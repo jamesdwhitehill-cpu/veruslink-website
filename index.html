@@ -711,6 +711,174 @@
   .footer-tagline { font-size: 0.88rem; color: rgba(255,255,255,0.35); margin-bottom: 8px; font-style: italic; }
   .footer-text { font-size: 0.8rem; color: rgba(255,255,255,0.2); }
 
+  /* ---- AUDIT ---- */
+  .audit-section { background: var(--bg-secondary); }
+
+  .audit-progress-wrap {
+    max-width: 680px;
+    margin: 0 auto 8px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .audit-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--teal));
+    border-radius: 100px;
+    width: 12.5%;
+    transition: width 0.4s ease;
+  }
+
+  .audit-progress-label {
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 32px;
+    font-weight: 600;
+  }
+
+  .audit-card {
+    max-width: 680px;
+    margin: 0 auto;
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    padding: 48px;
+    min-height: 320px;
+  }
+
+  .audit-q { display: none; }
+  .audit-q.active { display: block; animation: fadeInUp 0.35s ease both; }
+
+  .audit-q-num {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .audit-q-text {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 28px;
+    line-height: 1.4;
+  }
+
+  .audit-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .audit-opt {
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 20px;
+    text-align: left;
+    font-family: 'Mulish', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .audit-opt:hover {
+    border-color: var(--blue);
+    background: var(--blue-dim);
+    color: var(--blue);
+    transform: translateX(4px);
+  }
+
+  .audit-results {
+    display: none;
+    max-width: 780px;
+    margin: 0 auto;
+    animation: fadeInUp 0.5s ease both;
+  }
+
+  .audit-result-inner {
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1.5px solid var(--border);
+    box-shadow: var(--shadow-lg);
+    padding: 48px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .audit-score-wrap { text-align: center; }
+
+  .audit-score-ring {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 16px;
+  }
+
+  .audit-score-ring svg { width: 100%; height: 100%; }
+
+  .audit-score-num {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--text-dark);
+  }
+
+  .audit-score-label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .audit-result-title {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .audit-result-body {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .audit-result-pack {
+    display: inline-block;
+    background: var(--blue-dim);
+    border: 1.5px solid rgba(37,99,235,0.2);
+    color: var(--blue);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border-radius: 100px;
+  }
+
+  @media (max-width: 768px) {
+    .audit-card { padding: 28px 20px; }
+    .audit-result-inner { grid-template-columns: 1fr; }
+    .audit-score-ring { width: 110px; height: 110px; }
+  }
+
   /* ---- RESPONSIVE ---- */
   @media (max-width: 768px) {
     nav { padding: 14px 20px; }
@@ -736,6 +904,7 @@
     <a href="#how">How It Works</a>
     <a href="#industries">Industries</a>
     <a href="#pricing">Pricing</a>
+    <a href="#audit">Free Audit</a>
     <a href="#book" class="nav-cta">Book a Free Demo</a>
   </div>
 </nav>
@@ -767,6 +936,147 @@
     <div class="stat-label">Setup fees. Zero lock-in.</div>
   </div>
 </div>
+
+<!-- ADMIN DRAIN AUDIT -->
+<section class="audit-section" id="audit">
+  <div class="container">
+    <div class="section-label" style="text-align:center;">Free 2-Minute Assessment</div>
+    <div class="section-title" style="text-align:center;max-width:720px;margin:0 auto 12px;">The Admin Drain Audit</div>
+    <p class="section-subtitle" style="text-align:center;margin:0 auto 48px;">8 quick questions. Find out exactly how much time and money your business is leaking — and what to do about it.</p>
+
+    <!-- PROGRESS BAR -->
+    <div class="audit-progress-wrap">
+      <div class="audit-progress-bar" id="auditProgress"></div>
+    </div>
+    <div class="audit-progress-label"><span id="auditStep">1</span> of 8</div>
+
+    <!-- QUIZ CONTAINER -->
+    <div class="audit-card" id="auditCard">
+
+      <!-- Q1 -->
+      <div class="audit-q active" id="q1">
+        <div class="audit-q-num">01</div>
+        <div class="audit-q-text">How many hours a week do you spend on admin tasks — quoting, invoicing, emails, onboarding, chasing documents?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(1,1)">Less than 2 hours</button>
+          <button class="audit-opt" onclick="answer(1,2)">2–5 hours</button>
+          <button class="audit-opt" onclick="answer(1,3)">5–10 hours</button>
+          <button class="audit-opt" onclick="answer(1,4)">More than 10 hours</button>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="audit-q" id="q2">
+        <div class="audit-q-num">02</div>
+        <div class="audit-q-text">How long does it take you to onboard a new client from first contact to fully set up?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(2,1)">Same day — I have a system</button>
+          <button class="audit-opt" onclick="answer(2,2)">A few days — it's manual but okay</button>
+          <button class="audit-opt" onclick="answer(2,3)">1–2 weeks — lots of back and forth</button>
+          <button class="audit-opt" onclick="answer(2,4)">Honestly, it's a mess</button>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="audit-q" id="q3">
+        <div class="audit-q-num">03</div>
+        <div class="audit-q-text">How do you currently send quotes, proposals, or engagement letters?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(3,1)">Automated — goes out without me</button>
+          <button class="audit-opt" onclick="answer(3,2)">Template I copy-paste and edit</button>
+          <button class="audit-opt" onclick="answer(3,3)">I write them fresh each time</button>
+          <button class="audit-opt" onclick="answer(3,4)">Whatever I can cobble together</button>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="audit-q" id="q4">
+        <div class="audit-q-num">04</div>
+        <div class="audit-q-text">How often do you chase clients for documents, payments, or responses?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(4,1)">Rarely — it's all automated</button>
+          <button class="audit-opt" onclick="answer(4,2)">Occasionally — maybe once a week</button>
+          <button class="audit-opt" onclick="answer(4,3)">Often — it eats into my day</button>
+          <button class="audit-opt" onclick="answer(4,4)">Constantly — it's exhausting</button>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="audit-q" id="q5">
+        <div class="audit-q-num">05</div>
+        <div class="audit-q-text">What happens to your receipts and expenses?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(5,1)">Logged automatically as they happen</button>
+          <button class="audit-opt" onclick="answer(5,2)">Entered at the end of each week</button>
+          <button class="audit-opt" onclick="answer(5,3)">Pile up and I deal with them later</button>
+          <button class="audit-opt" onclick="answer(5,4)">Shoebox situation, not going to lie</button>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="audit-q" id="q6">
+        <div class="audit-q-num">06</div>
+        <div class="audit-q-text">How much visibility do you have over your business right now — clients, jobs, docs, pipeline?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(6,1)">Full visibility — dashboard or system</button>
+          <button class="audit-opt" onclick="answer(6,2)">Pretty good — spreadsheets or notes</button>
+          <button class="audit-opt" onclick="answer(6,3)">It's in my head mostly</button>
+          <button class="audit-opt" onclick="answer(6,4)">Honestly no idea where things are</button>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="audit-q" id="q7">
+        <div class="audit-q-num">07</div>
+        <div class="audit-q-text">If you could take on 20% more clients tomorrow, what would stop you?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(7,1)">Nothing — I have the capacity</button>
+          <button class="audit-opt" onclick="answer(7,2)">Finding the clients would be the challenge</button>
+          <button class="audit-opt" onclick="answer(7,3)">The admin would overwhelm me</button>
+          <button class="audit-opt" onclick="answer(7,4)">I can barely keep up as it is</button>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="audit-q" id="q8">
+        <div class="audit-q-num">08</div>
+        <div class="audit-q-text">What's your honest relationship with AI tools right now?</div>
+        <div class="audit-options">
+          <button class="audit-opt" onclick="answer(8,1)">Already using them well</button>
+          <button class="audit-opt" onclick="answer(8,2)">Dabbling — ChatGPT here and there</button>
+          <button class="audit-opt" onclick="answer(8,3)">Curious but don't know where to start</button>
+          <button class="audit-opt" onclick="answer(8,4)">Haven't touched it — feels overwhelming</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RESULTS -->
+    <div class="audit-results" id="auditResults">
+      <div class="audit-result-inner">
+        <div class="audit-score-wrap">
+          <div class="audit-score-ring">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="52" fill="none" stroke="#E5E7EB" stroke-width="10"/>
+              <circle cx="60" cy="60" r="52" fill="none" stroke="url(#grad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" id="scoreArc" stroke-dashoffset="326.7" style="transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset 1.2s ease;"/>
+              <defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2563EB"/><stop offset="100%" style="stop-color:#0D9488"/></linearGradient></defs>
+            </svg>
+            <div class="audit-score-num" id="scoreNum">0</div>
+          </div>
+          <div class="audit-score-label" id="scoreLabel"></div>
+        </div>
+        <div class="audit-result-content">
+          <div class="audit-result-title" id="resultTitle"></div>
+          <div class="audit-result-body" id="resultBody"></div>
+          <div class="audit-result-pack" id="resultPack"></div>
+          <a href="#book" class="btn-primary" style="display:inline-block;margin-top:28px;" onclick="document.getElementById('auditResults').scrollIntoView()">Book Your Free Demo →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 <!-- PROBLEM -->
 <section class="problem-section">
@@ -1165,6 +1475,91 @@
 </footer>
 
 <script>
+  // ADMIN DRAIN AUDIT
+  const scores = {};
+  let currentQ = 1;
+  const totalQ = 8;
+
+  function answer(q, val) {
+    scores[q] = val;
+    const opts = document.querySelectorAll('#q' + q + ' .audit-opt');
+    opts.forEach((o, i) => o.classList.toggle('selected', i === val - 1));
+    setTimeout(() => {
+      if (q < totalQ) {
+        document.getElementById('q' + q).classList.remove('active');
+        currentQ = q + 1;
+        document.getElementById('q' + currentQ).classList.add('active');
+        document.getElementById('auditStep').textContent = currentQ;
+        document.getElementById('auditProgress').style.width = ((currentQ / totalQ) * 100) + '%';
+      } else {
+        showResults();
+      }
+    }, 320);
+  }
+
+  function showResults() {
+    const total = Object.values(scores).reduce((a, b) => a + b, 0);
+    const max = totalQ * 4;
+    const pct = Math.round((total / max) * 100);
+
+    document.getElementById('auditCard').style.display = 'none';
+    document.getElementById('auditProgress').style.width = '100%';
+    document.getElementById('auditStep').textContent = '8';
+
+    const results = document.getElementById('auditResults');
+    results.style.display = 'block';
+
+    setTimeout(() => {
+      const circumference = 326.7;
+      const offset = circumference - (pct / 100) * circumference;
+      document.getElementById('scoreArc').style.strokeDashoffset = offset;
+      animateNum(pct);
+    }, 100);
+
+    let title, body, pack, label;
+
+    if (pct <= 35) {
+      label = "Well Optimised";
+      title = "You're ahead of 90% of small businesses.";
+      body = "Your systems are working. But there are still pockets of admin time you're leaving on the table. A Veruslink Starter pack could tighten the gaps and give you back 4–6 hours a month — time you could reinvest in growth.";
+      pack = "Recommended: Starter Pack — $197/mo";
+    } else if (pct <= 60) {
+      label = "Moderate Drain";
+      title = "You're losing 6–10 hours a month to admin.";
+      body = "You've got the basics covered but the cracks are showing. Clients are waiting longer than they should. Documents are going out slower than you'd like. You're doing work that should be automated. The Growth pack pays for itself within the first month.";
+      pack = "Recommended: Growth Pack — $397/mo";
+    } else if (pct <= 80) {
+      label = "High Drain";
+      title = "Admin is costing you 10–15 hours every month.";
+      body = "This is the danger zone. You're losing real billable time to work that an AI system could handle while you sleep. At your hourly rate, you're likely leaking $1,500–$2,500/mo in recoverable capacity. The Growth pack will change this within 30 days.";
+      pack = "Recommended: Growth Pack — $397/mo";
+    } else {
+      label = "Critical Drain";
+      title = "Your business is running on borrowed time.";
+      body = "You're in reactive mode. The admin is winning. Every day without a system is costing you clients, money, and energy you don't have. The Studio pack gives you a fully custom AI system built around exactly how your business works. Most clients in your position see ROI within the first two weeks.";
+      pack = "Recommended: Studio Pack — $497/mo";
+    }
+
+    document.getElementById('scoreNum').textContent = pct + '%';
+    document.getElementById('scoreLabel').textContent = label;
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('resultBody').textContent = body;
+    document.getElementById('resultPack').textContent = pack;
+
+    results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function animateNum(target) {
+    let current = 0;
+    const step = target / 40;
+    const el = document.getElementById('scoreNum');
+    const interval = setInterval(() => {
+      current = Math.min(current + step, target);
+      el.textContent = Math.round(current) + '%';
+      if (current >= target) clearInterval(interval);
+    }, 30);
+  }
+
   function showIndustry(id) {
     document.querySelectorAll('.industry-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
