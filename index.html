@@ -121,7 +121,7 @@
   .problem-card p { font-size:0.9rem; color:var(--text-muted); line-height:1.65; }
 
   /* HOW IT WORKS */
-  .steps { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; margin-top:48px; }
+  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px; }
   .step { position:relative; padding:36px; background:white; border:1.5px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); transition:transform 0.2s,box-shadow 0.2s; }
   .step:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
   .step-num { font-family:'Bricolage Grotesque',sans-serif; font-size:2.8rem; font-weight:800; color:var(--blue-dim); position:absolute; top:16px; right:20px; }
@@ -209,6 +209,34 @@
   .pricing-fit-note { max-width:700px; margin:32px auto 0; background:white; border:1.5px solid var(--border); border-radius:var(--radius); padding:24px 32px; font-size:0.88rem; color:var(--text-muted); line-height:1.7; box-shadow:var(--shadow); }
   .pricing-fit-note strong { color:var(--text-dark); display:block; margin-bottom:6px; font-family:'Bricolage Grotesque',sans-serif; }
 
+  /* FOUNDATION STACK */
+  .foundation-stack { background:var(--bg-dark); border:1.5px solid var(--border-dark); border-radius:var(--radius); padding:28px 32px; margin-bottom:28px; text-align:left; }
+  .foundation-label { font-family:'Bricolage Grotesque',sans-serif; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:2.5px; color:var(--teal-light); margin-bottom:6px; }
+  .foundation-title { font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:800; color:white; margin-bottom:4px; }
+  .foundation-price { font-family:'Bricolage Grotesque',sans-serif; font-size:2rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:14px; }
+  .foundation-items { list-style:none; }
+  .foundation-items li { display:flex; align-items:center; gap:10px; font-size:0.88rem; color:rgba(255,255,255,0.7); padding:5px 0; }
+  .foundation-items li .check { color:var(--teal-light); }
+  .foundation-divider { height:1px; background:var(--border); margin:4px 0 20px; }
+  .foundation-then { font-size:0.78rem; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px; text-align:left; }
+
+  /* RISK REVERSAL */
+  .risk-reversal { max-width:700px; margin:28px auto 0; background:linear-gradient(145deg,rgba(16,185,129,0.06),rgba(13,148,136,0.06)); border:1.5px solid rgba(16,185,129,0.25); border-radius:var(--radius); padding:28px 32px; text-align:center; }
+  .risk-reversal-title { font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:800; color:var(--accent-green); margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:8px; }
+  .risk-reversal p { font-size:0.92rem; color:var(--text-muted); line-height:1.7; }
+
+  /* SCARCITY BLOCK */
+  .scarcity-block { max-width:700px; margin:28px auto 0; background:linear-gradient(145deg,var(--bg-dark),#1C2C4A); border:1.5px solid var(--border-dark); border-radius:var(--radius-lg); padding:36px 40px; text-align:center; position:relative; overflow:hidden; }
+  .scarcity-block::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--blue),var(--teal)); }
+  .scarcity-eyebrow { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:2.5px; color:var(--teal-light); margin-bottom:12px; }
+  .scarcity-headline { font-family:'Bricolage Grotesque',sans-serif; font-size:1.5rem; font-weight:800; color:white; margin-bottom:16px; line-height:1.25; }
+  .scarcity-prices { display:flex; align-items:baseline; justify-content:center; gap:16px; margin-bottom:16px; }
+  .scarcity-old { font-family:'Bricolage Grotesque',sans-serif; font-size:1.3rem; font-weight:700; color:rgba(255,255,255,0.3); text-decoration:line-through; }
+  .scarcity-new { font-family:'Bricolage Grotesque',sans-serif; font-size:2.4rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .scarcity-spots { display:inline-flex; align-items:center; gap:8px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#f87171; font-size:0.82rem; font-weight:700; padding:6px 16px; border-radius:100px; margin-bottom:20px; }
+  .scarcity-spots::before { content:''; width:6px; height:6px; border-radius:50%; background:#f87171; animation:pulse 1.5s infinite; }
+  .scarcity-body { font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.7; max-width:520px; margin:0 auto; }
+
   /* TESTIMONIALS */
   .testimonial-section { background:var(--bg-primary); }
   .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; margin-top:48px; }
@@ -261,7 +289,7 @@
   @media (max-width:768px) {
     nav { padding:14px 20px; }
     .nav-links a:not(.nav-cta) { display:none; }
-    .steps { grid-template-columns:1fr; gap:20px; }
+    .steps { grid-template-columns:1fr!important; gap:20px; }
     .pricing-grid { grid-template-columns:1fr; max-width:420px; margin-left:auto; margin-right:auto; }
     .industry-content.active { grid-template-columns:1fr; }
     .vero-grid { grid-template-columns:1fr; }
@@ -286,7 +314,7 @@
     <a href="#industries">Industries</a>
     <a href="#pricing">Pricing</a>
     <a href="#audit">Free Audit</a>
-    <a href="#book" class="nav-cta">Book a Free Demo</a>
+    <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="nav-cta">Book Free Call</a>
   </div>
 </nav>
 
@@ -306,9 +334,10 @@
     </div>
   </div>
   <div class="hero-ctas">
-    <a href="#book" class="btn-primary" id="heroCta">See It In Action — Free Demo</a>
+    <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="btn-primary" id="heroCta">Book Your FREE Admin Audit</a>
     <a href="#how" class="btn-secondary">How It Works</a>
   </div>
+  <p style="margin-top:16px;font-size:0.85rem;color:var(--text-light);">Already had your consult? <a href="https://vero-signup.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--blue-light);text-decoration:underline;font-weight:600;">Sign up here &rarr;</a></p>
 </section>
 
 <!-- STATS -->
@@ -322,8 +351,8 @@
     <div class="stat-label">Average time to go live</div>
   </div>
   <div class="stat-item">
-    <div class="stat-number">$0</div>
-    <div class="stat-label">Setup fees (standard packs)</div>
+    <div class="stat-number">$197</div>
+    <div class="stat-label">Starting from per month</div>
   </div>
   <div class="stat-item">
     <div class="stat-number">30 days</div>
@@ -424,9 +453,14 @@
 <section id="how">
   <div class="container">
     <div class="section-label">How It Works</div>
-    <div class="section-title">Three Steps. Fully Installed.<br>You Don't Build a Thing.</div>
+    <div class="section-title">Four Steps. Fully Installed.<br>You Don't Build a Thing.</div>
     <p class="section-subtitle">We handle the build. You get the time back.</p>
     <div class="steps">
+      <div class="step">
+        <div class="step-num">00</div>
+        <h3>The Build</h3>
+        <p>We train Vero on your business — your tone, your templates, your rules. We clean out the admin backlog, connect your Telegram, and set up Mission Control. This is The Foundation.</p>
+      </div>
       <div class="step">
         <div class="step-num">01</div>
         <h3>We Map Your Workflow</h3>
@@ -477,8 +511,8 @@
           <div class="why-stat-label">Industry packs ready to deploy</div>
         </div>
         <div class="why-stat-card">
-          <div class="why-stat-num">$0</div>
-          <div class="why-stat-label">Setup fees on standard packs</div>
+          <div class="why-stat-num">3</div>
+          <div class="why-stat-label">Simple plans — no setup fees</div>
         </div>
       </div>
     </div>
@@ -729,56 +763,93 @@
   <div class="container" style="text-align:center;">
     <div class="section-label">Simple Pricing</div>
     <div class="section-title" style="max-width:700px;margin:0 auto 12px;">Pick the Plan That Fits.<br>Upgrade When You're Ready.</div>
-    <p class="section-subtitle" style="margin:0 auto;text-align:center;">No lock-in. No setup fees on standard packs. Every plan includes onboarding and your first industry pack.</p>
-    <div class="pricing-grid">
+    <p class="section-subtitle" style="margin:0 auto;text-align:center;">No lock-in. No setup fees. Every plan includes onboarding and your first industry pack.</p>
+
+    <div class="pricing-grid" style="margin-top:48px;">
       <div class="pricing-card">
         <div class="pricing-name">Starter</div>
         <div class="pricing-price">$197</div>
         <div class="pricing-period">per month, AUD incl. GST</div>
-        <div class="pricing-desc">Get your first automations live and start clawing back time this week.</div>
+        <div class="pricing-desc">For the solo operator who wants admin off their plate.</div>
         <ul class="pricing-features">
-          <li><span class="check">✓</span> 2–3 core workflow automations (e.g. quoting + invoicing, or onboarding + welcome emails)</li>
-          <li><span class="check">✓</span> Vero AI assistant via Telegram</li>
-          <li><span class="check">✓</span> Mission Control dashboard</li>
-          <li><span class="check">✓</span> Guided onboarding</li>
-          <li><span class="check">✓</span> Email support</li>
+          <li><span class="check">✓</span> Receipt capture</li>
+          <li><span class="check">✓</span> Mileage tracking</li>
+          <li><span class="check">✓</span> Clock in / clock out</li>
+          <li><span class="check">✓</span> Daily brief</li>
+          <li><span class="check">✓</span> Invoice generation</li>
+          <li><span class="check">✓</span> Telegram interface</li>
         </ul>
-        <a href="#book" class="pricing-btn outline">Book a Demo</a>
+        <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Get Started</a>
       </div>
       <div class="pricing-card featured">
         <div class="pricing-popular">Most Popular</div>
         <div class="pricing-name">Growth</div>
-        <div class="pricing-price">$397</div>
+        <div class="pricing-price">$447</div>
         <div class="pricing-period">per month, AUD incl. GST</div>
-        <div class="pricing-desc">Full industry pack installed. Documents, emails, and workflows — all automated.</div>
+        <div class="pricing-desc">For the operator ready to systematise their business.</div>
         <ul class="pricing-features">
-          <li><span class="check">✓</span> Full industry automation pack</li>
-          <li><span class="check">✓</span> Vero AI + Mission Control</li>
-          <li><span class="check">✓</span> Smart document generation (quotes, engagement letters, onboarding packs)</li>
-          <li><span class="check">✓</span> Automated email sequences (reminders, doc chases, follow-ups)</li>
-          <li><span class="check">✓</span> Priority onboarding</li>
+          <li><span class="check">✓</span> Everything in Starter</li>
+          <li><span class="check">✓</span> Email management</li>
+          <li><span class="check">✓</span> Time tracking</li>
+          <li><span class="check">✓</span> Expense categorisation</li>
+          <li><span class="check">✓</span> Credential vault</li>
+          <li><span class="check">✓</span> Daily digest</li>
         </ul>
-        <a href="#book" class="pricing-btn primary">Book a Demo</a>
+        <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="pricing-btn primary">Get Started</a>
       </div>
       <div class="pricing-card">
-        <div class="pricing-name">Studio</div>
-        <div class="pricing-price">$497</div>
+        <div class="pricing-name">Command</div>
+        <div class="pricing-price">$697</div>
         <div class="pricing-period">per month, AUD incl. GST</div>
-        <div class="pricing-desc">Custom workflows, multi-user access, and white-glove support for growing teams.</div>
+        <div class="pricing-desc">For the operator who wants an unfair advantage.</div>
         <ul class="pricing-features">
           <li><span class="check">✓</span> Everything in Growth</li>
-          <li><span class="check">✓</span> Custom-built workflows</li>
-          <li><span class="check">✓</span> Multi-user team access</li>
-          <li><span class="check">✓</span> Priority support + updates</li>
-          <li><span class="check">✓</span> Quarterly strategy review</li>
+          <li><span class="check">✓</span> Scout, Maven, Clio, Orion, Finnegan</li>
+          <li><span class="check">✓</span> Voice audit</li>
+          <li><span class="check">✓</span> CRM</li>
+          <li><span class="check">✓</span> Practice intelligence</li>
+          <li><span class="check">✓</span> White-label UI</li>
+          <li><span class="check">✓</span> Additional users $97/month</li>
         </ul>
-        <a href="#book" class="pricing-btn outline">Book a Demo</a>
+        <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Get Started</a>
       </div>
     </div>
-    <p class="pricing-note">All prices AUD. Cancel anytime — no exit fees.</p>
+    <p class="pricing-note">All prices AUD. No setup fees. Cancel anytime — no exit fees.</p>
+    <p style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--text-light);">Already had your consult? <a href="https://vero-signup.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--blue-light);text-decoration:underline;font-weight:600;">Sign up here &rarr;</a></p>
+
+    <!-- Voice Audit -->
+    <div style="margin-top:60px;text-align:center;">
+      <div class="section-label">Voice Audit</div>
+      <div class="section-title" style="font-size:1.6rem;">How Voice Audit Works</div>
+      <p class="section-subtitle">No forms. No typing. Just talk — Vero does the rest.</p>
+      <div class="steps-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin-top:36px;text-align:center;">
+        <div style="padding:28px 24px;background:var(--bg-card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);box-shadow:var(--shadow);">
+          <div style="font-size:2rem;margin-bottom:12px;">🎙️</div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--white);">1. Answer 5 questions</div>
+          <p style="font-size:0.9rem;color:var(--text-light);line-height:1.5;">Click record and tell Vero about your admin pain points. Five questions, under five minutes.</p>
+        </div>
+        <div style="padding:28px 24px;background:var(--bg-card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);box-shadow:var(--shadow);">
+          <div style="font-size:2rem;margin-bottom:12px;">🧠</div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--white);">2. Vero analyses your answers</div>
+          <p style="font-size:0.9rem;color:var(--text-light);line-height:1.5;">Your voice is transcribed and reviewed by AI. We identify what to automate, what to eliminate, and what to delegate.</p>
+        </div>
+        <div style="padding:28px 24px;background:var(--bg-card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);box-shadow:var(--shadow);">
+          <div style="font-size:2rem;margin-bottom:12px;">📋</div>
+          <div style="font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--white);">3. Get your Admin Kill-List</div>
+          <p style="font-size:0.9rem;color:var(--text-light);line-height:1.5;">We deliver a personalised report: the tasks costing you money, and exactly how Vero will handle them.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk Reversal -->
+    <div class="risk-reversal">
+      <div class="risk-reversal-title">🛡️ The Veruslink Guarantee</div>
+      <p>If we can't identify at least 5 hours of admin to eliminate in your first month, we'll refund your first month in full — no questions asked. We don't take your money unless we know we can deliver. If it's not a fit, we'll tell you before you pay.</p>
+    </div>
+
     <div class="pricing-fit-note">
       <strong>Not the right fit?</strong>
-      We're not for people who want to "play" with AI, want a one-off project, or aren't ready to let go of the admin. We build working systems for serious business owners. If that's not you right now — no hard feelings. If it is, let's talk.
+      We build working systems for serious business owners. If you're ready to eliminate admin and focus on growth, we're here. If not right now — no hard feelings.
     </div>
   </div>
 </section>
@@ -861,7 +932,7 @@
     <div class="section-title">Give Me 15 Minutes.<br>I'll Show You Exactly What We'd Fix First.</div>
     <p class="section-subtitle">No pitch. No pressure. If it's not a fit, I'll tell you straight and point you elsewhere. Most people leave the call with at least one thing they can fix immediately — whether they sign up or not.</p>
     <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
-      <a href="#" class="btn-primary">Claim My 10 Hours Back →</a>
+      <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="btn-primary">Book Your FREE Admin Audit →</a>
     </div>
   </div>
 </section>
@@ -874,6 +945,7 @@
   </div>
   <div class="footer-tagline">Reliable systems, installed for small business. No hype. Just results.</div>
   <div class="footer-text">© 2026 Veruslink. All rights reserved.</div>
+  <div class="footer-text" style="margin-top:8px;"><a href="/privacy" style="color:rgba(255,255,255,0.35);text-decoration:none;">Privacy Policy</a> · <a href="/terms" style="color:rgba(255,255,255,0.35);text-decoration:none;">Terms of Service</a></div>
 </footer>
 
 <script>
@@ -882,27 +954,27 @@ const industryData = {
   tradie: {
     headline: 'Get Your Weekends Back.<br>Let Vero Handle <em>the B.S.</em>',
     sub: 'We install a custom AI assistant (Vero) that handles your quoting, invoicing and receipt-chasing — so you stay on the tools and your partner stops doing the BAS at 11pm on a Sunday.',
-    cta: 'See How Vero Saves You 10 Hours →'
+    cta: 'Book Your FREE Admin Audit →'
   },
   accountant: {
     headline: 'Stop Onboarding Clients<br>at <em>$15/hr.</em>',
     sub: 'We install AI systems that generate your engagement letters, welcome packs and document checklists automatically — so you can take on more clients without drowning in admin.',
-    cta: 'See It In Action — Free Demo'
+    cta: 'Book Your FREE Admin Audit'
   },
   broker: {
     headline: 'Close More Deals.<br>Chase Less <em>Paperwork.</em>',
     sub: 'We install workflow systems that handle client intake, fact-find docs and compliance checklists automatically — so your pipeline moves faster and your clients get a slicker experience.',
-    cta: 'See It In Action — Free Demo'
+    cta: 'Book Your FREE Admin Audit'
   },
   hr: {
     headline: 'Place More People.<br>Write Less <em>Admin.</em>',
     sub: 'We install AI systems that generate candidate packs, client briefs and offer letters automatically — so your team spends time placing, not paperwork.',
-    cta: 'See It In Action — Free Demo'
+    cta: 'Book Your FREE Admin Audit'
   },
   coach: {
     headline: 'Stay in the Coaching Seat.<br>Not the <em>Admin Chair.</em>',
     sub: 'We install systems that handle your onboarding, session notes, action plans and check-ins automatically — so you show up fully for your clients every time.',
-    cta: 'See It In Action — Free Demo'
+    cta: 'Book Your FREE Admin Audit'
   }
 };
 
@@ -978,19 +1050,19 @@ function showResults() {
   if (pct <= 35) {
     label = "Low Drain"; title = "You're ahead of most small businesses.";
     body = "Your systems are working. But there are still gaps leaking time every month. A Starter pack could tighten things up and give you 4–6 hours back — time you could put into growth.";
-    pack = "Recommended: Starter Pack — $197/mo";
+    pack = "Recommended: Starter — $197/mo";
   } else if (pct <= 60) {
     label = "Moderate Drain"; title = "You're losing 6–10 hours a month to admin.";
-    body = "You've got the basics but the cracks are showing. Clients wait longer than they should. Documents go out slower than you'd like. This is fixable fast — the Growth pack typically pays for itself within the first month.";
-    pack = "Recommended: Growth Pack — $397/mo";
+    body = "You've got the basics but the cracks are showing. Clients wait longer than they should. Documents go out slower than you'd like. This is fixable fast — the Growth plan typically pays for itself within the first month.";
+    pack = "Recommended: Growth — $447/mo";
   } else if (pct <= 80) {
     label = "High Drain"; title = "Admin is costing you 10–15 hours every month.";
-    body = "This is real money. At your hourly rate you're leaking $1,500–$2,500/mo in recoverable capacity. This is fixable. The Growth pack will change this within 30 days.";
-    pack = "Recommended: Growth Pack — $397/mo";
+    body = "This is real money. At your hourly rate you're leaking $1,500–$2,500/mo in recoverable capacity. This is fixable. The Growth plan will change this within 30 days.";
+    pack = "Recommended: Growth — $447/mo";
   } else {
     label = "Critical Drain"; title = "Your business is in reactive mode. This is fixable.";
-    body = "The admin is winning right now. Every day without a system is costing you clients, money and energy. The Studio pack gives you a fully custom system built around exactly how your business works. Most clients in your position see results within the first two weeks.";
-    pack = "Recommended: Studio Pack — $497/mo";
+    body = "The admin is winning right now. Every day without a system is costing you clients, money and energy. The Command plan gives you a fully custom system built around exactly how your business works. Most clients in your position see results within the first two weeks.";
+    pack = "Recommended: Command — $697/mo";
   }
   document.getElementById('scoreNum').textContent = pct + '%';
   document.getElementById('scoreLabel').textContent = label;
@@ -1032,5 +1104,7 @@ document.querySelectorAll('.problem-card,.step,.pricing-card,.why-stat-card,.tes
   observer.observe(el);
 });
 </script>
+<a href="/privacy" style="display:none">Privacy Policy</a>
+<a href="/terms" style="display:none">Terms of Service</a>
 </body>
 </html>
