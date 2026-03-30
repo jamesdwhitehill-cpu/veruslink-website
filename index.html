@@ -1,1110 +1,938 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veruslink — Workflow Automation for Small Business</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg-primary: #F7F8FC;
-    --bg-secondary: #EDEEF5;
-    --bg-dark: #111827;
-    --bg-card: #FFFFFF;
-    --bg-card-dark: #1C2436;
-    --blue: #2563EB;
-    --blue-light: #3B82F6;
-    --blue-dim: rgba(37,99,235,0.08);
-    --teal: #0D9488;
-    --teal-light: #14B8A6;
-    --text-dark: #111827;
-    --text-mid: #374151;
-    --text-muted: #6B7280;
-    --text-light: #9CA3AF;
-    --white: #FFFFFF;
-    --accent-green: #10B981;
-    --border: rgba(37,99,235,0.1);
-    --border-dark: rgba(255,255,255,0.08);
-    --radius: 14px;
-    --radius-lg: 22px;
-    --shadow: 0 4px 24px rgba(17,24,39,0.07);
-    --shadow-lg: 0 12px 48px rgba(17,24,39,0.12);
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vero — Nothing Falls Through the Cracks | VerusLink Australia</title>
+  <meta name="description" content="Vero protects your revenue and handles admin automatically. Tracks leads, organises receipts, manages follow-ups, and gives business owners a clear daily operating rhythm. Limited onboarding.">
+  <meta name="keywords" content="AI business operations Australia, revenue protection, admin automation, AI business assistant, lead follow-up automation">
+  <link rel="canonical" href="https://veruslink.au/">
+  <meta property="og:title" content="Vero — Nothing Falls Through the Cracks">
+  <meta property="og:description" content="Vero protects your revenue and handles admin automatically. Tracks leads, organises receipts, manages follow-ups, and gives business owners a clear daily operating rhythm.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://veruslink.au/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Vero by VerusLink",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web, Telegram",
+    "offers": {
+      "@type": "Offer",
+      "price": "499",
+      "priceCurrency": "AUD",
+      "description": "Vero Operating System — includes onboarding, workflow setup, dashboard, action queue, receipts, and CRM support"
+    },
+    "description": "Vero protects revenue and handles admin automatically for small business owners.",
+    "url": "https://veruslink.au/"
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'Mulish',sans-serif; background:var(--bg-primary); color:var(--text-dark); line-height:1.6; overflow-x:hidden; }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  /* NAV */
-  nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:16px 48px; display:flex; justify-content:space-between; align-items:center; background:rgba(247,248,252,0.92); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
-  .nav-logo { font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.4rem; color:var(--text-dark); letter-spacing:-0.5px; display:flex; align-items:center; gap:8px; }
-  .nav-logo .logo-mark { width:32px; height:32px; background:linear-gradient(135deg,var(--blue),var(--teal)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.85rem; color:white; font-weight:800; }
-  .nav-logo span { color:var(--blue); }
-  .nav-links { display:flex; gap:32px; align-items:center; }
-  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.9rem; font-weight:600; transition:color 0.2s; }
-  .nav-links a:hover { color:var(--blue); }
-  .nav-cta { background:var(--blue)!important; color:white!important; padding:10px 24px; border-radius:8px; font-weight:700!important; font-size:0.85rem!important; transition:transform 0.2s,box-shadow 0.2s!important; }
-  .nav-cta:hover { transform:translateY(-1px); box-shadow:0 4px 20px rgba(37,99,235,0.3)!important; }
+    :root {
+      --bg: #0a0a0f;
+      --bg-card: #141419;
+      --bg-surface: #1c1c24;
+      --accent: #5b5be6;
+      --accent-hover: #6e6ef0;
+      --text: #ededef;
+      --text-secondary: #8a8a9a;
+      --text-tertiary: #5a5a6e;
+      --border: #2a2a35;
+      --radius: 8px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      /* Agent colours */
+      --finnegan: #5b5be6;
+      --scout: #34d399;
+      --maven: #fbbf24;
+      --clio: #a78bfa;
+      --orion: #f472b6;
+      /* Semantic */
+      --red-soft: rgba(239, 68, 68, 0.12);
+      --red-text: #f87171;
+      --green-soft: rgba(52, 211, 153, 0.12);
+      --green-text: #34d399;
+    }
 
-  /* HERO */
-  .hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; align-items:center; text-align:center; padding:140px 24px 60px; position:relative; overflow:hidden; }
-  .hero::before { content:''; position:absolute; top:-100px; left:50%; transform:translateX(-50%); width:900px; height:700px; background:radial-gradient(ellipse,rgba(37,99,235,0.07) 0%,transparent 65%); pointer-events:none; }
-  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:var(--blue-dim); border:1px solid rgba(37,99,235,0.2); padding:8px 20px; border-radius:100px; font-size:0.82rem; font-weight:700; color:var(--blue); margin-bottom:32px; animation:fadeInUp 0.6s ease-out both; letter-spacing:0.3px; }
-  .hero-badge::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--accent-green); animation:pulse 2s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .hero h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(2.4rem,5.5vw,4.6rem); font-weight:800; line-height:1.06; max-width:860px; margin-bottom:24px; animation:fadeInUp 0.6s ease-out 0.1s both; color:var(--text-dark); letter-spacing:-1.5px; }
-  .hero h1 em { font-style:normal; background:linear-gradient(135deg,var(--blue),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .hero-sub { font-size:clamp(1rem,2vw,1.15rem); color:var(--text-muted); max-width:560px; margin-bottom:40px; animation:fadeInUp 0.6s ease-out 0.2s both; line-height:1.75; text-align:center; }
+    html { scroll-behavior: smooth; background: var(--bg); }
 
-  /* INDUSTRY SELECTOR */
-  .industry-selector { animation:fadeInUp 0.6s ease-out 0.3s both; margin-bottom:8px; }
-  .industry-selector-label { font-size:0.82rem; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:2px; margin-bottom:16px; text-align:center; }
-  .industry-btns { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
-  .ind-btn { padding:11px 24px; border-radius:100px; border:1.5px solid var(--border); background:white; color:var(--text-muted); font-family:'Mulish',sans-serif; font-size:0.88rem; font-weight:700; cursor:pointer; transition:all 0.2s; box-shadow:var(--shadow); display:flex; align-items:center; gap:8px; }
-  .ind-btn:hover { border-color:var(--blue); color:var(--blue); transform:translateY(-2px); box-shadow:0 6px 20px rgba(37,99,235,0.15); }
-  .ind-btn.active { background:linear-gradient(135deg,var(--blue),var(--teal)); color:white; border-color:transparent; box-shadow:0 6px 24px rgba(37,99,235,0.3); transform:translateY(-2px); }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
 
-  .hero-ctas { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; margin-top:32px; animation:fadeInUp 0.6s ease-out 0.4s both; }
+    /* ── NAV BAR ──────────────────────────────────────────── */
+    .site-nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-btn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--accent-hover); }
 
-  @keyframes fadeInUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:translateY(0)} }
+    /* ── HERO ─────────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 24px 60px;
+    }
 
-  .btn-primary { background:linear-gradient(135deg,var(--blue),var(--blue-light)); color:white; padding:16px 36px; border-radius:10px; font-weight:700; font-size:1rem; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; border:none; cursor:pointer; font-family:'Mulish',sans-serif; }
-  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(37,99,235,0.35); }
-  .btn-secondary { background:white; color:var(--text-dark); padding:16px 36px; border-radius:10px; font-weight:600; font-size:1rem; text-decoration:none; border:1.5px solid var(--border); transition:border-color 0.2s,box-shadow 0.2s; font-family:'Mulish',sans-serif; }
-  .btn-secondary:hover { border-color:var(--blue); box-shadow:0 4px 16px rgba(37,99,235,0.12); }
+    .hero-content {
+      max-width: 740px;
+    }
 
-  /* STATS */
-  .stats-bar { display:flex; justify-content:center; gap:0; background:var(--bg-dark); flex-wrap:wrap; }
-  .stat-item { text-align:center; padding:40px 60px; border-right:1px solid var(--border-dark); }
-  .stat-item:last-child { border-right:none; }
-  .stat-number { font-family:'Bricolage Grotesque',sans-serif; font-size:2.2rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .stat-label { font-size:0.82rem; color:rgba(255,255,255,0.45); margin-top:4px; }
+    .hero-logo {
+      font-family: var(--font);
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: var(--text);
+      margin-bottom: 32px;
+      display: inline-block;
+      border-bottom: 3px solid var(--accent);
+      padding-bottom: 8px;
+    }
 
-  /* SECTIONS */
-  section { padding:100px 24px; }
-  .container { max-width:1100px; margin:0 auto; }
-  .section-label { text-transform:uppercase; font-size:0.72rem; font-weight:700; letter-spacing:3px; color:var(--blue); margin-bottom:16px; }
-  .section-title { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(1.9rem,4vw,2.8rem); font-weight:800; line-height:1.1; margin-bottom:20px; color:var(--text-dark); letter-spacing:-0.8px; }
-  .section-subtitle { font-size:1.05rem; color:var(--text-muted); max-width:580px; margin-bottom:56px; line-height:1.7; }
+    .hero h1 {
+      font-family: var(--font);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 24px;
+      color: var(--text);
+      letter-spacing: -2px;
+    }
 
-  /* DYNAMIC HERO COPY */
-  .hero-dynamic { transition:opacity 0.3s ease; text-align:center; width:100%; }
-  .hero-dynamic.fading { opacity:0; }
+    .hero p {
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      color: var(--text-secondary);
+      max-width: 560px;
+      margin: 0 auto 12px;
+      line-height: 1.55;
+    }
 
-  /* VERO EXPLAINER */
-  .vero-section { background:var(--bg-dark); }
-  .vero-section .section-label { color:var(--teal-light); }
-  .vero-section .section-title { color:white; }
-  .vero-section .section-subtitle { color:rgba(255,255,255,0.5); }
-  .vero-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center; margin-top:48px; }
-  .vero-chat { background:var(--bg-card-dark); border-radius:var(--radius-lg); padding:32px; border:1px solid var(--border-dark); }
-  .vero-chat-title { font-size:0.78rem; font-weight:700; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
-  .chat-msg { display:flex; gap:12px; margin-bottom:20px; align-items:flex-start; }
-  .chat-msg.vero { flex-direction:row-reverse; }
-  .chat-avatar { width:32px; height:32px; border-radius:50%; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; }
-  .chat-avatar.user { background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.5); }
-  .chat-avatar.ai { background:linear-gradient(135deg,var(--blue),var(--teal)); color:white; }
-  .chat-bubble { padding:12px 16px; border-radius:12px; font-size:0.88rem; line-height:1.55; max-width:260px; }
-  .chat-bubble.user { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.7); border-radius:12px 12px 12px 2px; }
-  .chat-bubble.ai { background:linear-gradient(135deg,rgba(37,99,235,0.2),rgba(13,148,136,0.2)); color:rgba(255,255,255,0.9); border-radius:12px 12px 2px 12px; }
-  .vero-points { list-style:none; }
-  .vero-points li { display:flex; gap:14px; align-items:flex-start; padding:16px 0; border-bottom:1px solid var(--border-dark); color:rgba(255,255,255,0.65); font-size:0.95rem; line-height:1.6; }
-  .vero-points li:last-child { border-bottom:none; }
-  .vero-point-icon { width:36px; height:36px; background:linear-gradient(135deg,rgba(37,99,235,0.2),rgba(13,148,136,0.2)); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:1rem; }
+    .hero-note {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+      margin-bottom: 36px;
+      font-style: italic;
+    }
 
-  /* PROBLEM */
-  .problem-section { background:var(--bg-secondary); }
-  .problem-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:20px; margin-top:48px; }
-  .problem-card { background:white; border:1.5px solid var(--border); border-radius:var(--radius); padding:32px; transition:transform 0.2s,box-shadow 0.2s; box-shadow:var(--shadow); }
-  .problem-card:hover { transform:translateY(-3px); box-shadow:var(--shadow-lg); }
-  .problem-icon { font-size:1.6rem; margin-bottom:16px; display:block; }
-  .problem-card h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.05rem; font-weight:700; margin-bottom:8px; color:var(--text-dark); }
-  .problem-card p { font-size:0.9rem; color:var(--text-muted); line-height:1.65; }
+    .btn-cta {
+      display: inline-block;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .btn-cta:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
 
-  /* HOW IT WORKS */
-  .steps { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:48px; }
-  .step { position:relative; padding:36px; background:white; border:1.5px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow); transition:transform 0.2s,box-shadow 0.2s; }
-  .step:hover { transform:translateY(-4px); box-shadow:var(--shadow-lg); }
-  .step-num { font-family:'Bricolage Grotesque',sans-serif; font-size:2.8rem; font-weight:800; color:var(--blue-dim); position:absolute; top:16px; right:20px; }
-  .step h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:700; margin-bottom:10px; margin-top:8px; color:var(--text-dark); }
-  .step p { font-size:0.9rem; color:var(--text-muted); line-height:1.65; }
+    .hero-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-ghost-hero {
+      display: inline-block;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost-hero:hover {
+      border-color: var(--text-secondary);
+      color: var(--text);
+    }
 
-  /* WHY VERUSLINK */
-  .why-section { background:var(--bg-primary); }
-  .why-inner { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
-  .why-quote { font-family:'Bricolage Grotesque',sans-serif; font-size:clamp(1.3rem,2.5vw,1.7rem); font-weight:700; color:var(--text-dark); line-height:1.35; margin-bottom:28px; letter-spacing:-0.5px; }
-  .why-quote em { font-style:normal; color:var(--blue); }
-  .why-body { font-size:0.97rem; color:var(--text-muted); line-height:1.85; margin-bottom:20px; }
-  .why-sig { display:flex; align-items:center; gap:14px; margin-top:32px; }
-  .why-avatar { width:52px; height:52px; background:linear-gradient(135deg,var(--blue),var(--teal)); border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.1rem; color:white; }
-  .why-name { font-weight:700; font-size:0.95rem; color:var(--text-dark); }
-  .why-title { font-size:0.82rem; color:var(--text-light); }
-  .why-stats { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-  .why-stat-card { background:var(--bg-dark); border:1px solid var(--border-dark); border-radius:var(--radius); padding:28px; box-shadow:var(--shadow); }
-  .why-stat-num { font-family:'Bricolage Grotesque',sans-serif; font-size:2.4rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .why-stat-label { font-size:0.85rem; color:rgba(255,255,255,0.45); margin-top:4px; line-height:1.4; }
+    /* ── SECTIONS ─────────────────────────────────────────── */
+    section {
+      padding: 80px 24px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
 
-  /* INDUSTRY PACKS */
-  .industry-section { background:var(--bg-secondary); }
-  .industry-tabs { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:40px; }
-  .tab-btn { padding:10px 22px; border-radius:100px; border:1.5px solid var(--border); background:white; color:var(--text-muted); font-family:'Mulish',sans-serif; font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.2s; box-shadow:var(--shadow); }
-  .tab-btn:hover,.tab-btn.active { background:var(--blue); color:white; border-color:var(--blue); font-weight:700; box-shadow:0 4px 16px rgba(37,99,235,0.25); }
-  .industry-content { display:none; background:white; border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:48px; box-shadow:var(--shadow-lg); }
-  .industry-content.active { display:grid; grid-template-columns:1.2fr 1fr; gap:48px; align-items:start; }
-  .industry-content h3 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.6rem; font-weight:800; margin-bottom:12px; color:var(--text-dark); letter-spacing:-0.5px; }
-  .industry-content .lead { font-size:1rem; color:var(--text-muted); margin-bottom:28px; line-height:1.7; }
-  .automation-list { list-style:none; }
-  .automation-list li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; font-size:0.93rem; color:var(--text-mid); border-bottom:1px solid var(--bg-secondary); }
-  .automation-list li:last-child { border-bottom:none; }
-  .check { color:var(--accent-green); font-weight:700; flex-shrink:0; margin-top:2px; }
-  .result-box { background:linear-gradient(145deg,var(--bg-dark),#1C2C4A); border-radius:var(--radius); padding:36px; color:white; }
-  .result-box .result-number { font-family:'Bricolage Grotesque',sans-serif; font-size:2.8rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .result-box .result-label { font-size:0.82rem; color:rgba(255,255,255,0.4); margin-bottom:20px; display:block; }
-  .result-box .result-math { font-size:0.9rem; color:rgba(255,255,255,0.55); line-height:1.9; }
-  .result-box .result-math strong { color:var(--teal-light); }
+    .section-heading {
+      font-family: var(--font);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
 
-  /* AUDIT */
-  .audit-section { background:var(--bg-primary); }
-  .audit-progress-wrap { max-width:680px; margin:0 auto 8px; height:6px; background:var(--border); border-radius:100px; overflow:hidden; }
-  .audit-progress-bar { height:100%; background:linear-gradient(90deg,var(--blue),var(--teal)); border-radius:100px; width:12.5%; transition:width 0.4s ease; }
-  .audit-progress-label { text-align:center; font-size:0.8rem; color:var(--text-light); margin-bottom:32px; font-weight:600; }
-  .audit-card { max-width:680px; margin:0 auto; background:white; border-radius:var(--radius-lg); border:1.5px solid var(--border); box-shadow:var(--shadow-lg); padding:48px; min-height:320px; }
-  .audit-q { display:none; }
-  .audit-q.active { display:block; animation:fadeInUp 0.35s ease both; }
-  .audit-q-num { font-family:'Bricolage Grotesque',sans-serif; font-size:0.75rem; font-weight:700; color:var(--blue); letter-spacing:2px; margin-bottom:16px; }
-  .audit-q-text { font-family:'Bricolage Grotesque',sans-serif; font-size:1.25rem; font-weight:700; color:var(--text-dark); margin-bottom:28px; line-height:1.4; }
-  .audit-options { display:flex; flex-direction:column; gap:12px; }
-  .audit-opt { background:var(--bg-primary); border:1.5px solid var(--border); border-radius:10px; padding:14px 20px; text-align:left; font-family:'Mulish',sans-serif; font-size:0.95rem; font-weight:600; color:var(--text-mid); cursor:pointer; transition:all 0.2s; }
-  .audit-opt:hover { border-color:var(--blue); background:var(--blue-dim); color:var(--blue); transform:translateX(4px); }
-  .audit-results { display:none; max-width:780px; margin:0 auto; animation:fadeInUp 0.5s ease both; }
-  .audit-result-inner { background:white; border-radius:var(--radius-lg); border:1.5px solid var(--border); box-shadow:var(--shadow-lg); padding:48px; display:grid; grid-template-columns:200px 1fr; gap:48px; align-items:start; }
-  .audit-score-wrap { text-align:center; }
-  .audit-score-ring { position:relative; width:140px; height:140px; margin:0 auto 16px; }
-  .audit-score-ring svg { width:100%; height:100%; }
-  .audit-score-num { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-family:'Bricolage Grotesque',sans-serif; font-size:2.2rem; font-weight:800; color:var(--text-dark); }
-  .audit-score-label { font-size:0.85rem; font-weight:700; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
-  .audit-result-title { font-family:'Bricolage Grotesque',sans-serif; font-size:1.5rem; font-weight:800; color:var(--text-dark); margin-bottom:12px; line-height:1.2; }
-  .audit-result-body { font-size:0.95rem; color:var(--text-muted); line-height:1.75; margin-bottom:16px; }
-  .audit-result-pack { display:inline-block; background:var(--blue-dim); border:1.5px solid rgba(37,99,235,0.2); color:var(--blue); font-weight:700; font-size:0.85rem; padding:8px 18px; border-radius:100px; }
+    .section-sub {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 560px;
+      margin: 0 auto 48px;
+    }
 
-  /* PRICING */
-  .pricing-section { background:var(--bg-secondary); }
-  .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:56px; }
-  .pricing-card { background:white; border:1.5px solid var(--border); border-radius:var(--radius-lg); padding:40px 32px; position:relative; transition:transform 0.2s,box-shadow 0.3s; box-shadow:var(--shadow); }
-  .pricing-card:hover { transform:translateY(-5px); box-shadow:var(--shadow-lg); }
-  .pricing-card.featured { border-color:var(--blue); background:linear-gradient(180deg,rgba(37,99,235,0.04) 0%,white 50%); box-shadow:0 8px 40px rgba(37,99,235,0.15); }
-  .pricing-popular { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,var(--blue),var(--teal)); color:white; font-size:0.7rem; font-weight:700; padding:5px 18px; border-radius:100px; text-transform:uppercase; letter-spacing:1.5px; white-space:nowrap; }
-  .pricing-name { font-family:'Bricolage Grotesque',sans-serif; font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:2px; color:var(--text-light); margin-bottom:8px; text-align:left; }
-  .pricing-price { font-family:'Bricolage Grotesque',sans-serif; font-size:3rem; font-weight:800; margin-bottom:4px; color:var(--text-dark); text-align:left; }
-  .pricing-card.featured .pricing-price { background:linear-gradient(135deg,var(--blue),var(--teal)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .pricing-period { font-size:0.85rem; color:var(--text-light); margin-bottom:24px; text-align:left; }
-  .pricing-desc { font-size:0.92rem; color:var(--text-muted); margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid var(--bg-secondary); line-height:1.55; text-align:left; }
-  .pricing-features { list-style:none; margin-bottom:32px; text-align:left; }
-  .pricing-features li { display:flex; align-items:flex-start; gap:10px; font-size:0.88rem; color:var(--text-muted); padding:7px 0; }
-  .pricing-btn { display:block; text-align:center; padding:14px; border-radius:10px; font-weight:700; font-size:0.95rem; text-decoration:none; transition:transform 0.2s,box-shadow 0.2s; width:100%; font-family:'Mulish',sans-serif; cursor:pointer; }
-  .pricing-btn.primary { background:linear-gradient(135deg,var(--blue),var(--blue-light)); color:white; border:none; }
-  .pricing-btn.primary:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(37,99,235,0.35); }
-  .pricing-btn.outline { border:1.5px solid var(--border); color:var(--text-dark); background:transparent; }
-  .pricing-btn.outline:hover { border-color:var(--blue); color:var(--blue); background:var(--blue-dim); }
-  .pricing-note { text-align:center; margin-top:32px; font-size:0.85rem; color:var(--text-light); }
-  .pricing-fit-note { max-width:700px; margin:32px auto 0; background:white; border:1.5px solid var(--border); border-radius:var(--radius); padding:24px 32px; font-size:0.88rem; color:var(--text-muted); line-height:1.7; box-shadow:var(--shadow); }
-  .pricing-fit-note strong { color:var(--text-dark); display:block; margin-bottom:6px; font-family:'Bricolage Grotesque',sans-serif; }
+    /* ── SECTION BADGE PILLS ─────────────────────────────── */
+    .section-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .section-badge.primary {
+      background: rgba(91, 91, 230, 0.15);
+      color: #5b5be6;
+    }
+    .section-badge.secondary {
+      background: transparent;
+      border: 1px solid rgba(91, 91, 230, 0.4);
+      color: #5b5be6;
+    }
 
-  /* FOUNDATION STACK */
-  .foundation-stack { background:var(--bg-dark); border:1.5px solid var(--border-dark); border-radius:var(--radius); padding:28px 32px; margin-bottom:28px; text-align:left; }
-  .foundation-label { font-family:'Bricolage Grotesque',sans-serif; font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:2.5px; color:var(--teal-light); margin-bottom:6px; }
-  .foundation-title { font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:800; color:white; margin-bottom:4px; }
-  .foundation-price { font-family:'Bricolage Grotesque',sans-serif; font-size:2rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:14px; }
-  .foundation-items { list-style:none; }
-  .foundation-items li { display:flex; align-items:center; gap:10px; font-size:0.88rem; color:rgba(255,255,255,0.7); padding:5px 0; }
-  .foundation-items li .check { color:var(--teal-light); }
-  .foundation-divider { height:1px; background:var(--border); margin:4px 0 20px; }
-  .foundation-then { font-size:0.78rem; font-weight:700; color:var(--text-light); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:4px; text-align:left; }
+    /* ── PROBLEM SECTION (Without / With) ─────────────────── */
+    .contrast-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
 
-  /* RISK REVERSAL */
-  .risk-reversal { max-width:700px; margin:28px auto 0; background:linear-gradient(145deg,rgba(16,185,129,0.06),rgba(13,148,136,0.06)); border:1.5px solid rgba(16,185,129,0.25); border-radius:var(--radius); padding:28px 32px; text-align:center; }
-  .risk-reversal-title { font-family:'Bricolage Grotesque',sans-serif; font-size:1.1rem; font-weight:800; color:var(--accent-green); margin-bottom:8px; display:flex; align-items:center; justify-content:center; gap:8px; }
-  .risk-reversal p { font-size:0.92rem; color:var(--text-muted); line-height:1.7; }
+    .contrast-card {
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      border: 1px solid var(--border);
+    }
 
-  /* SCARCITY BLOCK */
-  .scarcity-block { max-width:700px; margin:28px auto 0; background:linear-gradient(145deg,var(--bg-dark),#1C2C4A); border:1.5px solid var(--border-dark); border-radius:var(--radius-lg); padding:36px 40px; text-align:center; position:relative; overflow:hidden; }
-  .scarcity-block::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--blue),var(--teal)); }
-  .scarcity-eyebrow { font-size:0.72rem; font-weight:700; text-transform:uppercase; letter-spacing:2.5px; color:var(--teal-light); margin-bottom:12px; }
-  .scarcity-headline { font-family:'Bricolage Grotesque',sans-serif; font-size:1.5rem; font-weight:800; color:white; margin-bottom:16px; line-height:1.25; }
-  .scarcity-prices { display:flex; align-items:baseline; justify-content:center; gap:16px; margin-bottom:16px; }
-  .scarcity-old { font-family:'Bricolage Grotesque',sans-serif; font-size:1.3rem; font-weight:700; color:rgba(255,255,255,0.3); text-decoration:line-through; }
-  .scarcity-new { font-family:'Bricolage Grotesque',sans-serif; font-size:2.4rem; font-weight:800; background:linear-gradient(135deg,var(--blue-light),var(--teal-light)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .scarcity-spots { display:inline-flex; align-items:center; gap:8px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#f87171; font-size:0.82rem; font-weight:700; padding:6px 16px; border-radius:100px; margin-bottom:20px; }
-  .scarcity-spots::before { content:''; width:6px; height:6px; border-radius:50%; background:#f87171; animation:pulse 1.5s infinite; }
-  .scarcity-body { font-size:0.9rem; color:rgba(255,255,255,0.5); line-height:1.7; max-width:520px; margin:0 auto; }
+    .contrast-card.without {
+      background: rgba(239, 68, 68, 0.04);
+      border-color: rgba(239, 68, 68, 0.2);
+    }
 
-  /* TESTIMONIALS */
-  .testimonial-section { background:var(--bg-primary); }
-  .testimonials-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:24px; margin-top:48px; }
-  .testimonial-card { background:white; border:1.5px solid var(--border); border-radius:var(--radius); padding:36px; box-shadow:var(--shadow); }
-  .testimonial-stars { color:#FBBF24; font-size:0.9rem; letter-spacing:3px; margin-bottom:16px; }
-  .testimonial-text { font-size:1rem; line-height:1.7; color:var(--text-dark); margin-bottom:24px; font-style:italic; font-weight:300; }
-  .testimonial-author { display:flex; align-items:center; gap:14px; }
-  .testimonial-avatar { width:44px; height:44px; border-radius:50%; background:linear-gradient(135deg,var(--blue),var(--teal)); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:0.85rem; color:white; flex-shrink:0; }
-  .testimonial-name { font-weight:700; font-size:0.9rem; color:var(--text-dark); }
-  .testimonial-role { font-size:0.8rem; color:var(--text-light); }
+    .contrast-card.with {
+      background: rgba(52, 211, 153, 0.04);
+      border-color: rgba(52, 211, 153, 0.2);
+    }
 
-  /* FAQ */
-  .faq-section { background:var(--bg-secondary); }
-  .faq-list { max-width:720px; margin:48px auto 0; }
-  .faq-item { border-bottom:1px solid var(--border); }
-  .faq-question { width:100%; background:none; border:none; color:var(--text-dark); font-family:'Mulish',sans-serif; font-size:1rem; font-weight:700; text-align:left; padding:22px 0; cursor:pointer; display:flex; justify-content:space-between; align-items:center; transition:color 0.2s; }
-  .faq-question:hover { color:var(--blue); }
-  .faq-icon { font-size:1.3rem; color:var(--blue); transition:transform 0.3s; flex-shrink:0; margin-left:16px; }
-  .faq-answer { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
-  .faq-answer-inner { padding-bottom:22px; font-size:0.93rem; color:var(--text-muted); line-height:1.75; }
-  .faq-item.open .faq-icon { transform:rotate(45deg); }
-  .faq-item.open .faq-answer { max-height:300px; }
+    .contrast-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
 
-  /* CTA */
-  .cta-section { background:linear-gradient(145deg,#0F1E3D,#1C2C4A,#0D2040); text-align:center; padding:120px 24px; position:relative; overflow:hidden; }
-  .cta-section::before { content:''; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:800px; height:500px; background:radial-gradient(ellipse,rgba(37,99,235,0.2) 0%,transparent 65%); pointer-events:none; }
-  .cta-section .section-label { color:var(--teal-light); }
-  .cta-section .section-title { color:white; max-width:680px; margin:0 auto 20px; }
-  .cta-section .section-subtitle { color:rgba(255,255,255,0.5); margin:0 auto 40px; text-align:center; }
+    .contrast-card.without .contrast-label { color: var(--red-text); }
+    .contrast-card.with .contrast-label { color: var(--green-text); }
 
-  /* FOOTER */
-  footer { padding:48px 24px; background:var(--bg-dark); border-top:1px solid var(--border-dark); text-align:center; }
-  .footer-logo { font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.3rem; color:white; margin-bottom:10px; display:flex; align-items:center; justify-content:center; gap:8px; }
-  .footer-logo .logo-mark { width:28px; height:28px; background:linear-gradient(135deg,var(--blue),var(--teal)); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; }
-  .footer-logo span { color:var(--blue-light); }
-  .footer-tagline { font-size:0.88rem; color:rgba(255,255,255,0.3); margin-bottom:8px; font-style:italic; }
-  .footer-text { font-size:0.8rem; color:rgba(255,255,255,0.2); }
+    .contrast-list {
+      list-style: none;
+      padding: 0;
+    }
 
-  /* WHITE SECTION TEXTURE */
-  .why-section { background: var(--bg-primary); position: relative; }
-  .why-section::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 80% 20%, rgba(37,99,235,0.04) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(13,148,136,0.04) 0%, transparent 60%); pointer-events:none; }
+    .contrast-list li {
+      padding: 8px 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
 
-  .testimonial-section { background: var(--bg-primary); position:relative; }
-  .testimonial-section::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.03) 0%, transparent 55%); pointer-events:none; }
+    .contrast-list li::before {
+      flex-shrink: 0;
+      font-weight: 700;
+      font-size: 0.85rem;
+      margin-top: 2px;
+    }
 
-  #how { position:relative; }
-  #how::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse at 70% 30%, rgba(13,148,136,0.04) 0%, transparent 60%), radial-gradient(ellipse at 20% 70%, rgba(37,99,235,0.03) 0%, transparent 50%); pointer-events:none; }
+    .contrast-card.without .contrast-list li::before {
+      content: '\2717';
+      color: var(--red-text);
+    }
 
-  /* RESPONSIVE */
-  @media (max-width:768px) {
-    nav { padding:14px 20px; }
-    .nav-links a:not(.nav-cta) { display:none; }
-    .steps { grid-template-columns:1fr!important; gap:20px; }
-    .pricing-grid { grid-template-columns:1fr; max-width:420px; margin-left:auto; margin-right:auto; }
-    .industry-content.active { grid-template-columns:1fr; }
-    .vero-grid { grid-template-columns:1fr; }
-    .why-inner { grid-template-columns:1fr; }
-    .why-stats { grid-template-columns:1fr 1fr; }
-    .audit-result-inner { grid-template-columns:1fr; }
-    .stat-item { padding:28px 32px; border-right:none; border-bottom:1px solid var(--border-dark); }
-    section { padding:72px 20px; }
-  }
-</style>
+    .contrast-card.with .contrast-list li::before {
+      content: '\2713';
+      color: var(--green-text);
+    }
+
+    /* ── OUTCOMES / HOW IT WORKS ──────────────────────────── */
+    .outcomes-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 880px;
+      margin: 0 auto;
+    }
+
+    .outcome-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      transition: border-color 0.2s;
+    }
+
+    .outcome-card:hover {
+      border-color: var(--text-tertiary);
+    }
+
+    .outcome-icon {
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .outcome-card h3 {
+      font-family: var(--font);
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+
+    .outcome-card p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    .outcome-feature {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--accent);
+      margin-top: 12px;
+      display: block;
+    }
+
+    /* ── AGENTS (reframed) ────────────────────────────────── */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .agents-grid-bottom {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .agent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .agent-card:hover {
+      border-color: var(--text-tertiary);
+    }
+
+    .agent-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+    }
+
+    .agent-card.finnegan::before { background: var(--finnegan); }
+    .agent-card.scout::before { background: var(--scout); }
+    .agent-card.maven::before { background: var(--maven); }
+    .agent-card.clio::before { background: var(--clio); }
+    .agent-card.orion::before { background: var(--orion); }
+
+    .agent-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 2px;
+    }
+
+    .agent-card.finnegan .agent-name { color: var(--finnegan); }
+    .agent-card.scout .agent-name { color: var(--scout); }
+    .agent-card.maven .agent-name { color: var(--maven); }
+    .agent-card.clio .agent-name { color: var(--clio); }
+    .agent-card.orion .agent-name { color: var(--orion); }
+
+    .agent-role {
+      font-size: 0.75rem;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .agent-desc {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin: 0;
+    }
+
+    /* ── OFFER SECTION ────────────────────────────────────── */
+    .offer-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .offer-card {
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: 12px;
+      padding: 48px 40px;
+      position: relative;
+      text-align: center;
+    }
+
+    .offer-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 20px;
+      border-radius: 100px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .offer-title {
+      font-family: var(--font);
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .offer-price {
+      font-family: var(--font);
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .offer-price span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text-secondary);
+    }
+
+    .offer-setup {
+      font-size: 0.9rem;
+      color: var(--text-tertiary);
+      margin-bottom: 28px;
+    }
+
+    .offer-features {
+      list-style: none;
+      padding: 0;
+      text-align: left;
+      max-width: 420px;
+      margin: 0 auto 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px 24px;
+    }
+
+    .offer-features li {
+      padding: 6px 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .offer-features li::before {
+      content: '\2713';
+      color: var(--accent);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .offer-note {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+      font-style: italic;
+      margin-top: 20px;
+    }
+
+    /* Secondary offer */
+    .secondary-offer {
+      margin-top: 40px;
+      padding: 28px 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+    }
+
+    .secondary-offer h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .secondary-offer p {
+      font-size: 0.85rem;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      padding: 10px 22px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font);
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: var(--text-secondary);
+      color: var(--text);
+    }
+
+    /* ── FINAL CTA ────────────────────────────────────────── */
+    .final-cta {
+      text-align: center;
+      padding: 80px 24px 100px;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .final-cta h2 {
+      font-family: var(--font);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-weight: 800;
+      margin-bottom: 16px;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    .final-cta p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      margin-bottom: 32px;
+      line-height: 1.55;
+    }
+
+    /* ── FOOTER ───────────────────────────────────────────── */
+    .site-footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--text-tertiary);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+    .site-footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+    .site-footer a:hover {
+      color: var(--text);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .site-nav { padding: 0 16px; }
+      .nav-links { gap: 16px; }
+      .nav-link.hide-mobile { display: none; }
+
+      section {
+        padding: 60px 20px;
+      }
+
+      .hero-cta {
+        flex-direction: column;
+      }
+
+      .contrast-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+      }
+
+      .outcomes-grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .agents-grid { grid-template-columns: 1fr; }
+      .agents-grid-bottom { grid-template-columns: 1fr; }
+
+      .offer-card {
+        padding: 36px 24px;
+      }
+
+      .offer-features {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .agents-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    /* ── SCROLL PROGRESS BAR ─────────────────────────────── */
+    #scroll-progress {
+      position: fixed;
+      top: 56px;
+      left: 0;
+      height: 2px;
+      background: var(--accent);
+      z-index: 9999;
+      transition: width 0.1s linear;
+      width: 0%;
+    }
+
+    /* ── TIGHTER HEADINGS ────────────────────────────────── */
+    h1, h2, h3 {
+      font-weight: 900;
+      letter-spacing: -0.03em;
+    }
+
+    /* ── SCROLL-REVEAL ANIMATIONS ────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── DIVIDER ─────────────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: var(--border);
+      max-width: 200px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">
-    <div class="logo-mark">V</div>
-    Verus<span>link</span>
-  </div>
-  <div class="nav-links">
-    <a href="#how">How It Works</a>
-    <a href="#industries">Industries</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#audit">Free Audit</a>
-    <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="nav-cta">Book Free Call</a>
-  </div>
-</nav>
+  <div id="scroll-progress"></div>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-badge">Now onboarding new clients across Australia</div>
-  <h1 id="heroHeadline" style="transition:opacity 0.3s ease;">Stop Doing $15/hr Work Between Your <em>$150/hr</em> Work</h1>
-  <p class="hero-sub" id="heroSub" style="transition:opacity 0.3s ease;">We install workflow systems that eliminate the admin killing your business — so you take on more clients, not more hours. Up and running in 5–7 days.</p>
-  <div class="industry-selector">
-    <div class="industry-selector-label">I'm a...</div>
-    <div class="industry-btns">
-      <button class="ind-btn" onclick="selectIndustry('tradie')">🔧 Tradie</button>
-      <button class="ind-btn" onclick="selectIndustry('accountant')">📊 Accountant</button>
-      <button class="ind-btn" onclick="selectIndustry('broker')">🏠 Broker</button>
-      <button class="ind-btn" onclick="selectIndustry('hr')">👥 HR / Recruiter</button>
-      <button class="ind-btn" onclick="selectIndustry('coach')">🎯 Coach</button>
+  <!-- NAV -->
+  <nav class="site-nav">
+    <a href="#" class="nav-logo">Vero</a>
+    <div class="nav-links">
+      <a href="#how-it-works" class="nav-link hide-mobile">How It Works</a>
+      <a href="#offer" class="nav-link hide-mobile">Pricing</a>
+      <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="nav-btn">See if Vero is a fit</a>
     </div>
-  </div>
-  <div class="hero-ctas">
-    <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="btn-primary" id="heroCta">Book Your FREE Admin Audit</a>
-    <a href="#how" class="btn-secondary">How It Works</a>
-  </div>
-  <p style="margin-top:16px;font-size:0.85rem;color:var(--text-light);">Already had your consult? <a href="https://vero-signup.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--blue-light);text-decoration:underline;font-weight:600;">Sign up here &rarr;</a></p>
-</section>
+  </nav>
 
-<!-- STATS -->
-<div class="stats-bar">
-  <div class="stat-item">
-    <div class="stat-number">10–16 hrs</div>
-    <div class="stat-label">Saved per month, per client</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">5–7 days</div>
-    <div class="stat-label">Average time to go live</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">$197</div>
-    <div class="stat-label">Starting from per month</div>
-  </div>
-  <div class="stat-item">
-    <div class="stat-number">30 days</div>
-    <div class="stat-label">Typical time to see ROI</div>
-  </div>
-</div>
+  <!-- ═══ SECTION 1: HERO ═══ -->
+  <section class="hero" id="top">
+    <div class="hero-content">
+      <div class="hero-logo">Vero</div>
+      <h1>Nothing falls through the cracks with Vero</h1>
+      <p>Vero tracks leads, handles admin, organises receipts, and gives business owners a clear daily operating rhythm.</p>
+      <p class="hero-note">We onboard a limited number of businesses at a time.</p>
+      <div class="hero-cta">
+        <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="btn-cta">See if Vero is a fit &rarr;</a>
+        <a href="#how-it-works" class="btn-ghost-hero">How it works &rarr;</a>
+      </div>
+    </div>
+  </section>
 
-<!-- VERO EXPLAINER -->
-<section class="vero-section">
-  <div class="container">
-    <div class="section-label">Meet Vero</div>
-    <div class="section-title">Your New Full-Time Admin.<br>Who Never Sleeps.</div>
-    <p class="section-subtitle">You don't learn new software. You talk to Vero on Telegram — just like texting a mate. Vero handles the rest.</p>
-    <div class="vero-grid">
-      <div>
-        <ul class="vero-points">
-          <li>
-            <div class="vero-point-icon">🧾</div>
-            <div><strong style="color:white;display:block;margin-bottom:4px;">"Vero, here's a receipt from Bunnings."</strong>Logged. Categorised. Done. No more shoebox.</div>
-          </li>
-          <li>
-            <div class="vero-point-icon">📄</div>
-            <div><strong style="color:white;display:block;margin-bottom:4px;">"Vero, send a quote to Dave for the rewiring."</strong>Professional PDF out the door in seconds. While you stay on the tools.</div>
-          </li>
-          <li>
-            <div class="vero-point-icon">💰</div>
-            <div><strong style="color:white;display:block;margin-bottom:4px;">"Vero, who hasn't paid yet?"</strong>Instant list of overdue invoices. Vero chases them so you don't have to.</div>
-          </li>
-          <li>
-            <div class="vero-point-icon">📊</div>
-            <div><strong style="color:white;display:block;margin-bottom:4px;">Mission Control — your bird's-eye view.</strong>Every job, every doc, every dollar. <span style="color:rgba(255,255,255,0.4);font-size:0.88rem;">Vero populates it for you. You just look at it when you want to see who owes you money.</span></div>
-          </li>
+  <!-- ═══ SECTION 2: THE PROBLEM ═══ -->
+  <section id="problem">
+    <div style="text-align:center;"><span class="section-badge primary">The Problem</span></div>
+    <h2 class="section-heading">Most business owners are the bottleneck</h2>
+    <p class="section-sub">You started the business to do great work. Instead you're buried in admin, chasing follow-ups, and losing revenue you already earned.</p>
+
+    <div class="contrast-grid">
+      <div class="contrast-card without">
+        <div class="contrast-label">Without Vero</div>
+        <ul class="contrast-list">
+          <li>Follow-ups slip and leads go cold silently</li>
+          <li>Receipts pile up until end-of-month panic</li>
+          <li>No clear picture of what needs attention today</li>
+          <li>You are the single point of failure for every task</li>
+          <li>Revenue leaks through missed invoices and late chasing</li>
+          <li>Admin backlog grows faster than you can clear it</li>
         </ul>
       </div>
-      <div class="vero-chat">
-        <div class="vero-chat-title">Vero in action — Telegram</div>
-        <div class="chat-msg">
-          <div class="chat-avatar user">JW</div>
-          <div class="chat-bubble user">Just finished the Smith job. $4500 plus GST. Send the invoice and a thank you.</div>
-        </div>
-        <div class="chat-msg vero">
-          <div class="chat-avatar ai">V</div>
-          <div class="chat-bubble ai">Invoice #1042 sent to Smithy ✓ I've also logged that $84 Bunnings receipt you snapped this morning. You're clear for the weekend.</div>
-        </div>
-        <div class="chat-msg">
-          <div class="chat-avatar user">JW</div>
-          <div class="chat-bubble user">Who hasn't paid yet?</div>
-        </div>
-        <div class="chat-msg vero">
-          <div class="chat-avatar ai">V</div>
-          <div class="chat-bubble ai">3 outstanding: Mitchell Bros (14 days), Coastal Plumbing (7 days), J. Nguyen (3 days). Want me to chase them all?</div>
-        </div>
-        <div class="chat-msg">
-          <div class="chat-avatar user">JW</div>
-          <div class="chat-bubble user">Yes</div>
-        </div>
-        <div class="chat-msg vero">
-          <div class="chat-avatar ai">V</div>
-          <div class="chat-bubble ai">Reminders sent to all three ✓ I'll follow up again in 48hrs if no response. Enjoy the weekend.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- PROBLEM -->
-<section class="problem-section" id="problem">
-  <div class="container">
-    <div class="section-label">The Problem</div>
-    <div class="section-title" id="problemTitle">Your Business Is Running You.<br>It Should Be the Other Way Around.</div>
-    <p class="section-subtitle">You're not lazy. You're stuck in a system that wasn't built to scale.</p>
-    <div class="problem-grid" id="problemGrid">
-      <div class="problem-card">
-        <span class="problem-icon">⏱️</span>
-        <h3>Quoting Jobs at 9pm</h3>
-        <p>You're sending quotes from the car because the day was full of actual work. By the time you follow up, the lead's gone cold.</p>
-      </div>
-      <div class="problem-card">
-        <span class="problem-icon">📋</span>
-        <h3>Same Emails, Every Week</h3>
-        <p>Welcome emails, follow-ups, doc requests — you're typing the same thing over and over. Your inbox runs your calendar.</p>
-      </div>
-      <div class="problem-card">
-        <span class="problem-icon">🧾</span>
-        <h3>The Shoebox Situation</h3>
-        <p>Receipts under the seat. Invoices in drafts. Your partner doing the BAS at 11pm on a Sunday. It's not just messy — it's costing you your weekends.</p>
-      </div>
-      <div class="problem-card">
-        <span class="problem-icon">🚫</span>
-        <h3>Can't Afford to Hire Yet</h3>
-        <p>A full-time admin is $55K+ a year. You're not there yet. But you're losing clients because you can't keep up with the paperwork.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- HOW IT WORKS -->
-<section id="how">
-  <div class="container">
-    <div class="section-label">How It Works</div>
-    <div class="section-title">Four Steps. Fully Installed.<br>You Don't Build a Thing.</div>
-    <p class="section-subtitle">We handle the build. You get the time back.</p>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">00</div>
-        <h3>The Build</h3>
-        <p>We train Vero on your business — your tone, your templates, your rules. We clean out the admin backlog, connect your Telegram, and set up Mission Control. This is The Foundation.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">01</div>
-        <h3>We Map Your Workflow</h3>
-        <p>A quick call. We learn how your business actually runs — the quoting, the onboarding, the follow-ups. We plug into your current tools first. If you need new ones, we'll tell you upfront.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <h3>We Build & Install</h3>
-        <p>Your system goes live in 5–7 days — customised to your brand, your templates, your language. Vero handles requests from day one. Mission Control gives you full visibility.</p>
-      </div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <h3>You Reclaim Your Time</h3>
-        <p>The admin runs itself. You've got 10–16 hours back every month. That's 2–3 extra clients, zero extra hires. Most businesses recoup the fee within the first 30 days.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WHY VERUSLINK -->
-<section class="why-section">
-  <div class="container">
-    <div class="why-inner">
-      <div>
-        <div class="section-label">Why Veruslink</div>
-        <div class="why-quote">We built this because <em>small business owners are drowning in admin</em> — and hiring isn't always the next right move. Systems are.</div>
-        <p class="why-body">I've spent years working with business owners who are brilliant at what they do but buried in the work around the work. They're not failing because of lack of skill or effort. They're failing because nobody built them the right infrastructure.</p>
-        <p class="why-body">Veruslink isn't hype. It's a reliable, values-driven system installed by people who understand what's actually at stake — your time, your family, your business. If we can't see a way to save you at least 5 hours in the first month, we'll tell you straight and point you elsewhere.</p>
-        <div class="why-sig">
-          <div class="why-avatar">JW</div>
-          <div>
-            <div class="why-name">James Whitehill</div>
-            <div class="why-title">Founder, Veruslink</div>
-          </div>
-        </div>
-      </div>
-      <div class="why-stats">
-        <div class="why-stat-card">
-          <div class="why-stat-num">10–16</div>
-          <div class="why-stat-label">Hours saved per month per client</div>
-        </div>
-        <div class="why-stat-card">
-          <div class="why-stat-num">5–7</div>
-          <div class="why-stat-label">Days from signup to live system</div>
-        </div>
-        <div class="why-stat-card">
-          <div class="why-stat-num">6</div>
-          <div class="why-stat-label">Industry packs ready to deploy</div>
-        </div>
-        <div class="why-stat-card">
-          <div class="why-stat-num">3</div>
-          <div class="why-stat-label">Simple plans — no setup fees</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- INDUSTRY PACKS -->
-<section class="industry-section" id="industries">
-  <div class="container">
-    <div class="section-label">Built For Your Industry</div>
-    <div class="section-title">Not a Generic Tool.<br>A System Built for <em style="font-style:italic;color:var(--blue)">Your</em> Work.</div>
-    <p class="section-subtitle">Every pack comes pre-loaded with automations designed for how you actually operate. Example ROI figures based on typical hourly rates.</p>
-    <div class="industry-tabs">
-      <button class="tab-btn active" onclick="showIndustry('tradies')">Tradies & Contractors</button>
-      <button class="tab-btn" onclick="showIndustry('accountants')">Accountants</button>
-      <button class="tab-btn" onclick="showIndustry('brokers')">Mortgage Brokers</button>
-      <button class="tab-btn" onclick="showIndustry('hr')">HR & Recruitment</button>
-      <button class="tab-btn" onclick="showIndustry('coaches')">Business Coaches</button>
-      <button class="tab-btn" onclick="showIndustry('realestate')">Real Estate</button>
-    </div>
-    <div class="industry-content active" id="ind-tradies">
-      <div>
-        <h3>Plumbers, Sparkies, Chippies & Every Trade In Between</h3>
-        <p class="lead">A job comes in. The quote goes out in minutes, not hours. The invoice follows automatically. Your partner stops doing BAS at 11pm. You stay on the tools where you belong.</p>
-        <ul class="automation-list">
-          <li><span class="check">✓</span> Instant job quoting — fill in the details, the doc builds itself</li>
-          <li><span class="check">✓</span> Automatic invoice generation when the job's done</li>
-          <li><span class="check">✓</span> Receipt capture — photo it, Vero logs it. BAS sorted.</li>
-          <li><span class="check">✓</span> Payment follow-ups that chase automatically so you don't have to</li>
-          <li><span class="check">✓</span> Job status dashboard — every job, every stage, one view</li>
+      <div class="contrast-card with">
+        <div class="contrast-label">With Vero</div>
+        <ul class="contrast-list">
+          <li>Every lead is tracked and followed up automatically</li>
+          <li>Receipts are captured, logged, and categorised in real time</li>
+          <li>You get a clear morning brief of what matters today</li>
+          <li>Actions queue up for your approval, not your time</li>
+          <li>Invoices and payments are chased before they're overdue</li>
+          <li>Admin runs in the background while you focus on revenue</li>
         </ul>
       </div>
-      <div class="result-box">
-        <div class="result-number">8–12 hrs</div>
-        <span class="result-label">saved per month</span>
-        <div class="result-math">At $150/hr billable rate, that's<br><strong>$1,200–$1,800/mo back in your pocket.</strong><br><br>Typical plan: Growth ($397/mo).<br><strong>ROI: 3x–4x your investment.</strong></div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 3: OUTCOMES / HOW IT WORKS ═══ -->
+  <section id="how-it-works">
+    <div style="text-align:center;"><span class="section-badge secondary">How It Works</span></div>
+    <h2 class="section-heading">Everything runs. You just approve.</h2>
+    <p class="section-sub">Vero turns daily chaos into a calm operating rhythm. Here's what changes on Day 1.</p>
+
+    <div class="outcomes-grid">
+      <div class="outcome-card">
+        <span class="outcome-icon">&#9737;</span>
+        <h3>Clarity in under 60 seconds</h3>
+        <p>Start every morning with a brief that tells you what needs attention, what's been handled, and what's coming up. No digging through apps.</p>
+        <span class="outcome-feature">Morning Brief</span>
+      </div>
+
+      <div class="outcome-card">
+        <span class="outcome-icon">&#10003;</span>
+        <h3>Approve actions without becoming the bottleneck</h3>
+        <p>Follow-ups, reminders, and outreach queue up for a single tap. You stay in control without doing the work.</p>
+        <span class="outcome-feature">Action Queue</span>
+      </div>
+
+      <div class="outcome-card">
+        <span class="outcome-icon">&#9881;</span>
+        <h3>No end-of-month cleanup chaos</h3>
+        <p>Snap a receipt on Telegram and it's logged, categorised, and export-ready. No shoebox. No spreadsheet scramble.</p>
+        <span class="outcome-feature">Receipts &amp; Finance</span>
+      </div>
+
+      <div class="outcome-card">
+        <span class="outcome-icon">&#9733;</span>
+        <h3>No lead goes cold silently</h3>
+        <p>Every contact, every promise, every follow-up is tracked. Vero nudges before things slip and keeps your pipeline warm.</p>
+        <span class="outcome-feature">CRM &amp; Follow-up</span>
       </div>
     </div>
-    <div class="industry-content" id="ind-accountants">
-      <div>
-        <h3>Accountants & Bookkeepers</h3>
-        <p class="lead">New client comes on? Engagement letter, welcome pack, document checklist — generated and sent in seconds. Your onboarding runs itself while you focus on the work that actually bills.</p>
-        <ul class="automation-list">
-          <li><span class="check">✓</span> Client onboarding — intake form to welcome pack in minutes</li>
-          <li><span class="check">✓</span> Engagement letter generation — branded, compliant, done</li>
-          <li><span class="check">✓</span> Document checklists that chase clients automatically</li>
-          <li><span class="check">✓</span> Professional welcome emails — no more copy-paste</li>
-          <li><span class="check">✓</span> Mission Control — every client status at a glance</li>
+  </section>
+
+  <!-- ═══ SECTION 4: WHAT POWERS VERO (Agents — lower, reframed) ═══ -->
+  <section id="under-the-hood">
+    <div style="text-align:center;"><span class="section-badge secondary">Under The Hood</span></div>
+    <h2 class="section-heading">What's actually powering Vero</h2>
+    <p class="section-sub">Behind every action is a specialised AI agent, pre-trained for your workflow and working from Day 1.</p>
+
+    <div class="agents-grid">
+      <div class="agent-card finnegan">
+        <div class="agent-name">Finnegan</div>
+        <div class="agent-role">Finance &amp; Receipts</div>
+        <p class="agent-desc">Tracks receipts, sends invoices, chases late payments, and reminds you before bills are due. You see the numbers. He does the work.</p>
+      </div>
+
+      <div class="agent-card scout">
+        <div class="agent-name">Scout</div>
+        <div class="agent-role">Research &amp; Intelligence</div>
+        <p class="agent-desc">Researches everyone before you meet them. Watches your market for opportunities. Delivers your daily brief so you walk into every room prepared.</p>
+      </div>
+
+      <div class="agent-card maven">
+        <div class="agent-name">Maven</div>
+        <div class="agent-role">Marketing &amp; Outreach</div>
+        <p class="agent-desc">Writes your content, manages outreach, scores your leads. Your pipeline fills while you focus on closing.</p>
+      </div>
+    </div>
+
+    <div class="agents-grid-bottom">
+      <div class="agent-card clio">
+        <div class="agent-name">Clio</div>
+        <div class="agent-role">Relationships &amp; CRM</div>
+        <p class="agent-desc">Remembers every connection, every promise, every follow-up. Nobody falls through the cracks. Your network stays warm.</p>
+      </div>
+
+      <div class="agent-card orion">
+        <div class="agent-name">Orion</div>
+        <div class="agent-role">Operations &amp; Scheduling</div>
+        <p class="agent-desc">Handles scheduling, coordinates availability, and keeps the moving parts moving. The operational glue so nothing gets dropped.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ SECTION 5: OFFER ═══ -->
+  <section id="offer">
+    <div style="text-align:center;"><span class="section-badge primary">Get Started</span></div>
+    <h2 class="section-heading">One system. Everything handled.</h2>
+    <p class="section-sub">Vero replaces the admin pile, the forgotten follow-ups, and the end-of-month panic.</p>
+
+    <div class="offer-wrapper">
+      <div class="offer-card">
+        <div class="offer-badge">Limited Availability</div>
+        <div class="offer-title">Vero Operating System</div>
+        <div class="offer-price">$499<span>/month + setup</span></div>
+        <div class="offer-setup">Includes hands-on onboarding and workflow configuration</div>
+
+        <ul class="offer-features">
+          <li>Guided onboarding</li>
+          <li>Workflow setup</li>
+          <li>Full dashboard</li>
+          <li>Action queue</li>
+          <li>Receipt capture</li>
+          <li>Invoice tracking</li>
+          <li>CRM &amp; follow-ups</li>
+          <li>Morning brief</li>
+          <li>Market intelligence</li>
+          <li>Telegram integration</li>
+          <li>Content generation</li>
+          <li>Priority support</li>
         </ul>
+
+        <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="btn-cta" style="font-size:1rem;">See if Vero is a fit &rarr;</a>
+
+        <p class="offer-note">We onboard a limited number of businesses at a time to ensure quality. Founder pricing is locked for early adopters.</p>
       </div>
-      <div class="result-box">
-        <div class="result-number">10–15 hrs</div>
-        <span class="result-label">saved per month</span>
-        <div class="result-math">At $150/hr billable rate, that's<br><strong>$1,500–$2,250/mo back in your pocket.</strong><br><br>Typical plan: Growth ($397/mo).<br><strong>ROI: 4x–5x your investment.</strong></div>
-      </div>
-    </div>
-    <div class="industry-content" id="ind-brokers">
-      <div>
-        <h3>Mortgage & Finance Brokers</h3>
-        <p class="lead">Client intake, fact-find docs, compliance checklists — generated before your second coffee. Deals stay warm. Your pipeline moves faster.</p>
-        <ul class="automation-list">
-          <li><span class="check">✓</span> Client intake — form to file in minutes</li>
-          <li><span class="check">✓</span> Fact-find document generation — branded and compliant</li>
-          <li><span class="check">✓</span> Compliance checklists that never miss a step</li>
-          <li><span class="check">✓</span> Scheduled follow-ups — keep deals warm automatically</li>
-          <li><span class="check">✓</span> Full pipeline visibility in Mission Control</li>
-        </ul>
-      </div>
-      <div class="result-box">
-        <div class="result-number">10–14 hrs</div>
-        <span class="result-label">saved per month</span>
-        <div class="result-math">At $200/hr effective rate, that's<br><strong>$2,000–$2,800/mo in recovered capacity.</strong><br><br>Typical plan: Growth ($397/mo).<br><strong>ROI: 5x–7x your investment.</strong></div>
+
+      <!-- Secondary path — Finnegan waitlist -->
+      <div class="secondary-offer">
+        <h4>Just need receipts, reimbursements, or personal tax tracking?</h4>
+        <p>Finnegan can run standalone. Join the waitlist and we'll let you know when self-serve is open.</p>
+        <a href="mailto:james@veruslink.au?subject=Finnegan%20Waitlist" class="btn-secondary">Join the Finnegan waitlist &rarr;</a>
       </div>
     </div>
-    <div class="industry-content" id="ind-hr">
-      <div>
-        <h3>HR & Recruitment Agencies</h3>
-        <p class="lead">Candidate onboarding, client briefs, offer letters — generated in the time it takes to finish a phone call. Your team places faster.</p>
-        <ul class="automation-list">
-          <li><span class="check">✓</span> Candidate onboarding packs — automated from intake</li>
-          <li><span class="check">✓</span> Client briefs generated from a quick form</li>
-          <li><span class="check">✓</span> Interview scheduling and follow-up sequences</li>
-          <li><span class="check">✓</span> Offer letter generation — branded, consistent, instant</li>
-          <li><span class="check">✓</span> Every placement pipeline tracked in one dashboard</li>
-        </ul>
-      </div>
-      <div class="result-box">
-        <div class="result-number">12–16 hrs</div>
-        <span class="result-label">saved per month</span>
-        <div class="result-math">Per recruiter, that's 2–3 extra placements a month.<br><br><strong>At $5K–$15K per placement, the maths speaks for itself.</strong></div>
-      </div>
-    </div>
-    <div class="industry-content" id="ind-coaches">
-      <div>
-        <h3>Business Coaches & Consultants</h3>
-        <p class="lead">Client signs up. Pack goes out. Session notes turn into action plans. Progress reports generate themselves. You stay in the coaching seat.</p>
-        <ul class="automation-list">
-          <li><span class="check">✓</span> Client onboarding — welcome pack, intake form, expectations doc</li>
-          <li><span class="check">✓</span> Session note templates that structure your thinking</li>
-          <li><span class="check">✓</span> Auto-generated action plans from session inputs</li>
-          <li><span class="check">✓</span> Progress reports your clients actually read</li>
-          <li><span class="check">✓</span> Automated check-ins between sessions</li>
-        </ul>
-      </div>
-      <div class="result-box">
-        <div class="result-number">6–10 hrs</div>
-        <span class="result-label">saved per month</span>
-        <div class="result-math">That's 1–2 extra coaching slots per month.<br><br>At $300–$500/session,<br><strong>$300–$1,000/mo in new revenue from existing capacity.</strong></div>
-      </div>
-    </div>
-    <div class="industry-content" id="ind-realestate">
-      <div>
-        <h3>Real Estate Agents</h3>
-        <p class="lead">Listing docs, vendor reports, buyer follow-ups — handled before you leave the appraisal. Your brand looks sharp without the admin drag.</p>
-        <ul class="automation-list">
-          <li><span class="check">✓</span> Listing documentation — generated from a quick form</li>
-          <li><span class="check">✓</span> Vendor reports that update automatically</li>
-          <li><span class="check">✓</span> Buyer follow-up sequences — warm, timely, on-brand</li>
-          <li><span class="check">✓</span> Expense and commission tracking</li>
-          <li><span class="check">✓</span> Full pipeline view across every property</li>
-        </ul>
-      </div>
-      <div class="result-box">
-        <div class="result-number">8–12 hrs</div>
-        <span class="result-label">saved per month</span>
-        <div class="result-math">One extra listing per quarter from recovered time.<br><br><strong>At $10K–$25K per commission, that's serious upside.</strong></div>
-      </div>
-    </div>
+  </section>
+
+  <!-- ═══ SECTION 6: FINAL CTA ═══ -->
+  <div class="final-cta">
+    <h2>Ready to stop losing revenue to admin?</h2>
+    <p>Book a quick call and we'll walk you through how Vero fits your business. No pressure, no pitch deck. Just a conversation.</p>
+    <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="btn-cta" style="font-size:1.05rem; padding:16px 32px;">See if Vero is a fit &rarr;</a>
   </div>
-</section>
 
-<!-- AUDIT -->
-<section class="audit-section" id="audit">
-  <div class="container">
-    <div class="section-label" style="text-align:center;">Free 2-Minute Assessment</div>
-    <div class="section-title" style="text-align:center;max-width:720px;margin:0 auto 12px;">The Admin Drain Audit</div>
-    <p class="section-subtitle" style="text-align:center;margin:0 auto 48px;">8 quick questions. See your Admin Drain Score and find out exactly what to fix first.</p>
-    <div class="audit-progress-wrap"><div class="audit-progress-bar" id="auditProgress"></div></div>
-    <div class="audit-progress-label"><span id="auditStep">1</span> of 8</div>
-    <div class="audit-card" id="auditCard">
-      <div class="audit-q active" id="q1">
-        <div class="audit-q-num">01</div>
-        <div class="audit-q-text">How many hours a week do you spend on admin — quoting, invoicing, emails, onboarding, chasing documents?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(1,1)">Less than 2 hours</button>
-          <button class="audit-opt" onclick="answer(1,2)">2–5 hours</button>
-          <button class="audit-opt" onclick="answer(1,3)">5–10 hours</button>
-          <button class="audit-opt" onclick="answer(1,4)">More than 10 hours</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q2">
-        <div class="audit-q-num">02</div>
-        <div class="audit-q-text">How long does it take to onboard a new client from first contact to fully set up?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(2,1)">Same day — I have a system</button>
-          <button class="audit-opt" onclick="answer(2,2)">A few days — manual but okay</button>
-          <button class="audit-opt" onclick="answer(2,3)">1–2 weeks — lots of back and forth</button>
-          <button class="audit-opt" onclick="answer(2,4)">Honestly, it's a mess</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q3">
-        <div class="audit-q-num">03</div>
-        <div class="audit-q-text">How do you send quotes, proposals, or engagement letters?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(3,1)">Automated — goes out without me</button>
-          <button class="audit-opt" onclick="answer(3,2)">Template I copy-paste and edit</button>
-          <button class="audit-opt" onclick="answer(3,3)">I write them fresh each time</button>
-          <button class="audit-opt" onclick="answer(3,4)">Whatever I can cobble together</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q4">
-        <div class="audit-q-num">04</div>
-        <div class="audit-q-text">How often do you chase clients for documents, payments, or responses?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(4,1)">Rarely — it's automated</button>
-          <button class="audit-opt" onclick="answer(4,2)">Occasionally — maybe once a week</button>
-          <button class="audit-opt" onclick="answer(4,3)">Often — it eats into my day</button>
-          <button class="audit-opt" onclick="answer(4,4)">Constantly — it's exhausting</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q5">
-        <div class="audit-q-num">05</div>
-        <div class="audit-q-text">What happens to your receipts and expenses?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(5,1)">Logged automatically as they happen</button>
-          <button class="audit-opt" onclick="answer(5,2)">Entered at the end of each week</button>
-          <button class="audit-opt" onclick="answer(5,3)">Pile up and I deal with them later</button>
-          <button class="audit-opt" onclick="answer(5,4)">Shoebox situation, not going to lie</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q6">
-        <div class="audit-q-num">06</div>
-        <div class="audit-q-text">How much visibility do you have over your business right now — clients, jobs, docs, pipeline?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(6,1)">Full visibility — I have a dashboard</button>
-          <button class="audit-opt" onclick="answer(6,2)">Pretty good — spreadsheets or notes</button>
-          <button class="audit-opt" onclick="answer(6,3)">Mostly in my head</button>
-          <button class="audit-opt" onclick="answer(6,4)">No idea where things are</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q7">
-        <div class="audit-q-num">07</div>
-        <div class="audit-q-text">If you could take on 20% more clients tomorrow, what would stop you?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(7,1)">Nothing — I have the capacity</button>
-          <button class="audit-opt" onclick="answer(7,2)">Finding the clients would be the challenge</button>
-          <button class="audit-opt" onclick="answer(7,3)">The admin would overwhelm me</button>
-          <button class="audit-opt" onclick="answer(7,4)">I can barely keep up as it is</button>
-        </div>
-      </div>
-      <div class="audit-q" id="q8">
-        <div class="audit-q-num">08</div>
-        <div class="audit-q-text">What's your honest relationship with AI tools right now?</div>
-        <div class="audit-options">
-          <button class="audit-opt" onclick="answer(8,1)">Already using them well</button>
-          <button class="audit-opt" onclick="answer(8,2)">Dabbling — ChatGPT here and there</button>
-          <button class="audit-opt" onclick="answer(8,3)">Curious but don't know where to start</button>
-          <button class="audit-opt" onclick="answer(8,4)">Haven't touched it — feels overwhelming</button>
-        </div>
-      </div>
-    </div>
-    <div class="audit-results" id="auditResults">
-      <div class="audit-result-inner">
-        <div class="audit-score-wrap">
-          <div class="audit-score-ring">
-            <svg viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="52" fill="none" stroke="#E5E7EB" stroke-width="10"/>
-              <circle cx="60" cy="60" r="52" fill="none" stroke="url(#grad)" stroke-width="10" stroke-linecap="round" stroke-dasharray="326.7" id="scoreArc" stroke-dashoffset="326.7" style="transform:rotate(-90deg);transform-origin:center;transition:stroke-dashoffset 1.2s ease;"/>
-              <defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:#2563EB"/><stop offset="100%" style="stop-color:#0D9488"/></linearGradient></defs>
-            </svg>
-            <div class="audit-score-num" id="scoreNum">0</div>
-          </div>
-          <div class="audit-score-label" id="scoreLabel"></div>
-        </div>
-        <div class="audit-result-content">
-          <div class="audit-result-title" id="resultTitle"></div>
-          <div class="audit-result-body" id="resultBody"></div>
-          <div class="audit-result-pack" id="resultPack"></div>
-          <a href="#book" class="btn-primary" style="display:inline-block;margin-top:28px;">Book Your Free Demo →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <a href="https://veruslink.au" target="_blank">VerusLink</a> &middot; <a href="mailto:james@veruslink.au">james@veruslink.au</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a>
+  </footer>
 
-<!-- PRICING -->
-<section id="pricing" class="pricing-section">
-  <div class="container" style="text-align:center;">
-    <div class="section-label">Simple Pricing</div>
-    <div class="section-title" style="max-width:700px;margin:0 auto 12px;">Pick the Plan That Fits.<br>Upgrade When You're Ready.</div>
-    <p class="section-subtitle" style="margin:0 auto;text-align:center;">No lock-in. No setup fees. Every plan includes onboarding and your first industry pack.</p>
-
-    <div class="pricing-grid" style="margin-top:48px;">
-      <div class="pricing-card">
-        <div class="pricing-name">Starter</div>
-        <div class="pricing-price">$197</div>
-        <div class="pricing-period">per month, AUD incl. GST</div>
-        <div class="pricing-desc">For the solo operator who wants admin off their plate.</div>
-        <ul class="pricing-features">
-          <li><span class="check">✓</span> Receipt capture</li>
-          <li><span class="check">✓</span> Mileage tracking</li>
-          <li><span class="check">✓</span> Clock in / clock out</li>
-          <li><span class="check">✓</span> Daily brief</li>
-          <li><span class="check">✓</span> Invoice generation</li>
-          <li><span class="check">✓</span> Telegram interface</li>
-        </ul>
-        <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Get Started</a>
-      </div>
-      <div class="pricing-card featured">
-        <div class="pricing-popular">Most Popular</div>
-        <div class="pricing-name">Growth</div>
-        <div class="pricing-price">$447</div>
-        <div class="pricing-period">per month, AUD incl. GST</div>
-        <div class="pricing-desc">For the operator ready to systematise their business.</div>
-        <ul class="pricing-features">
-          <li><span class="check">✓</span> Everything in Starter</li>
-          <li><span class="check">✓</span> Email management</li>
-          <li><span class="check">✓</span> Time tracking</li>
-          <li><span class="check">✓</span> Expense categorisation</li>
-          <li><span class="check">✓</span> Credential vault</li>
-          <li><span class="check">✓</span> Daily digest</li>
-        </ul>
-        <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="pricing-btn primary">Get Started</a>
-      </div>
-      <div class="pricing-card">
-        <div class="pricing-name">Command</div>
-        <div class="pricing-price">$697</div>
-        <div class="pricing-period">per month, AUD incl. GST</div>
-        <div class="pricing-desc">For the operator who wants an unfair advantage.</div>
-        <ul class="pricing-features">
-          <li><span class="check">✓</span> Everything in Growth</li>
-          <li><span class="check">✓</span> Scout, Maven, Clio, Orion, Finnegan</li>
-          <li><span class="check">✓</span> Voice audit</li>
-          <li><span class="check">✓</span> CRM</li>
-          <li><span class="check">✓</span> Practice intelligence</li>
-          <li><span class="check">✓</span> White-label UI</li>
-          <li><span class="check">✓</span> Additional users $97/month</li>
-        </ul>
-        <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="pricing-btn outline">Get Started</a>
-      </div>
-    </div>
-    <p class="pricing-note">All prices AUD. No setup fees. Cancel anytime — no exit fees.</p>
-    <p style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--text-light);">Already had your consult? <a href="https://vero-signup.vercel.app" target="_blank" rel="noopener noreferrer" style="color:var(--blue-light);text-decoration:underline;font-weight:600;">Sign up here &rarr;</a></p>
-
-    <!-- Voice Audit -->
-    <div style="margin-top:60px;text-align:center;">
-      <div class="section-label">Voice Audit</div>
-      <div class="section-title" style="font-size:1.6rem;">How Voice Audit Works</div>
-      <p class="section-subtitle">No forms. No typing. Just talk — Vero does the rest.</p>
-      <div class="steps-grid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:28px;margin-top:36px;text-align:center;">
-        <div style="padding:28px 24px;background:var(--bg-card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);box-shadow:var(--shadow);">
-          <div style="font-size:2rem;margin-bottom:12px;">🎙️</div>
-          <div style="font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--white);">1. Answer 5 questions</div>
-          <p style="font-size:0.9rem;color:var(--text-light);line-height:1.5;">Click record and tell Vero about your admin pain points. Five questions, under five minutes.</p>
-        </div>
-        <div style="padding:28px 24px;background:var(--bg-card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);box-shadow:var(--shadow);">
-          <div style="font-size:2rem;margin-bottom:12px;">🧠</div>
-          <div style="font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--white);">2. Vero analyses your answers</div>
-          <p style="font-size:0.9rem;color:var(--text-light);line-height:1.5;">Your voice is transcribed and reviewed by AI. We identify what to automate, what to eliminate, and what to delegate.</p>
-        </div>
-        <div style="padding:28px 24px;background:var(--bg-card-dark);border:1px solid var(--border-dark);border-radius:var(--radius);box-shadow:var(--shadow);">
-          <div style="font-size:2rem;margin-bottom:12px;">📋</div>
-          <div style="font-weight:700;font-size:1.05rem;margin-bottom:8px;color:var(--white);">3. Get your Admin Kill-List</div>
-          <p style="font-size:0.9rem;color:var(--text-light);line-height:1.5;">We deliver a personalised report: the tasks costing you money, and exactly how Vero will handle them.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Risk Reversal -->
-    <div class="risk-reversal">
-      <div class="risk-reversal-title">🛡️ The Veruslink Guarantee</div>
-      <p>If we can't identify at least 5 hours of admin to eliminate in your first month, we'll refund your first month in full — no questions asked. We don't take your money unless we know we can deliver. If it's not a fit, we'll tell you before you pay.</p>
-    </div>
-
-    <div class="pricing-fit-note">
-      <strong>Not the right fit?</strong>
-      We build working systems for serious business owners. If you're ready to eliminate admin and focus on growth, we're here. If not right now — no hard feelings.
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section class="testimonial-section">
-  <div class="container">
-    <div class="section-label">Real Results</div>
-    <div class="section-title">Don't Take Our Word For It.</div>
-    <p class="section-subtitle">Early results from our first clients.</p>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-        <p class="testimonial-text">"I was quoting jobs at 10pm every night. Now the quote goes out before I've left the site. My wife noticed before my accountant did — I'm actually home for dinner."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">MK</div>
-          <div>
-            <div class="testimonial-name">Early Adopter</div>
-            <div class="testimonial-role">Electrical Contractor, Sydney — 4-person team</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="testimonial-stars">★ ★ ★ ★ ★</div>
-        <p class="testimonial-text">"We onboarded 8 new clients in our first month on the Growth plan. The engagement letters and welcome packs just happened. That used to take me a full afternoon per client."</p>
-        <div class="testimonial-author">
-          <div class="testimonial-avatar">SR</div>
-          <div>
-            <div class="testimonial-name">Early Adopter</div>
-            <div class="testimonial-role">Bookkeeping Practice, Melbourne — 80 clients</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="faq-section">
-  <div class="container">
-    <div class="section-label" style="text-align:center;">Questions</div>
-    <div class="section-title" style="text-align:center;">Straight Answers. No Jargon.</div>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-question">Is this just ChatGPT? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">No. Vero is a custom-built system connected to your actual business data — your clients, your pricing, your templates. ChatGPT doesn't know any of that. Vero does.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Do I have to change my current software? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">We plug into your current tools first. Xero, Gmail, Google Calendar — we work with what you have. If you need something new, we'll tell you upfront before you pay anything.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">What if I'm useless with tech? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">If you can send a text message, you can use Veruslink. You talk to Vero on Telegram. We build everything. You just use it.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Will this actually stop my partner stressing about the BAS? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Yes. Every receipt is captured the moment you pay for it. Come BAS time, you export the report and send it to your accountant. Done in 5 minutes instead of a Sunday night.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">How long does setup take? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">5–7 business days for standard packs. We do a discovery call, build your system, and walk you through everything before going live.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">Can I cancel anytime? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">Yes. Month-to-month. No lock-in, no exit fees. We'd rather earn your business every month than trap you in a contract.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-question">What if you can't save me time? <span class="faq-icon">+</span></button>
-        <div class="faq-answer"><div class="faq-answer-inner">If we can't identify at least 5 hours a month to save on the demo call, we'll tell you straight and won't take your money. We're not here to sell you something that doesn't work.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<section class="cta-section" id="book">
-  <div class="container" style="position:relative;z-index:1;">
-    <div class="section-label">Ready?</div>
-    <div class="section-title">Give Me 15 Minutes.<br>I'll Show You Exactly What We'd Fix First.</div>
-    <p class="section-subtitle">No pitch. No pressure. If it's not a fit, I'll tell you straight and point you elsewhere. Most people leave the call with at least one thing they can fix immediately — whether they sign up or not.</p>
-    <div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;">
-      <a href="https://cal.com/james-veruslink.au/adminaudit" target="_blank" rel="noopener noreferrer" class="btn-primary">Book Your FREE Admin Audit →</a>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-logo">
-    <div class="logo-mark">V</div>
-    Verus<span>link</span>
-  </div>
-  <div class="footer-tagline">Reliable systems, installed for small business. No hype. Just results.</div>
-  <div class="footer-text">© 2026 Veruslink. All rights reserved.</div>
-  <div class="footer-text" style="margin-top:8px;"><a href="/privacy" style="color:rgba(255,255,255,0.35);text-decoration:none;">Privacy Policy</a> · <a href="/terms" style="color:rgba(255,255,255,0.35);text-decoration:none;">Terms of Service</a></div>
-</footer>
-
-<script>
-// INDUSTRY COPY DATA
-const industryData = {
-  tradie: {
-    headline: 'Get Your Weekends Back.<br>Let Vero Handle <em>the B.S.</em>',
-    sub: 'We install a custom AI assistant (Vero) that handles your quoting, invoicing and receipt-chasing — so you stay on the tools and your partner stops doing the BAS at 11pm on a Sunday.',
-    cta: 'Book Your FREE Admin Audit →'
-  },
-  accountant: {
-    headline: 'Stop Onboarding Clients<br>at <em>$15/hr.</em>',
-    sub: 'We install AI systems that generate your engagement letters, welcome packs and document checklists automatically — so you can take on more clients without drowning in admin.',
-    cta: 'Book Your FREE Admin Audit'
-  },
-  broker: {
-    headline: 'Close More Deals.<br>Chase Less <em>Paperwork.</em>',
-    sub: 'We install workflow systems that handle client intake, fact-find docs and compliance checklists automatically — so your pipeline moves faster and your clients get a slicker experience.',
-    cta: 'Book Your FREE Admin Audit'
-  },
-  hr: {
-    headline: 'Place More People.<br>Write Less <em>Admin.</em>',
-    sub: 'We install AI systems that generate candidate packs, client briefs and offer letters automatically — so your team spends time placing, not paperwork.',
-    cta: 'Book Your FREE Admin Audit'
-  },
-  coach: {
-    headline: 'Stay in the Coaching Seat.<br>Not the <em>Admin Chair.</em>',
-    sub: 'We install systems that handle your onboarding, session notes, action plans and check-ins automatically — so you show up fully for your clients every time.',
-    cta: 'Book Your FREE Admin Audit'
-  }
-};
-
-let activeIndustry = null;
-
-function selectIndustry(id) {
-  activeIndustry = id;
-  document.querySelectorAll('.ind-btn').forEach(b => b.classList.remove('active'));
-  event.target.closest('.ind-btn').classList.add('active');
-  const data = industryData[id];
-  const h1 = document.getElementById('heroHeadline');
-  const sub = document.getElementById('heroSub');
-  h1.style.opacity = '0'; sub.style.opacity = '0';
-  setTimeout(() => {
-    h1.innerHTML = data.headline;
-    sub.textContent = data.sub;
-    document.getElementById('heroCta').textContent = data.cta;
-    h1.style.opacity = '1'; sub.style.opacity = '1';
-  }, 280);
-
-  // Scroll industry tabs to match
-  const tabMap = { tradie:'tradies', accountant:'accountants', broker:'brokers', hr:'hr', coach:'coaches' };
-  if (tabMap[id]) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.industry-content').forEach(c => c.classList.remove('active'));
-    const tabId = tabMap[id];
-    document.getElementById('ind-' + tabId).classList.add('active');
-    document.querySelectorAll('.tab-btn').forEach(b => {
-      if (b.getAttribute('onclick') && b.getAttribute('onclick').includes(tabId)) b.classList.add('active');
+  <script>
+    // ── SCROLL PROGRESS BAR ────────────────────────────────
+    window.addEventListener('scroll', () => {
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      document.getElementById('scroll-progress').style.width = progress + '%';
     });
-  }
-}
 
-function showIndustry(id) {
-  document.querySelectorAll('.industry-content').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-  document.getElementById('ind-' + id).classList.add('active');
-  event.target.classList.add('active');
-}
+    // ── SCROLL-REVEAL ANIMATIONS ───────────────────────────
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('section, .contrast-card, .outcome-card, .agent-card, .offer-card, .secondary-offer, .final-cta').forEach((el, i) => {
+        el.classList.add('reveal');
+        el.style.transitionDelay = (i % 4) * 0.1 + 's';
+      });
 
-// AUDIT
-const scores = {};
-let currentQ = 1;
-const totalQ = 8;
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
 
-function answer(q, val) {
-  scores[q] = val;
-  setTimeout(() => {
-    if (q < totalQ) {
-      document.getElementById('q' + q).classList.remove('active');
-      currentQ = q + 1;
-      document.getElementById('q' + currentQ).classList.add('active');
-      document.getElementById('auditStep').textContent = currentQ;
-      document.getElementById('auditProgress').style.width = ((currentQ / totalQ) * 100) + '%';
-    } else { showResults(); }
-  }, 320);
-}
-
-function showResults() {
-  const total = Object.values(scores).reduce((a,b) => a+b, 0);
-  const max = totalQ * 4;
-  const pct = Math.round((total / max) * 100);
-  document.getElementById('auditCard').style.display = 'none';
-  document.getElementById('auditProgress').style.width = '100%';
-  const results = document.getElementById('auditResults');
-  results.style.display = 'block';
-  setTimeout(() => {
-    const offset = 326.7 - (pct / 100) * 326.7;
-    document.getElementById('scoreArc').style.strokeDashoffset = offset;
-    animateNum(pct);
-  }, 100);
-  let title, body, pack, label;
-  if (pct <= 35) {
-    label = "Low Drain"; title = "You're ahead of most small businesses.";
-    body = "Your systems are working. But there are still gaps leaking time every month. A Starter pack could tighten things up and give you 4–6 hours back — time you could put into growth.";
-    pack = "Recommended: Starter — $197/mo";
-  } else if (pct <= 60) {
-    label = "Moderate Drain"; title = "You're losing 6–10 hours a month to admin.";
-    body = "You've got the basics but the cracks are showing. Clients wait longer than they should. Documents go out slower than you'd like. This is fixable fast — the Growth plan typically pays for itself within the first month.";
-    pack = "Recommended: Growth — $447/mo";
-  } else if (pct <= 80) {
-    label = "High Drain"; title = "Admin is costing you 10–15 hours every month.";
-    body = "This is real money. At your hourly rate you're leaking $1,500–$2,500/mo in recoverable capacity. This is fixable. The Growth plan will change this within 30 days.";
-    pack = "Recommended: Growth — $447/mo";
-  } else {
-    label = "Critical Drain"; title = "Your business is in reactive mode. This is fixable.";
-    body = "The admin is winning right now. Every day without a system is costing you clients, money and energy. The Command plan gives you a fully custom system built around exactly how your business works. Most clients in your position see results within the first two weeks.";
-    pack = "Recommended: Command — $697/mo";
-  }
-  document.getElementById('scoreNum').textContent = pct + '%';
-  document.getElementById('scoreLabel').textContent = label;
-  document.getElementById('resultTitle').textContent = title;
-  document.getElementById('resultBody').textContent = body;
-  document.getElementById('resultPack').textContent = pack;
-  results.scrollIntoView({ behavior:'smooth', block:'start' });
-}
-
-function animateNum(target) {
-  let current = 0; const step = target / 40;
-  const el = document.getElementById('scoreNum');
-  const iv = setInterval(() => {
-    current = Math.min(current + step, target);
-    el.textContent = Math.round(current) + '%';
-    if (current >= target) clearInterval(iv);
-  }, 30);
-}
-
-// FAQ
-document.querySelectorAll('.faq-question').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const item = btn.parentElement;
-    const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
-  });
-});
-
-// SCROLL ANIMATIONS
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) { entry.target.style.opacity='1'; entry.target.style.transform='translateY(0)'; }
-  });
-}, { threshold:0.1 });
-document.querySelectorAll('.problem-card,.step,.pricing-card,.why-stat-card,.testimonial-card').forEach(el => {
-  el.style.opacity='0'; el.style.transform='translateY(20px)';
-  el.style.transition='opacity 0.5s ease,transform 0.5s ease';
-  observer.observe(el);
-});
-</script>
-<a href="/privacy" style="display:none">Privacy Policy</a>
-<a href="/terms" style="display:none">Terms of Service</a>
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    });
+  </script>
 </body>
 </html>
