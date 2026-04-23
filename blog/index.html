@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — VerusLink | AI Operations for Australian Small Business</title>
+  <meta name="description" content="Insights on AI business operations, invoice automation, and how Australian small businesses are replacing virtual assistants with AI teams. From the VerusLink team.">
+  <link rel="canonical" href="https://veruslink.au/blog">
+  <meta property="og:title" content="Blog — VerusLink">
+  <meta property="og:description" content="Insights on AI business operations, invoice automation, and how Australian small businesses are replacing virtual assistants with AI teams.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://veruslink.au/blog">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0A;
+      --bg-card: #111111;
+      --bg-surface: #0F0F10;
+      --accent: #2D9CDB;
+      --accent-hover: #3AAFEF;
+      --text: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-tertiary: #808080;
+      --border: #1A1A1A;
+      --radius: 8px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ── NAV BAR ── */
+    .site-nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      background: rgba(10, 10, 15, 0.8);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-btn {
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 8px 18px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: var(--radius);
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: var(--accent-hover); }
+
+    /* ── BLOG LISTING ── */
+    .blog-header {
+      padding: 120px 32px 48px;
+      text-align: center;
+    }
+    .blog-header h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .blog-header p {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .blog-grid {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 32px 80px;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .blog-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .blog-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    .blog-card-date {
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-tertiary);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+    }
+    .blog-card h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+    .blog-card h2 a {
+      color: var(--text);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .blog-card h2 a:hover { color: var(--accent); }
+    .blog-card p {
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+    .blog-card .read-more {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .blog-card .read-more:hover { color: var(--accent-hover); }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center;
+      padding: 40px 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-tertiary);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      .blog-header h1 { font-size: 1.8rem; }
+      .blog-card { padding: 24px; }
+      .blog-card h2 { font-size: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="site-nav">
+    <a href="/" class="nav-logo">VERUSLINK</a>
+    <div class="nav-links">
+      <a href="/blog" class="nav-link">Blog</a>
+      <a href="/" class="nav-btn">Get Started</a>
+    </div>
+  </nav>
+
+  <header class="blog-header">
+    <h1>The VerusLink Blog</h1>
+    <p>Practical insights on AI operations for Australian small businesses. No hype, no fluff.</p>
+  </header>
+
+  <div class="blog-grid">
+
+    <article class="blog-card">
+      <div class="blog-card-date">28 March 2026</div>
+      <h2><a href="/blog/ai-business-assistant-australia.html">Why Australian Small Businesses Are Hiring AI Operations Teams in 2026</a></h2>
+      <p>The shift from virtual assistants to AI teams is accelerating. Here is what is driving it, what it actually costs, and what Day 1 looks like when you plug in an AI operations crew instead of hiring another body.</p>
+      <a href="/blog/ai-business-assistant-australia.html" class="read-more">Read article &rarr;</a>
+    </article>
+
+    <article class="blog-card">
+      <div class="blog-card-date">28 March 2026</div>
+      <h2><a href="/blog/ai-invoice-management-small-business.html">How Finnegan Handles Your Invoices So You Don't Have To</a></h2>
+      <p>Meet Finnegan, the AI agent that turns a voice command into a branded invoice, chases late payers, and reconciles everything. No spreadsheets, no chasing, no forgetting.</p>
+      <a href="/blog/ai-invoice-management-small-business.html" class="read-more">Read article &rarr;</a>
+    </article>
+
+    <article class="blog-card">
+      <div class="blog-card-date">28 March 2026</div>
+      <h2><a href="/blog/ai-assistant-vs-virtual-assistant-australia.html">AI Assistant vs Virtual Assistant: What Actually Makes Sense for a Small Business</a></h2>
+      <p>An honest comparison of AI assistants and human virtual assistants. Where VAs still win, where AI wins by a mile, and how the smart play might be using both.</p>
+      <a href="/blog/ai-assistant-vs-virtual-assistant-australia.html" class="read-more">Read article &rarr;</a>
+    </article>
+
+  </div>
+
+  <footer class="site-footer">
+    &copy; 2026 VerusLink Australia. All rights reserved.
+  </footer>
+
+</body>
+</html>

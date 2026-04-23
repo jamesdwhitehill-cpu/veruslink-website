@@ -1,0 +1,47 @@
+# VerusLink
+
+> VerusLink builds Vero — an AI-native operating system for Australian small businesses. Vero replaces the admin overhead of running a business: receipts, invoicing, CRM, client follow-ups, scheduling, and financial reporting — delivered via Telegram. Designed for tradies, bookkeepers, recruiters, and NFPs who need a full back-office without hiring one.
+
+VerusLink is founded by James Whitehill (Chief Connector) and operates as a one-person, multi-client AI infrastructure business. Vero is the product. The underlying platform is OpenClaw, self-hosted on a private VPS.
+
+Vero is not a chatbot. It is a team of named AI agents — Finnegan (finance), Scout (research), Maven (marketing), Clio (CRM), and Orion (operations) — that act on behalf of the business owner through a single Telegram interface.
+
+Pricing is $499/month AUD with a one-time setup fee. One plan. All agents included.
+
+Target customers: Australian SME owners who are time-poor, admin-heavy, and not technical. Best fit: tradies, bookkeepers, solo recruiters, NFP coordinators.
+
+## Product
+
+- [Home](https://veruslink.au): What Vero is and who it is for
+- [Apply / Audit](https://audit.veruslink.au): Voice-based business audit to assess fit — free, 8 questions, generates a personalised proposal
+- [Sign Up](https://signup.veruslink.au): Start a trial or purchase a plan
+- [Client Portal](https://app.veruslink.au): Existing client login — dashboard, obligations, standing orders, support
+
+## Agents
+
+- **Finnegan** — Finance agent. Handles receipts, invoices, reimbursements, financial summaries, ATO mileage tracking, invoice chasing.
+- **Scout** — Research agent. Delivers pre-meeting briefs, competitive intelligence, opportunity scanning, industry signals.
+- **Maven** — Marketing agent. LinkedIn drafts, prospect scanning, cold outreach sequences, acquisition loop.
+- **Clio** — CRM agent. Contact management, follow-up reminders, relationship tracking, deal radar.
+- **Orion** — Operations agent. Scheduling, standing orders, obligation tracking, system health.
+
+## Key Concepts
+
+- Vero operates via Telegram — no app to install, no dashboard required for daily use
+- All agents share a single business context per client (tenant memory)
+- Shadow mode: all outbound emails are drafted for human approval before sending
+- Tier gating: Command-tier clients get all 5 agents; lower tiers access Finnegan-first
+
+## Verticals We Serve
+
+- **Tradies**: quoting, receipt capture, subcontractor invoicing, job scheduling
+- **Bookkeepers**: client receipt collection, BAS support, invoice chasing, client health summaries
+- **Recruiters**: candidate pipeline, follow-up sequences, placement tracking
+- **NFPs**: grant obligation tracking, donor follow-up, admin reporting
+
+## About
+
+- Founder: James Whitehill — james@veruslink.au
+- Entity: NB Performance Pty Ltd (Australia)
+- Platform: OpenClaw on self-hosted Linux VPS (IONOS, Sydney-adjacent)
+- Built: 2025–2026

@@ -35,27 +35,27 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0a0a0f;
-      --bg-card: #141419;
-      --bg-surface: #1c1c24;
-      --accent: #5b5be6;
-      --accent-hover: #6e6ef0;
-      --text: #ededef;
-      --text-secondary: #8a8a9a;
-      --text-tertiary: #5a5a6e;
-      --border: #2a2a35;
+      --bg: #0A0A0A;
+      --bg-card: #111111;
+      --bg-surface: #0F0F10;
+      --accent: #2D9CDB;
+      --accent-hover: #3AAFEF;
+      --text: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-tertiary: #808080;
+      --border: #1A1A1A;
       --radius: 8px;
       --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
       /* Agent colours */
-      --finnegan: #5b5be6;
+      --finnegan: #2D9CDB;
       --scout: #34d399;
       --maven: #fbbf24;
-      --clio: #a78bfa;
+      --clio: #8B9CF7;
       --orion: #f472b6;
       /* Semantic */
-      --red-soft: rgba(239, 68, 68, 0.12);
+      --red-soft: rgba(239, 68, 68, 0.08);
       --red-text: #f87171;
-      --green-soft: rgba(52, 211, 153, 0.12);
+      --green-soft: rgba(52, 211, 153, 0.08);
       --green-text: #34d399;
     }
 
@@ -82,7 +82,7 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 32px;
-      background: rgba(10, 10, 15, 0.8);
+      background: rgba(10, 10, 10, 0.85);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
@@ -130,10 +130,87 @@
       justify-content: center;
       text-align: center;
       padding: 80px 24px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(45, 156, 219, 0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-content {
       max-width: 740px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── HERO BRIEF CARD ─────────────────────────────────── */
+    .hero-brief {
+      margin-top: 40px;
+      max-width: 380px;
+      margin-left: auto;
+      margin-right: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 22px;
+      text-align: left;
+      animation: hero-brief-float 4s ease-in-out infinite;
+    }
+    @keyframes hero-brief-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .hero-brief-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .hero-brief-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-tertiary);
+    }
+    .hero-brief-date {
+      font-size: 0.7rem;
+      color: var(--text-tertiary);
+    }
+    .hero-brief-item {
+      font-size: 0.85rem;
+      color: var(--text-secondary);
+      padding: 5px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      line-height: 1.45;
+    }
+    .hero-brief-item::before {
+      content: '\2022';
+      color: var(--text-tertiary);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .hero-brief-pill {
+      display: inline-block;
+      margin-top: 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--green-text);
+      background: var(--green-soft);
+      padding: 5px 14px;
+      border-radius: 100px;
+      text-decoration: none;
     }
 
     .hero-logo {
@@ -255,13 +332,13 @@
       margin-bottom: 16px;
     }
     .section-badge.primary {
-      background: rgba(91, 91, 230, 0.15);
-      color: #5b5be6;
+      background: rgba(45, 156, 219, 0.12);
+      color: var(--accent);
     }
     .section-badge.secondary {
       background: transparent;
-      border: 1px solid rgba(91, 91, 230, 0.4);
-      color: #5b5be6;
+      border: 1px solid rgba(45, 156, 219, 0.3);
+      color: var(--accent);
     }
 
     /* ── PROBLEM SECTION (Without / With) ─────────────────── */
@@ -280,13 +357,13 @@
     }
 
     .contrast-card.without {
-      background: rgba(239, 68, 68, 0.04);
-      border-color: rgba(239, 68, 68, 0.2);
+      background: rgba(239, 68, 68, 0.02);
+      border-color: rgba(239, 68, 68, 0.12);
     }
 
     .contrast-card.with {
-      background: rgba(52, 211, 153, 0.04);
-      border-color: rgba(52, 211, 153, 0.2);
+      background: rgba(52, 211, 153, 0.02);
+      border-color: rgba(52, 211, 153, 0.12);
     }
 
     .contrast-label {
@@ -467,11 +544,12 @@
 
     .offer-card {
       background: var(--bg-card);
-      border: 2px solid var(--accent);
+      border: 1px solid var(--border);
       border-radius: 12px;
       padding: 48px 40px;
       position: relative;
       text-align: center;
+      box-shadow: 0 0 0 1px rgba(45, 156, 219, 0.15);
     }
 
     .offer-badge {
@@ -713,6 +791,54 @@
       max-width: 200px;
       margin: 0 auto;
     }
+
+    /* ── PROOF BLOCK: What Vero Sees ─────────────────────── */
+    .proof-section {
+      padding: 0 24px 80px;
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .proof-heading {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+    .proof-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      text-align: left;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+    }
+    .proof-date {
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+    .proof-card strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+    .proof-risk {
+      color: var(--red-text);
+      font-weight: 500;
+    }
+    .proof-line {
+      margin-bottom: 4px;
+    }
+    .proof-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0;
+    }
   </style>
 </head>
 <body>
@@ -725,7 +851,7 @@
     <div class="nav-links">
       <a href="#how-it-works" class="nav-link hide-mobile">How It Works</a>
       <a href="#offer" class="nav-link hide-mobile">Pricing</a>
-      <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="nav-btn">See if Vero is a fit</a>
+      <a href="/apply" class="nav-btn">Apply for early access</a>
     </div>
   </nav>
 
@@ -733,15 +859,40 @@
   <section class="hero" id="top">
     <div class="hero-content">
       <div class="hero-logo">Vero</div>
-      <h1>Nothing falls through the cracks with Vero</h1>
-      <p>Vero tracks leads, handles admin, organises receipts, and gives business owners a clear daily operating rhythm.</p>
-      <p class="hero-note">We onboard a limited number of businesses at a time.</p>
+      <h1>Your business is bleeding while you read this.</h1>
+      <p>Vero watches your business, flags what needs attention, and moves on revenue and admin issues before they slip. You get a clear morning brief and an action queue — not another app to check.</p>
+      <p class="hero-note">Founding client spots are limited. We onboard one business at a time.</p>
       <div class="hero-cta">
-        <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="btn-cta">See if Vero is a fit &rarr;</a>
+        <a href="/apply" class="btn-cta">Apply for early access &rarr;</a>
         <a href="#how-it-works" class="btn-ghost-hero">How it works &rarr;</a>
+      </div>
+
+      <div class="hero-brief">
+        <div class="hero-brief-header">
+          <span class="hero-brief-label">Morning Brief</span>
+          <span class="hero-brief-date" id="heroBriefDate"></span>
+        </div>
+        <div class="hero-brief-item">2 follow-ups queued</div>
+        <div class="hero-brief-item">1 invoice overdue &mdash; Finnegan on it</div>
+        <div class="hero-brief-item">Scout brief ready</div>
+        <span class="hero-brief-pill">View brief &rarr;</span>
       </div>
     </div>
   </section>
+
+  <!-- ═══ PROOF: What Vero Sees ═══ -->
+  <div class="proof-section reveal">
+    <div class="proof-heading">What Vero sees</div>
+    <div class="proof-card">
+      <div class="proof-date" id="proofDate"></div>
+      <div class="proof-line"><strong>2 deals need your attention.</strong></div>
+      <div class="proof-divider"></div>
+      <div class="proof-line"><span class="proof-risk">$18k deal at risk</span> &mdash; Miller Associates (22d since contact)</div>
+      <div class="proof-line"><span class="proof-risk">$4.2k deal at risk</span> &mdash; Coastal Physio (stalled)</div>
+      <div class="proof-divider"></div>
+      <div class="proof-line"><strong>1 approval waiting.</strong></div>
+    </div>
+  </div>
 
   <!-- ═══ SECTION 2: THE PROBLEM ═══ -->
   <section id="problem">
@@ -861,8 +1012,9 @@
 
     <div class="offer-wrapper">
       <div class="offer-card">
-        <div class="offer-badge">Limited Availability</div>
-        <div class="offer-title">Vero Operating System</div>
+        <div class="offer-badge">Founding Client Pricing</div>
+        <div class="offer-title">Everything included.</div>
+        <p style="font-size:0.85rem;color:var(--text-tertiary);font-style:italic;margin-bottom:8px;">Most clients recover the monthly fee from their first chased invoice.</p>
         <div class="offer-price">$499<span>/month + setup</span></div>
         <div class="offer-setup">Includes hands-on onboarding and workflow configuration</div>
 
@@ -881,9 +1033,15 @@
           <li>Priority support</li>
         </ul>
 
-        <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="btn-cta" style="font-size:1rem;">See if Vero is a fit &rarr;</a>
+        <a href="/apply" class="btn-cta" style="font-size:1rem;">Apply for early access &rarr;</a>
 
-        <p class="offer-note">We onboard a limited number of businesses at a time to ensure quality. Founder pricing is locked for early adopters.</p>
+        <p class="offer-note">Founding client rate locked for the life of your account. We onboard one business at a time to ensure quality.</p>
+      </div>
+
+      <!-- Testimonial -->
+      <div style="margin-top:32px;padding:24px 28px;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);text-align:left;">
+        <p style="font-size:0.95rem;color:var(--text-secondary);font-style:italic;line-height:1.6;margin:0 0 10px;">&ldquo;I used to spend Sunday nights doing what Vero now handles automatically.&rdquo;</p>
+        <p style="font-size:0.8rem;color:var(--text-tertiary);margin:0;">&mdash; Early access member, Sydney</p>
       </div>
 
       <!-- Secondary path — Finnegan waitlist -->
@@ -898,13 +1056,13 @@
   <!-- ═══ SECTION 6: FINAL CTA ═══ -->
   <div class="final-cta">
     <h2>Ready to stop losing revenue to admin?</h2>
-    <p>Book a quick call and we'll walk you through how Vero fits your business. No pressure, no pitch deck. Just a conversation.</p>
-    <a href="mailto:james@veruslink.au?subject=Vero%20%E2%80%93%20Fit%20Check" class="btn-cta" style="font-size:1.05rem; padding:16px 32px;">See if Vero is a fit &rarr;</a>
+    <p>Apply and we'll walk you through how Vero fits your business. No pitch deck. Just a conversation about what's slipping.</p>
+    <a href="/apply" class="btn-cta" style="font-size:1.05rem; padding:16px 32px;">Apply for early access &rarr;</a>
   </div>
 
   <!-- ═══ FOOTER ═══ -->
   <footer class="site-footer">
-    <a href="https://veruslink.au" target="_blank">VerusLink</a> &middot; <a href="mailto:james@veruslink.au">james@veruslink.au</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a>
+    <a href="https://veruslink.au" target="_blank">Vero by VerusLink</a> &middot; <a href="mailto:james@veruslink.au">james@veruslink.au</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a>
   </footer>
 
   <script>
@@ -918,6 +1076,18 @@
 
     // ── SCROLL-REVEAL ANIMATIONS ───────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
+      // Dynamic dates for proof card + hero brief
+      (function() {
+        var d = new Date();
+        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+        var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+        var formatted = days[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()];
+        var el = document.getElementById('proofDate');
+        if (el) el.textContent = formatted;
+        var hb = document.getElementById('heroBriefDate');
+        if (hb) hb.textContent = formatted;
+      })();
+
       document.querySelectorAll('section, .contrast-card, .outcome-card, .agent-card, .offer-card, .secondary-offer, .final-cta').forEach((el, i) => {
         el.classList.add('reveal');
         el.style.transitionDelay = (i % 4) * 0.1 + 's';

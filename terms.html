@@ -3,81 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — Veruslink</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Mulish:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<title>Terms of Service — Vero</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-primary: #F7F8FC;
-    --bg-card: #FFFFFF;
-    --navy: #1B3A6B;
-    --accent: #00B4D8;
-    --blue: #1B3A6B;
-    --teal: #00B4D8;
-    --text-dark: #111827;
-    --text-mid: #374151;
-    --text-muted: #6B7280;
-    --text-light: #9CA3AF;
-    --border: rgba(27,58,107,0.1);
-    --radius: 14px;
-    --shadow: 0 4px 24px rgba(17,24,39,0.07);
+    --bg: #0A0A0A;
+    --bg-card: #111111;
+    --bg-surface: #0F0F10;
+    --accent: #2D9CDB;
+    --accent-hover: #3AAFEF;
+    --text: #FFFFFF;
+    --text-secondary: #B0B0B0;
+    --text-tertiary: #808080;
+    --border: #1A1A1A;
+    --radius: 8px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { font-family:'Mulish',sans-serif; background:var(--bg-primary); color:var(--text-dark); line-height:1.7; }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; background: var(--bg); }
+  body { font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.7; -webkit-font-smoothing: antialiased; }
 
-  .header { padding:20px 48px; display:flex; align-items:center; border-bottom:1px solid var(--border); background:rgba(247,248,252,0.92); }
-  .nav-logo { font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.4rem; color:var(--text-dark); letter-spacing:-0.5px; display:flex; align-items:center; gap:8px; text-decoration:none; }
-  .nav-logo .logo-mark { width:32px; height:32px; background:linear-gradient(135deg,var(--navy),var(--accent)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:0.85rem; color:white; font-weight:800; }
-  .nav-logo span { color:var(--navy); }
+  .header {
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg-surface);
+  }
+  .nav-logo {
+    font-family: var(--font);
+    font-weight: 800;
+    font-size: 1.4rem;
+    color: var(--text);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
 
-  .container { max-width:780px; margin:0 auto; padding:60px 24px 80px; }
-  h1 { font-family:'Bricolage Grotesque',sans-serif; font-size:2.4rem; font-weight:800; color:var(--text-dark); letter-spacing:-1px; margin-bottom:8px; }
-  .last-updated { font-size:0.9rem; color:var(--text-light); margin-bottom:48px; }
-  h2 { font-family:'Bricolage Grotesque',sans-serif; font-size:1.35rem; font-weight:700; color:var(--text-dark); margin-top:40px; margin-bottom:12px; letter-spacing:-0.3px; }
-  p { color:var(--text-mid); margin-bottom:16px; font-size:0.95rem; }
-  ul, ol { color:var(--text-mid); margin-bottom:16px; padding-left:24px; font-size:0.95rem; }
-  li { margin-bottom:8px; }
-  a { color:var(--navy); text-decoration:none; }
-  a:hover { text-decoration:underline; }
-  strong { color:var(--text-dark); }
+  .container { max-width: 780px; margin: 0 auto; padding: 60px 24px 80px; }
 
-  .card { background:var(--bg-card); border:1px solid rgba(27,58,107,0.08); border-radius:var(--radius); padding:24px; margin:24px 0; box-shadow:var(--shadow); }
-  .card p:last-child { margin-bottom:0; }
+  h1 {
+    font-family: var(--font);
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--text);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .last-updated { font-size: 0.9rem; color: var(--text-tertiary); margin-bottom: 48px; }
 
-  table { width:100%; border-collapse:collapse; margin:16px 0 24px; font-size:0.95rem; }
-  th { text-align:left; padding:12px 16px; background:var(--navy); color:#fff; font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:0.5px; }
-  th:first-child { border-radius:8px 0 0 0; }
-  th:last-child { border-radius:0 8px 0 0; }
-  td { padding:12px 16px; border-bottom:1px solid var(--border); color:var(--text-mid); }
-  tr:last-child td { border-bottom:none; }
-  tr:hover td { background:rgba(27,58,107,0.03); }
+  h2 {
+    font-family: var(--font);
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-top: 40px;
+    margin-bottom: 12px;
+  }
+  p { color: var(--text-secondary); margin-bottom: 16px; font-size: 0.95rem; }
+  ul, ol { color: var(--text-secondary); margin-bottom: 16px; padding-left: 24px; font-size: 0.95rem; }
+  li { margin-bottom: 8px; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; color: var(--accent-hover); }
+  strong { color: var(--text); }
+  code { background: var(--bg-surface); padding: 2px 6px; border-radius: 4px; font-size: 0.88rem; color: var(--text-secondary); }
+
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin: 24px 0;
+  }
+  .card p:last-child { margin-bottom: 0; }
+
+  table { width: 100%; border-collapse: collapse; margin: 16px 0 24px; font-size: 0.95rem; }
+  th {
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--bg-surface);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--border);
+  }
+  th:first-child { border-radius: var(--radius) 0 0 0; }
+  th:last-child { border-radius: 0 var(--radius) 0 0; }
+  td { padding: 12px 16px; border-bottom: 1px solid var(--border); color: var(--text-secondary); }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(45, 156, 219, 0.04); }
+
+  .site-footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--text-tertiary);
+    font-size: 0.85rem;
+    border-top: 1px solid var(--border);
+    max-width: 780px;
+    margin: 0 auto;
+  }
+  .site-footer a { color: var(--text-secondary); text-decoration: none; }
+  .site-footer a:hover { color: var(--text); }
 
   @media(max-width:600px) {
-    .header { padding:16px 20px; }
-    .container { padding:40px 20px 60px; }
-    h1 { font-size:1.8rem; }
-    table { font-size:0.85rem; }
-    th, td { padding:10px 12px; }
+    .header { padding: 16px 20px; }
+    .container { padding: 40px 20px 60px; }
+    h1 { font-size: 1.8rem; }
+    table { font-size: 0.85rem; }
+    th, td { padding: 10px 12px; }
   }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <a href="/" class="nav-logo">
-    <div class="logo-mark">V</div>
-    Verus<span>link</span>
-  </a>
+  <a href="/" class="nav-logo">Vero</a>
 </div>
 
 <div class="container">
   <h1>Terms of Service</h1>
   <p class="last-updated">Last updated: 7 March 2026</p>
 
-  <p>These Terms of Service ("Terms") govern your access to and use of the Veruslink platform, including the Vero AI assistant, the CRM, and all related services (collectively, the "Service") operated by NB Performance Pty Ltd ABN 25 675 763 050, trading as Veruslink ("we", "us", "our"). By signing up for or using the Service, you agree to be bound by these Terms.</p>
+  <p>These Terms of Service ("Terms") govern your access to and use of the VerusLink platform, including the Vero AI assistant, the CRM, and all related services (collectively, the "Service") operated by NB Performance Pty Ltd ABN 25 675 763 050, trading as VerusLink ("we", "us", "our"). By signing up for or using the Service, you agree to be bound by these Terms.</p>
 
   <h2>1. Service Description</h2>
-  <p>Veruslink provides an AI-powered administrative assistant ("Vero") delivered primarily via Telegram, along with a web-based CRM and supporting tools. The Service is designed to help small businesses automate administrative workflows including email drafting, contact management, follow-up scheduling, document generation, and client communication.</p>
+  <p>VerusLink provides an AI-powered administrative assistant ("Vero") delivered primarily via Telegram, along with a web-based CRM and supporting tools. The Service is designed to help small businesses automate administrative workflows including email drafting, contact management, follow-up scheduling, document generation, and client communication.</p>
   <p>Vero operates as an assistant under your direction. All emails drafted by Vero are subject to your review and approval before sending. Vero does not send communications on your behalf without your explicit authorisation.</p>
 
   <h2>2. Eligibility</h2>
@@ -91,23 +145,13 @@
 
   <table>
     <thead>
-      <tr><th>Tier</th><th>Monthly Price (AUD)</th><th>Includes</th></tr>
+      <tr><th>Plan</th><th>Monthly Price (AUD)</th><th>Includes</th></tr>
     </thead>
     <tbody>
       <tr>
-        <td><strong>Starter</strong></td>
-        <td>$197/mo</td>
-        <td>Core AI assistant, email drafting, contact management, CRM access, receipt capture, mileage tracking</td>
-      </tr>
-      <tr>
-        <td><strong>Growth</strong></td>
-        <td>$447/mo</td>
-        <td>Everything in Starter plus lead prospecting, meeting preparation, post-call follow-ups, document generation</td>
-      </tr>
-      <tr>
-        <td><strong>Command</strong></td>
-        <td>$697/mo</td>
-        <td>Everything in Growth plus practice intelligence, competitive analysis, acquisition modelling, full automation suite</td>
+        <td><strong>Vero</strong></td>
+        <td>$499/mo + one-time setup fee</td>
+        <td>Full platform: AI assistant, CRM, receipts, mileage, time tracking, invoicing, lead prospecting, meeting prep, document generation, competitive intelligence, full automation suite</td>
       </tr>
     </tbody>
   </table>
@@ -185,11 +229,15 @@
   <h2>19. Contact Us</h2>
   <div class="card">
     <p>If you have any questions about these Terms, please contact us:</p>
-    <p><strong>NB Performance Pty Ltd, trading as Veruslink</strong><br>
+    <p><strong>NB Performance Pty Ltd, trading as VerusLink</strong><br>
     ABN 25 675 763 050<br>
     Email: <a href="mailto:james@veruslink.au">james@veruslink.au</a></p>
   </div>
 </div>
+
+<footer class="site-footer">
+  <a href="https://veruslink.au" target="_blank">VerusLink</a> &middot; <a href="mailto:james@veruslink.au">james@veruslink.au</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a>
+</footer>
 
 </body>
 </html>

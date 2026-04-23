@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Next Steps — Vero by VerusLink</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="You're a strong fit for Vero. Book your setup session or send a quick voice audit.">
+  <link rel="canonical" href="https://veruslink.au/next-steps">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0A0A0A;
+      --bg-card: #111111;
+      --bg-surface: #0F0F10;
+      --accent: #2D9CDB;
+      --accent-hover: #3AAFEF;
+      --text: #FFFFFF;
+      --text-secondary: #B0B0B0;
+      --text-tertiary: #808080;
+      --border: #1A1A1A;
+      --radius: 8px;
+      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --green: #34d399;
+    }
+
+    html { scroll-behavior: smooth; background: var(--bg); }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 24px;
+    }
+
+    .ns-container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .ns-logo {
+      font-family: var(--font);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--text);
+      text-decoration: none;
+      display: block;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .ns-check {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(52, 211, 153, 0.12);
+      border: 2px solid var(--green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      font-size: 24px;
+      color: var(--green);
+    }
+
+    .ns-heading {
+      font-family: var(--font);
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 12px;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    .ns-sub {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      margin-bottom: 48px;
+      line-height: 1.55;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .ns-options {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .ns-option {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .ns-option:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .ns-option.primary {
+      border-color: var(--accent);
+      border-width: 2px;
+    }
+
+    .ns-option-badge {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--accent);
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .ns-option h3 {
+      font-family: var(--font);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .ns-option p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      line-height: 1.5;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--accent);
+      color: #fff;
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      display: inline-block;
+      padding: 12px 24px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-family: var(--font);
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--text-secondary);
+      color: var(--text);
+    }
+
+    .ns-footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      color: var(--text-tertiary);
+    }
+
+    .ns-footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .ns-footer a:hover {
+      color: var(--text);
+    }
+
+    @media (max-width: 600px) {
+      .ns-option {
+        padding: 24px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ns-container">
+    <a href="/" class="ns-logo">Vero</a>
+
+    <div class="ns-check">&#10003;</div>
+
+    <h1 class="ns-heading">You're a strong fit for Vero</h1>
+    <p class="ns-sub">We'll help you get set up properly so nothing falls through the cracks. Choose how you'd like to move forward.</p>
+
+    <div class="ns-options">
+      <!-- Option 1: Book setup session -->
+      <div class="ns-option primary">
+        <span class="ns-option-badge">Recommended</span>
+        <h3>Book your setup session</h3>
+        <p>Jump on a quick call and we'll walk through your business, configure your workflows, and get Vero running for you.</p>
+        <a href="https://cal.com/james-veruslink.au/vero-setup" target="_blank" class="btn-primary">Book a time &rarr;</a>
+      </div>
+
+      <!-- Option 2: Async voice audit -->
+      <div class="ns-option">
+        <h3>Prefer async? Send a voice audit instead</h3>
+        <p>Record a short voice note about your business, your current bottlenecks, and where follow-up or admin is breaking down. We'll review it before recommending the right Vero setup.</p>
+        <a id="auditLink" href="https://audit.veruslink.au/?tenant=james-whitehill" target="_blank" class="btn-ghost">Start voice audit &rarr;</a>
+        <div style="margin-top:12px;font-size:0.8rem;color:var(--text-tertiary);">
+          Prefer email? <a href="mailto:james@veruslink.au?subject=Voice%20Audit%20for%20Vero&body=Hi%20James%2C%0A%0AI%27ve%20attached%20a%20short%20voice%20audit%20for%20my%20business.%0A%0ABusiness%20name%3A%0AIndustry%3A%0AMain%20pain%20point%3A%0AWhat%27s%20currently%20slipping%20through%20the%20cracks%3A" style="color:var(--text-secondary);text-decoration:underline;">Send it manually instead</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="ns-footer">
+      <a href="/">&larr; Back to veruslink.au</a> &middot; <a href="mailto:james@veruslink.au">james@veruslink.au</a>
+    </div>
+  </div>
+
+  <script>
+    // Build personalized voice audit link from /apply handoff params
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const email = params.get('email');
+    const business = params.get('business');
+
+    if (name || email || business) {
+      const auditParams = new URLSearchParams();
+      auditParams.set('tenant', 'james-whitehill');
+      if (name) auditParams.set('name', name);
+      if (email) auditParams.set('email', email);
+      if (business) auditParams.set('business', business);
+      const auditLink = document.getElementById('auditLink');
+      if (auditLink) {
+        auditLink.href = 'https://audit.veruslink.au/?' + auditParams.toString();
+      }
+    }
+  </script>
+</body>
+</html>
