@@ -1,1108 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Stop Revenue Bleed—Vero Handles Admin While You Sleep</title>
-  <meta name="description" content="Vero catches every lead, tracks receipts, and keeps your AI stack running. One-man multi-million isn’t theory—I run it daily.">
-  <meta name="keywords" content="AI business operations Australia, revenue protection, admin automation, AI business assistant, lead follow-up automation">
-  <link rel="canonical" href="https://veruslink.au/">
-  <meta property="og:title" content="Vero — Nothing Falls Through the Cracks">
-  <meta property="og:description" content="Vero protects your revenue and handles admin automatically. Tracks leads, organises receipts, manages follow-ups, and gives business owners a clear daily operating rhythm.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://veruslink.au/">
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "Vero by VerusLink",
-    "applicationCategory": "BusinessApplication",
-    "operatingSystem": "Web, Telegram",
-    "offers": {
-      "@type": "Offer",
-      "price": "499",
-      "priceCurrency": "AUD",
-      "description": "Vero Operating System — includes onboarding, workflow setup, dashboard, action queue, receipts, and CRM support"
-    },
-    "description": "Vero protects revenue and handles admin automatically for small business owners.",
-    "url": "https://veruslink.au/"
-  }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0A0A0A;
-      --bg-card: #111111;
-      --bg-surface: #0F0F10;
-      --accent: #2D9CDB;
-      --accent-hover: #3AAFEF;
-      --text: #FFFFFF;
-      --text-secondary: #B0B0B0;
-      --text-tertiary: #808080;
-      --border: #1A1A1A;
-      --radius: 8px;
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      /* Agent colours */
-      --finnegan: #2D9CDB;
-      --scout: #34d399;
-      --maven: #fbbf24;
-      --clio: #8B9CF7;
-      --orion: #f472b6;
-      /* Semantic */
-      --red-soft: rgba(239, 68, 68, 0.08);
-      --red-text: #f87171;
-      --green-soft: rgba(52, 211, 153, 0.08);
-      --green-text: #34d399;
-    }
-
-    html { scroll-behavior: smooth; background: var(--bg); }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* ── NAV BAR ──────────────────────────────────────────── */
-    .site-nav {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-      background: rgba(10, 10, 10, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: var(--font);
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-    .nav-link {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-link:hover { color: var(--text); }
-    .nav-btn {
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: var(--radius);
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .nav-btn:hover { background: var(--accent-hover); }
-
-    /* ── HERO ─────────────────────────────────────────────── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 80px 24px 60px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(45, 156, 219, 0.04) 0%, transparent 70%);
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .hero-content {
-      max-width: 740px;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── HERO BRIEF CARD ─────────────────────────────────── */
-    .hero-brief {
-      margin-top: 40px;
-      max-width: 380px;
-      margin-left: auto;
-      margin-right: auto;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 20px 22px;
-      text-align: left;
-      animation: hero-brief-float 4s ease-in-out infinite;
-    }
-    @keyframes hero-brief-float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-6px); }
-    }
-    .hero-brief-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-    .hero-brief-label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--text-tertiary);
-    }
-    .hero-brief-date {
-      font-size: 0.7rem;
-      color: var(--text-tertiary);
-    }
-    .hero-brief-item {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      padding: 5px 0;
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      line-height: 1.45;
-    }
-    .hero-brief-item::before {
-      content: '\2022';
-      color: var(--text-tertiary);
-      flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .hero-brief-pill {
-      display: inline-block;
-      margin-top: 14px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--green-text);
-      background: var(--green-soft);
-      padding: 5px 14px;
-      border-radius: 100px;
-      text-decoration: none;
-    }
-
-    .hero-logo {
-      font-family: var(--font);
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: 6px;
-      text-transform: uppercase;
-      color: var(--text);
-      margin-bottom: 32px;
-      display: inline-block;
-      border-bottom: 3px solid var(--accent);
-      padding-bottom: 8px;
-    }
-
-    .hero h1 {
-      font-family: var(--font);
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 24px;
-      color: var(--text);
-      letter-spacing: -2px;
-    }
-
-    .hero p {
-      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
-      color: var(--text-secondary);
-      max-width: 560px;
-      margin: 0 auto 12px;
-      line-height: 1.55;
-    }
-
-    .hero-note {
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-      margin-bottom: 36px;
-      font-style: italic;
-    }
-
-    .btn-cta {
-      display: inline-block;
-      padding: 14px 28px;
-      background: var(--accent);
-      color: #fff;
-      font-family: var(--font);
-      font-size: 1rem;
-      font-weight: 600;
-      border: none;
-      border-radius: var(--radius);
-      cursor: pointer;
-      text-decoration: none;
-      transition: background 0.2s, transform 0.2s;
-    }
-    .btn-cta:hover {
-      background: var(--accent-hover);
-      transform: translateY(-1px);
-    }
-
-    .hero-cta {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-    .btn-ghost-hero {
-      display: inline-block;
-      padding: 14px 28px;
-      background: transparent;
-      color: var(--text-secondary);
-      font-family: var(--font);
-      font-size: 1rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-ghost-hero:hover {
-      border-color: var(--text-secondary);
-      color: var(--text);
-    }
-
-    /* ── SECTIONS ─────────────────────────────────────────── */
-    section {
-      padding: 80px 24px;
-      max-width: 1080px;
-      margin: 0 auto;
-    }
-
-    .section-heading {
-      font-family: var(--font);
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      font-weight: 800;
-      text-align: center;
-      margin-bottom: 8px;
-      color: var(--text);
-    }
-
-    .section-sub {
-      text-align: center;
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-      max-width: 560px;
-      margin: 0 auto 48px;
-    }
-
-    /* ── SECTION BADGE PILLS ─────────────────────────────── */
-    .section-badge {
-      display: inline-block;
-      font-size: 10px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      padding: 4px 12px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-    }
-    .section-badge.primary {
-      background: rgba(45, 156, 219, 0.12);
-      color: var(--accent);
-    }
-    .section-badge.secondary {
-      background: transparent;
-      border: 1px solid rgba(45, 156, 219, 0.3);
-      color: var(--accent);
-    }
-
-    /* ── PROBLEM SECTION (Without / With) ─────────────────── */
-    .contrast-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      max-width: 880px;
-      margin: 0 auto;
-    }
-
-    .contrast-card {
-      border-radius: var(--radius);
-      padding: 32px 28px;
-      border: 1px solid var(--border);
-    }
-
-    .contrast-card.without {
-      background: rgba(239, 68, 68, 0.02);
-      border-color: rgba(239, 68, 68, 0.12);
-    }
-
-    .contrast-card.with {
-      background: rgba(52, 211, 153, 0.02);
-      border-color: rgba(52, 211, 153, 0.12);
-    }
-
-    .contrast-label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .contrast-card.without .contrast-label { color: var(--red-text); }
-    .contrast-card.with .contrast-label { color: var(--green-text); }
-
-    .contrast-list {
-      list-style: none;
-      padding: 0;
-    }
-
-    .contrast-list li {
-      padding: 8px 0;
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 10px;
-      line-height: 1.5;
-    }
-
-    .contrast-list li::before {
-      flex-shrink: 0;
-      font-weight: 700;
-      font-size: 0.85rem;
-      margin-top: 2px;
-    }
-
-    .contrast-card.without .contrast-list li::before {
-      content: '\2717';
-      color: var(--red-text);
-    }
-
-    .contrast-card.with .contrast-list li::before {
-      content: '\2713';
-      color: var(--green-text);
-    }
-
-    /* ── OUTCOMES / HOW IT WORKS ──────────────────────────── */
-    .outcomes-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
-      max-width: 880px;
-      margin: 0 auto;
-    }
-
-    .outcome-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      transition: border-color 0.2s;
-    }
-
-    .outcome-card:hover {
-      border-color: var(--text-tertiary);
-    }
-
-    .outcome-icon {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      display: block;
-    }
-
-    .outcome-card h3 {
-      font-family: var(--font);
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: var(--text);
-    }
-
-    .outcome-card p {
-      color: var(--text-secondary);
-      font-size: 0.9rem;
-      line-height: 1.55;
-      margin: 0;
-    }
-
-    .outcome-feature {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      color: var(--accent);
-      margin-top: 12px;
-      display: block;
-    }
-
-    /* ── AGENTS (reframed) ────────────────────────────────── */
-    .agents-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-bottom: 16px;
-    }
-
-    .agents-grid-bottom {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 16px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .agent-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 20px;
-      position: relative;
-      overflow: hidden;
-      transition: border-color 0.2s;
-    }
-
-    .agent-card:hover {
-      border-color: var(--text-tertiary);
-    }
-
-    .agent-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-    }
-
-    .agent-card.finnegan::before { background: var(--finnegan); }
-    .agent-card.scout::before { background: var(--scout); }
-    .agent-card.maven::before { background: var(--maven); }
-    .agent-card.clio::before { background: var(--clio); }
-    .agent-card.orion::before { background: var(--orion); }
-
-    .agent-name {
-      font-weight: 700;
-      font-size: 1rem;
-      margin-bottom: 2px;
-    }
-
-    .agent-card.finnegan .agent-name { color: var(--finnegan); }
-    .agent-card.scout .agent-name { color: var(--scout); }
-    .agent-card.maven .agent-name { color: var(--maven); }
-    .agent-card.clio .agent-name { color: var(--clio); }
-    .agent-card.orion .agent-name { color: var(--orion); }
-
-    .agent-role {
-      font-size: 0.75rem;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      margin-bottom: 10px;
-    }
-
-    .agent-desc {
-      font-size: 0.85rem;
-      color: var(--text-secondary);
-      line-height: 1.55;
-      margin: 0;
-    }
-
-    /* ── OFFER SECTION ────────────────────────────────────── */
-    .offer-wrapper {
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .offer-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 48px 40px;
-      position: relative;
-      text-align: center;
-      box-shadow: 0 0 0 1px rgba(45, 156, 219, 0.15);
-    }
-
-    .offer-badge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent);
-      color: #fff;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 5px 20px;
-      border-radius: 100px;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
-    .offer-title {
-      font-family: var(--font);
-      font-size: 1.6rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 8px;
-    }
-
-    .offer-price {
-      font-family: var(--font);
-      font-size: 3rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-    .offer-price span {
-      font-size: 1rem;
-      font-weight: 400;
-      color: var(--text-secondary);
-    }
-
-    .offer-setup {
-      font-size: 0.9rem;
-      color: var(--text-tertiary);
-      margin-bottom: 28px;
-    }
-
-    .offer-features {
-      list-style: none;
-      padding: 0;
-      text-align: left;
-      max-width: 420px;
-      margin: 0 auto 32px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px 24px;
-    }
-
-    .offer-features li {
-      padding: 6px 0;
-      font-size: 0.9rem;
-      color: var(--text-secondary);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-    }
-    .offer-features li::before {
-      content: '\2713';
-      color: var(--accent);
-      font-weight: 700;
-      flex-shrink: 0;
-    }
-
-    .offer-note {
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-      font-style: italic;
-      margin-top: 20px;
-    }
-
-    /* Secondary offer */
-    .secondary-offer {
-      margin-top: 40px;
-      padding: 28px 32px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      text-align: center;
-    }
-
-    .secondary-offer h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-    }
-
-    .secondary-offer p {
-      font-size: 0.85rem;
-      color: var(--text-tertiary);
-      margin-bottom: 16px;
-      line-height: 1.5;
-    }
-
-    .btn-secondary {
-      display: inline-block;
-      padding: 10px 22px;
-      background: transparent;
-      color: var(--text-secondary);
-      font-family: var(--font);
-      font-size: 0.85rem;
-      font-weight: 600;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      cursor: pointer;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s;
-    }
-    .btn-secondary:hover {
-      border-color: var(--text-secondary);
-      color: var(--text);
-    }
-
-    /* ── FINAL CTA ────────────────────────────────────────── */
-    .final-cta {
-      text-align: center;
-      padding: 80px 24px 100px;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    .final-cta h2 {
-      font-family: var(--font);
-      font-size: clamp(1.8rem, 4vw, 2.4rem);
-      font-weight: 800;
-      margin-bottom: 16px;
-      color: var(--text);
-      letter-spacing: -1px;
-    }
-
-    .final-cta p {
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-      margin-bottom: 32px;
-      line-height: 1.55;
-    }
-
-    /* ── FOOTER ───────────────────────────────────────────── */
-    .site-footer {
-      text-align: center;
-      padding: 40px 24px;
-      color: var(--text-tertiary);
-      font-size: 0.85rem;
-      border-top: 1px solid var(--border);
-      max-width: 1080px;
-      margin: 0 auto;
-    }
-    .site-footer a {
-      color: var(--text-secondary);
-      text-decoration: none;
-    }
-    .site-footer a:hover {
-      color: var(--text);
-    }
-
-    /* ── RESPONSIVE ───────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .site-nav { padding: 0 16px; }
-      .nav-links { gap: 16px; }
-      .nav-link.hide-mobile { display: none; }
-
-      section {
-        padding: 60px 20px;
-      }
-
-      .hero-cta {
-        flex-direction: column;
-      }
-
-      .contrast-grid {
-        grid-template-columns: 1fr;
-        max-width: 440px;
-      }
-
-      .outcomes-grid {
-        grid-template-columns: 1fr;
-        max-width: 440px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .agents-grid { grid-template-columns: 1fr; }
-      .agents-grid-bottom { grid-template-columns: 1fr; }
-
-      .offer-card {
-        padding: 36px 24px;
-      }
-
-      .offer-features {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (min-width: 769px) and (max-width: 1024px) {
-      .agents-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    /* ── SCROLL PROGRESS BAR ─────────────────────────────── */
-    #scroll-progress {
-      position: fixed;
-      top: 56px;
-      left: 0;
-      height: 2px;
-      background: var(--accent);
-      z-index: 9999;
-      transition: width 0.1s linear;
-      width: 0%;
-    }
-
-    /* ── TIGHTER HEADINGS ────────────────────────────────── */
-    h1, h2, h3 {
-      font-weight: 900;
-      letter-spacing: -0.03em;
-    }
-
-    /* ── SCROLL-REVEAL ANIMATIONS ────────────────────────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── DIVIDER ─────────────────────────────────────────── */
-    .section-divider {
-      height: 1px;
-      background: var(--border);
-      max-width: 200px;
-      margin: 0 auto;
-    }
-
-    /* ── PROOF BLOCK: What Vero Sees ─────────────────────── */
-    .proof-section {
-      padding: 0 24px 80px;
-      max-width: 560px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .proof-heading {
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--text-tertiary);
-      margin-bottom: 20px;
-    }
-    .proof-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 28px 24px;
-      text-align: left;
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: var(--text-secondary);
-    }
-    .proof-date {
-      font-size: 0.8rem;
-      color: var(--text-tertiary);
-      margin-bottom: 16px;
-      font-weight: 500;
-    }
-    .proof-card strong {
-      color: var(--text);
-      font-weight: 600;
-    }
-    .proof-risk {
-      color: var(--red-text);
-      font-weight: 500;
-    }
-    .proof-line {
-      margin-bottom: 4px;
-    }
-    .proof-divider {
-      height: 1px;
-      background: var(--border);
-      margin: 14px 0;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VerusLink — AI Concierge for Business Owners Who Already Tried AI</title>
+<meta name="description" content="You bought the tools. You watched the tutorials. Nothing stuck. VerusLink is a retained AI concierge that gets inside your business and makes it work.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:#FAFAF8;color:#1C1C1A;font-size:15px;line-height:1.6}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 36px;border-bottom:1px solid rgba(28,28,26,0.07);position:sticky;top:0;background:#FAFAF8;z-index:100}
+.logo{font-family:'Fraunces',serif;font-size:17px;font-weight:300;letter-spacing:0.02em;color:#1C1C1A;text-decoration:none}
+.nav-cta{font-size:12px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:#1C1C1A;color:#FAFAF8;padding:9px 20px;border-radius:2px;cursor:pointer;border:none;text-decoration:none}
+
+/* HERO */
+.hero{background:#1C1C1A;padding:80px 36px 64px;color:#F0EDE6}
+.hero-kicker{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(240,237,230,0.35);margin-bottom:32px}
+.hero-h{font-family:'Fraunces',serif;font-size:46px;font-weight:300;line-height:1.1;margin-bottom:22px;color:#F0EDE6}
+.hero-h em{font-style:italic;color:#BFA77A}
+.hero-sub{font-size:16px;font-weight:300;color:rgba(240,237,230,0.5);max-width:440px;line-height:1.75;margin-bottom:40px}
+.hero-btn{display:inline-block;background:#BFA77A;color:#1C1C1A;font-size:13px;font-weight:500;letter-spacing:0.07em;padding:14px 28px;border-radius:2px;text-decoration:none}
+.hero-stat-row{display:flex;gap:32px;padding-top:36px;border-top:1px solid rgba(240,237,230,0.08);flex-wrap:wrap;margin-top:40px}
+.hstat-n{font-family:'Fraunces',serif;font-size:28px;font-weight:300;color:#BFA77A}
+.hstat-l{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:rgba(240,237,230,0.3)}
+
+/* SECTIONS */
+.section{padding:64px 36px;border-bottom:1px solid rgba(28,28,26,0.07)}
+.section.dark{background:#1C1C1A;color:#F0EDE6}
+.section.warm{background:#F2EFE8}
+.sec-label{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(28,28,26,0.28);margin-bottom:20px}
+.dark .sec-label{color:rgba(240,237,230,0.25)}
+.sec-h{font-family:'Fraunces',serif;font-size:28px;font-weight:300;line-height:1.2;margin-bottom:10px}
+.dark .sec-h{color:#F0EDE6}
+.sec-h em{font-style:italic;color:#8B6A3A}
+.dark .sec-h em{color:#BFA77A}
+.sec-body{font-size:15px;font-weight:300;color:rgba(28,28,26,0.5);line-height:1.75;margin-bottom:28px}
+.dark .sec-body{color:rgba(240,237,230,0.45)}
+
+/* TOOL GRAVEYARD */
+.tool-graveyard{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-bottom:28px}
+.tg-cell{background:white;border:1px solid rgba(28,28,26,0.07);padding:16px}
+.tg-dot{width:6px;height:6px;border-radius:50%;background:rgba(28,28,26,0.12);margin-bottom:8px}
+.tg-cell.dead .tg-dot{background:#B85454}
+.tg-cell.limbo .tg-dot{background:#B8943A}
+.tg-tool{font-size:13px;font-weight:500;color:rgba(28,28,26,0.6)}
+.tg-status{font-size:11px;color:rgba(28,28,26,0.3);margin-top:3px}
+.tg-cell.dead .tg-status{color:#B85454}
+.tg-cell.limbo .tg-status{color:#B8943A}
+.confront-pull{font-family:'Fraunces',serif;font-style:italic;font-size:19px;font-weight:300;color:rgba(28,28,26,0.55);line-height:1.5;border-left:2px solid #BFA77A;padding-left:20px}
+
+/* INSIGHTS */
+.insight-stack{display:flex;flex-direction:column;gap:2px}
+.insight{display:flex;gap:20px;padding:20px;background:rgba(240,237,230,0.03);border:1px solid rgba(240,237,230,0.06)}
+.insight-num{font-family:'Fraunces',serif;font-size:11px;color:rgba(191,167,122,0.5);letter-spacing:0.08em;width:24px;flex-shrink:0;padding-top:2px}
+.insight-text{font-size:14px;font-weight:300;color:rgba(240,237,230,0.65);line-height:1.6}
+.insight-text strong{font-weight:500;color:#F0EDE6}
+
+/* PROCESS */
+.process-flow{display:flex;flex-direction:column;gap:0}
+.pf-step{display:grid;grid-template-columns:44px 1fr;gap:20px;padding:24px 0;border-bottom:1px solid rgba(28,28,26,0.06)}
+.pf-step:last-child{border-bottom:none}
+.pf-n{font-family:'Fraunces',serif;font-size:32px;font-weight:300;color:rgba(191,167,122,0.3);line-height:1}
+.pf-title{font-size:15px;font-weight:500;color:#1C1C1A;margin-bottom:5px}
+.pf-body{font-size:13px;font-weight:300;color:rgba(28,28,26,0.5);line-height:1.65}
+.pf-outcome{display:inline-block;margin-top:10px;font-size:11px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:#8B6A3A;background:rgba(139,106,58,0.08);border:1px solid rgba(139,106,58,0.15);padding:4px 12px;border-radius:2px}
+
+/* PROOF */
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:28px}
+.proof-card{background:white;border:1px solid rgba(28,28,26,0.07);padding:22px;border-radius:2px}
+.proof-result{font-family:'Fraunces',serif;font-size:22px;font-weight:300;color:#8B6A3A;margin-bottom:6px}
+.proof-context{font-size:13px;font-weight:300;color:rgba(28,28,26,0.5);line-height:1.5}
+.proof-from{font-size:11px;color:rgba(28,28,26,0.3);letter-spacing:0.06em;margin-top:10px;text-transform:uppercase}
+
+/* FIT */
+.fit-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.fit-col{padding:20px;background:white;border:1px solid rgba(28,28,26,0.07)}
+.fit-col-head{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(28,28,26,0.3);margin-bottom:14px}
+.fit-col-head.yes{color:#5A8A5A}
+.fit-item{font-size:13px;font-weight:300;color:rgba(28,28,26,0.55);line-height:1.5;padding:7px 0;border-bottom:1px solid rgba(28,28,26,0.04)}
+.fit-item:last-child{border-bottom:none}
+.fit-item.yes{color:rgba(28,28,26,0.75)}
+.tf-note{border-left:2px solid rgba(191,167,122,0.4);padding:18px 22px;background:rgba(191,167,122,0.04)}
+.tf-note-label{font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(139,106,58,0.6);margin-bottom:8px}
+.tf-note-text{font-size:13px;font-weight:300;color:rgba(28,28,26,0.5);line-height:1.65}
+
+/* PRICE */
+.price-band{background:#1C1C1A;padding:40px 36px}
+.price-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.price-num{font-family:'Fraunces',serif;font-size:42px;font-weight:300;color:#BFA77A;line-height:1}
+.price-period{font-size:12px;color:rgba(240,237,230,0.3);margin-top:4px;letter-spacing:0.06em}
+.price-incl{font-size:13px;font-weight:300;color:rgba(240,237,230,0.35);margin-top:10px;max-width:260px;line-height:1.6}
+
+/* CLOSE */
+.close{background:#1C1C1A;padding:72px 36px;text-align:center}
+.close-pre{font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(240,237,230,0.25);margin-bottom:22px}
+.close-h{font-family:'Fraunces',serif;font-size:32px;font-weight:300;font-style:italic;color:rgba(240,237,230,0.6);line-height:1.25;margin-bottom:14px}
+.close-h em{font-style:normal;color:#BFA77A}
+.close-sub{font-size:14px;font-weight:300;color:rgba(240,237,230,0.3);margin-bottom:36px;max-width:380px;margin-left:auto;margin-right:auto;line-height:1.7}
+.close-btn{display:inline-block;background:#BFA77A;color:#1C1C1A;font-size:13px;font-weight:500;letter-spacing:0.07em;padding:15px 32px;border-radius:2px;text-decoration:none}
+.close-micro{font-size:12px;color:rgba(240,237,230,0.18);margin-top:18px;font-style:italic}
+
+/* FOOTER */
+.footer{padding:20px 36px;background:#1C1C1A;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(240,237,230,0.05)}
+.footer-logo{font-family:'Fraunces',serif;font-size:13px;color:rgba(240,237,230,0.2)}
+.footer-links{display:flex;gap:24px}
+.footer-link{font-size:11px;color:rgba(240,237,230,0.15);letter-spacing:0.06em;text-decoration:none}
+
+/* MOBILE */
+@media(max-width:600px){
+  .hero-h{font-size:32px}
+  .hero-stat-row{gap:20px}
+  .tool-graveyard{grid-template-columns:repeat(2,1fr)}
+  .proof-grid{grid-template-columns:1fr}
+  .fit-cols{grid-template-columns:1fr}
+  .price-inner{flex-direction:column;align-items:flex-start}
+  .nav{padding:16px 20px}
+  .hero,.section,.close{padding-left:20px;padding-right:20px}
+  .footer{padding:16px 20px}
+}
+</style>
 </head>
 <body>
 
-  <div id="scroll-progress"></div>
+<nav class="nav">
+  <a href="/" class="logo">VerusLink</a>
+  <a href="https://audit.veruslink.au" class="nav-cta">Book a free audit</a>
+</nav>
 
-  <!-- NAV -->
-  <nav class="site-nav">
-    <a href="#" class="nav-logo">Vero</a>
-    <div class="nav-links">
-      <a href="#how-it-works" class="nav-link hide-mobile">How It Works</a>
-      <a href="#offer" class="nav-link hide-mobile">Pricing</a>
-      <a href="/apply" class="nav-btn">Apply for early access</a>
-    </div>
-  </nav>
-
-  <!-- ═══ SECTION 1: HERO ═══ -->
-  <section class="hero" id="top">
-    <div class="hero-content">
-      <div class="hero-logo">Vero</div>
-      <h1>Your business is bleeding while you read this.</h1>
-      <p>Vero watches your business, flags what needs attention, and moves on revenue and admin issues before they slip. You get a clear morning brief and an action queue — not another app to check.</p>
-      <p class="hero-note">Founding client spots are limited. We onboard one business at a time.</p>
-      <div class="hero-cta">
-        <a href="/apply" class="btn-cta">Apply for early access &rarr;</a>
-        <a href="#how-it-works" class="btn-ghost-hero">How it works &rarr;</a>
-      </div>
-
-      <div class="hero-brief">
-        <div class="hero-brief-header">
-          <span class="hero-brief-label">Morning Brief</span>
-          <span class="hero-brief-date" id="heroBriefDate"></span>
-        </div>
-        <div class="hero-brief-item">2 follow-ups queued</div>
-        <div class="hero-brief-item">1 invoice overdue &mdash; Finnegan on it</div>
-        <div class="hero-brief-item">Scout brief ready</div>
-        <span class="hero-brief-pill">View brief &rarr;</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ PROOF: What Vero Sees ═══ -->
-  <div class="proof-section reveal">
-    <div class="proof-heading">What Vero sees</div>
-    <div class="proof-card">
-      <div class="proof-date" id="proofDate"></div>
-      <div class="proof-line"><strong>2 deals need your attention.</strong></div>
-      <div class="proof-divider"></div>
-      <div class="proof-line"><span class="proof-risk">$18k deal at risk</span> &mdash; Miller Associates (22d since contact)</div>
-      <div class="proof-line"><span class="proof-risk">$4.2k deal at risk</span> &mdash; Coastal Physio (stalled)</div>
-      <div class="proof-divider"></div>
-      <div class="proof-line"><strong>1 approval waiting.</strong></div>
-    </div>
+<section class="hero">
+  <div class="hero-kicker">AI Concierge · Sydney, Australia</div>
+  <h1 class="hero-h">You already tried AI.<br><em>That's the problem.</em></h1>
+  <p class="hero-sub">You bought the tools. You watched the tutorials. Nothing stuck. VerusLink is a retained AI concierge for business owners who are done experimenting and ready for someone to actually make it work.</p>
+  <a href="https://audit.veruslink.au" class="hero-btn">Book a free workflow audit →</a>
+  <div class="hero-stat-row">
+    <div class="hstat"><div class="hstat-n">5</div><div class="hstat-l">avg AI tools an SME already pays for</div></div>
+    <div class="hstat"><div class="hstat-n">12%</div><div class="hstat-l">say it's genuinely transforming their business</div></div>
+    <div class="hstat"><div class="hstat-n">88%</div><div class="hstat-l">feel busier than before they started</div></div>
   </div>
+</section>
 
-  <!-- ═══ SECTION 2: THE PROBLEM ═══ -->
-  <section id="problem">
-    <div style="text-align:center;"><span class="section-badge primary">The Problem</span></div>
-    <h2 class="section-heading">Most business owners are the bottleneck</h2>
-    <p class="section-sub">You started the business to do great work. Instead you're buried in admin, chasing follow-ups, and losing revenue you already earned.</p>
-
-    <div class="contrast-grid">
-      <div class="contrast-card without">
-        <div class="contrast-label">Without Vero</div>
-        <ul class="contrast-list">
-          <li>Follow-ups slip and leads go cold silently</li>
-          <li>Receipts pile up until end-of-month panic</li>
-          <li>No clear picture of what needs attention today</li>
-          <li>You are the single point of failure for every task</li>
-          <li>Revenue leaks through missed invoices and late chasing</li>
-          <li>Admin backlog grows faster than you can clear it</li>
-        </ul>
-      </div>
-      <div class="contrast-card with">
-        <div class="contrast-label">With Vero</div>
-        <ul class="contrast-list">
-          <li>Every lead is tracked and followed up automatically</li>
-          <li>Receipts are captured, logged, and categorised in real time</li>
-          <li>You get a clear morning brief of what matters today</li>
-          <li>Actions queue up for your approval, not your time</li>
-          <li>Invoices and payments are chased before they're overdue</li>
-          <li>Admin runs in the background while you focus on revenue</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ SECTION 3: OUTCOMES / HOW IT WORKS ═══ -->
-  <section id="how-it-works">
-    <div style="text-align:center;"><span class="section-badge secondary">How It Works</span></div>
-    <h2 class="section-heading">Everything runs. You just approve.</h2>
-    <p class="section-sub">Vero turns daily chaos into a calm operating rhythm. Here's what changes on Day 1.</p>
-
-    <div class="outcomes-grid">
-      <div class="outcome-card">
-        <span class="outcome-icon">&#9737;</span>
-        <h3>Clarity in under 60 seconds</h3>
-        <p>Start every morning with a brief that tells you what needs attention, what's been handled, and what's coming up. No digging through apps.</p>
-        <span class="outcome-feature">Morning Brief</span>
-      </div>
-
-      <div class="outcome-card">
-        <span class="outcome-icon">&#10003;</span>
-        <h3>Approve actions without becoming the bottleneck</h3>
-        <p>Follow-ups, reminders, and outreach queue up for a single tap. You stay in control without doing the work.</p>
-        <span class="outcome-feature">Action Queue</span>
-      </div>
-
-      <div class="outcome-card">
-        <span class="outcome-icon">&#9881;</span>
-        <h3>No end-of-month cleanup chaos</h3>
-        <p>Snap a receipt on Telegram and it's logged, categorised, and export-ready. No shoebox. No spreadsheet scramble.</p>
-        <span class="outcome-feature">Receipts &amp; Finance</span>
-      </div>
-
-      <div class="outcome-card">
-        <span class="outcome-icon">&#9733;</span>
-        <h3>No lead goes cold silently</h3>
-        <p>Every contact, every promise, every follow-up is tracked. Vero nudges before things slip and keeps your pipeline warm.</p>
-        <span class="outcome-feature">CRM &amp; Follow-up</span>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ SECTION 4: WHAT POWERS VERO (Agents — lower, reframed) ═══ -->
-  <section id="under-the-hood">
-    <div style="text-align:center;"><span class="section-badge secondary">Under The Hood</span></div>
-    <h2 class="section-heading">What's actually powering Vero</h2>
-    <p class="section-sub">Behind every action is a specialised AI agent, pre-trained for your workflow and working from Day 1.</p>
-
-    <div class="agents-grid">
-      <div class="agent-card finnegan">
-        <div class="agent-name">Finnegan</div>
-        <div class="agent-role">Finance &amp; Receipts</div>
-        <p class="agent-desc">Tracks receipts, sends invoices, chases late payments, and reminds you before bills are due. You see the numbers. He does the work.</p>
-      </div>
-
-      <div class="agent-card scout">
-        <div class="agent-name">Scout</div>
-        <div class="agent-role">Research &amp; Intelligence</div>
-        <p class="agent-desc">Researches everyone before you meet them. Watches your market for opportunities. Delivers your daily brief so you walk into every room prepared.</p>
-      </div>
-
-      <div class="agent-card maven">
-        <div class="agent-name">Maven</div>
-        <div class="agent-role">Marketing &amp; Outreach</div>
-        <p class="agent-desc">Writes your content, manages outreach, scores your leads. Your pipeline fills while you focus on closing.</p>
-      </div>
-    </div>
-
-    <div class="agents-grid-bottom">
-      <div class="agent-card clio">
-        <div class="agent-name">Clio</div>
-        <div class="agent-role">Relationships &amp; CRM</div>
-        <p class="agent-desc">Remembers every connection, every promise, every follow-up. Nobody falls through the cracks. Your network stays warm.</p>
-      </div>
-
-      <div class="agent-card orion">
-        <div class="agent-name">Orion</div>
-        <div class="agent-role">Operations &amp; Scheduling</div>
-        <p class="agent-desc">Handles scheduling, coordinates availability, and keeps the moving parts moving. The operational glue so nothing gets dropped.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ SECTION 5: OFFER ═══ -->
-  <section id="offer">
-    <div style="text-align:center;"><span class="section-badge primary">Get Started</span></div>
-    <h2 class="section-heading">One system. Everything handled.</h2>
-    <p class="section-sub">Vero replaces the admin pile, the forgotten follow-ups, and the end-of-month panic.</p>
-
-    <div class="offer-wrapper">
-      <div class="offer-card">
-        <div class="offer-badge">Founding Client Pricing</div>
-        <div class="offer-title">Everything included.</div>
-        <p style="font-size:0.85rem;color:var(--text-tertiary);font-style:italic;margin-bottom:8px;">Most clients recover the monthly fee from their first chased invoice.</p>
-        <div class="offer-price">$499<span>/month + setup</span></div>
-        <div class="offer-setup">Includes hands-on onboarding and workflow configuration</div>
-
-        <ul class="offer-features">
-          <li>Guided onboarding</li>
-          <li>Workflow setup</li>
-          <li>Full dashboard</li>
-          <li>Action queue</li>
-          <li>Receipt capture</li>
-          <li>Invoice tracking</li>
-          <li>CRM &amp; follow-ups</li>
-          <li>Morning brief</li>
-          <li>Market intelligence</li>
-          <li>Telegram integration</li>
-          <li>Content generation</li>
-          <li>Priority support</li>
-        </ul>
-
-        <a href="/apply" class="btn-cta" style="font-size:1rem;">Apply for early access &rarr;</a>
-
-        <p class="offer-note">Founding client rate locked for the life of your account. We onboard one business at a time to ensure quality.</p>
-      </div>
-
-      <!-- Testimonial -->
-      <div style="margin-top:32px;padding:24px 28px;background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:var(--radius);text-align:left;">
-        <p style="font-size:0.95rem;color:var(--text-secondary);font-style:italic;line-height:1.6;margin:0 0 10px;">&ldquo;I used to spend Sunday nights doing what Vero now handles automatically.&rdquo;</p>
-        <p style="font-size:0.8rem;color:var(--text-tertiary);margin:0;">&mdash; Early access member, Sydney</p>
-      </div>
-
-      <!-- Secondary path — Finnegan waitlist -->
-      <div class="secondary-offer">
-        <h4>Just need receipts, reimbursements, or personal tax tracking?</h4>
-        <p>Finnegan can run standalone. Join the waitlist and we'll let you know when self-serve is open.</p>
-        <a href="mailto:james@veruslink.au?subject=Finnegan%20Waitlist" class="btn-secondary">Join the Finnegan waitlist &rarr;</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ SECTION 6: FINAL CTA ═══ -->
-  <div class="final-cta">
-    <h2>Ready to stop losing revenue to admin?</h2>
-    <p>Apply and we'll walk you through how Vero fits your business. No pitch deck. Just a conversation about what's slipping.</p>
-    <a href="/apply" class="btn-cta" style="font-size:1.05rem; padding:16px 32px;">Apply for early access &rarr;</a>
+<section class="section">
+  <div class="sec-label">We've seen your tech stack</div>
+  <h2 class="sec-h">The tools aren't the problem.<br><em>The missing layer is.</em></h2>
+  <p class="sec-body">You have subscriptions. You have accounts. You have a Notion board you made in January. What you don't have is someone who mapped your actual workflows and wired everything together so it runs without you holding it.</p>
+  <div class="tool-graveyard">
+    <div class="tg-cell dead"><div class="tg-dot"></div><div class="tg-tool">ChatGPT</div><div class="tg-status">Used it twice</div></div>
+    <div class="tg-cell dead"><div class="tg-dot"></div><div class="tg-tool">Zapier</div><div class="tg-status">Half-built zap</div></div>
+    <div class="tg-cell limbo"><div class="tg-dot"></div><div class="tg-tool">HubSpot</div><div class="tg-status">Only the free bit</div></div>
+    <div class="tg-cell dead"><div class="tg-dot"></div><div class="tg-tool">Notion AI</div><div class="tg-status">Never opened</div></div>
+    <div class="tg-cell limbo"><div class="tg-dot"></div><div class="tg-tool">Make.com</div><div class="tg-status">One automation</div></div>
+    <div class="tg-cell dead"><div class="tg-dot"></div><div class="tg-tool">That other one</div><div class="tg-status">Can't remember</div></div>
   </div>
+  <div class="confront-pull">"I know AI should be helping me. I just can't work out how to make it fit what I actually do."</div>
+</section>
 
-  <!-- ═══ FOOTER ═══ -->
-  <footer class="site-footer">
-    <a href="https://veruslink.au" target="_blank">Vero by VerusLink</a> &middot; <a href="mailto:james@veruslink.au">james@veruslink.au</a> &middot; <a href="/privacy">Privacy</a> &middot; <a href="/terms">Terms</a>
-  </footer>
+<section class="section dark">
+  <div class="sec-label">What's actually going on</div>
+  <h2 class="sec-h">AI didn't fail you.<br><em>Application did.</em></h2>
+  <p class="sec-body">The tools are genuinely powerful. The gap is between what they can do in theory and what's running inside your specific business on a Tuesday afternoon.</p>
+  <div class="insight-stack">
+    <div class="insight"><div class="insight-num">01</div><div class="insight-text"><strong>Tools need wiring to your workflows, not dropping on top of them.</strong> A generic AI setup does generic things. A concierge who learns your business builds something that actually fits it.</div></div>
+    <div class="insight"><div class="insight-num">02</div><div class="insight-text"><strong>The first win has to happen in the first two weeks, or it never happens.</strong> Most implementations die in setup. We start with the one thing that pays for itself immediately, then build from there.</div></div>
+    <div class="insight"><div class="insight-num">03</div><div class="insight-text"><strong>You don't have time to learn and run a business simultaneously.</strong> The owners getting results aren't technically smarter. They have someone who does the implementation work for them.</div></div>
+    <div class="insight"><div class="insight-num">04</div><div class="insight-text"><strong>Adding more tools makes it worse.</strong> The answer isn't another subscription. It's making the ones you have actually do something for you.</div></div>
+  </div>
+</section>
 
-  <script>
-    // ── SCROLL PROGRESS BAR ────────────────────────────────
-    window.addEventListener('scroll', () => {
-      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const progress = (scrollTop / scrollHeight) * 100;
-      document.getElementById('scroll-progress').style.width = progress + '%';
-    });
+<section class="section">
+  <div class="sec-label">What we actually do</div>
+  <h2 class="sec-h">A retained concierge who gets<br><em>inside your business and stays there.</em></h2>
+  <p class="sec-body">Not a course. Not a consultant who hands you a report. A working relationship where AI gets embedded into how your business actually operates — and we stick around to make sure it keeps working.</p>
+  <div class="process-flow">
+    <div class="pf-step"><div class="pf-n">01</div><div><div class="pf-title">The audit — map what's actually broken</div><div class="pf-body">45 minutes. We go through your real week, not a hypothetical one. Where does time go? Where does money leak? Which tools you're already paying for could be doing more? We find the highest-leverage fix first.</div><div class="pf-outcome">Free. No commitment.</div></div></div>
+    <div class="pf-step"><div class="pf-n">02</div><div><div class="pf-title">Month one — one win that pays for itself</div><div class="pf-body">Two calls, hands-on build sessions, async support in between. We pick the single workflow most likely to show a measurable return inside 30 days and build it inside your actual systems, not a sandbox.</div><div class="pf-outcome">Documented ROI by day 30.</div></div></div>
+    <div class="pf-step"><div class="pf-n">03</div><div><div class="pf-title">Ongoing — compound it</div><div class="pf-body">Every month adds a layer. What worked in month one becomes infrastructure. Month two fixes the next thing. By month three you have a business that runs differently than it did — and a dashboard that shows it.</div><div class="pf-outcome">Cancel anytime. Most don't.</div></div></div>
+  </div>
+</section>
 
-    // ── SCROLL-REVEAL ANIMATIONS ───────────────────────────
-    document.addEventListener('DOMContentLoaded', () => {
-      // Dynamic dates for proof card + hero brief
-      (function() {
-        var d = new Date();
-        var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-        var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
-        var formatted = days[d.getDay()] + ' ' + d.getDate() + ' ' + months[d.getMonth()];
-        var el = document.getElementById('proofDate');
-        if (el) el.textContent = formatted;
-        var hb = document.getElementById('heroBriefDate');
-        if (hb) hb.textContent = formatted;
-      })();
+<div class="price-band">
+  <div class="price-inner">
+    <div>
+      <div class="price-num">$1,500</div>
+      <div class="price-period">per month · cancel anytime · no lock-in</div>
+      <div class="price-incl">Two strategy calls · hands-on build · unlimited async · shared progress dashboard</div>
+    </div>
+    <a href="https://audit.veruslink.au" class="close-btn">Start with a free audit →</a>
+  </div>
+</div>
 
-      document.querySelectorAll('section, .contrast-card, .outcome-card, .agent-card, .offer-card, .secondary-offer, .final-cta').forEach((el, i) => {
-        el.classList.add('reveal');
-        el.style.transitionDelay = (i % 4) * 0.1 + 's';
-      });
+<section class="section warm">
+  <div class="sec-label">Real outcomes</div>
+  <h2 class="sec-h" style="font-family:'Fraunces',serif;font-size:24px;font-weight:300;margin-bottom:8px">Not case studies. <em style="font-style:italic;color:#8B6A3A">Results.</em></h2>
+  <div class="proof-grid">
+    <div class="proof-card"><div class="proof-result">4 hrs/week</div><div class="proof-context">Recovered from a follow-up process running manually across three different inboxes</div><div class="proof-from">Professional services, Sydney</div></div>
+    <div class="proof-card"><div class="proof-result">Day 12</div><div class="proof-context">First automated workflow live and processing real work — not a demo, actual business operations</div><div class="proof-from">Service business, Brisbane</div></div>
+    <div class="proof-card"><div class="proof-result">$1,800</div><div class="proof-context">In outstanding invoices chased and collected in the first fortnight — fee paid for itself immediately</div><div class="proof-from">Consultant, Melbourne</div></div>
+    <div class="proof-card"><div class="proof-result">Zero</div><div class="proof-context">New subscriptions added. Everything built on tools the client already had and was already paying for</div><div class="proof-from">Operator, Perth</div></div>
+  </div>
+</section>
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1 });
+<section class="section">
+  <div class="sec-label">Is this right for you</div>
+  <h2 class="sec-h">We work with a small number of clients.<br><em>We're honest about fit.</em></h2>
+  <p class="sec-body">This isn't a software product with unlimited seats. It's a retained relationship — which means we need to be selective, and so do you.</p>
+  <div class="fit-cols">
+    <div class="fit-col"><div class="fit-col-head yes">Good fit</div><div class="fit-item yes">Running $500K–$5M, owner-led</div><div class="fit-item yes">Already tried AI. Frustrated it didn't stick.</div><div class="fit-item yes">Ready to invest in something that actually works</div><div class="fit-item yes">Want outcomes, not tutorials</div><div class="fit-item yes">Decision-maker who moves quickly</div></div>
+    <div class="fit-col"><div class="fit-col-head">Not a fit</div><div class="fit-item">Looking for generic AI training</div><div class="fit-item">Want a handoff report to implement yourself</div><div class="fit-item">Not yet sure if AI is worth it</div><div class="fit-item">Need sign-off from multiple stakeholders</div><div class="fit-item">Startup pre-revenue</div></div>
+  </div>
+  <div class="tf-note">
+    <div class="tf-note-label">When you're ready to grow</div>
+    <div class="tf-note-text">A tight operation is the foundation growth lands on. When you're ready for brand and market strategy, we work closely with Two Fires — senior practitioners with McDonald's, Mars and Unilever-calibre track records. We'll make the introduction when the time is right.</div>
+  </div>
+</section>
 
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    });
-  </script>
+<section class="close">
+  <div class="close-pre">The only question left</div>
+  <h2 class="close-h">How long will you keep paying for tools<br>that <em>nobody has wired together</em>?</h2>
+  <p class="close-sub">One 45-minute conversation. We prepare on our side. You leave with a clear map of what's possible in your business — whether you work with us or not.</p>
+  <a href="https://audit.veruslink.au" class="close-btn">Book your free audit →</a>
+  <div class="close-micro">No pitch deck. No pressure. No new subscriptions.</div>
+</section>
+
+<footer class="footer">
+  <div class="footer-logo">VerusLink</div>
+  <div class="footer-links">
+    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/terms" class="footer-link">Terms</a>
+  </div>
+</footer>
+
 </body>
 </html>
