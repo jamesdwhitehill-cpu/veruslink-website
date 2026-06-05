@@ -13,12 +13,12 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#080810;color:#fff;font-size:15px;line-height:1.6;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:#0D0D18;color:#fff;font-size:15px;line-height:1.6;overflow-x:hidden}
 
-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:rgba(8,8,16,0.92);backdrop-filter:blur(12px);z-index:100}
+nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:rgba(13,13,24,0.92);backdrop-filter:blur(12px);z-index:100}
 .logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
 .nav-links{display:flex;gap:24px;align-items:center}
-.nav-link{font-size:12px;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
+.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
 .nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:#2D9CDB;color:#000;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
 
 .hero{padding:80px 40px 64px;position:relative;text-align:center;overflow:hidden}
@@ -39,10 +39,10 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:20px 4
 .stat-pill-n{font-size:2rem;font-weight:900;letter-spacing:-1px;color:#2D9CDB;line-height:1}
 .stat-pill-l{font-size:11px;font-weight:500;color:rgba(255,255,255,0.3);margin-top:6px;letter-spacing:0.04em;line-height:1.4}
 
-.logo-band{padding:18px 40px;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.02);text-align:center}
+.logo-band{padding:18px 40px;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.04);text-align:center}
 .logo-band-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:12px}
 .logo-band-items{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center}
-.logo-band-item{font-size:12px;font-weight:700;color:rgba(255,255,255,0.2);letter-spacing:0.06em;text-transform:uppercase}
+.logo-band-item{font-size:13px;font-weight:700;color:rgba(255,255,255,0.2);letter-spacing:0.06em;text-transform:uppercase}
 
 .section{padding:64px 40px;position:relative;overflow:hidden}
 .section-glow-l{position:absolute;left:-100px;top:50%;transform:translateY(-50%);width:300px;height:300px;background:radial-gradient(ellipse,rgba(45,156,219,0.07) 0%,transparent 70%);pointer-events:none}
@@ -50,86 +50,86 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:20px 4
 .sec-label-dot{width:4px;height:4px;border-radius:50%;background:#2D9CDB;flex-shrink:0}
 .sec-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:12px}
 .sec-h em{font-style:italic;font-weight:400;color:#2D9CDB}
-.sec-body{font-size:15px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:28px;max-width:540px}
+.sec-body{font-size:17px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:28px;max-width:540px}
 
 .tg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px}
-.tg-cell{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px}
+.tg-cell{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px}
 .tg-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.1);margin-bottom:10px}
 .tg-cell.dead .tg-dot{background:#c0392b;box-shadow:0 0 8px rgba(192,57,43,0.4)}
 .tg-cell.limbo .tg-dot{background:#e67e22;box-shadow:0 0 8px rgba(230,126,34,0.3)}
-.tg-tool{font-size:13px;font-weight:600;color:rgba(255,255,255,0.55)}
+.tg-tool{font-size:15px;font-weight:600;color:rgba(255,255,255,0.55)}
 .tg-status{font-size:11px;color:rgba(255,255,255,0.25);margin-top:3px}
 .tg-cell.dead .tg-status{color:rgba(192,57,43,0.8)}
 .tg-cell.limbo .tg-status{color:rgba(230,126,34,0.7)}
-.pull-quote{font-size:1.1rem;font-style:italic;color:rgba(255,255,255,0.35);line-height:1.55;border-left:2px solid #2D9CDB;padding-left:20px;max-width:500px}
+.pull-quote{font-size:1.2rem;font-style:italic;color:rgba(255,255,255,0.35);line-height:1.55;border-left:2px solid #2D9CDB;padding-left:20px;max-width:500px}
 
 .insights{display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
-.insight{display:flex;gap:16px;padding:18px 20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:12px}
+.insight{display:flex;gap:16px;padding:18px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:12px}
 .i-num{font-size:10px;font-weight:800;color:rgba(45,156,219,0.4);width:20px;flex-shrink:0;padding-top:2px;letter-spacing:0.05em}
-.i-text{font-size:14px;color:rgba(255,255,255,0.5);line-height:1.65}
+.i-text{font-size:16px;color:rgba(255,255,255,0.5);line-height:1.65}
 .i-text strong{font-weight:700;color:#fff}
 
 .inline-cta{padding:20px 40px;background:rgba(45,156,219,0.05);border-top:1px solid rgba(45,156,219,0.1);border-bottom:1px solid rgba(45,156,219,0.1);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-.inline-cta-text{font-size:13px;color:rgba(255,255,255,0.4)}
+.inline-cta-text{font-size:15px;color:rgba(255,255,255,0.4)}
 .inline-cta-text strong{color:#fff;font-weight:600}
 .cta-sm{font-size:11px;font-weight:700;letter-spacing:0.06em;color:#2D9CDB;background:rgba(45,156,219,0.08);border:1px solid rgba(45,156,219,0.2);padding:9px 18px;border-radius:100px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
 
 .aoa-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.aoa-step{display:flex;gap:16px;padding:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:14px;align-items:flex-start}
+.aoa-step{display:flex;gap:16px;padding:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:14px;align-items:flex-start}
 .aoa-icon{width:42px;height:42px;border-radius:10px;background:rgba(45,156,219,0.1);border:1px solid rgba(45,156,219,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
 .aoa-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.aoa-body{font-size:13px;color:rgba(255,255,255,0.45);line-height:1.6}
+.aoa-body{font-size:15px;color:rgba(255,255,255,0.45);line-height:1.6}
 .aoa-badge{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2D9CDB;background:rgba(45,156,219,0.08);border:1px solid rgba(45,156,219,0.15);padding:3px 12px;border-radius:100px}
 
 .after-box{background:rgba(45,156,219,0.04);border:1px solid rgba(45,156,219,0.15);border-radius:14px;padding:22px;margin-top:16px}
 .after-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#2D9CDB;margin-bottom:14px}
 .after-items{display:flex;flex-direction:column;gap:10px}
-.after-item{display:flex;gap:12px;font-size:13px;color:rgba(255,255,255,0.45);line-height:1.5}
+.after-item{display:flex;gap:12px;font-size:15px;color:rgba(255,255,255,0.45);line-height:1.5}
 .after-num{font-size:11px;font-weight:800;color:#2D9CDB;width:18px;flex-shrink:0;padding-top:1px}
 
 .price-wrap{padding:0 40px 40px}
 .price-band{background:rgba(45,156,219,0.06);border:1px solid rgba(45,156,219,0.15);border-radius:20px;padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
 .price-n{font-size:clamp(2.5rem,6vw,3.6rem);font-weight:900;letter-spacing:-2px;color:#2D9CDB;line-height:1}
 .price-period{font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;letter-spacing:0.04em}
-.price-incl{font-size:13px;color:rgba(255,255,255,0.3);margin-top:10px;max-width:260px;line-height:1.65}
+.price-incl{font-size:15px;color:rgba(255,255,255,0.3);margin-top:10px;max-width:260px;line-height:1.65}
 
 .proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
-.proof-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
+.proof-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
 .proof-n{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:#2D9CDB;margin-bottom:6px;line-height:1}
-.proof-ctx{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:10px}
+.proof-ctx{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:10px}
 .proof-from{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.2)}
 
-.founder{padding:64px 40px;background:rgba(255,255,255,0.02);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden}
+.founder{padding:64px 40px;background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden}
 .founder-inner{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
 .founder-avatar{width:110px;height:110px;border-radius:20px;background:linear-gradient(135deg,rgba(45,156,219,0.3),rgba(45,156,219,0.05));border:1px solid rgba(45,156,219,0.2);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#2D9CDB;flex-shrink:0;letter-spacing:-1px}
 .founder-content{flex:1;min-width:200px}
 .founder-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:10px}
 .founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px}
 .founder-title{font-size:13px;color:#2D9CDB;font-weight:600;margin-bottom:14px}
-.founder-bio{font-size:14px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:10px}
+.founder-bio{font-size:16px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:10px}
 .founder-creds{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .founder-cred{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.3)}
 
 .faqs{display:flex;flex-direction:column;gap:8px;margin-top:20px}
-.faq{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;cursor:pointer}
+.faq{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;cursor:pointer}
 .faq-q{font-size:14px;font-weight:700;color:rgba(255,255,255,0.75);display:flex;justify-content:space-between;align-items:center;gap:16px}
 .faq-icon{font-size:20px;color:#2D9CDB;flex-shrink:0;transition:transform 0.2s;line-height:1}
-.faq-a{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:12px;display:none}
+.faq-a{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:12px;display:none}
 .faq.open .faq-a{display:block}
 .faq.open .faq-icon{transform:rotate(45deg)}
 
 .fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.fit-col{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
+.fit-col{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
 .fit-col-head{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:14px}
 .fit-col-head.yes{color:#34d399}
-.fit-item{font-size:13px;color:rgba(255,255,255,0.4);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.4;display:flex;align-items:flex-start;gap:8px}
+.fit-item{font-size:15px;color:rgba(255,255,255,0.4);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.4;display:flex;align-items:flex-start;gap:8px}
 .fit-item:last-child{border-bottom:none}
 .fit-item.yes{color:rgba(255,255,255,0.75)}
 .fit-check{color:#34d399;flex-shrink:0}
 .fit-cross{color:rgba(255,255,255,0.2);flex-shrink:0}
 .tf-note{border:1px solid rgba(45,156,219,0.15);border-radius:12px;padding:20px;background:rgba(45,156,219,0.04);margin-top:8px}
 .tf-note-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(45,156,219,0.6);margin-bottom:8px}
-.tf-note-text{font-size:13px;color:rgba(255,255,255,0.4);line-height:1.65}
+.tf-note-text{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.65}
 
 .close{padding:80px 40px;text-align:center;position:relative;overflow:hidden}
 .close-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(45,156,219,0.12) 0%,transparent 70%);pointer-events:none}
@@ -169,7 +169,7 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
     <a href="#how-it-works" class="nav-link">How it works</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#faqs" class="nav-link">FAQs</a>
-    <a href="https://audit.veruslink.au" class="nav-cta">Start the audit</a>
+    <a href="https://www.veruslink.au/audit" class="nav-cta">Start the audit</a>
   </div>
 </nav>
 
@@ -180,7 +180,7 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   <h1 class="hero-h">You already tried AI.<br><em>That's the problem.</em></h1>
   <p class="op-line">You bought the tools. Nothing stuck. VerusLink is <strong>the missing operator layer between your tools and your Tuesday.</strong></p>
   <div class="hero-btns">
-    <a href="https://audit.veruslink.au" class="btn-primary">Start with the intake form →</a>
+    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
     <a href="#how-it-works" class="btn-ghost">See how it works</a>
   </div>
   <div class="stat-pills">
@@ -237,7 +237,7 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 
 <div class="inline-cta">
   <div class="inline-cta-text"><strong>Ready to stop paying for tools nobody's wired together?</strong> The intake form takes 10 minutes.</div>
-  <a href="https://audit.veruslink.au" class="cta-sm">Start with the intake form →</a>
+  <a href="https://www.veruslink.au/audit" class="cta-sm">Start with the intake form →</a>
 </div>
 
 <section class="section" id="how-it-works">
@@ -266,13 +266,13 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
       <div class="price-period">per month · cancel anytime · no lock-in</div>
       <div class="price-incl">Two done-with-you calls · AOA methodology · unlimited async · Notion hub with quantified ROI · done-for-you builds available as upsell</div>
     </div>
-    <a href="https://audit.veruslink.au" class="btn-primary">Start with the intake form →</a>
+    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
   </div>
 </div>
 
 <div class="inline-cta">
   <div class="inline-cta-text"><strong>The intake form is free.</strong> The first call ships something real.</div>
-  <a href="https://audit.veruslink.au" class="cta-sm">Start with the intake form →</a>
+  <a href="https://www.veruslink.au/audit" class="cta-sm">Start with the intake form →</a>
 </div>
 
 <section class="section">
@@ -289,7 +289,7 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
 
 <div class="inline-cta">
   <div class="inline-cta-text"><strong>Seen enough?</strong> The form takes 10 minutes. We do the rest.</div>
-  <a href="https://audit.veruslink.au" class="cta-sm">Start with the intake form →</a>
+  <a href="https://www.veruslink.au/audit" class="cta-sm">Start with the intake form →</a>
 </div>
 
 <section class="founder" id="about">
@@ -342,7 +342,7 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   <div class="close-pre">The only question left</div>
   <h2 class="close-h">How long will you keep paying for tools<br>that <em>nobody has wired together</em>?</h2>
   <p class="close-sub">Complete a 10-minute intake form. We analyse it before we speak. You leave call one with at least one automation already running — whether you continue or not.</p>
-  <a href="https://audit.veruslink.au" class="btn-primary">Start with the intake form →</a>
+  <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
   <div class="close-micro">No pitch deck. No pressure. No new subscriptions.</div>
 </section>
 
