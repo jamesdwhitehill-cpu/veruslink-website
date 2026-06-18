@@ -3,177 +3,383 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink — AI Concierge for Business Owners Who Already Tried AI</title>
-<meta name="description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into automations that actually ship.">
-<meta property="og:description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into automations that actually ship.">
+<title>VerusLink — Your AI Operations Team. One Retainer.</title>
+<meta name="description" content="For one monthly line item, business owners get a whole always-on AI operations team. Five named agents handle build, research, content, finance and follow-up. Not a tool. Not a course. A crew.">
+<meta property="og:description" content="For one monthly line item, business owners get a whole always-on AI operations team. Five named agents handle build, research, content, finance and follow-up. Not a tool. Not a course. A crew.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+:root{
+  --ink:#060A14;
+  --base:#0A1322;
+  --elev:#101D33;
+  --surface:rgba(255,255,255,0.045);
+  --surface-2:rgba(255,255,255,0.07);
+  --border:rgba(141,203,255,0.12);
+  --border-soft:rgba(255,255,255,0.08);
+  --accent:#4DA3FF;
+  --accent-bright:#8FCBFF;
+  --azure:#1E6FD9;
+  --live:#34D399;
+  --fg:#F2F6FF;
+  --fg-mut:rgba(226,236,255,0.56);
+  --fg-dim:rgba(226,236,255,0.34);
+  --fg-faint:rgba(226,236,255,0.20);
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --display:'Space Grotesk','Inter',sans-serif;
+  --ease:cubic-bezier(0.16,1,0.3,1);
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#0D0D18;color:#fff;font-size:15px;line-height:1.6;overflow-x:hidden}
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--ink);
+  color:var(--fg);
+  font-size:16px;
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+/* blueprint grid texture, fixed behind everything */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(141,203,255,0.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(141,203,255,0.035) 1px,transparent 1px);
+  background-size:64px 64px;
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 80%);
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 80%);
+}
+.wrap{position:relative;z-index:1}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:6px}
 
-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:rgba(13,13,24,0.92);backdrop-filter:blur(12px);z-index:100}
-.logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:24px;align-items:center}
-.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
-.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:#2D9CDB;color:#000;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
+/* ---------- NAV ---------- */
+nav{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px max(20px,calc((100% - 1140px)/2));
+  border-bottom:1px solid var(--border-soft);
+  position:sticky;top:0;
+  background:rgba(6,10,20,0.82);backdrop-filter:blur(14px);
+  z-index:100;
+}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--fg)}
+.logo-mark{width:26px;height:26px;flex-shrink:0}
+.logo-word{font-size:14px;font-weight:800;letter-spacing:5px;text-transform:uppercase}
+.nav-links{display:flex;gap:26px;align-items:center}
+.nav-link{font-size:13px;font-weight:500;color:var(--fg-dim);letter-spacing:0.03em;text-decoration:none}
+.nav-link:hover{color:var(--fg)}
+.nav-cta{
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.04em;
+  background:var(--accent);color:#04101f;padding:11px 20px;border-radius:10px;
+  border:none;cursor:pointer;text-decoration:none;
+  box-shadow:0 0 0 1px rgba(141,203,255,0.4),0 8px 30px -10px rgba(77,163,255,0.6);
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+  min-height:44px;display:inline-flex;align-items:center;
+}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 0 0 1px rgba(141,203,255,0.6),0 12px 36px -10px rgba(77,163,255,0.8)}
 
-.hero{padding:80px max(40px,calc((100% - 1080px)/2)) 64px;position:relative;text-align:center;overflow:hidden}
-.hero-glow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(45,156,219,0.18) 0%,transparent 70%);pointer-events:none}
-.hero-glow-2{position:absolute;bottom:-80px;right:-80px;width:350px;height:350px;background:radial-gradient(ellipse,rgba(45,156,219,0.08) 0%,transparent 70%);pointer-events:none}
-.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(45,156,219,0.1);border:1px solid rgba(45,156,219,0.25);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:#2D9CDB;letter-spacing:0.04em;margin-bottom:28px}
-.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:#2D9CDB}
-.hero-h{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;color:#fff}
-.hero-h em{font-style:italic;font-weight:400;color:rgba(255,255,255,0.45)}
-.op-line{font-size:16px;font-weight:500;color:rgba(255,255,255,0.45);max-width:480px;margin:0 auto 36px;line-height:1.7}
-.op-line strong{color:#2D9CDB;font-weight:600}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
-.btn-primary{background:#2D9CDB;color:#000;font-size:13px;font-weight:700;letter-spacing:0.06em;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;display:inline-block;max-width:320px}
-.btn-ghost{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);font-size:13px;font-weight:600;padding:14px 28px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);cursor:pointer;text-decoration:none;display:inline-block;max-width:320px}
+/* ---------- shared section ---------- */
+.section{padding:88px max(20px,calc((100% - 1140px)/2));position:relative}
+.glow{position:absolute;border-radius:50%;pointer-events:none;filter:blur(10px)}
+.sec-label{
+  display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);
+  font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:18px;
+}
+.sec-label-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0;box-shadow:0 0 10px var(--accent)}
+.sec-h{
+  font-family:var(--display);
+  font-size:clamp(1.9rem,4.2vw,2.7rem);font-weight:700;line-height:1.08;
+  letter-spacing:-0.02em;margin-bottom:16px;color:var(--fg);
+}
+.sec-h .accent{color:var(--accent)}
+.sec-body{font-size:17px;color:var(--fg-mut);line-height:1.75;margin-bottom:34px;max-width:680px}
 
-.stat-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
-.stat-pill{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px 24px;text-align:center;flex:1;min-width:140px;max-width:200px}
-.stat-pill-n{font-size:2rem;font-weight:900;letter-spacing:-1px;color:#2D9CDB;line-height:1}
-.stat-pill-l{font-size:11px;font-weight:500;color:rgba(255,255,255,0.3);margin-top:6px;letter-spacing:0.04em;line-height:1.4}
-.stat-pill-src{font-size:10px;font-weight:500;color:rgba(255,255,255,0.18);margin-top:8px;letter-spacing:0.02em;line-height:1.4}
+/* ---------- HERO ---------- */
+.hero{
+  padding:84px max(20px,calc((100% - 1140px)/2)) 72px;
+  position:relative;text-align:center;overflow:hidden;
+}
+.hero-glow{position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:760px;height:520px;max-width:120vw;
+  background:radial-gradient(ellipse,rgba(77,163,255,0.22) 0%,transparent 70%);pointer-events:none;filter:blur(8px)}
+.hero-glow-2{position:absolute;bottom:-100px;right:-120px;width:420px;height:420px;
+  background:radial-gradient(ellipse,rgba(30,111,217,0.16) 0%,transparent 70%);pointer-events:none}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.06em;
+  color:var(--accent-bright);background:rgba(77,163,255,0.08);
+  border:1px solid var(--border);border-radius:100px;padding:7px 16px;margin-bottom:30px;
+}
+.eyebrow .live-dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 rgba(52,211,153,0.6);animation:ping 2.2s var(--ease) infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,211,153,0.55)}70%{box-shadow:0 0 0 8px rgba(52,211,153,0)}100%{box-shadow:0 0 0 0 rgba(52,211,153,0)}}
+.hero-h{
+  font-family:var(--display);
+  font-size:clamp(2.6rem,7.4vw,4.6rem);font-weight:700;line-height:1.02;
+  letter-spacing:-0.03em;margin-bottom:22px;color:var(--fg);
+}
+.hero-h .accent{color:var(--accent);display:block}
+.hero-h .accent::after{content:"";display:inline-block;width:0.5em}
+.urgency{
+  font-family:var(--mono);font-size:13px;font-weight:500;letter-spacing:0.02em;
+  color:var(--accent-bright);max-width:560px;margin:0 auto 14px;
+}
+.op-line{font-size:18px;font-weight:400;color:var(--fg-mut);max-width:600px;margin:0 auto 36px;line-height:1.7}
+.op-line strong{color:var(--fg);font-weight:600}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.btn-primary{
+  font-family:var(--mono);background:var(--accent);color:#04101f;font-size:14px;font-weight:600;letter-spacing:0.02em;
+  padding:15px 30px;border-radius:12px;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  min-height:48px;justify-content:center;
+  box-shadow:0 0 0 1px rgba(141,203,255,0.4),0 14px 40px -14px rgba(77,163,255,0.7);
+  transition:transform .2s var(--ease),box-shadow .2s var(--ease);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px rgba(141,203,255,0.7),0 20px 50px -14px rgba(77,163,255,0.9)}
+.btn-ghost{
+  font-family:var(--mono);background:var(--surface);color:var(--fg-mut);font-size:14px;font-weight:500;
+  padding:15px 30px;border-radius:12px;border:1px solid var(--border-soft);cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  min-height:48px;justify-content:center;transition:border-color .2s var(--ease),color .2s var(--ease)}
+.btn-ghost:hover{border-color:var(--border);color:var(--fg)}
 
-.logo-band{padding:18px 40px;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.04);text-align:center}
-.logo-band-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:12px}
-.logo-band-items{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center}
-.logo-band-item{font-size:13px;font-weight:700;color:rgba(255,255,255,0.2);letter-spacing:0.06em;text-transform:uppercase}
+/* status console row under hero */
+.console{
+  display:inline-flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;
+  font-family:var(--mono);
+}
+.chip{
+  display:inline-flex;align-items:center;gap:9px;
+  font-size:12px;font-weight:500;letter-spacing:0.02em;color:var(--fg-mut);
+  background:var(--surface);border:1px solid var(--border-soft);border-radius:100px;padding:8px 15px;
+}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 8px var(--live);animation:pulse 2.4s ease-in-out infinite}
+.chip .dot.blue{background:var(--accent);box-shadow:0 0 8px var(--accent)}
+.chip b{color:var(--fg);font-weight:600}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.35}}
 
-.section{padding:64px max(40px,calc((100% - 1080px)/2));position:relative;overflow:hidden}
-.section-glow-l{position:absolute;left:-100px;top:50%;transform:translateY(-50%);width:300px;height:300px;background:radial-gradient(ellipse,rgba(45,156,219,0.07) 0%,transparent 70%);pointer-events:none}
-.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px}
-.sec-label-dot{width:4px;height:4px;border-radius:50%;background:#2D9CDB;flex-shrink:0}
-.sec-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:12px}
-.sec-h em{font-style:italic;font-weight:400;color:#2D9CDB}
-.sec-body{font-size:17px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:28px;max-width:700px}
+/* ---------- ROSTER (centerpiece) ---------- */
+#roster{padding-top:96px}
+.roster-glow{top:60px;left:-120px;width:380px;height:380px;background:radial-gradient(circle,rgba(77,163,255,0.10),transparent 70%)}
+.roster-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:36px}
+.roster-meta{font-family:var(--mono);font-size:12px;color:var(--fg-dim);text-align:right;line-height:1.7}
+.roster-meta .num{color:var(--accent);font-weight:600}
+.roster-grid{display:grid;grid-template-columns:1fr;gap:14px}
+.agent{
+  position:relative;overflow:hidden;
+  background:linear-gradient(160deg,var(--surface-2),var(--surface));
+  border:1px solid var(--border-soft);border-radius:18px;padding:24px;
+  transition:transform .25s var(--ease),border-color .25s var(--ease),box-shadow .25s var(--ease);
+}
+.agent::after{content:"";position:absolute;inset:0;border-radius:18px;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx,50%) var(--my,0%),rgba(77,163,255,0.10),transparent 60%);
+  opacity:0;transition:opacity .3s var(--ease)}
+.agent:hover{transform:translateY(-4px);border-color:var(--border);box-shadow:0 24px 60px -28px rgba(77,163,255,0.5)}
+.agent:hover::after{opacity:1}
+.agent-top{display:flex;align-items:flex-start;gap:16px;margin-bottom:16px}
+.agent-icon{
+  width:52px;height:52px;border-radius:13px;flex-shrink:0;
+  background:rgba(77,163,255,0.10);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;color:var(--accent-bright);
+  box-shadow:inset 0 0 18px -8px rgba(143,203,255,0.6);
+}
+.agent-icon svg{width:26px;height:26px}
+.agent-id{flex:1;min-width:0}
+.codename{font-family:var(--mono);font-size:1.3rem;font-weight:700;letter-spacing:-0.01em;color:var(--fg);line-height:1}
+.agent-role{font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-top:7px}
+.agent-handle{font-size:15px;color:var(--fg-mut);line-height:1.55;margin-bottom:18px}
+.agent-status{
+  display:flex;align-items:center;gap:9px;font-family:var(--mono);font-size:11.5px;
+  color:var(--fg-dim);border-top:1px solid var(--border-soft);padding-top:14px;
+}
+.agent-status .dot{width:7px;height:7px;border-radius:50%;background:var(--live);box-shadow:0 0 8px var(--live);flex-shrink:0;animation:pulse 2.4s ease-in-out infinite}
+.agent-status b{color:var(--fg-mut);font-weight:600}
 
-.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px}
-.tg-cell{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px}
-.tg-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.1);margin-bottom:10px}
-.tg-cell.dead .tg-dot{background:#c0392b;box-shadow:0 0 8px rgba(192,57,43,0.4)}
-.tg-cell.limbo .tg-dot{background:#e67e22;box-shadow:0 0 8px rgba(230,126,34,0.3)}
-.tg-tool{font-size:15px;font-weight:600;color:rgba(255,255,255,0.55)}
-.tg-status{font-size:11px;color:rgba(255,255,255,0.25);margin-top:3px}
-.tg-cell.dead .tg-status{color:rgba(192,57,43,0.8)}
-.tg-cell.limbo .tg-status{color:rgba(230,126,34,0.7)}
-.pull-quote{font-size:1.2rem;font-style:italic;color:rgba(255,255,255,0.35);line-height:1.55;border-left:2px solid #2D9CDB;padding-left:20px;max-width:500px}
+/* ---------- METRICS BAND ---------- */
+.metrics-band{background:linear-gradient(180deg,rgba(16,29,51,0.5),transparent)}
+.market-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:18px}
+.market-card{
+  background:var(--surface);border:1px solid var(--border-soft);border-radius:16px;padding:24px;
+  transition:border-color .25s var(--ease),background .25s var(--ease)}
+.market-card:hover{border-color:var(--border);background:var(--surface-2)}
+.market-n{font-family:var(--display);font-size:2.6rem;font-weight:700;letter-spacing:-0.02em;color:var(--accent);line-height:1}
+.market-l{font-size:15px;color:var(--fg-mut);margin-top:10px;line-height:1.5}
+.market-src{font-family:var(--mono);font-size:11px;color:var(--fg-faint);margin-top:12px;line-height:1.5;letter-spacing:0.01em}
+.proof-divider{display:flex;align-items:center;gap:14px;margin:34px 0 22px;font-family:var(--mono);font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--fg-dim)}
+.proof-divider::before,.proof-divider::after{content:"";height:1px;flex:1;background:var(--border-soft)}
+.proof-grid{display:grid;grid-template-columns:1fr;gap:12px}
+.proof-card{
+  background:linear-gradient(160deg,rgba(77,163,255,0.06),var(--surface));
+  border:1px solid var(--border);border-radius:16px;padding:24px;position:relative;overflow:hidden}
+.proof-tag{position:absolute;top:16px;right:16px;font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);opacity:0.75}
+.proof-n{font-family:var(--display);font-size:2.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--fg);margin-bottom:8px;line-height:1}
+.proof-ctx{font-size:15px;color:var(--fg-mut);line-height:1.55;margin-bottom:12px}
+.proof-from{font-family:var(--mono);font-size:10.5px;letter-spacing:0.08em;text-transform:uppercase;color:var(--fg-faint)}
 
-.insights{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;max-width:720px}
-.insight{display:flex;gap:16px;padding:18px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:12px}
-.i-num{font-size:10px;font-weight:800;color:rgba(45,156,219,0.4);width:20px;flex-shrink:0;padding-top:2px;letter-spacing:0.05em}
-.i-text{font-size:16px;color:rgba(255,255,255,0.5);line-height:1.65}
-.i-text strong{font-weight:700;color:#fff}
+/* reveal-on-scroll */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.in{opacity:1;transform:none}
 
-.inline-cta{padding:20px max(40px,calc((100% - 1080px)/2));background:rgba(45,156,219,0.05);border-top:1px solid rgba(45,156,219,0.1);border-bottom:1px solid rgba(45,156,219,0.1);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-.inline-cta-text{font-size:15px;color:rgba(255,255,255,0.4)}
-.inline-cta-text strong{color:#fff;font-weight:600}
-.cta-sm{font-size:11px;font-weight:700;letter-spacing:0.06em;color:#2D9CDB;background:rgba(45,156,219,0.08);border:1px solid rgba(45,156,219,0.2);padding:9px 18px;border-radius:100px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+/* ---------- diagnosis insights ---------- */
+.insights{display:flex;flex-direction:column;gap:10px;max-width:760px}
+.insight{display:flex;gap:18px;padding:20px 22px;background:var(--surface);border:1px solid var(--border-soft);border-radius:14px}
+.i-num{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);width:26px;flex-shrink:0;padding-top:2px}
+.i-text{font-size:16px;color:var(--fg-mut);line-height:1.65}
+.i-text strong{font-weight:700;color:var(--fg)}
 
-.aoa-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.aoa-step{display:flex;gap:16px;padding:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:14px;align-items:flex-start}
-.aoa-icon{width:42px;height:42px;border-radius:10px;background:rgba(45,156,219,0.1);border:1px solid rgba(45,156,219,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.aoa-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.aoa-body{font-size:15px;color:rgba(255,255,255,0.45);line-height:1.6}
-.aoa-badge{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2D9CDB;background:rgba(45,156,219,0.08);border:1px solid rgba(45,156,219,0.15);padding:3px 12px;border-radius:100px}
+/* ---------- inline CTA ---------- */
+.inline-cta{
+  padding:24px max(20px,calc((100% - 1140px)/2));
+  background:linear-gradient(90deg,rgba(30,111,217,0.10),rgba(77,163,255,0.04));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.inline-cta-text{font-size:16px;color:var(--fg-mut)}
+.inline-cta-text strong{color:var(--fg);font-weight:600}
+.cta-sm{
+  font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.03em;color:var(--accent-bright);
+  background:rgba(77,163,255,0.10);border:1px solid var(--border);padding:11px 20px;border-radius:10px;
+  cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-flex;align-items:center;min-height:44px;
+  transition:background .2s var(--ease)}
+.cta-sm:hover{background:rgba(77,163,255,0.18)}
 
-.after-box{background:rgba(45,156,219,0.04);border:1px solid rgba(45,156,219,0.15);border-radius:14px;padding:22px;margin-top:16px}
-.after-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#2D9CDB;margin-bottom:14px}
-.after-items{display:flex;flex-direction:column;gap:10px}
-.after-item{display:flex;gap:12px;font-size:15px;color:rgba(255,255,255,0.45);line-height:1.5}
-.after-num{font-size:11px;font-weight:800;color:#2D9CDB;width:18px;flex-shrink:0;padding-top:1px}
+/* ---------- AOA how it works ---------- */
+.aoa-steps{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.aoa-step{display:flex;gap:18px;padding:24px;background:var(--surface);border:1px solid var(--border-soft);border-radius:16px;align-items:flex-start;
+  transition:border-color .25s var(--ease)}
+.aoa-step:hover{border-color:var(--border)}
+.aoa-icon{width:46px;height:46px;border-radius:12px;background:rgba(77,163,255,0.10);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--accent-bright)}
+.aoa-icon svg{width:22px;height:22px}
+.aoa-title{font-family:var(--display);font-size:16px;font-weight:600;color:var(--fg);margin-bottom:7px;line-height:1.25}
+.aoa-body{font-size:15px;color:var(--fg-mut);line-height:1.6}
+.aoa-badge{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--accent);background:rgba(77,163,255,0.08);border:1px solid var(--border);padding:5px 13px;border-radius:100px}
 
-.price-wrap{padding:0 max(40px,calc((100% - 1080px)/2)) 40px}
-.price-band{background:rgba(45,156,219,0.06);border:1px solid rgba(45,156,219,0.15);border-radius:20px;padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
-.price-n{font-size:clamp(2.5rem,6vw,3.6rem);font-weight:900;letter-spacing:-2px;color:#2D9CDB;line-height:1}
-.price-period{font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;letter-spacing:0.04em}
-.price-incl{font-size:15px;color:rgba(255,255,255,0.3);margin-top:10px;max-width:260px;line-height:1.65}
+/* ---------- pricing ---------- */
+.price-wrap{padding:0 max(20px,calc((100% - 1140px)/2)) 40px}
+.price-band{
+  background:linear-gradient(150deg,rgba(30,111,217,0.14),rgba(77,163,255,0.05));
+  border:1px solid var(--border);border-radius:22px;padding:38px;position:relative;overflow:hidden;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:24px}
+.price-band::before{content:"";position:absolute;top:-80px;right:-80px;width:280px;height:280px;
+  background:radial-gradient(circle,rgba(77,163,255,0.18),transparent 70%);pointer-events:none}
+.price-n{font-family:var(--display);font-size:clamp(2.8rem,7vw,4rem);font-weight:700;letter-spacing:-0.03em;color:var(--fg);line-height:1}
+.price-n span{color:var(--accent)}
+.price-period{font-family:var(--mono);font-size:12px;color:var(--accent-bright);margin-top:8px;letter-spacing:0.03em}
+.price-incl{font-size:15px;color:var(--fg-mut);margin-top:14px;max-width:320px;line-height:1.65}
+.price-cta-col{position:relative;z-index:1}
 
-.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
-.proof-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
-.proof-n{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:#2D9CDB;margin-bottom:6px;line-height:1}
-.proof-ctx{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:10px}
-.proof-from{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.2)}
+/* ---------- founder ---------- */
+.founder{padding:88px max(20px,calc((100% - 1140px)/2));background:linear-gradient(180deg,rgba(16,29,51,0.45),transparent);
+  border-top:1px solid var(--border-soft);border-bottom:1px solid var(--border-soft);position:relative;overflow:hidden}
+.founder-inner{display:flex;gap:36px;align-items:flex-start;flex-wrap:wrap}
+.founder-avatar{width:116px;height:116px;border-radius:22px;flex-shrink:0;
+  background:linear-gradient(140deg,rgba(77,163,255,0.35),rgba(30,111,217,0.08));
+  border:1px solid var(--border);display:flex;align-items:center;justify-content:center;
+  font-family:var(--display);font-size:34px;font-weight:700;color:var(--accent-bright);letter-spacing:-0.02em;
+  box-shadow:inset 0 0 30px -10px rgba(143,203,255,0.5)}
+.founder-content{flex:1;min-width:240px}
+.founder-name{font-family:var(--display);font-size:1.7rem;font-weight:700;letter-spacing:-0.01em;margin-bottom:5px}
+.founder-title{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:500;margin-bottom:16px;letter-spacing:0.02em}
+.founder-bio{font-size:16px;color:var(--fg-mut);line-height:1.75;margin-bottom:12px;max-width:640px}
+.founder-bio strong{color:var(--fg);font-weight:600}
+.founder-creds{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.founder-cred{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--fg-dim);
+  background:var(--surface);border:1px solid var(--border-soft);border-radius:100px;padding:6px 15px;letter-spacing:0.02em}
 
-.founder{padding:64px max(40px,calc((100% - 1080px)/2));background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden}
-.founder-inner{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
-.founder-avatar{width:110px;height:110px;border-radius:20px;background:linear-gradient(135deg,rgba(45,156,219,0.3),rgba(45,156,219,0.05));border:1px solid rgba(45,156,219,0.2);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#2D9CDB;flex-shrink:0;letter-spacing:-1px}
-.founder-content{flex:1;min-width:200px}
-.founder-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:10px}
-.founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px}
-.founder-title{font-size:13px;color:#2D9CDB;font-weight:600;margin-bottom:14px}
-.founder-bio{font-size:16px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:10px;max-width:620px}
-.founder-creds{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.founder-cred{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.3)}
+/* ---------- fit ---------- */
+.fit-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:14px}
+.fit-col{background:var(--surface);border:1px solid var(--border-soft);border-radius:16px;padding:26px}
+.fit-col.yes{border-color:rgba(52,211,153,0.2)}
+.fit-col-head{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--fg-dim);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.fit-col-head.yes{color:var(--live)}
+.fit-item{font-size:15px;color:var(--fg-mut);padding:10px 0;border-bottom:1px solid var(--border-soft);line-height:1.45;display:flex;align-items:flex-start;gap:11px}
+.fit-item:last-child{border-bottom:none}
+.fit-item.yes{color:var(--fg)}
+.fit-ic{flex-shrink:0;margin-top:2px}
+.fit-ic.check{color:var(--live)}
+.fit-ic.cross{color:var(--fg-faint)}
+.tf-note{border:1px solid var(--border);border-radius:14px;padding:22px;background:rgba(30,111,217,0.06);margin-top:14px}
+.tf-note-label{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:9px}
+.tf-note-text{font-size:15px;color:var(--fg-mut);line-height:1.65}
+.tf-note-text strong{color:var(--fg);font-weight:600}
 
-.faqs{display:flex;flex-direction:column;gap:8px;margin-top:20px;max-width:720px}
-.faq{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;cursor:pointer}
-.faq-q{font-size:14px;font-weight:700;color:rgba(255,255,255,0.75);display:flex;justify-content:space-between;align-items:center;gap:16px}
-.faq-icon{font-size:20px;color:#2D9CDB;flex-shrink:0;transition:transform 0.2s;line-height:1}
-.faq-a{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:12px;display:none}
+/* ---------- FAQ ---------- */
+.faqs{display:flex;flex-direction:column;gap:10px;max-width:760px}
+.faq{background:var(--surface);border:1px solid var(--border-soft);border-radius:14px;padding:22px 24px;cursor:pointer;transition:border-color .2s var(--ease)}
+.faq:hover{border-color:var(--border)}
+.faq-q{font-family:var(--display);font-size:16px;font-weight:600;color:var(--fg);display:flex;justify-content:space-between;align-items:center;gap:18px;line-height:1.35}
+.faq-icon{flex-shrink:0;color:var(--accent);transition:transform .25s var(--ease);width:22px;height:22px}
+.faq-a{font-size:15px;color:var(--fg-mut);line-height:1.7;margin-top:14px;display:none}
 .faq.open .faq-a{display:block}
 .faq.open .faq-icon{transform:rotate(45deg)}
 
-.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.fit-col{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
-.fit-col-head{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:14px}
-.fit-col-head.yes{color:#34d399}
-.fit-item{font-size:15px;color:rgba(255,255,255,0.4);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.4;display:flex;align-items:flex-start;gap:8px}
-.fit-item:last-child{border-bottom:none}
-.fit-item.yes{color:rgba(255,255,255,0.75)}
-.fit-check{color:#34d399;flex-shrink:0}
-.fit-cross{color:rgba(255,255,255,0.2);flex-shrink:0}
-.tf-note{border:1px solid rgba(45,156,219,0.15);border-radius:12px;padding:20px;background:rgba(45,156,219,0.04);margin-top:8px}
-.tf-note-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(45,156,219,0.6);margin-bottom:8px}
-.tf-note-text{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.65}
+/* ---------- close ---------- */
+.close{padding:104px max(20px,calc((100% - 1140px)/2));text-align:center;position:relative;overflow:hidden}
+.close-glow{position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:680px;height:380px;max-width:120vw;
+  background:radial-gradient(ellipse,rgba(77,163,255,0.16) 0%,transparent 70%);pointer-events:none;filter:blur(8px)}
+.close-pre{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;color:var(--accent);margin-bottom:22px}
+.close-h{font-family:var(--display);font-size:clamp(2rem,4.6vw,2.9rem);font-weight:700;letter-spacing:-0.02em;color:var(--fg);line-height:1.1;margin-bottom:18px}
+.close-h .accent{color:var(--accent)}
+.close-sub{font-size:16px;color:var(--fg-mut);margin:0 auto 34px;max-width:460px;line-height:1.7}
+.close-micro{font-family:var(--mono);font-size:12px;color:var(--fg-dim);margin-top:18px}
 
-.close{padding:80px max(40px,calc((100% - 1080px)/2));text-align:center;position:relative;overflow:hidden}
-.close-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(45,156,219,0.12) 0%,transparent 70%);pointer-events:none}
-.close-pre{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:20px}
-.close-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:rgba(255,255,255,0.5);line-height:1.2;margin-bottom:14px;font-style:italic}
-.close-h em{font-style:normal;color:#2D9CDB}
-.close-sub{font-size:15px;color:rgba(255,255,255,0.3);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.7}
-.close-micro{font-size:12px;color:rgba(255,255,255,0.2);margin-top:16px;font-style:italic}
+/* ---------- footer ---------- */
+footer{padding:32px max(20px,calc((100% - 1140px)/2));border-top:1px solid var(--border-soft)}
+.footer-top{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;margin-bottom:18px}
+.footer-logo{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.4em;text-transform:uppercase;color:var(--fg-dim)}
+.footer-links{display:flex;gap:24px}
+.footer-link{font-size:13px;color:var(--fg-dim);text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+.footer-link:hover{color:var(--fg)}
+.footer-legal{font-size:12px;color:var(--fg-faint);line-height:1.6}
 
-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.2)}
-.footer-links{display:flex;gap:20px}
-.footer-link{font-size:11px;color:rgba(255,255,255,0.15);text-decoration:none}
-
-@media(min-width:768px){
+/* ---------- responsive ---------- */
+@media(min-width:720px){
+  .roster-grid{grid-template-columns:repeat(2,1fr)}
+  .roster-grid .agent:last-child{grid-column:1 / -1}
+  .market-grid{grid-template-columns:repeat(3,1fr)}
+  .proof-grid{grid-template-columns:repeat(2,1fr)}
   .aoa-steps{display:grid;grid-template-columns:repeat(3,1fr);align-items:stretch}
-  .inline-cta{flex-direction:column;justify-content:center;text-align:center}
-  .price-band{flex-direction:column;justify-content:center;text-align:center;max-width:600px;margin:0 auto}
+  .fit-grid{grid-template-columns:1fr 1fr}
+}
+@media(min-width:1040px){
+  .roster-grid{grid-template-columns:repeat(3,1fr)}
+  .roster-grid .agent:nth-child(4){grid-column:auto}
+  .roster-grid .agent:last-child{grid-column:auto}
+}
+@media(max-width:719px){
+  nav{padding:14px 18px}
+  .nav-links{gap:14px}
+  .nav-links .nav-link{display:none}
+  .section,.founder,.close,.hero{padding-left:18px;padding-right:18px}
+  .inline-cta,.price-wrap,footer{padding-left:18px;padding-right:18px}
+  .section{padding-top:64px;padding-bottom:64px}
+  .price-band{flex-direction:column;align-items:flex-start;padding:28px}
+  .footer-top{flex-direction:column;align-items:flex-start}
 }
 
-@media(max-width:600px){
-  nav{padding:16px 20px}
-  .nav-links .nav-link{display:none}
-  .hero,.section,.founder,.close{padding-left:20px;padding-right:20px}
-  .logo-band,.inline-cta{padding-left:20px;padding-right:20px}
-  .price-wrap{padding:0 20px 32px}
-  .hero-h{font-size:2.2rem}
-  .tg{grid-template-columns:repeat(2,1fr)}
-  .proof-grid{grid-template-columns:1fr}
-  .fit-grid{grid-template-columns:1fr}
-  .stat-pills{flex-direction:column;align-items:center}
-  .stat-pill{max-width:100%;width:100%}
-  .price-band{flex-direction:column;align-items:flex-start}
-  footer{padding:20px}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{animation:none !important;transition:none !important}
+  .reveal{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
+<div class="wrap">
 
 <nav>
-  <a href="/" class="logo">VerusLink</a>
+  <a href="/" class="logo" aria-label="VerusLink home">
+    <svg class="logo-mark" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <rect x="1" y="1" width="30" height="30" rx="8" fill="#0A1322" stroke="#1E6FD9" stroke-width="1.4"/>
+      <path d="M9 9.5L16 23l7-13.5" stroke="#4DA3FF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="16" cy="9.5" r="2" fill="#8FCBFF"/>
+    </svg>
+    <span class="logo-word">VerusLink</span>
+  </a>
   <div class="nav-links">
+    <a href="#roster" class="nav-link">The crew</a>
     <a href="#how-it-works" class="nav-link">How it works</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#faqs" class="nav-link">FAQs</a>
@@ -181,89 +387,207 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   </div>
 </nav>
 
+<!-- ================= HERO ================= -->
 <section class="hero">
   <div class="hero-glow"></div>
   <div class="hero-glow-2"></div>
-  <div class="hero-pill"><div class="hero-pill-dot"></div>AI Concierge · Sydney, Australia</div>
-  <h1 class="hero-h">You already tried AI.<br><em>That's the problem.</em></h1>
-  <p class="op-line">You bought the tools. Nothing stuck. VerusLink is <strong>the missing operator layer between your tools and your Tuesday.</strong></p>
+  <div class="eyebrow"><span class="live-dot"></span>OPERATIONS LIVE · SYDNEY, AUSTRALIA</div>
+  <h1 class="hero-h">Your AI operations team.<span class="accent">One retainer.</span></h1>
+  <p class="urgency">// Your business is bleeding while you read this.</p>
+  <p class="op-line">Not a tool. Not a course. Not a solo consultant. For one monthly line item you commission a whole always-on crew that <strong>wires your tools together and actually ships the work.</strong></p>
   <div class="hero-btns">
-    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
-    <a href="#how-it-works" class="btn-ghost">See how it works</a>
+    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <a href="#roster" class="btn-ghost">Meet the crew</a>
   </div>
-  <div class="stat-pills">
-    <div class="stat-pill"><div class="stat-pill-n">40%</div><div class="stat-pill-l">have not seen measurable results from AI</div><div class="stat-pill-src">ECI AI Readiness Report, 550+ SMB leaders</div></div>
-    <div class="stat-pill"><div class="stat-pill-n">42%</div><div class="stat-pill-l">discontinued most of their AI initiatives in 2025</div><div class="stat-pill-src">Alpha Apex Group</div></div>
-    <div class="stat-pill"><div class="stat-pill-n">88%</div><div class="stat-pill-l">cite lack of expertise and clarity on where to begin</div><div class="stat-pill-src">ECI AI Readiness Report</div></div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="sec-label"><div class="sec-label-dot"></div>What's actually going on</div>
-  <h2 class="sec-h">AI didn't fail you.<br><em>Application did.</em></h2>
-  <p class="sec-body">The tools are genuinely powerful. The gap is between what they can do in theory and what's running inside your specific business on a Tuesday afternoon.</p>
-  <div class="insights">
-    <div class="insight"><div class="i-num">01</div><div class="i-text"><strong>The first win has to happen in two weeks, or it never happens.</strong> Most implementations die in setup. We start with the one thing that pays for itself immediately, then build from there.</div></div>
-    <div class="insight"><div class="i-num">02</div><div class="i-text"><strong>You don't have time to learn and run a business simultaneously.</strong> The owners getting results aren't technically smarter. They have someone who does the implementation work for them.</div></div>
-    <div class="insight"><div class="i-num">03</div><div class="i-text"><strong>Most consultants deliver decks, not automations.</strong> After 40 hours and $10,000, the average AI consulting engagement produces a strategy document. Not a single working automation. We ship something real on call one. That's not a marketing claim. It's the only way this model works.</div></div>
+  <div class="console">
+    <span class="chip"><span class="dot"></span><b>5 agents</b>&nbsp;active</span>
+    <span class="chip"><span class="dot blue"></span>uptime&nbsp;<b>24/7</b></span>
+    <span class="chip"><span class="dot"></span>async&nbsp;reply&nbsp;<b>&lt;12h</b></span>
+    <span class="chip"><span class="dot blue"></span>lock-in&nbsp;<b>none</b></span>
   </div>
 </section>
 
+<!-- ================= ROSTER (centerpiece) ================= -->
+<section class="section" id="roster">
+  <div class="glow roster-glow"></div>
+  <div class="roster-head">
+    <div>
+      <div class="sec-label"><span class="sec-label-dot"></span>The crew you hire</div>
+      <h2 class="sec-h">Five agents. <span class="accent">One unit.</span></h2>
+      <p class="sec-body" style="margin-bottom:0">A named operations team that runs in the background of your business. Each one owns a job. Together they cover the boring 80 percent so you stop doing twelve jobs at once.</p>
+    </div>
+    <div class="roster-meta">
+      <div>UNIT: <span class="num">VERUSLINK-01</span></div>
+      <div>STATUS: <span class="num">OPERATIONAL</span></div>
+      <div>HEADCOUNT: <span class="num">05 / 05</span></div>
+    </div>
+  </div>
+
+  <div class="roster-grid">
+    <!-- FORGE -->
+    <article class="agent" tabindex="0">
+      <div class="agent-top">
+        <div class="agent-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M14.7 6.3a3.5 3.5 0 00-4.9 4.2L4 16.3 7.7 20l5.8-5.8a3.5 3.5 0 004.2-4.9l-2.5 2.5-2.3-.5-.5-2.3 2.3-2.7z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        </div>
+        <div class="agent-id">
+          <div class="codename">Forge</div>
+          <div class="agent-role">Build &amp; Automation</div>
+        </div>
+      </div>
+      <p class="agent-handle">Wires your existing tools together and ships working automations. Zero new subscriptions.</p>
+      <div class="agent-status"><span class="dot"></span>now handling: <b>wiring CRM &rarr; invoicing</b></div>
+    </article>
+
+    <!-- SCOUT -->
+    <article class="agent" tabindex="0">
+      <div class="agent-top">
+        <div class="agent-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.6"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11 8v6M8 11h6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+        </div>
+        <div class="agent-id">
+          <div class="codename">Scout</div>
+          <div class="agent-role">Research &amp; Intel</div>
+        </div>
+      </div>
+      <p class="agent-handle">Finds leads, watches your market, and gathers what you need to make the call.</p>
+      <div class="agent-status"><span class="dot"></span>now handling: <b>monitoring 14 sources</b></div>
+    </article>
+
+    <!-- MAVEN -->
+    <article class="agent" tabindex="0">
+      <div class="agent-top">
+        <div class="agent-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 16V8a1 1 0 011-1h3l4-3v16l-4-3H5a1 1 0 01-1-1z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M16 9a4 4 0 010 6M18.5 6.5a7.5 7.5 0 010 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        </div>
+        <div class="agent-id">
+          <div class="codename">Maven</div>
+          <div class="agent-role">Content &amp; Marketing</div>
+        </div>
+      </div>
+      <p class="agent-handle">Produces and scales on-brand content and campaigns. One client hit 38x output.</p>
+      <div class="agent-status"><span class="dot"></span>now handling: <b>drafting week's content</b></div>
+    </article>
+
+    <!-- FINNEGAN -->
+    <article class="agent" tabindex="0">
+      <div class="agent-top">
+        <div class="agent-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3.5" y="6" width="17" height="12" rx="2" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="12" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 9.5h.01M17.5 14.5h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </div>
+        <div class="agent-id">
+          <div class="codename">Finnegan</div>
+          <div class="agent-role">Finance &amp; Admin</div>
+        </div>
+      </div>
+      <p class="agent-handle">Chases invoices, reconciles, and handles the money admin. Chased $1,800 in a fortnight.</p>
+      <div class="agent-status"><span class="dot"></span>now handling: <b>chasing 3 overdue invoices</b></div>
+    </article>
+
+    <!-- BEACON -->
+    <article class="agent" tabindex="0">
+      <div class="agent-top">
+        <div class="agent-icon">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v3M12 18v3M4.5 12h-1.5M21 12h-1.5M6 6l-1 -1M19 6l1 -1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="12" cy="12" r="4.5" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <div class="agent-id">
+          <div class="codename">Beacon</div>
+          <div class="agent-role">Comms &amp; Follow-up</div>
+        </div>
+      </div>
+      <p class="agent-handle">Handles inbox follow-up and client replies. Never drops a thread. Recovered 4 hrs/week.</p>
+      <div class="agent-status"><span class="dot"></span>now handling: <b>follow-up across 3 inboxes</b></div>
+    </article>
+  </div>
+</section>
+
+<!-- ================= DIAGNOSIS ================= -->
 <section class="section" style="padding-top:0">
-  <div class="sec-label"><div class="sec-label-dot"></div>Why now</div>
-  <h2 class="sec-h">Why now.<br><em>The squeeze is real.</em></h2>
-  <p class="sec-body">Australian operating costs went up again this quarter. Super obligations are rising. Card surcharge bans are eating margins. AI automation isn't a productivity hack anymore. It's a cost-reduction lever. The question is how many more quarters you absorb rising costs without automating the boring 80 percent.</p>
+  <div class="sec-label"><span class="sec-label-dot"></span>What's actually going on</div>
+  <h2 class="sec-h">AI didn't fail you. <span class="accent">Application did.</span></h2>
+  <p class="sec-body">The tools are genuinely powerful. The gap is between what they can do in theory and what's running inside your specific business on a Tuesday afternoon. A crew closes that gap.</p>
+  <div class="insights reveal">
+    <div class="insight"><div class="i-num">01</div><div class="i-text"><strong>The first win has to happen fast, or it never happens.</strong> Most implementations die in setup. The crew starts with the one thing that pays for itself immediately, then builds from there.</div></div>
+    <div class="insight"><div class="i-num">02</div><div class="i-text"><strong>You don't have time to learn AI and run a business at once.</strong> The owners getting results aren't smarter. They have a team that does the implementation work for them.</div></div>
+    <div class="insight"><div class="i-num">03</div><div class="i-text"><strong>Most consultants deliver decks, not automations.</strong> After 40 hours and $10,000, the average AI engagement produces a strategy document. Not one working automation. The crew ships something real on call one.</div></div>
+  </div>
 </section>
 
+<!-- ================= METRICS BAND ================= -->
+<section class="section metrics-band">
+  <div class="sec-label"><span class="sec-label-dot"></span>The numbers</div>
+  <h2 class="sec-h">The market is stuck. <span class="accent">The crew isn't.</span></h2>
+  <p class="sec-body">Most business owners bought the tools and saw nothing stick. Here's the gap, and here's what gets closed when an actual team runs it.</p>
+
+  <div class="market-grid reveal">
+    <div class="market-card"><div class="market-n">40%</div><div class="market-l">have not seen measurable results from AI.</div><div class="market-src">ECI AI Readiness Report, 550+ SMB leaders</div></div>
+    <div class="market-card"><div class="market-n">42%</div><div class="market-l">discontinued most of their AI initiatives in 2025.</div><div class="market-src">Alpha Apex Group</div></div>
+    <div class="market-card"><div class="market-n">88%</div><div class="market-l">cite lack of expertise and clarity on where to begin.</div><div class="market-src">ECI AI Readiness Report</div></div>
+  </div>
+
+  <div class="proof-divider">Documented outcomes</div>
+
+  <div class="proof-grid reveal">
+    <div class="proof-card"><div class="proof-tag">Beacon</div><div class="proof-n">4 hrs/week</div><div class="proof-ctx">Recovered from a follow-up process running manually across three different inboxes.</div><div class="proof-from">Professional services, Sydney</div></div>
+    <div class="proof-card"><div class="proof-tag">Finnegan</div><div class="proof-n">$1,800</div><div class="proof-ctx">In outstanding invoices chased and collected in the first fortnight. The fee paid for itself.</div><div class="proof-from">Consultant, Melbourne</div></div>
+    <div class="proof-card"><div class="proof-tag">Forge</div><div class="proof-n">Zero</div><div class="proof-ctx">New subscriptions added. Everything built on tools the client already had and was already paying for.</div><div class="proof-from">Operator, Perth</div></div>
+    <div class="proof-card"><div class="proof-tag">Maven</div><div class="proof-n">38&times;</div><div class="proof-ctx">Content output increase for a wellness brand using AI-assisted systems, at one-eighth the previous external cost.</div><div class="proof-from">Multi-location business, Sydney &amp; Melbourne</div></div>
+  </div>
+</section>
+
+<!-- ================= INLINE CTA ================= -->
 <div class="inline-cta">
   <div class="inline-cta-text"><strong>The intake form is free.</strong> The first call ships something real.</div>
-  <a href="https://www.veruslink.au/audit" class="cta-sm">Start with the intake form →</a>
+  <a href="https://www.veruslink.au/audit" class="cta-sm">Start with the intake form &rarr;</a>
 </div>
 
+<!-- ================= HOW IT WORKS (AOA) ================= -->
 <section class="section" id="how-it-works">
-  <div class="sec-label"><div class="sec-label-dot"></div>What we actually do</div>
-  <h2 class="sec-h">Done-with-you.<br><em>Not done-for-you.</em></h2>
-  <p class="sec-body">Not a course. Not a consultant who hands you a report. A retained relationship where AI gets embedded into how your business actually operates — and we stick around to make sure it keeps working.</p>
-  <div class="aoa-steps">
-    <div class="aoa-step"><div class="aoa-icon">📋</div><div><div class="aoa-title">The audit — map what's actually broken</div><div class="aoa-body">Complete a 10-minute intake form before we speak. We map your time sinks, existing tools, and biggest bottlenecks — and surface 1–3 AI opportunities before call one. The form is the audit. No prep wasted.</div><div class="aoa-badge">Free. No commitment.</div></div></div>
-    <div class="aoa-step"><div class="aoa-icon">⚡</div><div><div class="aoa-title">Every call — Audit, Optimize, Automate</div><div class="aoa-body">You share your screen. We fix the process first, then wire in AI — because automating chaos just gives you faster chaos. Every call ships at least one skill or automation. No first-call win means the engagement is already dead.</div><div class="aoa-badge">Documented ROI by day 30.</div></div></div>
-    <div class="aoa-step"><div class="aoa-icon">🔁</div><div><div class="aoa-title">Between calls — always in your corner</div><div class="aoa-body">Unlimited async support via voice message — replied to in under 12 business hours. Every session is logged in a shared Notion hub: skills built, automations shipped, time recovered. You see exactly what each month is worth. That's what makes $1,500 a no-brainer at renewal.</div><div class="aoa-badge">Cancel anytime. Most don't.</div></div></div>
+  <div class="sec-label"><span class="sec-label-dot"></span>How the crew works</div>
+  <h2 class="sec-h">Done-with-you. <span class="accent">Not done-for-you.</span></h2>
+  <p class="sec-body">Not a course. Not a consultant who hands you a report. A retained crew where AI gets embedded into how your business actually operates, and we stick around to keep it working. The method is Audit, Optimize, Automate.</p>
+  <div class="aoa-steps reveal">
+    <div class="aoa-step">
+      <div class="aoa-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M9 8h6M9 12h6M9 16h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></div>
+      <div><div class="aoa-title">Audit. Map what's actually broken.</div><div class="aoa-body">Complete a 10-minute intake form before we speak. We map your time sinks, existing tools, and biggest bottlenecks, and surface 1 to 3 AI opportunities before call one. The form is the audit.</div><span class="aoa-badge">Free. No commitment.</span></div>
+    </div>
+    <div class="aoa-step">
+      <div class="aoa-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+      <div><div class="aoa-title">Optimize. Then automate.</div><div class="aoa-body">You share your screen. We fix the process first, then the crew wires in AI, because automating chaos just gives you faster chaos. Every call ships at least one skill. No first-call win means the engagement is dead.</div><span class="aoa-badge">Documented ROI by day 30.</span></div>
+    </div>
+    <div class="aoa-step">
+      <div class="aoa-icon"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20 11a8 8 0 10-2.3 5.6M20 5v5h-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div><div class="aoa-title">Always in your corner.</div><div class="aoa-body">Unlimited async support, replied to in under 12 business hours. Every session is logged in a shared Notion hub: skills built, automations shipped, time recovered. You see exactly what each month is worth.</div><span class="aoa-badge">Cancel anytime. Most don't.</span></div>
+    </div>
   </div>
 </section>
 
+<!-- ================= PRICING ================= -->
 <div class="price-wrap">
   <div class="price-band">
     <div>
-      <div class="price-n">$1,500</div>
-      <div class="price-period">per month · cancel anytime · no lock-in</div>
-      <div class="price-incl">Two done-with-you calls · AOA methodology · unlimited async · Notion hub with quantified ROI · done-for-you builds available as upsell</div>
+      <div class="price-n">$1,500<span>/mo</span></div>
+      <div class="price-period">// cancel anytime · no lock-in</div>
+      <div class="price-incl">Two done-with-you calls. The full crew of five agents. AOA methodology. Unlimited async. A Notion hub with quantified ROI. Done-for-you builds available as an upsell.</div>
     </div>
-    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+    <div class="price-cta-col">
+      <a href="https://www.veruslink.au/audit" class="btn-primary">Commission the crew &rarr;</a>
+    </div>
   </div>
 </div>
 
-<section class="section">
-  <div class="sec-label"><div class="sec-label-dot"></div>Real outcomes</div>
-  <h2 class="sec-h">Not case studies.<br><em>Results.</em></h2>
-  <p class="sec-body">Specific, documented wins from client sessions. No names until clients say so. No numbers we can't stand behind.</p>
-  <div class="proof-grid">
-    <div class="proof-card"><div class="proof-n">4 hrs/week</div><div class="proof-ctx">Recovered from a follow-up process running manually across three different inboxes.</div><div class="proof-from">Professional services, Sydney</div></div>
-    <div class="proof-card"><div class="proof-n">$1,800</div><div class="proof-ctx">In outstanding invoices chased and collected in the first fortnight — fee paid for itself immediately.</div><div class="proof-from">Consultant, Melbourne</div></div>
-    <div class="proof-card"><div class="proof-n">Zero</div><div class="proof-ctx">New subscriptions added. Everything built on tools the client already had and was already paying for.</div><div class="proof-from">Operator, Perth</div></div>
-    <div class="proof-card"><div class="proof-n">38×</div><div class="proof-ctx">Content output increase for a wellness brand using AI-assisted systems — at one-eighth the previous external cost.</div><div class="proof-from">Multi-location business, Sydney &amp; Melbourne</div></div>
-  </div>
-</section>
-
+<!-- ================= FOUNDER ================= -->
 <section class="founder" id="about">
-  <div class="sec-label"><div class="sec-label-dot"></div>Meet the founder</div>
   <div class="founder-inner">
     <div class="founder-avatar">JW</div>
     <div class="founder-content">
-      <div class="founder-label">About</div>
+      <div class="sec-label"><span class="sec-label-dot"></span>Who runs the unit</div>
       <div class="founder-name">James Whitehill</div>
       <div class="founder-title">AI Concierge · Chief Connector · VerusLink</div>
-      <p class="founder-bio">15+ years in advertising production. 4+ years building AI systems for SMEs. I built Vero — an AI operating system for my own businesses — before turning what I learned into a concierge service for other operators.</p>
-      <p class="founder-bio">I work closely with <strong style="color:rgba(255,255,255,0.7)">Two Fires</strong>, co-founded with Paul Tredinnick (McDonald's, Mars, Unilever, Burger King). When your operation is tight and you're ready to grow, we'll make that introduction.</p>
+      <p class="founder-bio">15+ years in advertising production. 4+ years building AI systems for SMEs. I built Vero, an AI operating system for my own businesses, before turning what I learned into a concierge crew for other operators.</p>
+      <p class="founder-bio">I work closely with <strong>Two Fires</strong>, co-founded with Paul Tredinnick (McDonald's, Mars, Unilever, Burger King). When your operation is tight and you're ready to grow, we'll make that introduction.</p>
       <div class="founder-creds">
         <div class="founder-cred">15+ yrs advertising</div>
         <div class="founder-cred">4+ yrs building AI tools</div>
@@ -273,57 +597,126 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   </div>
 </section>
 
-<section class="section" id="faqs">
-  <div class="sec-label"><div class="sec-label-dot"></div>FAQs</div>
-  <h2 class="sec-h">Common questions.<br><em>Straight answers.</em></h2>
-  <div class="faqs">
-    <div class="faq"><div class="faq-q">What exactly happens on the first call?<span class="faq-icon">+</span></div><div class="faq-a">We come prepared. We've reviewed your intake form and mapped 1–3 specific AI opportunities for your business. On the call, you share your screen, we pick the highest-leverage fix, and we build it together before the call ends. You leave with something running — not a plan.</div></div>
-    <div class="faq"><div class="faq-q">Do I need to know anything about AI?<span class="faq-icon">+</span></div><div class="faq-a">No. You need to know your business. That's the part I can't do without you. The AI part is what I bring. We build it together on your screen so you understand what's running and why — but you don't need a technical background.</div></div>
-    <div class="faq"><div class="faq-q">Will I need to buy new tools or subscriptions?<span class="faq-icon">+</span></div><div class="faq-a">Almost certainly not. Most clients already have everything we need — they're just not using it properly. One of our proof points is zero new subscriptions added. We work with what you've got.</div></div>
-    <div class="faq"><div class="faq-q">What's the difference between done-with-you and done-for-you?<span class="faq-icon">+</span></div><div class="faq-a">Done-with-you means we build together on your screen — you understand what's there and you own it. Done-for-you is available as an upsell — we build independently and hand it over. Most clients start done-with-you and add done-for-you once they see what's possible.</div></div>
-    <div class="faq"><div class="faq-q">What if I want to cancel?<span class="faq-icon">+</span></div><div class="faq-a">Cancel anytime. No lock-in, no minimum term, no penalty. Most clients don't cancel — because by month two the systems are running and the value is visible in the Notion hub. But the option is always there.</div></div>
-  </div>
-</section>
-
-<section class="section" style="padding-top:0">
-  <div class="sec-label"><div class="sec-label-dot"></div>Is this right for you</div>
-  <h2 class="sec-h">We're selective.<br><em>And so should you be.</em></h2>
-  <p class="sec-body">This isn't a software product with unlimited seats. It's a retained relationship — which means we need to be selective, and so do you.</p>
+<!-- ================= FIT ================= -->
+<section class="section">
+  <div class="sec-label"><span class="sec-label-dot"></span>Is this right for you</div>
+  <h2 class="sec-h">We're selective. <span class="accent">So should you be.</span></h2>
+  <p class="sec-body">This isn't a software product with unlimited seats. It's a retained crew, which means we need to be selective, and so do you.</p>
   <div class="fit-grid">
-    <div class="fit-col"><div class="fit-col-head yes">Good fit</div><div class="fit-item yes"><span class="fit-check">✓</span>Running $500K–$5M, owner-led</div><div class="fit-item yes"><span class="fit-check">✓</span>Already tried AI. Frustrated it didn't stick.</div><div class="fit-item yes"><span class="fit-check">✓</span>Ready to invest in something that works</div><div class="fit-item yes"><span class="fit-check">✓</span>Want outcomes, not tutorials</div><div class="fit-item yes"><span class="fit-check">✓</span>Decision-maker who moves quickly</div></div>
-    <div class="fit-col"><div class="fit-col-head">Not a fit</div><div class="fit-item"><span class="fit-cross">✗</span>Looking for generic AI training</div><div class="fit-item"><span class="fit-cross">✗</span>Want a handoff report to implement yourself</div><div class="fit-item"><span class="fit-cross">✗</span>Not yet sure if AI is worth it</div><div class="fit-item"><span class="fit-cross">✗</span>Need sign-off from multiple stakeholders</div><div class="fit-item"><span class="fit-cross">✗</span>Startup pre-revenue</div></div>
+    <div class="fit-col yes">
+      <div class="fit-col-head yes">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Good fit
+      </div>
+      <div class="fit-item yes"><span class="fit-ic check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Running $500K to $5M, owner-led</div>
+      <div class="fit-item yes"><span class="fit-ic check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Already tried AI. Frustrated it didn't stick.</div>
+      <div class="fit-item yes"><span class="fit-ic check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ready to invest in something that works</div>
+      <div class="fit-item yes"><span class="fit-ic check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Want outcomes, not tutorials</div>
+      <div class="fit-item yes"><span class="fit-ic check"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12l5 5 9-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Decision-maker who moves quickly</div>
+    </div>
+    <div class="fit-col">
+      <div class="fit-col-head">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>Not a fit
+      </div>
+      <div class="fit-item"><span class="fit-ic cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Looking for generic AI training</div>
+      <div class="fit-item"><span class="fit-ic cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Want a handoff report to implement yourself</div>
+      <div class="fit-item"><span class="fit-ic cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Not yet sure if AI is worth it</div>
+      <div class="fit-item"><span class="fit-ic cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Need sign-off from multiple stakeholders</div>
+      <div class="fit-item"><span class="fit-ic cross"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>Startup pre-revenue</div>
+    </div>
+  </div>
+  <div class="tf-note">
+    <div class="tf-note-label">The growth path</div>
+    <div class="tf-note-text">Get your operation tight with the crew, and the door to <strong>Two Fires</strong> opens. When you're ready to scale, that introduction is part of the relationship.</div>
   </div>
 </section>
 
+<!-- ================= FAQs ================= -->
+<section class="section" id="faqs" style="padding-top:0">
+  <div class="sec-label"><span class="sec-label-dot"></span>FAQs</div>
+  <h2 class="sec-h">Common questions. <span class="accent">Straight answers.</span></h2>
+  <div class="faqs">
+    <div class="faq">
+      <div class="faq-q">What exactly happens on the first call?<svg class="faq-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">We come prepared. We've reviewed your intake form and mapped 1 to 3 specific AI opportunities for your business. On the call, you share your screen, we pick the highest-leverage fix, and we build it together before the call ends. You leave with something running, not a plan.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-q">Do I need to know anything about AI?<svg class="faq-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">No. You need to know your business. That's the part the crew can't do without you. The AI part is what we bring. We build it together on your screen so you understand what's running and why, but you don't need a technical background.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-q">Will I need to buy new tools or subscriptions?<svg class="faq-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Almost certainly not. Most clients already have everything we need, they're just not using it properly. One of our proof points is zero new subscriptions added. Forge works with what you've got.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-q">What's the difference between done-with-you and done-for-you?<svg class="faq-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Done-with-you means we build together on your screen, you understand what's there and you own it. Done-for-you is available as an upsell, we build independently and hand it over. Most clients start done-with-you and add done-for-you once they see what's possible.</div>
+    </div>
+    <div class="faq">
+      <div class="faq-q">What if I want to cancel?<svg class="faq-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="faq-a">Cancel anytime. No lock-in, no minimum term, no penalty. Most clients don't cancel, because by month two the systems are running and the value is visible in the Notion hub. But the option is always there.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLOSE ================= -->
 <section class="close">
   <div class="close-glow"></div>
-  <div class="close-pre">The only question left</div>
-  <h2 class="close-h">How long will you keep paying for tools<br>that <em>nobody has wired together</em>?</h2>
-  <p class="close-sub">Complete a 10-minute intake form. We analyse it before we speak. You leave call one with at least one automation already running — whether you continue or not.</p>
-  <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+  <div class="close-pre">// The only question left</div>
+  <h2 class="close-h">How long do you keep doing twelve jobs<br>with <span class="accent">no crew behind you?</span></h2>
+  <p class="close-sub">Complete a 10-minute intake form. We analyse it before we speak. You leave call one with at least one automation already running, whether you continue or not.</p>
+  <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
   <div class="close-micro">No pitch deck. No pressure. No new subscriptions.</div>
 </section>
 
+<!-- ================= FOOTER ================= -->
 <footer>
-  <div class="footer-logo">VerusLink</div>
-  <div class="footer-links">
-    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
-    <a href="/privacy" class="footer-link">Privacy</a>
-    <a href="/terms" class="footer-link">Terms</a>
+  <div class="footer-top">
+    <div class="footer-logo">VerusLink</div>
+    <div class="footer-links">
+      <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
+      <a href="/privacy" class="footer-link">Privacy</a>
+      <a href="/terms" class="footer-link">Terms</a>
+    </div>
   </div>
+  <div class="footer-legal">VerusLink is operated by NB Performance Pty Ltd · ABN 25 675 763 050 · Sydney, Australia.</div>
 </footer>
 
+</div>
+
 <script>
-document.querySelectorAll('.faq').forEach(f=>{
-  f.addEventListener('click',()=>f.classList.toggle('open'));
+// FAQ accordion
+document.querySelectorAll('.faq').forEach(function(f){
+  f.addEventListener('click',function(){f.classList.toggle('open');});
 });
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t)t.scrollIntoView({behavior:'smooth'});
+
+// Smooth-scroll for in-page anchors
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var t=document.querySelector(a.getAttribute('href'));
+    if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth'});}
   });
 });
+
+// Pointer glow on agent cards
+document.querySelectorAll('.agent').forEach(function(card){
+  card.addEventListener('pointermove',function(e){
+    var r=card.getBoundingClientRect();
+    card.style.setProperty('--mx',(e.clientX-r.left)+'px');
+    card.style.setProperty('--my',(e.clientY-r.top)+'px');
+  });
+});
+
+// Reveal-on-scroll (respects reduced motion via CSS override)
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(el){el.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});
+  },{threshold:0.12});
+  els.forEach(function(el){io.observe(el);});
+})();
 </script>
 
 </body>
