@@ -19,8 +19,6 @@
 
 <div class="container">
   <div id="banner" class="banner hidden"></div>
-
-  <!-- Access denied / loading states -->
   <div id="gate" class="card hidden"></div>
 
   <div id="dashboard" class="hidden">
@@ -31,9 +29,7 @@
     <div class="card">
       <h2>Your sync code</h2>
       <p class="muted" style="margin-bottom:16px">Share this code or the link. Anyone with it can view your availability and subscribe to updates.</p>
-      <div class="code-display">
-        <span class="code-pill" id="code-pill">SYNC-····</span>
-      </div>
+      <div class="code-display"><span class="code-pill" id="code-pill">SYNC-····</span></div>
       <div class="link-row">
         <span class="link-box" id="share-link">https://veruslink.au/sync/view.html?code=…</span>
         <button class="btn btn-ghost" id="copy-btn">Copy link</button>
@@ -44,25 +40,60 @@
     <!-- Availability grid -->
     <div class="card">
       <h2>When are you available?</h2>
-      <p class="muted" style="margin-bottom:18px">Click a slot to mark yourself <b style="color:var(--green)">available</b>. Click again to clear it.</p>
-      <div class="grid-wrap">
-        <table class="grid" id="grid"></table>
+      <p class="muted" style="margin-bottom:18px">Click a slot to cycle <b style="color:var(--green)">available</b> → <b style="color:var(--red)">unavailable</b> → not set.</p>
+
+      <!-- Controls -->
+      <div class="controls">
+        <div class="control">
+          <span>Slot length</span>
+          <select id="dur-select">
+            <option value="15">15 min</option>
+            <option value="30">30 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+        <div class="control">
+          <span>Day starts</span>
+          <input type="time" id="bh-start" step="900">
+        </div>
+        <div class="control">
+          <span>Day ends</span>
+          <input type="time" id="bh-end" step="900">
+        </div>
+        <div class="control">
+          <span>Editing</span>
+          <div class="seg" id="mode-seg">
+            <button data-mode="recurring" class="active">Recurring schedule</button>
+            <button data-mode="week">This week only</button>
+          </div>
+        </div>
       </div>
+
+      <!-- Week nav -->
+      <div class="weeknav">
+        <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
+        <button class="navbtn" id="next-week" aria-label="Next week">›</button>
+        <span class="range" id="week-range">—</span>
+        <button class="btn btn-ghost today-btn" id="today-btn" style="padding:8px 14px">Today</button>
+      </div>
+
+      <div class="grid-wrap"><table class="grid" id="grid"></table></div>
+
       <div class="legend">
-        <span><span class="swatch on"></span>Available</span>
-        <span><span class="swatch off"></span>Not available</span>
+        <span><span class="swatch avail"></span>Available</span>
+        <span><span class="swatch unavail"></span>Unavailable</span>
+        <span><span class="swatch empty"></span>Not set</span>
+        <span class="faint" style="margin-left:auto">● = override for a specific date</span>
       </div>
+
       <div class="row-actions" style="margin-top:22px">
         <button class="btn btn-primary" id="save-btn">Save &amp; notify subscribers</button>
-        <span class="faint" id="save-status"></span>
       </div>
     </div>
   </div>
 </div>
 
-<footer>
-  Powered by <a href="https://veruslink.au">VerusLink</a>
-</footer>
+<footer>Powered by <a href="https://veruslink.au">VerusLink</a></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -70,7 +101,8 @@ const SB_URL = 'https://tzthoqfzmiifvwjemxmy.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
-const DAYS = ['Mon','Tue','Wed','Thu','Fri']; // day_of_week 0..4
+const DOW_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const params = new URLSearchParams(location.search);
 const codeParam = (params.get('code') || '').trim().toUpperCase();
 const emailParam = (params.get('email') || '').trim().toLowerCase();
@@ -79,149 +111,259 @@ const banner = document.getElementById('banner');
 const gate = document.getElementById('gate');
 const dash = document.getElementById('dashboard');
 
-let codeRow = null;        // vl_codes row
-let slots = [];            // ['08:00','08:30',...]
-const selected = new Set();// keys "day_start" e.g. "0_08:00"
+let codeRow = null;
+let slots = [];
+let weekOffset = 0;
+let editMode = 'recurring';          // 'recurring' | 'week'
+const recurring = new Map();         // `${dow}_${slot}` -> 'avail'|'unavail'
+const overrides = new Map();         // `${YYYY-MM-DD}_${slot}` -> 'avail'|'unavail'
 
-// ---- time helpers ----
-const hm = (t) => String(t).slice(0,5);                 // '08:00:00' -> '08:00'
-const toMin = (t) => { const [h,m]=hm(t).split(':').map(Number); return h*60+m; };
-const toHM = (mins) => `${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
-const pretty = (t) => { let [h,m]=hm(t).split(':').map(Number); const ap=h<12?'am':'pm'; const h12=((h+11)%12)+1; return `${h12}:${String(m).padStart(2,'0')}${ap}`; };
+// ---- date/time helpers ----
+const hm = (t)=>String(t).slice(0,5);
+const toMin = (t)=>{const [h,m]=hm(t).split(':').map(Number);return h*60+m;};
+const toHM = (mins)=>`${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
+const pretty = (t)=>{let [h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return `${h12}:${String(m).padStart(2,'0')}${ap}`;};
+const dowMon = (d)=>(d.getDay()+6)%7;                                   // 0=Mon..6=Sun
+const addDays = (d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+const startOfDay = (d)=>{const x=new Date(d);x.setHours(0,0,0,0);return x;};
+const isoDate = (d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parseISO = (s)=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
+function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push(toHM(m));return out;}
 
-function buildSlots(startT, endT, dur){
-  const out=[]; for(let m=toMin(startT); m+dur<=toMin(endT); m+=dur) out.push(toHM(m)); return out;
-}
+const NOW = new Date();
+const TODAY0 = startOfDay(NOW);
+const THIS_MONDAY = addDays(TODAY0, -dowMon(TODAY0));
 
-function showError(msg){ banner.className='banner err'; banner.textContent=msg; }
-function denied(msg){ gate.classList.remove('hidden'); gate.innerHTML = `<h2>Can't open this dashboard</h2><p class="muted" style="margin-top:8px">${msg}</p><p style="margin-top:16px"><a href="/sync/">Create a new code →</a></p>`; }
+function showError(m){ banner.className='banner err'; banner.textContent=m; }
+function denied(msg){ gate.classList.remove('hidden'); gate.innerHTML=`<h2>Can't open this dashboard</h2><p class="muted" style="margin-top:8px">${msg}</p><p style="margin-top:16px"><a href="/sync/">Create a new code →</a></p>`; }
+function toast(msg, ok=true){ const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 async function init(){
-  if (!codeParam){ denied('No code provided in the link.'); return; }
-
-  // Fetch the code
-  const { data: c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
-  if (error){ denied(error.message); return; }
-  if (!c){ denied('That code does not exist or is no longer active.'); return; }
+  if(!codeParam){ denied('No code provided in the link.'); return; }
+  const { data:c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
+  if(error){ denied(error.message); return; }
+  if(!c){ denied('That code does not exist or is no longer active.'); return; }
   codeRow = c;
 
-  // Email auth gate: must match the owner's email
-  const { data: owner } = await sb.from('vl_owners').select('email,name').eq('id', c.owner_id).maybeSingle();
-  if (!owner || !emailParam || owner.email.toLowerCase() !== emailParam){
-    denied('This dashboard link is tied to the owner\'s email. Open it using the link you were given after creating the code.');
+  const { data:owner } = await sb.from('vl_owners').select('email').eq('id', c.owner_id).maybeSingle();
+  if(!owner || !emailParam || owner.email.toLowerCase() !== emailParam){
+    denied("This dashboard link is tied to the owner's email. Open it using the link you were given after creating the code.");
     return;
   }
 
-  // Render
   dash.classList.remove('hidden');
   document.getElementById('label-h').textContent = c.label;
   document.getElementById('code-pill').textContent = c.code;
   const link = `https://veruslink.au/sync/view.html?code=${c.code}`;
   document.getElementById('share-link').textContent = link;
-  document.getElementById('copy-btn').addEventListener('click', () => {
-    navigator.clipboard.writeText(link).then(()=>{
-      const b=document.getElementById('copy-btn'); b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy link',1800);
-    });
+  document.getElementById('copy-btn').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(link).then(()=>{ const b=document.getElementById('copy-btn'); b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy link',1800); });
   });
 
-  slots = buildSlots(c.business_hours_start, c.business_hours_end, c.slot_duration_minutes);
-  renderGrid();
+  // init controls from code settings
+  document.getElementById('dur-select').value = String(c.slot_duration_minutes);
+  document.getElementById('bh-start').value = hm(c.business_hours_start);
+  document.getElementById('bh-end').value = hm(c.business_hours_end);
+
+  rebuildSlots();
   await loadBlocks();
+  render();
   loadSubscriberCount();
-  document.getElementById('save-btn').addEventListener('click', save);
+  wireControls();
 }
 
-function renderGrid(){
-  const grid = document.getElementById('grid');
-  let html = '<thead><tr><th></th>' + DAYS.map(d=>`<th>${d}</th>`).join('') + '</tr></thead><tbody>';
-  for (const s of slots){
-    html += `<tr><td class="time">${pretty(s)}</td>`;
-    for (let d=0; d<DAYS.length; d++){
-      html += `<td><div class="cell" data-key="${d}_${s}"></div></td>`;
-    }
-    html += '</tr>';
-  }
-  html += '</tbody>';
-  grid.innerHTML = html;
-  grid.querySelectorAll('.cell').forEach(cell=>{
-    cell.addEventListener('click', ()=>{
-      const k = cell.dataset.key;
-      if (selected.has(k)){ selected.delete(k); cell.classList.remove('on'); }
-      else { selected.add(k); cell.classList.add('on'); }
-    });
-  });
+function rebuildSlots(){
+  slots = buildSlots(codeRow.business_hours_start, codeRow.business_hours_end, codeRow.slot_duration_minutes);
 }
 
 async function loadBlocks(){
-  const { data, error } = await sb.from('vl_available_blocks').select('day_of_week,start_time').eq('code_id', codeRow.id);
-  if (error){ showError('Could not load your saved availability: '+error.message); return; }
-  selected.clear();
-  for (const b of (data||[])){
-    if (b.day_of_week > 4) continue; // MVP grid only shows Mon-Fri
-    const k = `${b.day_of_week}_${hm(b.start_time)}`;
-    selected.add(k);
-    const cell = document.querySelector(`.cell[data-key="${k}"]`);
-    if (cell) cell.classList.add('on');
+  recurring.clear(); overrides.clear();
+  const { data, error } = await sb.from('vl_available_blocks')
+    .select('day_of_week,start_time,provider,valid_from').eq('code_id', codeRow.id);
+  if(error){ showError('Could not load saved availability: '+error.message); return; }
+  for(const b of (data||[])){
+    const state = b.provider==='unavailable' ? 'unavail' : 'avail';
+    const slot = hm(b.start_time);
+    if(b.valid_from){ overrides.set(`${b.valid_from}_${slot}`, state); }
+    else { recurring.set(`${b.day_of_week}_${slot}`, state); }
   }
 }
 
-async function loadSubscriberCount(){
-  const badge = document.getElementById('count-badge');
-  try {
-    const r = await fetch(`/api/sync-notify?code_id=${codeRow.id}`);
-    const j = await r.json();
-    const n = j.count || 0;
-    badge.innerHTML = `<b>${n}</b> ${n===1?'person':'people'} will be notified when you update.`;
-  } catch { badge.textContent = ''; }
+function maxWeekOffset(){
+  const horizon = addDays(TODAY0, codeRow.days_ahead);
+  let off=0;
+  while(addDays(THIS_MONDAY,(off+1)*7) <= horizon) off++;
+  return off;
 }
 
-async function save(){
-  const btn = document.getElementById('save-btn');
-  const status = document.getElementById('save-status');
-  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Saving…';
-  status.textContent = '';
-  banner.className = 'banner hidden';
+function weekStart(){ return addDays(THIS_MONDAY, weekOffset*7); }
 
-  try {
-    // Build new blocks from selected cells
-    const blocks = [...selected].map(k=>{
-      const [d, start] = k.split('_');
-      const end = toHM(toMin(start) + codeRow.slot_duration_minutes);
-      return { code_id: codeRow.id, day_of_week: Number(d), start_time: start, end_time: end, provider: 'manual' };
+function effective(dateISO, dow, slot){
+  const ok = `${dateISO}_${slot}`;
+  if(overrides.has(ok)) return { state: overrides.get(ok), override: true };
+  const r = recurring.get(`${dow}_${slot}`);
+  return { state: r, override: false };
+}
+
+function render(){
+  const ws = weekStart();
+  const we = addDays(ws,6);
+  document.getElementById('week-range').textContent =
+    `${ws.getDate()} ${MON_NAMES[ws.getMonth()]} – ${we.getDate()} ${MON_NAMES[we.getMonth()]}`;
+  document.getElementById('prev-week').disabled = weekOffset<=0;
+  document.getElementById('next-week').disabled = weekOffset>=maxWeekOffset();
+
+  const days = [];
+  for(let d=0; d<7; d++){
+    const date = addDays(ws,d);
+    days.push({ date, dow:d, iso:isoDate(date), weekend:d>=5, isToday: startOfDay(date).getTime()===TODAY0.getTime() });
+  }
+
+  // header
+  let html='<thead><tr><th></th>';
+  for(const dy of days){
+    const cls = (dy.weekend?'weekend ':'') + (dy.isToday?'is-today':'');
+    html += `<th class="${cls.trim()}">
+      <span class="dow">${DOW_NAMES[dy.dow]}</span>
+      <span class="dnum">${dy.date.getDate()}</span>
+      <span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span>
+    </th>`;
+  }
+  html+='</tr></thead><tbody>';
+
+  // current-time row index (only if today in week)
+  const todayInWeek = days.some(d=>d.isToday);
+  const nowMin = NOW.getHours()*60 + NOW.getMinutes();
+  let nowRowSlot = null;
+  if(todayInWeek){
+    for(const s of slots){ if(toMin(s)<=nowMin && nowMin < toMin(s)+codeRow.slot_duration_minutes){ nowRowSlot=s; break; } }
+  }
+
+  for(const s of slots){
+    const rowCls = (nowRowSlot===s)?' class="now-row"':'';
+    html+=`<tr${rowCls}><td class="time">${pretty(s)}</td>`;
+    for(const dy of days){
+      const slotStart = new Date(dy.date); slotStart.setHours(0,0,0,0); slotStart.setMinutes(toMin(s));
+      const past = slotStart < NOW;
+      const { state, override } = effective(dy.iso, dy.dow, s);
+      let cls='cell';
+      if(state==='avail') cls+=' avail'; else if(state==='unavail') cls+=' unavail';
+      if(override && state!==undefined) cls+=' override';
+      if(dy.weekend) cls+=' weekend';
+      if(past) cls+=' past';
+      html+=`<td><div class="${cls}" data-iso="${dy.iso}" data-dow="${dy.dow}" data-slot="${s}" data-past="${past?1:0}"></div></td>`;
+    }
+    html+='</tr>';
+  }
+  html+='</tbody>';
+  const grid=document.getElementById('grid');
+  grid.innerHTML=html;
+  grid.querySelectorAll('.cell').forEach(c=> c.addEventListener('click', onCellClick));
+}
+
+const cycle = (st)=> st==='avail' ? 'unavail' : st==='unavail' ? undefined : 'avail';
+
+function onCellClick(e){
+  const cell=e.currentTarget;
+  if(cell.dataset.past==='1') return;
+  const iso=cell.dataset.iso, dow=Number(cell.dataset.dow), slot=cell.dataset.slot;
+
+  if(editMode==='recurring'){
+    const k=`${dow}_${slot}`;
+    const next=cycle(recurring.get(k));
+    if(next) recurring.set(k,next); else recurring.delete(k);
+  } else {
+    const ok=`${iso}_${slot}`;
+    const tmpl=recurring.get(`${dow}_${slot}`);
+    const curEff = overrides.has(ok) ? overrides.get(ok) : tmpl;
+    const next = cycle(curEff);
+    if(next===undefined || next===tmpl) overrides.delete(ok); else overrides.set(ok,next);
+  }
+  applyCell(cell, iso, dow, slot);
+}
+
+function applyCell(cell, iso, dow, slot){
+  const { state, override } = effective(iso, dow, slot);
+  cell.classList.remove('avail','unavail','override');
+  if(state==='avail') cell.classList.add('avail'); else if(state==='unavail') cell.classList.add('unavail');
+  if(override && state!==undefined) cell.classList.add('override');
+}
+
+function wireControls(){
+  document.getElementById('prev-week').addEventListener('click', ()=>{ if(weekOffset>0){weekOffset--; render();} });
+  document.getElementById('next-week').addEventListener('click', ()=>{ if(weekOffset<maxWeekOffset()){weekOffset++; render();} });
+  document.getElementById('today-btn').addEventListener('click', ()=>{ weekOffset=0; render(); });
+
+  document.querySelectorAll('#mode-seg button').forEach(b=> b.addEventListener('click', ()=>{
+    editMode=b.dataset.mode;
+    document.querySelectorAll('#mode-seg button').forEach(x=>x.classList.toggle('active', x===b));
+  }));
+
+  document.getElementById('dur-select').addEventListener('change', async (e)=>{
+    const v=Number(e.target.value); codeRow.slot_duration_minutes=v;
+    await sb.from('vl_codes').update({ slot_duration_minutes:v, updated_at:new Date().toISOString() }).eq('id', codeRow.id);
+    rebuildSlots(); render();
+  });
+  const onHours = async ()=>{
+    const st=document.getElementById('bh-start').value, en=document.getElementById('bh-end').value;
+    if(!st||!en||toMin(en)<=toMin(st)) return;
+    codeRow.business_hours_start=st; codeRow.business_hours_end=en;
+    await sb.from('vl_codes').update({ business_hours_start:st, business_hours_end:en, updated_at:new Date().toISOString() }).eq('id', codeRow.id);
+    rebuildSlots(); render();
+  };
+  document.getElementById('bh-start').addEventListener('change', onHours);
+  document.getElementById('bh-end').addEventListener('change', onHours);
+
+  document.getElementById('save-btn').addEventListener('click', save);
+}
+
+async function loadSubscriberCount(){
+  const badge=document.getElementById('count-badge');
+  try{
+    const r=await fetch(`/api/sync-notify?code_id=${codeRow.id}`); const j=await r.json();
+    const n=j.count||0; badge.innerHTML=`<b>${n}</b> ${n===1?'person':'people'} will be notified when you update.`;
+  }catch{ badge.textContent=''; }
+}
+
+function slotEnd(slot){ return toHM(toMin(slot)+codeRow.slot_duration_minutes); }
+
+async function save(){
+  const btn=document.getElementById('save-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Saving…';
+  banner.className='banner hidden';
+  try{
+    const blocks=[];
+    recurring.forEach((state,key)=>{
+      const i=key.indexOf('_'); const dow=Number(key.slice(0,i)); const slot=key.slice(i+1);
+      blocks.push({ code_id:codeRow.id, day_of_week:dow, start_time:slot, end_time:slotEnd(slot),
+        provider: state==='unavail'?'unavailable':'manual', valid_from:null, valid_until:null });
+    });
+    overrides.forEach((state,key)=>{
+      const i=key.indexOf('_'); const iso=key.slice(0,i); const slot=key.slice(i+1);
+      blocks.push({ code_id:codeRow.id, day_of_week:dowMon(parseISO(iso)), start_time:slot, end_time:slotEnd(slot),
+        provider: state==='unavail'?'unavailable':'manual', valid_from:iso, valid_until:iso });
     });
 
-    // Replace: delete existing then insert
-    const del = await sb.from('vl_available_blocks').delete().eq('code_id', codeRow.id);
-    if (del.error) throw del.error;
-    if (blocks.length){
-      const ins = await sb.from('vl_available_blocks').insert(blocks);
-      if (ins.error) throw ins.error;
-    }
+    const del=await sb.from('vl_available_blocks').delete().eq('code_id', codeRow.id);
+    if(del.error) throw del.error;
+    if(blocks.length){ const ins=await sb.from('vl_available_blocks').insert(blocks); if(ins.error) throw ins.error; }
 
-    // Log the change + bump updated_at
-    await sb.from('vl_change_log').insert({ code_id: codeRow.id, change_summary: `Availability updated — ${blocks.length} slot(s)` });
-    await sb.from('vl_codes').update({ updated_at: new Date().toISOString() }).eq('id', codeRow.id);
+    await sb.from('vl_change_log').insert({ code_id:codeRow.id, change_summary:`Availability updated — ${blocks.length} block(s)` });
+    await sb.from('vl_codes').update({ updated_at:new Date().toISOString() }).eq('id', codeRow.id);
 
-    // Trigger notifications (rate-limited server side)
-    let notifyMsg = '';
-    try {
-      const r = await fetch('/api/sync-notify', {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ code_id: codeRow.id })
-      });
-      const j = await r.json();
-      if (j.reason === 'rate_limited') notifyMsg = ' (subscribers already notified recently — next email available within the hour)';
-      else if (typeof j.notified === 'number') notifyMsg = ` ${j.notified} subscriber(s) notified.`;
-    } catch {/* non-blocking */}
-
-    banner.className = 'banner ok';
-    banner.textContent = `Saved.${notifyMsg}`;
+    let extra='';
+    try{
+      const r=await fetch('/api/sync-notify',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ code_id:codeRow.id }) });
+      const j=await r.json();
+      if(j.reason==='rate_limited') extra=' (subscribers already notified recently)';
+      else if(typeof j.notified==='number') extra=` · ${j.notified} notified`;
+    }catch{}
+    toast('Saved'+extra, true);
     loadSubscriberCount();
-  } catch (err){
-    console.error(err);
-    showError('Could not save: ' + (err.message||err));
-  } finally {
-    btn.disabled = false; btn.textContent = 'Save & notify subscribers';
+  }catch(err){
+    console.error(err); toast('Could not save: '+(err.message||err), false);
+  }finally{
+    btn.disabled=false; btn.textContent='Save & notify subscribers';
   }
 }
 

@@ -42,10 +42,17 @@
     <p class="sub" id="tz-note"></p>
 
     <div class="card">
+      <div class="weeknav">
+        <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
+        <button class="navbtn" id="next-week" aria-label="Next week">›</button>
+        <span class="range" id="week-range">—</span>
+        <button class="btn btn-ghost today-btn" id="today-btn" style="padding:8px 14px">Today</button>
+      </div>
       <div class="grid-wrap"><table class="grid" id="grid"></table></div>
       <div class="legend">
-        <span><span class="swatch on"></span>Available</span>
-        <span><span class="swatch off"></span>Not available</span>
+        <span><span class="swatch avail"></span>Available</span>
+        <span><span class="swatch unavail"></span>Unavailable</span>
+        <span><span class="swatch empty"></span>Not set</span>
       </div>
     </div>
 
@@ -72,9 +79,7 @@
   </div>
 </div>
 
-<footer>
-  Powered by <a href="https://veruslink.au">VerusLink</a> · <a href="/sync/unsubscribe.html">Unsubscribe</a>
-</footer>
+<footer>Powered by <a href="https://veruslink.au">VerusLink</a> · <a href="/sync/unsubscribe.html">Unsubscribe</a></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -82,65 +87,121 @@ const SB_URL = 'https://tzthoqfzmiifvwjemxmy.supabase.co';
 const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
 const sb = supabase.createClient(SB_URL, SB_KEY);
 
-const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+const DOW_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const params = new URLSearchParams(location.search);
 const codeParam = (params.get('code') || '').trim().toUpperCase();
 
 const banner = document.getElementById('banner');
-let codeRow = null, slots = [];
+let codeRow=null, slots=[], weekOffset=0;
+const recurring=new Map(), overrides=new Map();
 
-const hm = (t)=>String(t).slice(0,5);
-const toMin = (t)=>{const [h,m]=hm(t).split(':').map(Number); return h*60+m;};
-const toHM = (mins)=>`${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
-const pretty = (t)=>{let [h,m]=hm(t).split(':').map(Number); const ap=h<12?'am':'pm'; const h12=((h+11)%12)+1; return `${h12}:${String(m).padStart(2,'0')}${ap}`;};
-function buildSlots(s,e,d){const out=[];for(let m=toMin(s);m+d<=toMin(e);m+=d)out.push(toHM(m));return out;}
+const hm=(t)=>String(t).slice(0,5);
+const toMin=(t)=>{const [h,m]=hm(t).split(':').map(Number);return h*60+m;};
+const toHM=(mins)=>`${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
+const pretty=(t)=>{let [h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return `${h12}:${String(m).padStart(2,'0')}${ap}`;};
+const dowMon=(d)=>(d.getDay()+6)%7;
+const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
+const startOfDay=(d)=>{const x=new Date(d);x.setHours(0,0,0,0);return x;};
+const isoDate=(d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push(toHM(m));return out;}
+
+const NOW=new Date(), TODAY0=startOfDay(NOW), THIS_MONDAY=addDays(TODAY0,-dowMon(TODAY0));
 function showError(m){ banner.className='banner err'; banner.textContent=m; }
 
-// Lookup form (no ?code)
 document.getElementById('lookup-form')?.addEventListener('submit',(e)=>{
   e.preventDefault();
   const v=document.getElementById('code-in').value.trim().toUpperCase();
-  if(v) location.href = `/sync/view.html?code=${encodeURIComponent(v)}`;
+  if(v) location.href=`/sync/view.html?code=${encodeURIComponent(v)}`;
 });
 
 async function init(){
   if(!codeParam){ document.getElementById('lookup').classList.remove('hidden'); return; }
-
   const { data:c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
   if(error){ document.getElementById('lookup').classList.remove('hidden'); showError(error.message); return; }
   if(!c){ document.getElementById('lookup').classList.remove('hidden'); showError('That code does not exist or is no longer active.'); return; }
-  codeRow = c;
+  codeRow=c;
 
   document.getElementById('view').classList.remove('hidden');
-  document.getElementById('label-h').textContent = `${c.label}`;
-  document.getElementById('label-inline').textContent = c.label;
-  document.getElementById('tz-note').textContent = `Times shown in ${c.timezone}.`;
+  document.getElementById('label-h').textContent=c.label;
+  document.getElementById('label-inline').textContent=c.label;
+  document.getElementById('tz-note').textContent=`Times shown in ${c.timezone}.`;
 
-  slots = buildSlots(c.business_hours_start, c.business_hours_end, c.slot_duration_minutes);
-  renderGrid();
+  slots=buildSlots(c.business_hours_start,c.business_hours_end,c.slot_duration_minutes);
   await loadBlocks();
+  render();
+  wireNav();
   document.getElementById('sub-form').addEventListener('submit', subscribe);
 }
 
-function renderGrid(){
-  const grid=document.getElementById('grid');
-  let html='<thead><tr><th></th>'+DAYS.map(d=>`<th>${d}</th>`).join('')+'</tr></thead><tbody>';
-  for(const s of slots){
-    html+=`<tr><td class="time">${pretty(s)}</td>`;
-    for(let d=0;d<DAYS.length;d++) html+=`<td><div class="cell readonly" data-key="${d}_${s}"></div></td>`;
-    html+='</tr>';
-  }
-  html+='</tbody>'; grid.innerHTML=html;
-}
-
 async function loadBlocks(){
-  const { data, error } = await sb.from('vl_available_blocks').select('day_of_week,start_time').eq('code_id', codeRow.id);
+  recurring.clear(); overrides.clear();
+  const { data, error } = await sb.from('vl_available_blocks')
+    .select('day_of_week,start_time,provider,valid_from').eq('code_id', codeRow.id);
   if(error){ showError('Could not load availability: '+error.message); return; }
   for(const b of (data||[])){
-    if(b.day_of_week>4) continue;
-    const cell=document.querySelector(`.cell[data-key="${b.day_of_week}_${hm(b.start_time)}"]`);
-    if(cell) cell.classList.add('on');
+    const state=b.provider==='unavailable'?'unavail':'avail';
+    const slot=hm(b.start_time);
+    if(b.valid_from) overrides.set(`${b.valid_from}_${slot}`,state);
+    else recurring.set(`${b.day_of_week}_${slot}`,state);
   }
+}
+
+function maxWeekOffset(){
+  const horizon=addDays(TODAY0, codeRow.days_ahead); let off=0;
+  while(addDays(THIS_MONDAY,(off+1)*7)<=horizon) off++;
+  return off;
+}
+function weekStart(){ return addDays(THIS_MONDAY, weekOffset*7); }
+function effective(iso,dow,slot){
+  const ok=`${iso}_${slot}`;
+  if(overrides.has(ok)) return overrides.get(ok);
+  return recurring.get(`${dow}_${slot}`);
+}
+
+function render(){
+  const ws=weekStart(), we=addDays(ws,6);
+  document.getElementById('week-range').textContent=`${ws.getDate()} ${MON_NAMES[ws.getMonth()]} – ${we.getDate()} ${MON_NAMES[we.getMonth()]}`;
+  document.getElementById('prev-week').disabled = weekOffset<=0;
+  document.getElementById('next-week').disabled = weekOffset>=maxWeekOffset();
+
+  const days=[];
+  for(let d=0; d<7; d++){ const date=addDays(ws,d); days.push({ date, dow:d, iso:isoDate(date), weekend:d>=5, isToday:startOfDay(date).getTime()===TODAY0.getTime() }); }
+
+  let html='<thead><tr><th></th>';
+  for(const dy of days){
+    const cls=(dy.weekend?'weekend ':'')+(dy.isToday?'is-today':'');
+    html+=`<th class="${cls.trim()}"><span class="dow">${DOW_NAMES[dy.dow]}</span><span class="dnum">${dy.date.getDate()}</span><span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span></th>`;
+  }
+  html+='</tr></thead><tbody>';
+
+  const todayInWeek=days.some(d=>d.isToday);
+  const nowMin=NOW.getHours()*60+NOW.getMinutes();
+  let nowRowSlot=null;
+  if(todayInWeek){ for(const s of slots){ if(toMin(s)<=nowMin && nowMin<toMin(s)+codeRow.slot_duration_minutes){ nowRowSlot=s; break; } } }
+
+  for(const s of slots){
+    html+=`<tr${nowRowSlot===s?' class="now-row"':''}><td class="time">${pretty(s)}</td>`;
+    for(const dy of days){
+      const slotStart=new Date(dy.date); slotStart.setHours(0,0,0,0); slotStart.setMinutes(toMin(s));
+      const past=slotStart<NOW;
+      const state=effective(dy.iso,dy.dow,s);
+      let cls='cell readonly';
+      if(state==='avail') cls+=' avail'; else if(state==='unavail') cls+=' unavail';
+      if(dy.weekend) cls+=' weekend';
+      if(past) cls+=' past';
+      html+=`<td><div class="${cls}"></div></td>`;
+    }
+    html+='</tr>';
+  }
+  html+='</tbody>';
+  document.getElementById('grid').innerHTML=html;
+}
+
+function wireNav(){
+  document.getElementById('prev-week').addEventListener('click',()=>{ if(weekOffset>0){weekOffset--; render();} });
+  document.getElementById('next-week').addEventListener('click',()=>{ if(weekOffset<maxWeekOffset()){weekOffset++; render();} });
+  document.getElementById('today-btn').addEventListener('click',()=>{ weekOffset=0; render(); });
 }
 
 async function subscribe(e){
@@ -151,18 +212,14 @@ async function subscribe(e){
   const btn=document.getElementById('sub-btn');
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Subscribing…';
   banner.className='banner hidden';
-
   try{
-    const { error } = await sb.from('vl_subscribers').insert({ code_id: codeRow.id, email, name });
-    // 23505 = already subscribed (unique code_id+email) — treat as success
+    const { error } = await sb.from('vl_subscribers').insert({ code_id:codeRow.id, email, name });
     if(error && error.code!=='23505') throw error;
     document.getElementById('subscribe-card').classList.add('hidden');
     document.getElementById('sub-success').classList.remove('hidden');
-    document.getElementById('sub-success-msg').textContent =
-      `You'll get an email when ${codeRow.label} updates their availability.`;
+    document.getElementById('sub-success-msg').textContent=`You'll get an email when ${codeRow.label} updates their availability.`;
   }catch(err){
-    console.error(err);
-    showError('Could not subscribe: '+(err.message||err));
+    console.error(err); showError('Could not subscribe: '+(err.message||err));
     btn.disabled=false; btn.textContent='Subscribe to updates';
   }
 }
