@@ -71,9 +71,11 @@
 
       <!-- Week nav -->
       <div class="weeknav">
-        <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
-        <button class="navbtn" id="next-week" aria-label="Next week">›</button>
-        <span class="range" id="week-range">—</span>
+        <div class="wn-left">
+          <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
+          <button class="navbtn" id="next-week" aria-label="Next week">›</button>
+          <span class="range" id="week-range">—</span>
+        </div>
         <button class="btn btn-ghost today-btn" id="today-btn" style="padding:8px 14px">Today</button>
       </div>
 
@@ -85,6 +87,7 @@
         <span><span class="swatch empty"></span>Not set</span>
         <span class="faint" style="margin-left:auto">● = override for a specific date</span>
       </div>
+      <div class="bulk-hint">Tip: drag across cells — or Shift-click two cells — to bulk-edit a block. On touch, long-press a cell to start a selection.</div>
 
       <div class="row-actions" style="margin-top:22px">
         <button class="btn btn-primary" id="save-btn">Save &amp; notify subscribers</button>
@@ -239,7 +242,8 @@ function render(){
     for(const s of slots){ if(toMin(s)<=nowMin && nowMin < toMin(s)+codeRow.slot_duration_minutes){ nowRowSlot=s; break; } }
   }
 
-  for(const s of slots){
+  for(let ri=0; ri<slots.length; ri++){
+    const s=slots[ri];
     const rowCls = (nowRowSlot===s)?' class="now-row"':'';
     html+=`<tr${rowCls}><td class="time">${pretty(s)}</td>`;
     for(const dy of days){
@@ -251,35 +255,126 @@ function render(){
       if(override && state!==undefined) cls+=' override';
       if(dy.weekend) cls+=' weekend';
       if(past) cls+=' past';
-      html+=`<td><div class="${cls}" data-iso="${dy.iso}" data-dow="${dy.dow}" data-slot="${s}" data-past="${past?1:0}"></div></td>`;
+      html+=`<td><div class="${cls}" data-iso="${dy.iso}" data-dow="${dy.dow}" data-slot="${s}" data-r="${ri}" data-c="${dy.dow}" data-past="${past?1:0}"></div></td>`;
     }
     html+='</tr>';
   }
   html+='</tbody>';
-  const grid=document.getElementById('grid');
-  grid.innerHTML=html;
-  grid.querySelectorAll('.cell').forEach(c=> c.addEventListener('click', onCellClick));
+  document.getElementById('grid').innerHTML=html;
 }
 
 const cycle = (st)=> st==='avail' ? 'unavail' : st==='unavail' ? undefined : 'avail';
 
-function onCellClick(e){
-  const cell=e.currentTarget;
-  if(cell.dataset.past==='1') return;
-  const iso=cell.dataset.iso, dow=Number(cell.dataset.dow), slot=cell.dataset.slot;
-
+// Set an explicit state (used by bulk actions). target: 'avail' | 'unavail' | null(=clear)
+function setCellState(iso, dow, slot, target){
   if(editMode==='recurring'){
     const k=`${dow}_${slot}`;
-    const next=cycle(recurring.get(k));
-    if(next) recurring.set(k,next); else recurring.delete(k);
+    if(target) recurring.set(k,target); else recurring.delete(k);
   } else {
     const ok=`${iso}_${slot}`;
     const tmpl=recurring.get(`${dow}_${slot}`);
-    const curEff = overrides.has(ok) ? overrides.get(ok) : tmpl;
-    const next = cycle(curEff);
+    if(target===null || target===tmpl) overrides.delete(ok); else overrides.set(ok,target);
+  }
+}
+
+// ---- bulk selection state ----
+let mouseDown=false, dragStart=null, dragMoved=false, suppressNextClick=false;
+let selectMode=false, longPressTimer=null, lastAnchor=null;
+let bulkCells=[];
+let bar=null;
+
+const getInfo=(el)=>({ el, iso:el.dataset.iso, dow:Number(el.dataset.dow), slot:el.dataset.slot, r:Number(el.dataset.r), c:Number(el.dataset.c), past:el.dataset.past==='1' });
+function gridEl(){ return document.getElementById('grid'); }
+function cellsInRect(r1,c1,r2,c2){
+  const rlo=Math.min(r1,r2),rhi=Math.max(r1,r2),clo=Math.min(c1,c2),chi=Math.max(c1,c2);
+  return [...gridEl().querySelectorAll('.cell')].filter(el=>{const r=+el.dataset.r,c=+el.dataset.c;return r>=rlo&&r<=rhi&&c>=clo&&c<=chi;});
+}
+function clearSelectingOnly(){ gridEl().querySelectorAll('.cell.selecting').forEach(c=>c.classList.remove('selecting')); }
+function highlightSelecting(a,b){ clearSelectingOnly(); cellsInRect(a.r,a.c,b.r,b.c).forEach(e=>e.classList.add('selecting')); }
+function finalizeSelecting(){
+  const els=[...gridEl().querySelectorAll('.cell.selecting')];
+  els.forEach(e=>{ e.classList.remove('selecting'); e.classList.add('selected'); });
+  bulkCells=els.map(getInfo); showBar();
+}
+function setBulk(els){ clearBulk(); els.forEach(e=>e.classList.add('selected')); bulkCells=els.map(getInfo); }
+function toggleSelect(info){
+  if(info.el.classList.contains('selected')){ info.el.classList.remove('selected'); bulkCells=bulkCells.filter(i=>i.el!==info.el); }
+  else { info.el.classList.add('selected'); bulkCells.push(info); }
+  showBar();
+}
+function hideBar(){ if(bar) bar.classList.add('hidden'); }
+function clearBulk(){
+  document.querySelectorAll('.cell.selected,.cell.selecting').forEach(c=>c.classList.remove('selected','selecting'));
+  bulkCells=[]; selectMode=false; hideBar();
+}
+function buildBar(){
+  bar=document.createElement('div'); bar.id='bulk-bar'; bar.className='hidden';
+  bar.innerHTML=`<span class="bb-count">0 selected</span>
+    <button class="bb-avail">Set available</button>
+    <button class="bb-unavail">Set unavailable</button>
+    <button class="bb-clear">Clear</button>
+    <button class="bb-done">Done</button>`;
+  document.body.appendChild(bar);
+  bar.querySelector('.bb-avail').addEventListener('click', ()=>applyBulk('avail'));
+  bar.querySelector('.bb-unavail').addEventListener('click', ()=>applyBulk('unavail'));
+  bar.querySelector('.bb-clear').addEventListener('click', ()=>applyBulk(null));
+  bar.querySelector('.bb-done').addEventListener('click', clearBulk);
+}
+function showBar(){
+  if(!bar) buildBar();
+  if(!bulkCells.length){ hideBar(); return; }
+  bar.querySelector('.bb-count').textContent = `${bulkCells.length} selected`;
+  bar.querySelector('.bb-done').style.display = selectMode ? '' : 'none';
+  bar.classList.remove('hidden');
+  let minL=Infinity,maxR=-Infinity,minT=Infinity;
+  bulkCells.forEach(info=>{ const r=info.el.getBoundingClientRect(); minL=Math.min(minL,r.left); maxR=Math.max(maxR,r.right); minT=Math.min(minT,r.top); });
+  const cx=(minL+maxR)/2; const bh=bar.offsetHeight;
+  let top=minT-bh-10; if(top<8) top=minT+44;
+  bar.style.left=cx+'px'; bar.style.top=top+'px';
+}
+function applyBulk(target){
+  bulkCells.forEach(info=>{ if(info.past) return; setCellState(info.iso,info.dow,info.slot,target); applyCell(info.el,info.iso,info.dow,info.slot); });
+  clearBulk();
+}
+
+function onCellClick(cell, e){
+  if(suppressNextClick){ suppressNextClick=false; return; }
+  const info=getInfo(cell);
+  if(selectMode){ toggleSelect(info); return; }
+  if(e.shiftKey && lastAnchor){ setBulk(cellsInRect(lastAnchor.r,lastAnchor.c,info.r,info.c)); showBar(); return; }
+  clearBulk();
+  if(info.past) return;
+  if(editMode==='recurring'){
+    const k=`${info.dow}_${info.slot}`; const next=cycle(recurring.get(k));
+    if(next) recurring.set(k,next); else recurring.delete(k);
+  } else {
+    const ok=`${info.iso}_${info.slot}`; const tmpl=recurring.get(`${info.dow}_${info.slot}`);
+    const curEff = overrides.has(ok) ? overrides.get(ok) : tmpl; const next=cycle(curEff);
     if(next===undefined || next===tmpl) overrides.delete(ok); else overrides.set(ok,next);
   }
-  applyCell(cell, iso, dow, slot);
+  applyCell(cell, info.iso, info.dow, info.slot);
+  lastAnchor={ r:info.r, c:info.c };
+}
+
+function initGridHandlers(){
+  const grid=gridEl();
+  grid.addEventListener('click', e=>{ const el=e.target.closest('.cell'); if(el && grid.contains(el)) onCellClick(el,e); });
+  grid.addEventListener('mousedown', e=>{ if(e.button!==0) return; const el=e.target.closest('.cell'); if(!el) return; suppressNextClick=false; mouseDown=true; dragStart=getInfo(el); dragMoved=false; });
+  grid.addEventListener('mousemove', e=>{ if(!mouseDown||!dragStart) return; const el=e.target.closest('.cell'); if(!el) return; if(+el.dataset.r!==dragStart.r || +el.dataset.c!==dragStart.c) dragMoved=true; if(dragMoved) highlightSelecting(dragStart,getInfo(el)); });
+  document.addEventListener('mouseup', ()=>{ if(!mouseDown) return; mouseDown=false; if(dragMoved){ finalizeSelecting(); suppressNextClick=true; } dragStart=null; });
+  // touch long-press to start a selection
+  grid.addEventListener('touchstart', e=>{ const el=e.target.closest('.cell'); if(!el) return; const info=getInfo(el);
+    longPressTimer=setTimeout(()=>{ longPressTimer=null; suppressNextClick=true; selectMode=true; clearSelectingOnly();
+      if(!info.el.classList.contains('selected')){ info.el.classList.add('selected'); bulkCells.push(info); }
+      showBar(); if(navigator.vibrate) navigator.vibrate(15);
+    }, 450);
+  }, {passive:true});
+  const cancelLP=()=>{ if(longPressTimer){ clearTimeout(longPressTimer); longPressTimer=null; } };
+  grid.addEventListener('touchmove', cancelLP, {passive:true});
+  grid.addEventListener('touchend', cancelLP);
+  // dismiss
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') clearBulk(); });
+  document.addEventListener('click', e=>{ if(!bulkCells.length) return; if(e.target.closest('#bulk-bar')) return; if(e.target.closest('.cell')) return; clearBulk(); });
 }
 
 function applyCell(cell, iso, dow, slot){
@@ -315,6 +410,7 @@ function wireControls(){
   document.getElementById('bh-end').addEventListener('change', onHours);
 
   document.getElementById('save-btn').addEventListener('click', save);
+  initGridHandlers();
 }
 
 async function loadSubscriberCount(){

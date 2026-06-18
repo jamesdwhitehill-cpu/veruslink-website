@@ -90,6 +90,7 @@ export default async function handler(req, res) {
 
     // ---- Send emails via Resend ----
     let sent = 0;
+    const ids = [];
     if (subs.length && process.env.RESEND_API_KEY) {
       const viewUrl = `${SITE}/sync/view.html?code=${encodeURIComponent(code)}`;
       for (const s of subs) {
@@ -105,7 +106,7 @@ export default async function handler(req, res) {
               html: emailHtml({ label, code, viewUrl, unsubUrl }),
             }),
           });
-          if (r.ok) sent++;
+          if (r.ok) { sent++; const jd = await r.json().catch(() => ({})); if (jd.id) ids.push({ email: s.email, id: jd.id }); }
         } catch (_) { /* skip individual failures */ }
       }
     }
@@ -117,7 +118,7 @@ export default async function handler(req, res) {
       body: JSON.stringify({ notified: true }),
     });
 
-    return res.status(200).json({ notified: sent });
+    return res.status(200).json({ notified: sent, ids });
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }
