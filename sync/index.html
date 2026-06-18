@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VerusLink Sync — Stop polling. Start syncing.</title>
+<meta name="description" content="Share a single code. Update your availability once. Everyone who needs to know, knows.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sync/sync.css">
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+  <div class="nav-right"><a href="/sync/view.html">Have a code?</a></div>
+</nav>
+
+<div class="container narrow">
+  <div class="eyebrow">VerusLink Sync</div>
+  <h1>Stop polling.<br>Start syncing.</h1>
+  <p class="sub">Share a single code. Update your availability once. Everyone who needs to know, knows.</p>
+
+  <div id="banner" class="banner hidden"></div>
+
+  <div class="card">
+    <form id="create-form">
+      <div class="field">
+        <label for="name">Your name</label>
+        <input type="text" id="name" placeholder="James Whitehill" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
+        <div class="hint">We use this to give you back into your dashboard. No spam.</div>
+      </div>
+      <div class="field">
+        <label for="label">What should people see?</label>
+        <input type="text" id="label" placeholder="Dr Sarah — Tuesdays &amp; Thursdays" required>
+        <div class="hint">This is the title shown on your public availability page.</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="submit-btn">Create my sync code →</button>
+    </form>
+  </div>
+
+  <p class="faint" style="text-align:center;font-size:13px">Already have a code? <a href="/sync/view.html">View an availability page</a></p>
+</div>
+
+<footer>
+  Powered by <a href="https://veruslink.au">VerusLink</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL = 'https://tzthoqfzmiifvwjemxmy.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+const banner = document.getElementById('banner');
+function showError(msg){ banner.className='banner err'; banner.textContent=msg; }
+
+function genCode(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // no ambiguous chars
+  let s = '';
+  for (let i=0;i<4;i++) s += chars[Math.floor(Math.random()*chars.length)];
+  return 'SYNC-' + s;
+}
+
+document.getElementById('create-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const name = document.getElementById('name').value.trim();
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const label = document.getElementById('label').value.trim();
+  if (!name || !email || !label) return;
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="spinner"></span> Creating…';
+  banner.className = 'banner hidden';
+
+  try {
+    // 1) Find or create the owner (no upsert — RLS allows insert + read only)
+    let ownerId;
+    const { data: existing, error: selErr } = await sb
+      .from('vl_owners').select('id').eq('email', email).maybeSingle();
+    if (selErr) throw selErr;
+
+    if (existing) {
+      ownerId = existing.id;
+    } else {
+      const { data: created, error: insErr } = await sb
+        .from('vl_owners').insert({ name, email }).select('id').single();
+      if (insErr) throw insErr;
+      ownerId = created.id;
+    }
+
+    // 2) Generate a unique code and create the vl_codes row (retry on collision)
+    let code, codeRow, attempts = 0;
+    while (attempts < 5) {
+      attempts++;
+      code = genCode();
+      const { data, error } = await sb
+        .from('vl_codes')
+        .insert({ owner_id: ownerId, code, label })
+        .select('code')
+        .single();
+      if (!error) { codeRow = data; break; }
+      if (error.code === '23505') continue; // unique violation -> new code
+      throw error;
+    }
+    if (!codeRow) throw new Error('Could not generate a unique code, please try again.');
+
+    // 3) Redirect to the owner dashboard
+    window.location.href = `/sync/manage.html?code=${encodeURIComponent(codeRow.code)}&email=${encodeURIComponent(email)}`;
+  } catch (err) {
+    console.error(err);
+    showError(err.message || 'Something went wrong. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Create my sync code →';
+  }
+});
+</script>
+</body>
+</html>

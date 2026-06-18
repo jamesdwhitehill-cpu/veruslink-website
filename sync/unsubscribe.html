@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VerusLink Sync — Unsubscribe</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sync/sync.css">
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+</nav>
+
+<div class="container narrow">
+  <div class="eyebrow">VerusLink Sync</div>
+  <h1>Unsubscribe</h1>
+  <div class="card" id="card">
+    <p class="muted" id="msg"><span class="spinner"></span> Processing…</p>
+  </div>
+</div>
+
+<footer>
+  Powered by <a href="https://veruslink.au">VerusLink</a>
+</footer>
+
+<script>
+const params = new URLSearchParams(location.search);
+const sub = (params.get('sub') || '').trim();
+const msg = document.getElementById('msg');
+
+async function run(){
+  if(!sub){
+    msg.innerHTML = 'This page unsubscribes you using the link in your notification email. If you want to stop updates, please use the <b>Unsubscribe</b> link at the bottom of any email we sent you.';
+    return;
+  }
+  try{
+    const r = await fetch('/api/sync-unsubscribe', {
+      method:'POST', headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ sub })
+    });
+    const j = await r.json().catch(()=>({}));
+    if(r.ok){
+      msg.innerHTML = "You've been unsubscribed. You won't receive any more availability updates for this code.";
+    }else{
+      msg.innerHTML = (j && j.error) ? `Couldn't unsubscribe: ${j.error}` : "Couldn't process that unsubscribe link. It may already be inactive.";
+    }
+  }catch(e){
+    msg.innerHTML = "Something went wrong. Please try the link again later.";
+  }
+}
+run();
+</script>
+</body>
+</html>

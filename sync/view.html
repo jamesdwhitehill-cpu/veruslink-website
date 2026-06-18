@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VerusLink Sync — Availability</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sync/sync.css">
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+  <div class="nav-right"><a href="/sync/">Create a code</a></div>
+</nav>
+
+<div class="container">
+  <div id="banner" class="banner hidden"></div>
+
+  <!-- No code: ask for one -->
+  <div id="lookup" class="narrow hidden">
+    <div class="eyebrow">VerusLink Sync</div>
+    <h1>View an availability page</h1>
+    <p class="sub">Enter the code you were given.</p>
+    <div class="card">
+      <form id="lookup-form">
+        <div class="field">
+          <label for="code-in">Availability code</label>
+          <input type="text" id="code-in" placeholder="SYNC-XXXX" autocomplete="off" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">View →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Code view -->
+  <div id="view" class="hidden">
+    <div class="eyebrow">Availability</div>
+    <h1 id="label-h">—</h1>
+    <p class="sub" id="tz-note"></p>
+
+    <div class="card">
+      <div class="grid-wrap"><table class="grid" id="grid"></table></div>
+      <div class="legend">
+        <span><span class="swatch on"></span>Available</span>
+        <span><span class="swatch off"></span>Not available</span>
+      </div>
+    </div>
+
+    <!-- Subscribe -->
+    <div class="card" id="subscribe-card">
+      <h2>Get notified when this changes</h2>
+      <p class="muted" style="margin-bottom:18px">We'll email you whenever <span id="label-inline">this person</span> updates their availability.</p>
+      <form id="sub-form">
+        <div class="field">
+          <label for="sub-name">Name <span class="faint">(optional)</span></label>
+          <input type="text" id="sub-name" placeholder="Your name" autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="sub-email">Email</label>
+          <input type="email" id="sub-email" placeholder="you@example.com" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary" id="sub-btn">Subscribe to updates</button>
+      </form>
+    </div>
+    <div class="card hidden" id="sub-success">
+      <h2>You're subscribed ✓</h2>
+      <p class="muted" id="sub-success-msg">You'll get an email when this availability changes.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Powered by <a href="https://veruslink.au">VerusLink</a> · <a href="/sync/unsubscribe.html">Unsubscribe</a>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SB_URL = 'https://tzthoqfzmiifvwjemxmy.supabase.co';
+const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
+const sb = supabase.createClient(SB_URL, SB_KEY);
+
+const DAYS = ['Mon','Tue','Wed','Thu','Fri'];
+const params = new URLSearchParams(location.search);
+const codeParam = (params.get('code') || '').trim().toUpperCase();
+
+const banner = document.getElementById('banner');
+let codeRow = null, slots = [];
+
+const hm = (t)=>String(t).slice(0,5);
+const toMin = (t)=>{const [h,m]=hm(t).split(':').map(Number); return h*60+m;};
+const toHM = (mins)=>`${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
+const pretty = (t)=>{let [h,m]=hm(t).split(':').map(Number); const ap=h<12?'am':'pm'; const h12=((h+11)%12)+1; return `${h12}:${String(m).padStart(2,'0')}${ap}`;};
+function buildSlots(s,e,d){const out=[];for(let m=toMin(s);m+d<=toMin(e);m+=d)out.push(toHM(m));return out;}
+function showError(m){ banner.className='banner err'; banner.textContent=m; }
+
+// Lookup form (no ?code)
+document.getElementById('lookup-form')?.addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const v=document.getElementById('code-in').value.trim().toUpperCase();
+  if(v) location.href = `/sync/view.html?code=${encodeURIComponent(v)}`;
+});
+
+async function init(){
+  if(!codeParam){ document.getElementById('lookup').classList.remove('hidden'); return; }
+
+  const { data:c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
+  if(error){ document.getElementById('lookup').classList.remove('hidden'); showError(error.message); return; }
+  if(!c){ document.getElementById('lookup').classList.remove('hidden'); showError('That code does not exist or is no longer active.'); return; }
+  codeRow = c;
+
+  document.getElementById('view').classList.remove('hidden');
+  document.getElementById('label-h').textContent = `${c.label}`;
+  document.getElementById('label-inline').textContent = c.label;
+  document.getElementById('tz-note').textContent = `Times shown in ${c.timezone}.`;
+
+  slots = buildSlots(c.business_hours_start, c.business_hours_end, c.slot_duration_minutes);
+  renderGrid();
+  await loadBlocks();
+  document.getElementById('sub-form').addEventListener('submit', subscribe);
+}
+
+function renderGrid(){
+  const grid=document.getElementById('grid');
+  let html='<thead><tr><th></th>'+DAYS.map(d=>`<th>${d}</th>`).join('')+'</tr></thead><tbody>';
+  for(const s of slots){
+    html+=`<tr><td class="time">${pretty(s)}</td>`;
+    for(let d=0;d<DAYS.length;d++) html+=`<td><div class="cell readonly" data-key="${d}_${s}"></div></td>`;
+    html+='</tr>';
+  }
+  html+='</tbody>'; grid.innerHTML=html;
+}
+
+async function loadBlocks(){
+  const { data, error } = await sb.from('vl_available_blocks').select('day_of_week,start_time').eq('code_id', codeRow.id);
+  if(error){ showError('Could not load availability: '+error.message); return; }
+  for(const b of (data||[])){
+    if(b.day_of_week>4) continue;
+    const cell=document.querySelector(`.cell[data-key="${b.day_of_week}_${hm(b.start_time)}"]`);
+    if(cell) cell.classList.add('on');
+  }
+}
+
+async function subscribe(e){
+  e.preventDefault();
+  const name=document.getElementById('sub-name').value.trim()||null;
+  const email=document.getElementById('sub-email').value.trim().toLowerCase();
+  if(!email) return;
+  const btn=document.getElementById('sub-btn');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Subscribing…';
+  banner.className='banner hidden';
+
+  try{
+    const { error } = await sb.from('vl_subscribers').insert({ code_id: codeRow.id, email, name });
+    // 23505 = already subscribed (unique code_id+email) — treat as success
+    if(error && error.code!=='23505') throw error;
+    document.getElementById('subscribe-card').classList.add('hidden');
+    document.getElementById('sub-success').classList.remove('hidden');
+    document.getElementById('sub-success-msg').textContent =
+      `You'll get an email when ${codeRow.label} updates their availability.`;
+  }catch(err){
+    console.error(err);
+    showError('Could not subscribe: '+(err.message||err));
+    btn.disabled=false; btn.textContent='Subscribe to updates';
+  }
+}
+
+init();
+</script>
+</body>
+</html>
