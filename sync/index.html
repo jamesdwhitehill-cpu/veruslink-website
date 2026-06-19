@@ -111,8 +111,14 @@ document.getElementById('create-form').addEventListener('submit', async (e) => {
     }
     if (!codeRow) throw new Error('Could not generate a unique code, please try again.');
 
-    // 3) Redirect to the owner dashboard
-    window.location.href = `/sync/manage.html?code=${encodeURIComponent(codeRow.code)}&email=${encodeURIComponent(email)}`;
+    // 3) Send the owner a secure sign-in link, then take them to the dashboard
+    //    gate. Access requires clicking the emailed magic link — the dashboard is
+    //    no longer unlocked by a guessable ?email= URL param.
+    try{
+      await fetch('/api/sync-owner', { method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ action:'request-link', code: codeRow.code }) });
+    }catch(_){ /* non-fatal — they can request again from the dashboard */ }
+    window.location.href = `/sync/manage.html?code=${encodeURIComponent(codeRow.code)}`;
   } catch (err) {
     console.error(err);
     showError(err.message || 'Something went wrong. Please try again.');

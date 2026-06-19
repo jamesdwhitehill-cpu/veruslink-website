@@ -108,7 +108,6 @@ const DOW_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const params = new URLSearchParams(location.search);
 const codeParam = (params.get('code') || '').trim().toUpperCase();
-const emailParam = (params.get('email') || '').trim().toLowerCase();
 
 const banner = document.getElementById('banner');
 const gate = document.getElementById('gate');
@@ -139,20 +138,49 @@ const THIS_MONDAY = addDays(TODAY0, -dowMon(TODAY0));
 
 function showError(m){ banner.className='banner err'; banner.textContent=m; }
 function denied(msg){ gate.classList.remove('hidden'); gate.innerHTML=`<h2>Can't open this dashboard</h2><p class="muted" style="margin-top:8px">${msg}</p><p style="margin-top:16px"><a href="/sync/">Create a new code →</a></p>`; }
+
+// Owner-auth gate: ask the owner to email themselves a magic link. The email
+// address on file is never revealed to the browser — proof of ownership comes
+// from clicking the emailed link, not from a guessable URL param.
+function showLinkGate(code, note){
+  gate.classList.remove('hidden');
+  gate.innerHTML = `
+    <h2>Owner sign-in required</h2>
+    <p class="muted" style="margin-top:8px">${note || 'To manage availability for <b>'+(code||'this code')+'</b>, confirm you are the owner. We\'ll email a secure sign-in link to the address on file for this code.'}</p>
+    <div class="field" style="margin-top:16px">
+      <label for="gate-code">Sync code</label>
+      <input type="text" id="gate-code" placeholder="SYNC-XXXX" autocomplete="off" value="${code||''}">
+    </div>
+    <button class="btn btn-primary" id="gate-send">Email me a sign-in link</button>
+    <p class="faint" id="gate-msg" style="margin-top:14px"></p>`;
+  document.getElementById('gate-send').addEventListener('click', async ()=>{
+    const c = (document.getElementById('gate-code').value||'').trim().toUpperCase();
+    const msg = document.getElementById('gate-msg');
+    if(!c){ msg.textContent='Enter your sync code.'; return; }
+    const b = document.getElementById('gate-send'); b.disabled=true; b.innerHTML='<span class="spinner"></span> Sending…';
+    try{
+      await fetch('/api/sync-owner',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action:'request-link', code:c }) });
+      msg.innerHTML = "If that code exists, a sign-in link is on its way to the owner's email. Check your inbox.";
+    }catch(_){ msg.textContent='Could not send the link. Please try again.'; }
+    finally{ b.disabled=false; b.textContent='Email me a sign-in link'; }
+  });
+}
 function toast(msg, ok=true){ const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 async function init(){
-  if(!codeParam){ denied('No code provided in the link.'); return; }
-  const { data:c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
-  if(error){ denied(error.message); return; }
-  if(!c){ denied('That code does not exist or is no longer active.'); return; }
+  // Auth is established by an httpOnly session cookie set after the owner clicks
+  // their emailed magic link. The browser proves ownership to the server, which
+  // returns the code data — there is NO client-side email/string comparison.
+  let c = null;
+  try{
+    const r = await fetch(`/api/sync-owner?session=1&code=${encodeURIComponent(codeParam)}`, { credentials:'same-origin' });
+    if(r.status === 401){ showLinkGate(codeParam); return; }
+    if(r.status === 403){ showLinkGate(codeParam, 'Your sign-in session is for a different code. Request a fresh link for this one below.'); return; }
+    const j = await r.json();
+    if(!r.ok || !j.code){ denied(j.error || 'Could not open this dashboard.'); return; }
+    c = j.code;
+  }catch(e){ denied('Could not reach the sign-in service. Please try again.'); return; }
   codeRow = c;
-
-  const { data:owner } = await sb.from('vl_owners').select('email').eq('id', c.owner_id).maybeSingle();
-  if(!owner || !emailParam || owner.email.toLowerCase() !== emailParam){
-    denied("This dashboard link is tied to the owner's email. Open it using the link you were given after creating the code.");
-    return;
-  }
 
   dash.classList.remove('hidden');
   document.getElementById('label-h').textContent = c.label;
@@ -396,14 +424,14 @@ function wireControls(){
 
   document.getElementById('dur-select').addEventListener('change', async (e)=>{
     const v=Number(e.target.value); codeRow.slot_duration_minutes=v;
-    await sb.from('vl_codes').update({ slot_duration_minutes:v, updated_at:new Date().toISOString() }).eq('id', codeRow.id);
+    await saveSettings({ slot_duration_minutes:v });
     rebuildSlots(); render();
   });
   const onHours = async ()=>{
     const st=document.getElementById('bh-start').value, en=document.getElementById('bh-end').value;
     if(!st||!en||toMin(en)<=toMin(st)) return;
     codeRow.business_hours_start=st; codeRow.business_hours_end=en;
-    await sb.from('vl_codes').update({ business_hours_start:st, business_hours_end:en, updated_at:new Date().toISOString() }).eq('id', codeRow.id);
+    await saveSettings({ business_hours_start:st, business_hours_end:en });
     rebuildSlots(); render();
   };
   document.getElementById('bh-start').addEventListener('change', onHours);
@@ -423,6 +451,15 @@ async function loadSubscriberCount(){
 
 function slotEnd(slot){ return toHM(toMin(slot)+codeRow.slot_duration_minutes); }
 
+// Persist code settings through the session-gated server endpoint (service key).
+async function saveSettings(patch){
+  const r = await fetch('/api/sync-save',{ method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
+    body:JSON.stringify({ action:'settings', ...patch }) });
+  if(r.status===401){ showError('Your session expired — request a new sign-in link.'); return false; }
+  if(!r.ok){ const j=await r.json().catch(()=>({})); showError('Could not save settings: '+(j.error||r.status)); return false; }
+  return true;
+}
+
 async function save(){
   const btn=document.getElementById('save-btn');
   btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Saving…';
@@ -431,21 +468,21 @@ async function save(){
     const blocks=[];
     recurring.forEach((state,key)=>{
       const i=key.indexOf('_'); const dow=Number(key.slice(0,i)); const slot=key.slice(i+1);
-      blocks.push({ code_id:codeRow.id, day_of_week:dow, start_time:slot, end_time:slotEnd(slot),
+      blocks.push({ day_of_week:dow, start_time:slot, end_time:slotEnd(slot),
         provider: state==='unavail'?'unavailable':'manual', valid_from:null, valid_until:null });
     });
     overrides.forEach((state,key)=>{
       const i=key.indexOf('_'); const iso=key.slice(0,i); const slot=key.slice(i+1);
-      blocks.push({ code_id:codeRow.id, day_of_week:dowMon(parseISO(iso)), start_time:slot, end_time:slotEnd(slot),
+      blocks.push({ day_of_week:dowMon(parseISO(iso)), start_time:slot, end_time:slotEnd(slot),
         provider: state==='unavail'?'unavailable':'manual', valid_from:iso, valid_until:iso });
     });
 
-    const del=await sb.from('vl_available_blocks').delete().eq('code_id', codeRow.id);
-    if(del.error) throw del.error;
-    if(blocks.length){ const ins=await sb.from('vl_available_blocks').insert(blocks); if(ins.error) throw ins.error; }
-
-    await sb.from('vl_change_log').insert({ code_id:codeRow.id, change_summary:`Availability updated — ${blocks.length} block(s)` });
-    await sb.from('vl_codes').update({ updated_at:new Date().toISOString() }).eq('id', codeRow.id);
+    // All writes (delete blocks, insert blocks, change_log, touch updated_at)
+    // run server-side under the verified owner session — no direct anon writes.
+    const sr = await fetch('/api/sync-save',{ method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
+      body:JSON.stringify({ action:'save-blocks', blocks }) });
+    if(sr.status===401){ throw new Error('Your session expired — request a new sign-in link from /sync/manage.html'); }
+    if(!sr.ok){ const j=await sr.json().catch(()=>({})); throw new Error(j.error||('save failed ('+sr.status+')')); }
 
     let extra='';
     try{
