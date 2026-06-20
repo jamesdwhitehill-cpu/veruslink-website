@@ -35,6 +35,16 @@
     </div>
   </div>
 
+  <!-- Paused code -->
+  <div id="paused" class="narrow hidden">
+    <div class="eyebrow">VerusLink Sync</div>
+    <h1>Availability paused</h1>
+    <div class="card">
+      <h2>This availability page is currently paused.</h2>
+      <p class="muted" style="margin-top:8px">The owner has temporarily paused updates. Check back later.</p>
+    </div>
+  </div>
+
   <!-- Code view -->
   <div id="view" class="hidden">
     <div class="eyebrow">Availability</div>
@@ -121,7 +131,19 @@ async function init(){
   if(!codeParam){ document.getElementById('lookup').classList.remove('hidden'); return; }
   const { data:c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
   if(error){ document.getElementById('lookup').classList.remove('hidden'); showError(error.message); return; }
-  if(!c){ document.getElementById('lookup').classList.remove('hidden'); showError('That code does not exist or is no longer active.'); return; }
+  if(!c){
+    // A paused code is invisible to the anon key (RLS allows reads only where
+    // is_active = true), so a paused page and a missing code look identical here.
+    // Ask the server to tell them apart and show a proper "paused" message.
+    try{
+      const r = await fetch(`/api/sync-public?code=${encodeURIComponent(codeParam)}`);
+      const j = await r.json().catch(()=>({}));
+      if(j && j.exists && j.is_active===false){ document.getElementById('paused').classList.remove('hidden'); return; }
+    }catch(_){ /* fall through to generic message */ }
+    document.getElementById('lookup').classList.remove('hidden');
+    showError('That code does not exist or is no longer active.');
+    return;
+  }
   codeRow=c;
 
   document.getElementById('view').classList.remove('hidden');

@@ -19,7 +19,7 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, RESEND_API_KEY, SYNC_TOKEN_SECRET.
 
-import { makeToken, verifyToken, sessionFromRequest, sessionCookie, sbGet, sbHeaders, sbUrl } from './_sync-token.js';
+import { makeToken, verifyToken, sessionFromRequest, sessionCookie, sbGet, sbSend, createCodeForOwner } from './_sync-token.js';
 
 const SITE = 'https://veruslink.au';
 const FROM = 'VerusLink Sync <vero@veruslink.au>';
@@ -44,6 +44,47 @@ function magicEmailHtml({ label, code, link }) {
       If you didn't request this, you can safely ignore it. Powered by <a href="${SITE}" style="color:rgba(255,255,255,0.5)">VerusLink</a>
     </p>
   </div></body></html>`;
+}
+
+function dashboardEmailHtml({ link }) {
+  return `<!DOCTYPE html><html><body style="margin:0;background:#0D0D18;font-family:Inter,Arial,sans-serif;color:#fff">
+  <div style="max-width:520px;margin:0 auto;padding:32px 24px">
+    <div style="font-size:13px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:#fff;margin-bottom:24px">VERUSLINK</div>
+    <div style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:28px">
+      <h1 style="font-size:21px;margin:0 0 12px">Open your sync dashboard</h1>
+      <p style="color:rgba(255,255,255,0.65);font-size:15px;line-height:1.6;margin:0 0 24px">
+        Click below to manage all of your VerusLink Sync codes. This link expires in 30 minutes and can only be used by you.
+      </p>
+      <a href="${esc(link)}" style="display:inline-block;background:#2D9CDB;color:#04121c;font-weight:700;text-decoration:none;padding:13px 24px;border-radius:11px;font-size:15px">Open my dashboard →</a>
+    </div>
+    <p style="color:rgba(255,255,255,0.34);font-size:12px;line-height:1.6;margin-top:22px">
+      If you didn't request this, you can safely ignore it. Powered by <a href="${SITE}" style="color:rgba(255,255,255,0.5)">VerusLink</a>
+    </p>
+  </div></body></html>`;
+}
+
+// Email an owner a magic link that opens the multi-code dashboard. The owner's
+// email is resolved server-side and never exposed to the browser. No-op (silent)
+// if the owner has no codes, no email, or Resend is not configured.
+async function sendDashboardLink(ownerId) {
+  const owners = await sbGet(`vl_owners?id=eq.${encodeURIComponent(ownerId)}&select=email`);
+  if (!owners.length || !owners[0].email || !process.env.RESEND_API_KEY) return;
+  const codes = await sbGet(`vl_codes?owner_id=eq.${encodeURIComponent(ownerId)}&select=id&order=created_at.asc&limit=1`);
+  if (!codes.length) return; // nothing to manage yet
+  const magic = makeToken({ code_id: codes[0].id, owner_id: ownerId, kind: 'magic', dest: 'dashboard' });
+  const link = `${SITE}/api/sync-owner?token=${encodeURIComponent(magic)}`;
+  try {
+    await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        from: FROM,
+        to: owners[0].email,
+        subject: 'Your VerusLink Sync dashboard link',
+        html: dashboardEmailHtml({ link }),
+      }),
+    });
+  } catch (_) { /* swallow — caller still returns ok */ }
 }
 
 export default async function handler(req, res) {
@@ -72,7 +113,12 @@ export default async function handler(req, res) {
       } catch (_) { /* fall through */ }
       const session = makeToken({ code_id: payload.code_id, owner_id: payload.owner_id, kind: 'session' });
       res.setHeader('Set-Cookie', sessionCookie(session));
-      res.setHeader('Location', `/sync/manage.html?code=${encodeURIComponent(codeStr)}`);
+      // Owner-scoped links (dest:'dashboard') land on the multi-code dashboard;
+      // code-scoped links keep the original single-code manage destination.
+      const location = payload.dest === 'dashboard'
+        ? '/sync/dashboard.html'
+        : `/sync/manage.html?code=${encodeURIComponent(codeStr)}`;
+      res.setHeader('Location', location);
       return res.status(302).end();
     }
 
@@ -98,38 +144,80 @@ export default async function handler(req, res) {
     return res.status(400).json({ error: 'token or session required' });
   }
 
-  // ---- POST: request a magic link ----
+  // ---- POST ----
   if (req.method !== 'POST') return res.status(405).json({ error: 'GET or POST only' });
 
-  const code = (req.body && req.body.code || '').toString().trim().toUpperCase();
   const action = (req.body && req.body.action || '').toString();
-  if (action !== 'request-link') return res.status(400).json({ error: 'unknown action' });
-  if (!code) return res.status(400).json({ error: 'code required' });
 
   try {
-    const codes = await sbGet(`vl_codes?code=eq.${encodeURIComponent(code)}&select=id,label,owner_id`);
-    // Always return ok to avoid revealing which codes exist.
-    if (codes.length) {
-      const c = codes[0];
-      const owners = await sbGet(`vl_owners?id=eq.${encodeURIComponent(c.owner_id)}&select=email`);
-      if (owners.length && owners[0].email && process.env.RESEND_API_KEY) {
-        const magic = makeToken({ code_id: c.id, owner_id: c.owner_id, kind: 'magic' });
-        const link = `${SITE}/api/sync-owner?token=${encodeURIComponent(magic)}`;
-        try {
-          await fetch('https://api.resend.com/emails', {
-            method: 'POST',
-            headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              from: FROM,
-              to: owners[0].email,
-              subject: 'Your VerusLink Sync dashboard link',
-              html: magicEmailHtml({ label: c.label, code, link }),
-            }),
-          });
-        } catch (_) { /* swallow — still return ok */ }
+    // (1) Code-scoped magic link (manage.html gate) — emails the owner on file.
+    if (action === 'request-link') {
+      const code = (req.body && req.body.code || '').toString().trim().toUpperCase();
+      if (!code) return res.status(400).json({ error: 'code required' });
+      const codes = await sbGet(`vl_codes?code=eq.${encodeURIComponent(code)}&select=id,label,owner_id`);
+      // Always return ok to avoid revealing which codes exist.
+      if (codes.length) {
+        const c = codes[0];
+        const owners = await sbGet(`vl_owners?id=eq.${encodeURIComponent(c.owner_id)}&select=email`);
+        if (owners.length && owners[0].email && process.env.RESEND_API_KEY) {
+          const magic = makeToken({ code_id: c.id, owner_id: c.owner_id, kind: 'magic' });
+          const link = `${SITE}/api/sync-owner?token=${encodeURIComponent(magic)}`;
+          try {
+            await fetch('https://api.resend.com/emails', {
+              method: 'POST',
+              headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                from: FROM,
+                to: owners[0].email,
+                subject: 'Your VerusLink Sync dashboard link',
+                html: magicEmailHtml({ label: c.label, code, link }),
+              }),
+            });
+          } catch (_) { /* swallow — still return ok */ }
+        }
       }
+      return res.status(200).json({ ok: true });
     }
-    return res.status(200).json({ ok: true });
+
+    // (2) Owner-scoped magic link (dashboard sign-in) — emails by address.
+    //     Uniform { ok:true } regardless of whether the email exists (no enumeration).
+    if (action === 'request-owner-link') {
+      const email = (req.body && req.body.email || '').toString().trim().toLowerCase();
+      if (email) {
+        const owners = await sbGet(`vl_owners?email=eq.${encodeURIComponent(email)}&select=id`);
+        if (owners.length) await sendDashboardLink(owners[0].id);
+      }
+      return res.status(200).json({ ok: true });
+    }
+
+    // (3) Signup — create the first code for a brand-new email and start a session.
+    //     If the email already exists we do NOT auto-authenticate (that would be an
+    //     account takeover via the public form); instead we email a sign-in link.
+    if (action === 'signup') {
+      const name = (req.body && req.body.name || '').toString().trim();
+      const email = (req.body && req.body.email || '').toString().trim().toLowerCase();
+      const label = (req.body && req.body.label || '').toString().trim();
+      if (!name || !email || !label) return res.status(400).json({ error: 'name, email and label are required' });
+      if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) return res.status(400).json({ error: 'invalid email' });
+      if (name.length > 120 || label.length > 200) return res.status(400).json({ error: 'name or label too long' });
+
+      const existing = await sbGet(`vl_owners?email=eq.${encodeURIComponent(email)}&select=id`);
+      if (existing.length) {
+        await sendDashboardLink(existing[0].id);
+        return res.status(200).json({ existing: true });
+      }
+
+      const created = await sbSend('POST', 'vl_owners', { name, email }, { Prefer: 'return=representation' });
+      const owner = (await created.json())[0];
+      const codeRow = await createCodeForOwner(owner.id, label);
+
+      // New account, freshly created by this caller — safe to start a session.
+      const session = makeToken({ code_id: codeRow.id, owner_id: owner.id, kind: 'session' });
+      res.setHeader('Set-Cookie', sessionCookie(session));
+      return res.status(200).json({ ok: true, code: codeRow.code });
+    }
+
+    return res.status(400).json({ error: 'unknown action' });
   } catch (e) {
     return res.status(500).json({ error: e.message });
   }

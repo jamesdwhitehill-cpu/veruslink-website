@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VerusLink Sync — Your dashboard</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sync/sync.css">
+<style>
+  .dash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:28px}
+  .dash-head .owner{color:var(--text-muted);font-size:15px;margin-top:2px}
+  .dash-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+  .sign-out{background:none;border:none;color:var(--text-faint);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 4px}
+  .sign-out:hover{color:#fff}
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
+  .sync-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s}
+  .sync-card.paused{opacity:.72}
+  .sync-card .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .sync-card .pill{font-family:'Inter',monospace;font-size:20px;font-weight:800;letter-spacing:2px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(45,156,219,0.3);border-radius:10px;padding:7px 13px;cursor:pointer}
+  .sync-card .pill:hover{border-color:var(--accent)}
+  .status{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap}
+  .status.active{color:var(--green);background:var(--green-soft);border:1px solid var(--green)}
+  .status.paused{color:var(--text-muted);background:var(--surface-strong);border:1px solid var(--border-strong)}
+  .sync-card .label{font-size:17px;font-weight:700;letter-spacing:-0.2px;line-height:1.3;word-break:break-word}
+  .sync-card .meta{font-size:13px;color:var(--text-muted);display:flex;flex-direction:column;gap:3px}
+  .sync-card .meta b{color:#fff}
+  .sync-card .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+  .sync-card .actions .btn{padding:10px 14px;font-size:13.5px;flex:1;min-width:84px}
+  .create-card{border-style:dashed}
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:480px){.grid-2{grid-template-columns:1fr}}
+  .center-narrow{max-width:460px}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+  <div class="nav-right"><a href="/sync/view.html">Have a code?</a></div>
+</nav>
+
+<div class="container">
+  <div id="banner" class="banner hidden"></div>
+
+  <!-- Loading -->
+  <div id="loading" class="card"><span class="spinner" style="border-color:rgba(255,255,255,.25);border-top-color:#fff"></span> Loading your dashboard…</div>
+
+  <!-- Sign-in gate -->
+  <div id="signin" class="narrow hidden">
+    <div class="eyebrow">VerusLink Sync</div>
+    <h1>Your sync dashboard</h1>
+    <p class="sub">Enter your email and we'll send you a secure sign-in link.</p>
+    <div class="card center-narrow">
+      <form id="signin-form">
+        <div class="field">
+          <label for="si-email">Email</label>
+          <input type="email" id="si-email" placeholder="you@example.com" autocomplete="email" required>
+          <div class="hint">We'll email a one-time link to the address on file. The link expires in 30 minutes.</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full" id="si-btn">Email me a sign-in link</button>
+      </form>
+      <p class="faint" id="si-msg" style="margin-top:14px"></p>
+    </div>
+    <p class="faint" style="text-align:center;font-size:13px">No account yet? <a href="/sync/">Create your first sync code</a></p>
+  </div>
+
+  <!-- Dashboard -->
+  <div id="dash" class="hidden">
+    <div class="dash-head">
+      <div>
+        <div class="eyebrow">Your availability</div>
+        <h1 style="margin-bottom:4px">Your Sync Codes</h1>
+        <div class="owner" id="owner-name">—</div>
+      </div>
+      <div class="dash-actions">
+        <button class="btn btn-primary" id="new-btn">+ Create new sync</button>
+        <button class="sign-out" id="signout-btn">Sign out</button>
+      </div>
+    </div>
+
+    <!-- Inline create form -->
+    <div class="card create-card hidden" id="create-card">
+      <h2>Create a new sync code</h2>
+      <p class="muted" style="margin-bottom:18px">A new shareable availability page under your account.</p>
+      <form id="create-form">
+        <div class="field">
+          <label for="c-label">What should people see?</label>
+          <input type="text" id="c-label" placeholder="Dr Smith — Physio" required>
+          <div class="hint">The title shown on the public availability page.</div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="c-dur">Slot length</label>
+            <select id="c-dur" style="width:100%">
+              <option value="15">15 min</option>
+              <option value="30" selected>30 min</option>
+              <option value="60">60 min</option>
+            </select>
+          </div>
+          <div class="field"></div>
+        </div>
+        <div class="grid-2">
+          <div class="field">
+            <label for="c-start">Day starts</label>
+            <input type="time" id="c-start" step="900" value="08:00" style="width:100%">
+          </div>
+          <div class="field">
+            <label for="c-end">Day ends</label>
+            <input type="time" id="c-end" step="900" value="18:00" style="width:100%">
+          </div>
+        </div>
+        <div class="row-actions">
+          <button type="submit" class="btn btn-primary" id="c-submit">Create code</button>
+          <button type="button" class="btn btn-ghost" id="c-cancel">Cancel</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Empty state -->
+    <div id="empty" class="card hidden" style="text-align:center;padding:42px 26px">
+      <h2 style="margin-bottom:8px">You haven't created any sync codes yet.</h2>
+      <p class="muted" style="margin-bottom:22px">Create your first one to start sharing your availability.</p>
+      <button class="btn btn-primary" id="empty-create">+ Create new sync</button>
+    </div>
+
+    <!-- Cards -->
+    <div class="cards" id="cards"></div>
+  </div>
+</div>
+
+<footer>Powered by <a href="https://veruslink.au">VerusLink</a></footer>
+
+<script>
+const SITE = 'https://veruslink.au';
+const banner = document.getElementById('banner');
+const loadingEl = document.getElementById('loading');
+const signinEl = document.getElementById('signin');
+const dashEl = document.getElementById('dash');
+const cardsEl = document.getElementById('cards');
+const emptyEl = document.getElementById('empty');
+
+let codes = [];
+
+function showError(m){ banner.className='banner err'; banner.textContent=m; }
+function toast(msg, ok=true){ const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+const esc = (s)=>String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function fmtDate(iso){
+  if(!iso) return '—';
+  const d = new Date(iso);
+  if(isNaN(d)) return '—';
+  let h=d.getHours(); const ap=h<12?'am':'pm'; const h12=((h+11)%12)+1;
+  return `${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}, ${h12}:${String(d.getMinutes()).padStart(2,'0')}${ap}`;
+}
+
+async function api(method, body){
+  const r = await fetch('/api/sync-dashboard', {
+    method,
+    credentials:'same-origin',
+    headers: body ? {'Content-Type':'application/json'} : undefined,
+    body: body ? JSON.stringify(body) : undefined,
+  });
+  return r;
+}
+
+// ---- boot ----
+async function init(){
+  let r;
+  try{ r = await api('GET'); }
+  catch(_){ loadingEl.classList.add('hidden'); showError('Could not reach the sign-in service. Please try again.'); return; }
+  loadingEl.classList.add('hidden');
+  if(r.status === 401){ showSignin(); return; }
+  let j;
+  try{ j = await r.json(); }catch(_){ showError('Unexpected response from server.'); return; }
+  if(!r.ok){ showError(j.error || 'Could not load your dashboard.'); return; }
+  document.getElementById('owner-name').textContent = j.owner && j.owner.name ? j.owner.name : '';
+  codes = j.codes || [];
+  dashEl.classList.remove('hidden');
+  renderCards();
+}
+
+// ---- sign-in gate ----
+function showSignin(){
+  signinEl.classList.remove('hidden');
+  document.getElementById('signin-form').addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const email = document.getElementById('si-email').value.trim().toLowerCase();
+    const msg = document.getElementById('si-msg');
+    const btn = document.getElementById('si-btn');
+    if(!email) return;
+    btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Sending…';
+    try{
+      await fetch('/api/sync-owner',{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'request-owner-link', email }) });
+      msg.innerHTML = "If that email has an account, a sign-in link is on its way. Check your inbox.";
+    }catch(_){ msg.textContent='Could not send the link. Please try again.'; }
+    finally{ btn.disabled=false; btn.textContent='Email me a sign-in link'; }
+  });
+}
+
+// ---- render ----
+function renderCards(){
+  if(!codes.length){ cardsEl.innerHTML=''; emptyEl.classList.remove('hidden'); return; }
+  emptyEl.classList.add('hidden');
+  cardsEl.innerHTML = codes.map(cardHtml).join('');
+  codes.forEach(c => wireCard(c.id));
+}
+
+function cardHtml(c){
+  const n = c.subscriber_count || 0;
+  const active = !!c.is_active;
+  return `<div class="sync-card ${active?'':'paused'}" data-id="${esc(c.id)}">
+    <div class="top">
+      <span class="pill" data-act="copy-code" title="Copy code">${esc(c.code)}</span>
+      <span class="status ${active?'active':'paused'}">${active?'Active':'Paused'}</span>
+    </div>
+    <div class="label">${esc(c.label)}</div>
+    <div class="meta">
+      <span><b>${n}</b> ${n===1?'subscriber':'subscribers'}</span>
+      <span>Updated ${esc(fmtDate(c.updated_at))}</span>
+    </div>
+    <div class="actions">
+      <button class="btn btn-ghost" data-act="manage">Manage</button>
+      <button class="btn btn-ghost" data-act="share">Share</button>
+      <button class="btn btn-ghost" data-act="toggle">${active?'Pause':'Resume'}</button>
+    </div>
+  </div>`;
+}
+
+function wireCard(id){
+  const card = cardsEl.querySelector(`.sync-card[data-id="${CSS.escape(id)}"]`);
+  if(!card) return;
+  const c = codes.find(x=>x.id===id);
+  const viewUrl = `${SITE}/sync/view.html?code=${encodeURIComponent(c.code)}`;
+  card.querySelector('[data-act="copy-code"]').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(c.code).then(()=>toast('Code copied'));
+  });
+  card.querySelector('[data-act="share"]').addEventListener('click', ()=>{
+    navigator.clipboard.writeText(viewUrl).then(()=>toast('Share link copied!')).catch(()=>toast('Could not copy',false));
+  });
+  card.querySelector('[data-act="manage"]').addEventListener('click', async (e)=>{
+    const b=e.currentTarget; b.disabled=true; b.innerHTML='<span class="spinner"></span>';
+    try{
+      const r = await api('POST', { action:'switch', code_id:c.id });
+      if(!r.ok) throw new Error('switch failed');
+      location.href = `/sync/manage.html?code=${encodeURIComponent(c.code)}`;
+    }catch(_){ b.disabled=false; b.textContent='Manage'; toast('Could not open manage view',false); }
+  });
+  card.querySelector('[data-act="toggle"]').addEventListener('click', async (e)=>{
+    const b=e.currentTarget; const next=!c.is_active;
+    b.disabled=true; b.innerHTML='<span class="spinner"></span>';
+    try{
+      const r = await api('POST', { action:'set-active', code_id:c.id, is_active:next });
+      const j = await r.json().catch(()=>({}));
+      if(r.status===401){ toast('Session expired — sign in again',false); setTimeout(()=>location.reload(),1200); return; }
+      if(!r.ok) throw new Error(j.error||'toggle failed');
+      c.is_active = j.is_active;
+      renderCards();
+      toast(c.is_active?'Resumed':'Paused');
+    }catch(err){ b.disabled=false; b.textContent=c.is_active?'Pause':'Resume'; toast('Could not update: '+(err.message||err),false); }
+  });
+}
+
+// ---- create ----
+function openCreate(){ document.getElementById('create-card').classList.remove('hidden'); document.getElementById('c-label').focus(); }
+function closeCreate(){ document.getElementById('create-card').classList.add('hidden'); document.getElementById('create-form').reset(); document.getElementById('c-dur').value='30'; document.getElementById('c-start').value='08:00'; document.getElementById('c-end').value='18:00'; }
+document.getElementById('new-btn').addEventListener('click', openCreate);
+document.getElementById('empty-create').addEventListener('click', openCreate);
+document.getElementById('c-cancel').addEventListener('click', closeCreate);
+
+document.getElementById('create-form').addEventListener('submit', async (e)=>{
+  e.preventDefault();
+  const label = document.getElementById('c-label').value.trim();
+  const slot = Number(document.getElementById('c-dur').value);
+  const st = document.getElementById('c-start').value;
+  const en = document.getElementById('c-end').value;
+  if(!label) return;
+  const btn = document.getElementById('c-submit');
+  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Creating…';
+  try{
+    const r = await api('POST', { action:'create', label, slot_duration_minutes:slot, business_hours_start:st, business_hours_end:en });
+    const j = await r.json().catch(()=>({}));
+    if(r.status===401){ toast('Session expired — sign in again',false); setTimeout(()=>location.reload(),1200); return; }
+    if(!r.ok || !j.code) throw new Error(j.error||'create failed');
+    codes.push(j.code);
+    closeCreate();
+    renderCards();
+    toast('Code created');
+  }catch(err){ toast('Could not create: '+(err.message||err),false); }
+  finally{ btn.disabled=false; btn.textContent='Create code'; }
+});
+
+// ---- sign out ----
+document.getElementById('signout-btn').addEventListener('click', async ()=>{
+  try{ await api('POST', { action:'signout' }); }catch(_){}
+  location.href = '/sync/dashboard.html';
+});
+
+init();
+</script>
+</body>
+</html>

@@ -36,9 +36,12 @@ function sign(payloadB64) {
 }
 
 // kind: 'session' (cookie) or 'magic' (emailed link)
-export function makeToken({ code_id, owner_id, kind = 'session' }) {
+// dest: optional post-consume redirect hint for magic links ('dashboard' | undefined).
+//       Carried inside the signed payload so it cannot be tampered with.
+export function makeToken({ code_id, owner_id, kind = 'session', dest }) {
   const ttl = kind === 'magic' ? MAGIC_TTL_SECONDS : ISSUE_TTL_SECONDS;
   const payload = { code_id, owner_id, kind, exp: Math.floor(Date.now() / 1000) + ttl };
+  if (dest) payload.dest = dest;
   const payloadB64 = b64urlEncode(JSON.stringify(payload));
   return `${payloadB64}.${sign(payloadB64)}`;
 }
@@ -96,4 +99,43 @@ export async function sbGet(path) {
   const r = await fetch(sbUrl(path), { headers: sbHeaders() });
   if (!r.ok) throw new Error(`Supabase GET ${r.status}: ${await r.text()}`);
   return r.json();
+}
+export async function sbSend(method, path, body, extraHeaders = {}) {
+  const r = await fetch(sbUrl(path), {
+    method,
+    headers: { ...sbHeaders(), ...extraHeaders },
+    body: body == null ? undefined : JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error(`Supabase ${method} ${r.status}: ${await r.text()}`);
+  return r;
+}
+
+// Unambiguous code alphabet (no 0/O/1/I) — matches the original client generator.
+const CODE_CHARS = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+export function makeCode() {
+  let s = '';
+  for (let i = 0; i < 4; i++) s += CODE_CHARS[Math.floor(Math.random() * CODE_CHARS.length)];
+  return 'SYNC-' + s;
+}
+
+// Insert a new vl_codes row for an owner, retrying on code collisions. Returns
+// the created row. Uses the service key (RLS bypass) — callers MUST have already
+// verified the owner (session) or be the unauthenticated signup path.
+export async function createCodeForOwner(ownerId, label, opts = {}) {
+  for (let attempt = 0; attempt < 6; attempt++) {
+    const body = { owner_id: ownerId, code: makeCode(), label };
+    if (opts.slot_duration_minutes != null) body.slot_duration_minutes = opts.slot_duration_minutes;
+    if (opts.business_hours_start != null) body.business_hours_start = opts.business_hours_start;
+    if (opts.business_hours_end != null) body.business_hours_end = opts.business_hours_end;
+    const r = await fetch(sbUrl('vl_codes'), {
+      method: 'POST',
+      headers: { ...sbHeaders(), Prefer: 'return=representation' },
+      body: JSON.stringify(body),
+    });
+    if (r.ok) return (await r.json())[0];
+    const txt = await r.text();
+    if (r.status === 409 || txt.includes('23505')) continue; // unique violation -> new code
+    throw new Error(`create code failed: ${r.status} ${txt}`);
+  }
+  throw new Error('could not generate a unique code');
 }
