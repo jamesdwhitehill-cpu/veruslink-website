@@ -10,6 +10,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sync/sync.css">
+<style>
+  /* All-day toggle: clickable day headers + column hover preview */
+  .grid th.dayhead{cursor:pointer;border-radius:8px;transition:background .12s}
+  .grid th.dayhead:hover{background:var(--surface-strong)}
+  .grid th.col-hl{background:var(--surface-strong)}
+  .cell.col-hl{border-color:var(--accent);box-shadow:inset 0 0 0 99px rgba(45,156,219,0.06)}
+</style>
 </head>
 <body>
 <nav>
@@ -251,11 +258,15 @@ function render(){
     days.push({ date, dow:d, iso:isoDate(date), weekend:d>=5, isToday: startOfDay(date).getTime()===TODAY0.getTime() });
   }
 
-  // header
+  // header — day columns are clickable to set/clear the whole day at once
   let html='<thead><tr><th></th>';
   for(const dy of days){
-    const cls = (dy.weekend?'weekend ':'') + (dy.isToday?'is-today':'');
-    html += `<th class="${cls.trim()}">
+    let cls = (dy.weekend?'weekend ':'') + (dy.isToday?'is-today':'');
+    // Only future/today columns with at least one editable (non-past) slot are clickable.
+    const editable = slots.some(s=>!isSlotPast(dy.date, s));
+    const headCls = (cls.trim() + (editable?' dayhead':'')).trim();
+    const attrs = editable ? ` data-c="${dy.dow}" data-dow="${dy.dow}" data-iso="${dy.iso}" title="Click to set all day"` : '';
+    html += `<th class="${headCls}"${attrs}>
       <span class="dow">${DOW_NAMES[dy.dow]}</span>
       <span class="dnum">${dy.date.getDate()}</span>
       <span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span>
@@ -290,6 +301,49 @@ function render(){
   }
   html+='</tbody>';
   document.getElementById('grid').innerHTML=html;
+  wireDayHeaders();
+}
+
+// True if the slot's start time on this date is already in the past (mirrors the
+// per-cell `past` rule so the all-day toggle skips the same non-editable slots).
+function isSlotPast(date, slot){
+  const ss=new Date(date); ss.setHours(0,0,0,0); ss.setMinutes(toMin(slot));
+  return ss < NOW;
+}
+
+// All-day toggle: cycle every editable slot in a column through the same
+// three states as a single cell — empty/mixed → available → unavailable → clear.
+// Respects the current Recurring vs This-week-only mode (via setCellState).
+function toggleDayColumn(dow, iso){
+  clearBulk();
+  const date = parseISO(iso);
+  const editable = slots.filter(s=>!isSlotPast(date, s));
+  if(!editable.length) return;
+  let allAvail=true, allUnavail=true;
+  for(const s of editable){
+    const { state } = effective(iso, dow, s);
+    if(state!=='avail') allAvail=false;
+    if(state!=='unavail') allUnavail=false;
+  }
+  const target = allAvail ? 'unavail' : allUnavail ? null : 'avail';
+  for(const s of editable) setCellState(iso, dow, s, target);
+  render();
+}
+
+// Preview-highlight a whole column while hovering its header.
+function setColHighlight(c, on){
+  document.querySelectorAll(`#grid th[data-c="${c}"], #grid .cell[data-c="${c}"]`)
+    .forEach(el=>el.classList.toggle('col-hl', on));
+}
+
+// (Re)attach header listeners after every render (innerHTML replaces the nodes).
+function wireDayHeaders(){
+  document.querySelectorAll('#grid th.dayhead').forEach(th=>{
+    const dow=Number(th.dataset.dow), iso=th.dataset.iso, c=th.dataset.c;
+    th.addEventListener('mouseenter', ()=>setColHighlight(c, true));
+    th.addEventListener('mouseleave', ()=>setColHighlight(c, false));
+    th.addEventListener('click', ()=>{ setColHighlight(c, false); toggleDayColumn(dow, iso); });
+  });
 }
 
 const cycle = (st)=> st==='avail' ? 'unavail' : st==='unavail' ? undefined : 'avail';

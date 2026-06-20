@@ -9,6 +9,12 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sync/sync.css">
+<style>
+  /* whole-day availability indicator under each day header */
+  .allday{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:4px;padding:1px 6px;border-radius:999px;line-height:1.5}
+  .allday.avail{color:var(--green);background:var(--green-soft);border:1px solid var(--green)}
+  .allday.unavail{color:var(--red);background:rgba(248,113,122,0.16);border:1px solid var(--red)}
+</style>
 </head>
 <body>
 <nav>
@@ -183,6 +189,20 @@ function effective(iso,dow,slot){
   return recurring.get(`${dow}_${slot}`);
 }
 
+// Whole-column summary so viewers can scan open/blocked days at a glance:
+// 'avail' if every slot is available, 'unavail' if every slot is unavailable,
+// otherwise null (empty or mixed).
+function dayAggregate(dy){
+  if(!slots.length) return null;
+  let allAvail=true, allUnavail=true;
+  for(const s of slots){
+    const st=effective(dy.iso, dy.dow, s);
+    if(st!=='avail') allAvail=false;
+    if(st!=='unavail') allUnavail=false;
+  }
+  return allAvail ? 'avail' : allUnavail ? 'unavail' : null;
+}
+
 function render(){
   const ws=weekStart(), we=addDays(ws,6);
   document.getElementById('week-range').textContent=`${ws.getDate()} ${MON_NAMES[ws.getMonth()]} – ${we.getDate()} ${MON_NAMES[we.getMonth()]}`;
@@ -195,7 +215,11 @@ function render(){
   let html='<thead><tr><th></th>';
   for(const dy of days){
     const cls=(dy.weekend?'weekend ':'')+(dy.isToday?'is-today':'');
-    html+=`<th class="${cls.trim()}"><span class="dow">${DOW_NAMES[dy.dow]}</span><span class="dnum">${dy.date.getDate()}</span><span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span></th>`;
+    const agg=dayAggregate(dy);
+    const ind = agg==='avail' ? '<span class="allday avail" title="Available all day">All day</span>'
+              : agg==='unavail' ? '<span class="allday unavail" title="Unavailable all day">Blocked</span>'
+              : '';
+    html+=`<th class="${cls.trim()}"><span class="dow">${DOW_NAMES[dy.dow]}</span><span class="dnum">${dy.date.getDate()}</span><span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span>${ind}</th>`;
   }
   html+='</tr></thead><tbody>';
 
