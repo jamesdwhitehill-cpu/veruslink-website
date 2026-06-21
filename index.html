@@ -12,165 +12,218 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
 <style>
+:root{
+  --bg:#f4f4f5;
+  --card:#ffffff;
+  --accent:#2D9CDB;
+  --accent-rgb:45,156,219;
+  --accent-soft:rgba(45,156,219,0.08);
+  --text:#111111;
+  --text2:#555555;
+  --muted:#888888;
+  --black:#111111;
+  --border:#e0e0e0;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:#0D0D18;color:#fff;font-size:15px;line-height:1.6;overflow-x:hidden}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 
-nav{display:flex;justify-content:space-between;align-items:center;padding:20px 40px;border-bottom:1px solid rgba(255,255,255,0.06);position:sticky;top:0;background:rgba(13,13,24,0.92);backdrop-filter:blur(12px);z-index:100}
+/* ── shared ── */
+.section{padding:64px max(40px,calc((100% - 1080px)/2));position:relative}
+.section.gray{background:var(--bg)}
+.section.white{background:var(--card)}
+.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.sec-label-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.sec-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:12px;color:var(--text)}
+.sec-h em{font-style:italic;font-weight:400;color:var(--accent)}
+.sec-body{font-size:17px;color:var(--text2);line-height:1.75;margin-bottom:28px;max-width:700px}
+
+/* ── 1. nav ── */
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
 .logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
 .nav-links{display:flex;gap:24px;align-items:center}
-.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
-.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:#2D9CDB;color:#000;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
+.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
+.nav-link:hover{color:#fff}
+.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
 
-.hero{padding:80px max(40px,calc((100% - 1080px)/2)) 64px;position:relative;text-align:center;overflow:hidden}
-.hero-glow{position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(45,156,219,0.18) 0%,transparent 70%);pointer-events:none}
-.hero-glow-2{position:absolute;bottom:-80px;right:-80px;width:350px;height:350px;background:radial-gradient(ellipse,rgba(45,156,219,0.08) 0%,transparent 70%);pointer-events:none}
-.hero-pill{display:inline-flex;align-items:center;gap:8px;background:rgba(45,156,219,0.1);border:1px solid rgba(45,156,219,0.25);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:#2D9CDB;letter-spacing:0.04em;margin-bottom:28px}
-.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:#2D9CDB}
-.hero-h{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;color:#fff}
-.hero-h em{font-style:italic;font-weight:400;color:rgba(255,255,255,0.45)}
-.op-line{font-size:16px;font-weight:500;color:rgba(255,255,255,0.45);max-width:480px;margin:0 auto 36px;line-height:1.7}
-.op-line strong{color:#2D9CDB;font-weight:600}
+/* ── buttons ── */
+.btn-primary{background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.06em;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;display:inline-block}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn-ghost{background:transparent;color:var(--text);font-size:13px;font-weight:600;padding:14px 28px;border-radius:100px;border:1px solid var(--border);cursor:pointer;text-decoration:none;display:inline-block}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── recurring inline cta line ── */
+.cta-line{text-align:center;padding:26px 20px;background:var(--bg)}
+.cta-line a{color:var(--accent);font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none}
+.cta-line a:hover{text-decoration:underline}
+
+/* ── 2. hero ── */
+.hero{padding:80px max(40px,calc((100% - 1080px)/2)) 64px;text-align:center;background:var(--card)}
+.hero-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid rgba(var(--accent-rgb),0.25);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.04em;margin-bottom:28px}
+.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
+.hero-h{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;color:var(--text)}
+.hero-h em{font-style:italic;font-weight:400;color:var(--muted)}
+.op-line{font-size:17px;font-weight:500;color:var(--text2);max-width:480px;margin:0 auto 36px;line-height:1.7}
+.op-line strong{color:var(--accent);font-weight:600}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
-.btn-primary{background:#2D9CDB;color:#000;font-size:13px;font-weight:700;letter-spacing:0.06em;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;display:inline-block;max-width:320px}
-.btn-ghost{background:rgba(255,255,255,0.06);color:rgba(255,255,255,0.6);font-size:13px;font-weight:600;padding:14px 28px;border-radius:100px;border:1px solid rgba(255,255,255,0.1);cursor:pointer;text-decoration:none;display:inline-block;max-width:320px}
 
-.stat-pills{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
-.stat-pill{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:16px;padding:20px 24px;text-align:center;flex:1;min-width:140px;max-width:200px}
-.stat-pill-n{font-size:2rem;font-weight:900;letter-spacing:-1px;color:#2D9CDB;line-height:1}
-.stat-pill-l{font-size:11px;font-weight:500;color:rgba(255,255,255,0.3);margin-top:6px;letter-spacing:0.04em;line-height:1.4}
-.stat-pill-src{font-size:10px;font-weight:500;color:rgba(255,255,255,0.18);margin-top:8px;letter-spacing:0.02em;line-height:1.4}
+.stat-pills{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
+.stat-pill{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:22px 24px;text-align:center;flex:1;min-width:160px;max-width:240px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.stat-pill-n{font-size:2.1rem;font-weight:900;letter-spacing:-1px;color:var(--accent);line-height:1}
+.stat-pill-l{font-size:12px;font-weight:500;color:var(--text2);margin-top:8px;letter-spacing:0.02em;line-height:1.45}
+.stat-pill-src{font-size:10px;font-weight:500;color:var(--muted);margin-top:8px;letter-spacing:0.02em;line-height:1.4}
 
-.logo-band{padding:18px 40px;border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.04);text-align:center}
-.logo-band-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:12px}
-.logo-band-items{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:center}
-.logo-band-item{font-size:13px;font-weight:700;color:rgba(255,255,255,0.2);letter-spacing:0.06em;text-transform:uppercase}
+/* ── 3. points ── */
+.points{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
+.point{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:24px}
+.point-num{width:34px;height:34px;border-radius:50%;background:var(--black);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.point-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
+.point-body{font-size:15px;color:var(--text2);line-height:1.65}
 
-.section{padding:64px max(40px,calc((100% - 1080px)/2));position:relative;overflow:hidden}
-.section-glow-l{position:absolute;left:-100px;top:50%;transform:translateY(-50%);width:300px;height:300px;background:radial-gradient(ellipse,rgba(45,156,219,0.07) 0%,transparent 70%);pointer-events:none}
-.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:16px}
-.sec-label-dot{width:4px;height:4px;border-radius:50%;background:#2D9CDB;flex-shrink:0}
-.sec-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:12px}
-.sec-h em{font-style:italic;font-weight:400;color:#2D9CDB}
-.sec-body{font-size:17px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:28px;max-width:700px}
+/* ── why now band ── */
+.whynow{padding:48px max(40px,calc((100% - 1080px)/2));background:var(--card);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
 
-.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:28px}
-.tg-cell{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:16px}
-.tg-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.1);margin-bottom:10px}
-.tg-cell.dead .tg-dot{background:#c0392b;box-shadow:0 0 8px rgba(192,57,43,0.4)}
-.tg-cell.limbo .tg-dot{background:#e67e22;box-shadow:0 0 8px rgba(230,126,34,0.3)}
-.tg-tool{font-size:15px;font-weight:600;color:rgba(255,255,255,0.55)}
-.tg-status{font-size:11px;color:rgba(255,255,255,0.25);margin-top:3px}
-.tg-cell.dead .tg-status{color:rgba(192,57,43,0.8)}
-.tg-cell.limbo .tg-status{color:rgba(230,126,34,0.7)}
-.pull-quote{font-size:1.2rem;font-style:italic;color:rgba(255,255,255,0.35);line-height:1.55;border-left:2px solid #2D9CDB;padding-left:20px;max-width:500px}
+/* ── 4. AOA how it works ── */
+.aoa{display:flex;align-items:stretch;gap:10px;margin-top:8px}
+.aoa-step{flex:1;background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px 22px;text-align:center}
+.aoa-step.mid{border:1.5px solid var(--accent)}
+.aoa-ico{width:48px;height:48px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.aoa-ico svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.8}
+.aoa-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px}
+.aoa-desc{font-size:14px;color:var(--muted);line-height:1.55}
+.aoa-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:26px;font-weight:700;flex-shrink:0}
 
-.insights{display:flex;flex-direction:column;gap:8px;margin-bottom:28px;max-width:720px}
-.insight{display:flex;gap:16px;padding:18px 20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:12px}
-.i-num{font-size:10px;font-weight:800;color:rgba(45,156,219,0.4);width:20px;flex-shrink:0;padding-top:2px;letter-spacing:0.05em}
-.i-text{font-size:16px;color:rgba(255,255,255,0.5);line-height:1.65}
-.i-text strong{font-weight:700;color:#fff}
+/* ── 5. inline cta bar ── */
+.cta-bar{background:var(--card);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:36px 20px;text-align:center}
+.cta-bar-inner{max-width:500px;margin:0 auto}
+.cta-bar-text{font-size:17px;color:var(--text);font-weight:600;margin-bottom:18px;line-height:1.5}
+.cta-bar-text strong{color:var(--accent)}
+.cta-bar-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-.inline-cta{padding:20px max(40px,calc((100% - 1080px)/2));background:rgba(45,156,219,0.05);border-top:1px solid rgba(45,156,219,0.1);border-bottom:1px solid rgba(45,156,219,0.1);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap}
-.inline-cta-text{font-size:15px;color:rgba(255,255,255,0.4)}
-.inline-cta-text strong{color:#fff;font-weight:600}
-.cta-sm{font-size:11px;font-weight:700;letter-spacing:0.06em;color:#2D9CDB;background:rgba(45,156,219,0.08);border:1px solid rgba(45,156,219,0.2);padding:9px 18px;border-radius:100px;cursor:pointer;white-space:nowrap;text-decoration:none;display:inline-block}
+/* ── 6. done with you cards ── */
+.dwy{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.dwy-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
+.dwy-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:100px;margin-bottom:14px}
+.dwy-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px;line-height:1.35}
+.dwy-body{font-size:15px;color:var(--text2);line-height:1.65}
 
-.aoa-steps{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
-.aoa-step{display:flex;gap:16px;padding:20px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.06);border-radius:14px;align-items:flex-start}
-.aoa-icon{width:42px;height:42px;border-radius:10px;background:rgba(45,156,219,0.1);border:1px solid rgba(45,156,219,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.aoa-title{font-size:14px;font-weight:700;color:#fff;margin-bottom:5px}
-.aoa-body{font-size:15px;color:rgba(255,255,255,0.45);line-height:1.6}
-.aoa-badge{display:inline-block;margin-top:8px;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#2D9CDB;background:rgba(45,156,219,0.08);border:1px solid rgba(45,156,219,0.15);padding:3px 12px;border-radius:100px}
+/* ── 7. benefits grid ── */
+.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.benefit{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:24px}
+.benefit-ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.benefit-ico svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8}
+.benefit-label{font-size:15px;font-weight:700;color:var(--text);line-height:1.4}
 
-.after-box{background:rgba(45,156,219,0.04);border:1px solid rgba(45,156,219,0.15);border-radius:14px;padding:22px;margin-top:16px}
-.after-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#2D9CDB;margin-bottom:14px}
-.after-items{display:flex;flex-direction:column;gap:10px}
-.after-item{display:flex;gap:12px;font-size:15px;color:rgba(255,255,255,0.45);line-height:1.5}
-.after-num{font-size:11px;font-weight:800;color:#2D9CDB;width:18px;flex-shrink:0;padding-top:1px}
+/* ── 8. comparison table ── */
+.compare-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.compare{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;min-width:640px}
+.compare th,.compare td{padding:16px 18px;text-align:left;font-size:14px;border-bottom:0.5px solid var(--border)}
+.compare thead th{font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
+.compare thead th.win{color:var(--accent)}
+.compare tbody tr:last-child td{border-bottom:none}
+.compare td.rowlabel{font-weight:700;color:var(--text);background:var(--bg);width:24%}
+.compare td{color:var(--text2)}
+.compare td.win{color:var(--text);font-weight:700}
+.compare col.wincol,.compare th.win,.compare td.win{background:var(--accent-soft)}
 
-.price-wrap{padding:0 max(40px,calc((100% - 1080px)/2)) 40px}
-.price-band{background:rgba(45,156,219,0.06);border:1px solid rgba(45,156,219,0.15);border-radius:20px;padding:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
-.price-n{font-size:clamp(2.5rem,6vw,3.6rem);font-weight:900;letter-spacing:-2px;color:#2D9CDB;line-height:1}
-.price-period{font-size:12px;color:rgba(255,255,255,0.3);margin-top:4px;letter-spacing:0.04em}
-.price-incl{font-size:15px;color:rgba(255,255,255,0.3);margin-top:10px;max-width:260px;line-height:1.65}
+/* ── 9. pricing ── */
+.pricing{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;align-items:start}
+.price-card{background:var(--card);border:0.5px solid var(--border);border-radius:20px;padding:32px;position:relative}
+.price-card.featured{border:1.5px solid var(--accent)}
+.price-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:18px}
+.price-badge.black{background:var(--black);color:#fff}
+.price-badge.accent{background:var(--accent);color:#fff}
+.price-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:0.02em}
+.price-n{font-size:clamp(2.4rem,6vw,3.2rem);font-weight:900;letter-spacing:-2px;color:var(--text);line-height:1}
+.price-term{font-size:13px;color:var(--muted);margin-top:6px;margin-bottom:16px;line-height:1.4}
+.price-desc{font-size:15px;color:var(--text2);line-height:1.6;margin-bottom:20px}
+.price-list{list-style:none;margin-bottom:24px;display:flex;flex-direction:column;gap:10px}
+.price-list li{font-size:14px;color:var(--text2);line-height:1.5;display:flex;gap:10px;align-items:flex-start}
+.price-list li svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2.2;flex-shrink:0;margin-top:2px}
+.price-card .btn-primary,.price-card .btn-ghost{display:block;text-align:center}
 
-.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:20px}
-.proof-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
-.proof-n{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:#2D9CDB;margin-bottom:6px;line-height:1}
-.proof-ctx{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.5;margin-bottom:10px}
-.proof-from{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.2)}
+/* ── 10. guarantee ── */
+.guarantee-wrap{padding:56px max(40px,calc((100% - 1080px)/2));background:var(--card)}
+.guarantee{background:var(--accent-soft);border-radius:20px;max-width:600px;margin:0 auto;padding:40px 36px;text-align:center}
+.guarantee-h{font-size:1.5rem;font-weight:900;letter-spacing:-0.5px;color:var(--text);margin-bottom:14px}
+.guarantee-body{font-size:16px;color:var(--text2);line-height:1.7}
 
-.founder{padding:64px max(40px,calc((100% - 1080px)/2));background:rgba(255,255,255,0.04);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);position:relative;overflow:hidden}
+/* ── 11. proof ── */
+.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+.proof-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
+.proof-n{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:var(--accent);margin-bottom:8px;line-height:1}
+.proof-ctx{font-size:15px;color:var(--text2);line-height:1.55;margin-bottom:12px}
+.proof-from{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
+.proof-note{font-size:14px;color:var(--muted);font-style:italic;line-height:1.6;margin-top:20px;max-width:620px}
+
+/* ── 12. founder ── */
 .founder-inner{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
-.founder-avatar{width:110px;height:110px;border-radius:20px;background:linear-gradient(135deg,rgba(45,156,219,0.3),rgba(45,156,219,0.05));border:1px solid rgba(45,156,219,0.2);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900;color:#2D9CDB;flex-shrink:0;letter-spacing:-1px}
-.founder-content{flex:1;min-width:200px}
-.founder-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:10px}
-.founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px}
-.founder-title{font-size:13px;color:#2D9CDB;font-weight:600;margin-bottom:14px}
-.founder-bio{font-size:16px;color:rgba(255,255,255,0.45);line-height:1.75;margin-bottom:10px;max-width:620px}
-.founder-creds{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
-.founder-cred{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:100px;padding:5px 14px;font-size:11px;font-weight:600;color:rgba(255,255,255,0.3)}
+.founder-avatar{width:96px;height:96px;border-radius:20px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-1px}
+.founder-content{flex:1;min-width:240px}
+.founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;color:var(--text)}
+.founder-title{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:18px}
+.founder-bio{font-size:16px;color:var(--text2);line-height:1.75;margin-bottom:14px;max-width:640px}
+.tf-strip{display:inline-flex;align-items:center;gap:10px;margin-top:8px;background:var(--bg);border:0.5px solid var(--border);border-radius:12px;padding:12px 18px;font-size:13px;color:var(--text2);line-height:1.5;max-width:640px}
+.tf-strip strong{color:var(--text);font-weight:700}
 
-.faqs{display:flex;flex-direction:column;gap:8px;margin-top:20px;max-width:720px}
-.faq{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:20px;cursor:pointer}
-.faq-q{font-size:14px;font-weight:700;color:rgba(255,255,255,0.75);display:flex;justify-content:space-between;align-items:center;gap:16px}
-.faq-icon{font-size:20px;color:#2D9CDB;flex-shrink:0;transition:transform 0.2s;line-height:1}
-.faq-a{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.7;margin-top:12px;display:none}
+/* ── 13. faq ── */
+.faqs{display:flex;flex-direction:column;gap:10px;margin-top:20px;max-width:760px}
+.faq{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:20px 22px;cursor:pointer}
+.faq-q{font-size:15px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-icon{font-size:20px;color:var(--accent);flex-shrink:0;transition:transform 0.2s;line-height:1}
+.faq-a{font-size:15px;color:var(--text2);line-height:1.7;margin-top:12px;display:none}
 .faq.open .faq-a{display:block}
 .faq.open .faq-icon{transform:rotate(45deg)}
 
-.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.fit-col{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:22px}
-.fit-col-head{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:14px}
-.fit-col-head.yes{color:#34d399}
-.fit-item{font-size:15px;color:rgba(255,255,255,0.4);padding:8px 0;border-bottom:1px solid rgba(255,255,255,0.05);line-height:1.4;display:flex;align-items:flex-start;gap:8px}
+/* ── 14. fit ── */
+.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+.fit-col{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
+.fit-col-head{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--black);padding:6px 16px;border-radius:100px;margin-bottom:18px}
+.fit-item{font-size:15px;color:var(--text2);padding:9px 0;border-bottom:0.5px solid var(--border);line-height:1.45;display:flex;align-items:flex-start;gap:10px}
 .fit-item:last-child{border-bottom:none}
-.fit-item.yes{color:rgba(255,255,255,0.75)}
-.fit-check{color:#34d399;flex-shrink:0}
-.fit-cross{color:rgba(255,255,255,0.2);flex-shrink:0}
-.tf-note{border:1px solid rgba(45,156,219,0.15);border-radius:12px;padding:20px;background:rgba(45,156,219,0.04);margin-top:8px}
-.tf-note-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(45,156,219,0.6);margin-bottom:8px}
-.tf-note-text{font-size:15px;color:rgba(255,255,255,0.4);line-height:1.65}
+.fit-item.yes{color:var(--text)}
+.fit-check{color:var(--accent);flex-shrink:0;font-weight:700}
+.fit-cross{color:var(--muted);flex-shrink:0}
 
-.close{padding:80px max(40px,calc((100% - 1080px)/2));text-align:center;position:relative;overflow:hidden}
-.close-glow{position:absolute;top:0;left:50%;transform:translateX(-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(45,156,219,0.12) 0%,transparent 70%);pointer-events:none}
-.close-pre{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:20px}
-.close-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:rgba(255,255,255,0.5);line-height:1.2;margin-bottom:14px;font-style:italic}
-.close-h em{font-style:normal;color:#2D9CDB}
-.close-sub{font-size:15px;color:rgba(255,255,255,0.3);margin-bottom:32px;max-width:400px;margin-left:auto;margin-right:auto;line-height:1.7}
-.close-micro{font-size:12px;color:rgba(255,255,255,0.2);margin-top:16px;font-style:italic}
+/* ── 15. close ── */
+.close{padding:80px max(40px,calc((100% - 1080px)/2));text-align:center;background:var(--black)}
+.close-pre{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px}
+.close-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:#fff;line-height:1.2;margin-bottom:28px}
+.close-h em{font-style:italic;font-weight:400;color:var(--accent)}
+.close-micro{font-size:13px;color:rgba(255,255,255,0.45);margin-top:18px;font-style:italic}
 
-footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.2)}
+/* ── 16. footer ── */
+footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
 .footer-links{display:flex;gap:20px}
-.footer-link{font-size:11px;color:rgba(255,255,255,0.15);text-decoration:none}
+.footer-link{font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none}
+.footer-link:hover{color:#fff}
 
-@media(min-width:768px){
-  .aoa-steps{display:grid;grid-template-columns:repeat(3,1fr);align-items:stretch}
-  .inline-cta{flex-direction:column;justify-content:center;text-align:center}
-  .price-band{flex-direction:column;justify-content:center;text-align:center;max-width:600px;margin:0 auto}
+/* ── responsive ── */
+@media(max-width:768px){
+  .points{grid-template-columns:1fr}
+  .dwy{grid-template-columns:1fr}
+  .benefits{grid-template-columns:repeat(2,1fr)}
+  .pricing{grid-template-columns:1fr}
+  .proof-grid{grid-template-columns:1fr}
+  .fit-grid{grid-template-columns:1fr}
+  .aoa{flex-direction:column}
+  .aoa-arrow{transform:rotate(90deg);padding:4px 0}
+  .stat-pills{flex-direction:column;align-items:center}
+  .stat-pill{max-width:100%;width:100%}
 }
-
 @media(max-width:600px){
   nav{padding:16px 20px}
   .nav-links .nav-link{display:none}
-  .hero,.section,.founder,.close{padding-left:20px;padding-right:20px}
-  .logo-band,.inline-cta{padding-left:20px;padding-right:20px}
-  .price-wrap{padding:0 20px 32px}
+  .hero,.section,.whynow,.guarantee-wrap,.close{padding-left:20px;padding-right:20px}
   .hero-h{font-size:2.2rem}
-  .tg{grid-template-columns:repeat(2,1fr)}
-  .proof-grid{grid-template-columns:1fr}
-  .fit-grid{grid-template-columns:1fr}
-  .stat-pills{flex-direction:column;align-items:center}
-  .stat-pill{max-width:100%;width:100%}
-  .price-band{flex-direction:column;align-items:flex-start}
   footer{padding:20px}
 }
 </style>
 </head>
 <body>
 
+<!-- 1. NAV -->
 <nav>
   <a href="/" class="logo">VerusLink</a>
   <div class="nav-links">
@@ -181,9 +234,8 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   </div>
 </nav>
 
+<!-- 2. HERO -->
 <section class="hero">
-  <div class="hero-glow"></div>
-  <div class="hero-glow-2"></div>
   <div class="hero-pill"><div class="hero-pill-dot"></div>AI Concierge · Sydney, Australia</div>
   <h1 class="hero-h">You already tried AI.<br><em>That's the problem.</em></h1>
   <p class="op-line">You bought the tools. Nothing stuck. VerusLink is <strong>the missing operator layer between your tools and your Tuesday.</strong></p>
@@ -198,51 +250,199 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
   </div>
 </section>
 
-<section class="section">
+<!-- 3. AI DIDN'T FAIL YOU -->
+<section class="section gray">
   <div class="sec-label"><div class="sec-label-dot"></div>What's actually going on</div>
   <h2 class="sec-h">AI didn't fail you.<br><em>Application did.</em></h2>
   <p class="sec-body">The tools are genuinely powerful. The gap is between what they can do in theory and what's running inside your specific business on a Tuesday afternoon.</p>
-  <div class="insights">
-    <div class="insight"><div class="i-num">01</div><div class="i-text"><strong>The first win has to happen in two weeks, or it never happens.</strong> Most implementations die in setup. We start with the one thing that pays for itself immediately, then build from there.</div></div>
-    <div class="insight"><div class="i-num">02</div><div class="i-text"><strong>You don't have time to learn and run a business simultaneously.</strong> The owners getting results aren't technically smarter. They have someone who does the implementation work for them.</div></div>
-    <div class="insight"><div class="i-num">03</div><div class="i-text"><strong>Most consultants deliver decks, not automations.</strong> After 40 hours and $10,000, the average AI consulting engagement produces a strategy document. Not a single working automation. We ship something real on call one. That's not a marketing claim. It's the only way this model works.</div></div>
+  <div class="points">
+    <div class="point"><div class="point-num">01</div><div class="point-title">The first win has to happen in two weeks, or it never happens.</div><div class="point-body">Most implementations die in setup. We start with the one thing that pays for itself immediately, then build from there.</div></div>
+    <div class="point"><div class="point-num">02</div><div class="point-title">You don't have time to learn and run a business simultaneously.</div><div class="point-body">The owners getting results aren't technically smarter. They have someone who does the implementation work for them.</div></div>
+    <div class="point"><div class="point-num">03</div><div class="point-title">Most consultants deliver decks, not automations.</div><div class="point-body">After 40 hours and $10,000, the average AI consulting engagement produces a strategy document. Not a single working automation. We ship something real on call one. That's not a marketing claim. It's the only way this model works.</div></div>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+
+<!-- WHY NOW (preserved copy) -->
+<div class="whynow">
   <div class="sec-label"><div class="sec-label-dot"></div>Why now</div>
   <h2 class="sec-h">Why now.<br><em>The squeeze is real.</em></h2>
-  <p class="sec-body">Australian operating costs went up again this quarter. Super obligations are rising. Card surcharge bans are eating margins. AI automation isn't a productivity hack anymore. It's a cost-reduction lever. The question is how many more quarters you absorb rising costs without automating the boring 80 percent.</p>
-</section>
-
-<div class="inline-cta">
-  <div class="inline-cta-text"><strong>The intake form is free.</strong> The first call ships something real.</div>
-  <a href="https://www.veruslink.au/audit" class="cta-sm">Start with the intake form →</a>
+  <p class="sec-body" style="margin-bottom:0">Australian operating costs went up again this quarter. Super obligations are rising. Card surcharge bans are eating margins. AI automation isn't a productivity hack anymore. It's a cost-reduction lever. The question is how many more quarters you absorb rising costs without automating the boring 80 percent.</p>
 </div>
 
-<section class="section" id="how-it-works">
+<!-- 4. HOW IT WORKS — AOA -->
+<section class="section white" id="how-it-works">
   <div class="sec-label"><div class="sec-label-dot"></div>What we actually do</div>
-  <h2 class="sec-h">Done-with-you.<br><em>Not done-for-you.</em></h2>
-  <p class="sec-body">Not a course. Not a consultant who hands you a report. A retained relationship where AI gets embedded into how your business actually operates — and we stick around to make sure it keeps working.</p>
-  <div class="aoa-steps">
-    <div class="aoa-step"><div class="aoa-icon">📋</div><div><div class="aoa-title">The audit — map what's actually broken</div><div class="aoa-body">Complete a 10-minute intake form before we speak. We map your time sinks, existing tools, and biggest bottlenecks — and surface 1–3 AI opportunities before call one. The form is the audit. No prep wasted.</div><div class="aoa-badge">Free. No commitment.</div></div></div>
-    <div class="aoa-step"><div class="aoa-icon">⚡</div><div><div class="aoa-title">Every call — Audit, Optimize, Automate</div><div class="aoa-body">You share your screen. We fix the process first, then wire in AI — because automating chaos just gives you faster chaos. Every call ships at least one skill or automation. No first-call win means the engagement is already dead.</div><div class="aoa-badge">Documented ROI by day 30.</div></div></div>
-    <div class="aoa-step"><div class="aoa-icon">🔁</div><div><div class="aoa-title">Between calls — always in your corner</div><div class="aoa-body">Unlimited async support via voice message — replied to in under 12 business hours. Every session is logged in a shared Notion hub: skills built, automations shipped, time recovered. You see exactly what each month is worth. That's what makes $1,500 a no-brainer at renewal.</div><div class="aoa-badge">Cancel anytime. Most don't.</div></div></div>
+  <h2 class="sec-h">How it works.<br><em>Audit, Optimise, Automate.</em></h2>
+  <p class="sec-body">A retained relationship where AI gets embedded into how your business actually operates — and we stick around to make sure it keeps working. We fix before we automate.</p>
+  <div class="aoa">
+    <div class="aoa-step">
+      <div class="aoa-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16" y1="16" x2="21" y2="21"/></svg></div>
+      <div class="aoa-name">Audit</div>
+      <div class="aoa-desc">Map what's actually broken before touching a single tool.</div>
+    </div>
+    <div class="aoa-arrow">→</div>
+    <div class="aoa-step mid">
+      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg></div>
+      <div class="aoa-name">Optimise</div>
+      <div class="aoa-desc">Fix the process first — automating chaos just gives you faster chaos.</div>
+    </div>
+    <div class="aoa-arrow">→</div>
+    <div class="aoa-step">
+      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M4 17l5-5-5-5M12 19h8"/></svg></div>
+      <div class="aoa-name">Automate</div>
+      <div class="aoa-desc">Wire AI into the tools you already pay for — and ship it.</div>
+    </div>
   </div>
 </section>
 
-<div class="price-wrap">
-  <div class="price-band">
-    <div>
-      <div class="price-n">$1,500</div>
-      <div class="price-period">per month · cancel anytime · no lock-in</div>
-      <div class="price-incl">Two done-with-you calls · AOA methodology · unlimited async · Notion hub with quantified ROI · done-for-you builds available as upsell</div>
+<!-- 5. INLINE CTA BAR -->
+<div class="cta-bar">
+  <div class="cta-bar-inner">
+    <div class="cta-bar-text">Start with the <strong>$999 assessment</strong>. Or go straight to the intake form.</div>
+    <div class="cta-bar-btns">
+      <a href="https://www.veruslink.au/audit" class="btn-primary">Book your assessment</a>
+      <a href="https://www.veruslink.au/audit" class="btn-ghost">Intake form</a>
     </div>
-    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
   </div>
 </div>
 
-<section class="section">
+<!-- 6. DONE WITH YOU. NOT DONE FOR YOU. -->
+<section class="section gray">
+  <div class="sec-label"><div class="sec-label-dot"></div>The relationship</div>
+  <h2 class="sec-h">Done with you.<br><em>Not done for you.</em></h2>
+  <p class="sec-body">Not a course. Not a consultant who hands you a report. Here's what that looks like in practice.</p>
+  <div class="dwy">
+    <div class="dwy-card">
+      <div class="dwy-badge">Free · no commitment</div>
+      <div class="dwy-title">The audit — map what's actually broken</div>
+      <div class="dwy-body">Complete a 10-minute intake form before we speak. We map your time sinks, existing tools, and biggest bottlenecks — and surface 1–3 AI opportunities before call one. The form is the audit. No prep wasted.</div>
+    </div>
+    <div class="dwy-card">
+      <div class="dwy-badge">Documented ROI by day 30</div>
+      <div class="dwy-title">Every call — Audit, Optimise, Automate</div>
+      <div class="dwy-body">You share your screen. We fix the process first, then wire in AI — because automating chaos just gives you faster chaos. Every call ships at least one skill or automation. No first-call win means the engagement is already dead.</div>
+    </div>
+    <div class="dwy-card">
+      <div class="dwy-badge">Cancel anytime · most don't</div>
+      <div class="dwy-title">Between calls — always in your corner</div>
+      <div class="dwy-body">Unlimited async support via voice message — replied to in under 12 business hours. Every session is logged in a shared Notion hub: skills built, automations shipped, time recovered. You see exactly what each month is worth.</div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+
+<!-- 7. WHAT'S INCLUDED — BENEFITS -->
+<section class="section white">
+  <div class="sec-label"><div class="sec-label-dot"></div>What's included</div>
+  <h2 class="sec-h">What's included.<br><em>Everything that matters.</em></h2>
+  <div class="benefits">
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c0-3 2.5-5 5.5-5s5.5 2 5.5 5"/><path d="M16 5.5a3 3 0 0 1 0 5.8M17.5 14c2.3.4 4 2.3 4 4.8"/></svg></div>
+      <div class="benefit-label">Done with you</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></svg></div>
+      <div class="benefit-label">No new subscriptions</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><rect x="7.5" y="12" width="3" height="5"/><rect x="13" y="8" width="3" height="9"/><rect x="18.5" y="5" width="0.1" height="12"/></svg></div>
+      <div class="benefit-label">ROI documented by day 30</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/></svg></div>
+      <div class="benefit-label">Unlimited async support</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24"><rect x="6" y="5" width="3.5" height="14"/><rect x="14.5" y="5" width="3.5" height="14"/></svg></div>
+      <div class="benefit-label">Pause or cancel anytime</div>
+    </div>
+    <div class="benefit">
+      <div class="benefit-ico"><svg viewBox="0 0 24 24"><path d="M12 3c3 1.5 5 5 5 9 0 2-1 4-1 4H8s-1-2-1-4c0-4 2-7.5 5-9z"/><path d="M8 16l-2 4M16 16l2 4M12 17v3"/><circle cx="12" cy="10" r="1.4"/></svg></div>
+      <div class="benefit-label">Something ships every cycle</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8. COMPARISON TABLE -->
+<section class="section gray">
+  <div class="sec-label"><div class="sec-label-dot"></div>The honest comparison</div>
+  <h2 class="sec-h">Why not just hire<br>a <em>consultant or buy a course?</em></h2>
+  <p class="sec-body">Fair question. Here's the straight comparison — no spin.</p>
+  <div class="compare-scroll">
+    <table class="compare">
+      <colgroup><col><col><col><col class="wincol"></colgroup>
+      <thead>
+        <tr><th></th><th>AI course</th><th>Consultant</th><th class="win">VerusLink</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="rowlabel">Time to first result</td><td>Weeks of study</td><td>4–8 weeks</td><td class="win">Day 1</td></tr>
+        <tr><td class="rowlabel">What you receive</td><td>Videos and templates</td><td>Strategy deck</td><td class="win">Working automations</td></tr>
+        <tr><td class="rowlabel">Ongoing support</td><td>Forum access</td><td>Ends at delivery</td><td class="win">Unlimited async</td></tr>
+        <tr><td class="rowlabel">New subscriptions needed</td><td>3–5 tools</td><td>2–4 tools</td><td class="win">Zero</td></tr>
+        <tr><td class="rowlabel">Who does the work</td><td>You</td><td>You (after handoff)</td><td class="win">Done with you</td></tr>
+        <tr><td class="rowlabel">Monthly cost</td><td>$50–200 + your time</td><td>$5,000–10,000 project</td><td class="win">$1,500/mo cancel anytime</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+
+<!-- 9. PRICING -->
+<section class="section white">
+  <div class="sec-label"><div class="sec-label-dot"></div>Pricing</div>
+  <h2 class="sec-h">Two ways in.<br><em>Start where you're ready.</em></h2>
+  <div class="pricing">
+    <div class="price-card">
+      <span class="price-badge black">Start here</span>
+      <div class="price-name">AI Opportunity Assessment</div>
+      <div class="price-n">$999</div>
+      <div class="price-term">one-time</div>
+      <div class="price-desc">Everything you need to know about where AI fits your business. No commitment beyond this.</div>
+      <ul class="price-list">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>60–90 minute recorded discovery call</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>AI analysis of workflows, costs, and opportunities</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Branded assessment report with AI readiness score</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>90-day roadmap with quick wins and strategic plays</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Your Perfect Week: before and after</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Three options: do it yourself, done with you, or do nothing</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>The report is yours regardless of what you decide</li>
+      </ul>
+      <a href="https://www.veruslink.au/audit" class="btn-ghost">Book your assessment</a>
+    </div>
+    <div class="price-card featured">
+      <span class="price-badge accent">Recommended</span>
+      <div class="price-name">Ongoing Concierge</div>
+      <div class="price-n">$1,500</div>
+      <div class="price-term">per month. Cancel anytime. No lock-in.</div>
+      <div class="price-desc">AI embedded into how you operate. Not a one-off project.</div>
+      <ul class="price-list">
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Two done-with-you working sessions per month</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>AOA methodology: Audit, Optimise, Automate</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Unlimited async support via voice message</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Shared Notion hub with every automation logged and ROI quantified</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Done-for-you builds available as add-on</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Something ships every cycle</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Most clients start with the assessment</li>
+      </ul>
+      <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+    </div>
+  </div>
+</section>
+
+<!-- 10. GUARANTEE -->
+<div class="guarantee-wrap">
+  <div class="guarantee">
+    <div class="guarantee-h">No risk. No lock-in. No pitch deck.</div>
+    <p class="guarantee-body">The assessment report is yours regardless. The retainer is cancel-anytime. The first call ships something real whether you continue or not. If we can't find five hours a week to give you back, we'll tell you on the call.</p>
+  </div>
+</div>
+
+<!-- 11. PROOF -->
+<section class="section gray">
   <div class="sec-label"><div class="sec-label-dot"></div>Real outcomes</div>
   <h2 class="sec-h">Not case studies.<br><em>Results.</em></h2>
   <p class="sec-body">Specific, documented wins from client sessions. No names until clients say so. No numbers we can't stand behind.</p>
@@ -252,28 +452,30 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
     <div class="proof-card"><div class="proof-n">Zero</div><div class="proof-ctx">New subscriptions added. Everything built on tools the client already had and was already paying for.</div><div class="proof-from">Operator, Perth</div></div>
     <div class="proof-card"><div class="proof-n">38×</div><div class="proof-ctx">Content output increase for a wellness brand using AI-assisted systems — at one-eighth the previous external cost.</div><div class="proof-from">Multi-location business, Sydney &amp; Melbourne</div></div>
   </div>
+  <p class="proof-note">Named case studies coming soon. We're 90 days in and clients aren't ready to go public yet. That's honest.</p>
 </section>
 
-<section class="founder" id="about">
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+
+<!-- 12. FOUNDER -->
+<section class="section white" id="about">
   <div class="sec-label"><div class="sec-label-dot"></div>Meet the founder</div>
   <div class="founder-inner">
     <div class="founder-avatar">JW</div>
     <div class="founder-content">
-      <div class="founder-label">About</div>
       <div class="founder-name">James Whitehill</div>
       <div class="founder-title">AI Concierge · Chief Connector · VerusLink</div>
+      <p class="founder-bio">VerusLink is run by one person. That's deliberate.</p>
       <p class="founder-bio">15+ years in advertising production. 4+ years building AI systems for SMEs. I built Vero — an AI operating system for my own businesses — before turning what I learned into a concierge service for other operators.</p>
-      <p class="founder-bio">I work closely with <strong style="color:rgba(255,255,255,0.7)">Two Fires</strong>, co-founded with Paul Tredinnick (McDonald's, Mars, Unilever, Burger King). When your operation is tight and you're ready to grow, we'll make that introduction.</p>
-      <div class="founder-creds">
-        <div class="founder-cred">15+ yrs advertising</div>
-        <div class="founder-cred">4+ yrs building AI tools</div>
-        <div class="founder-cred">Sydney, Australia</div>
-      </div>
+      <p class="founder-bio">I take a limited number of clients at a time because the model only works if I know your business deeply. You work directly with the person who built this. No handoffs, no junior staff, no outsourcing.</p>
+      <p class="founder-bio">I work closely with Two Fires, co-founded with Paul Tredinnick (McDonald's, Mars, Unilever, Burger King). When your operation is tight and you're ready to grow, we'll make that introduction.</p>
+      <div class="tf-strip"><strong>In partnership with Two Fires</strong> — 30 years brand strategy across McDonald's, Mars, Unilever, Burger King</div>
     </div>
   </div>
 </section>
 
-<section class="section" id="faqs">
+<!-- 13. FAQ -->
+<section class="section gray" id="faqs">
   <div class="sec-label"><div class="sec-label-dot"></div>FAQs</div>
   <h2 class="sec-h">Common questions.<br><em>Straight answers.</em></h2>
   <div class="faqs">
@@ -282,28 +484,36 @@ footer{padding:24px 40px;border-top:1px solid rgba(255,255,255,0.05);display:fle
     <div class="faq"><div class="faq-q">Will I need to buy new tools or subscriptions?<span class="faq-icon">+</span></div><div class="faq-a">Almost certainly not. Most clients already have everything we need — they're just not using it properly. One of our proof points is zero new subscriptions added. We work with what you've got.</div></div>
     <div class="faq"><div class="faq-q">What's the difference between done-with-you and done-for-you?<span class="faq-icon">+</span></div><div class="faq-a">Done-with-you means we build together on your screen — you understand what's there and you own it. Done-for-you is available as an upsell — we build independently and hand it over. Most clients start done-with-you and add done-for-you once they see what's possible.</div></div>
     <div class="faq"><div class="faq-q">What if I want to cancel?<span class="faq-icon">+</span></div><div class="faq-a">Cancel anytime. No lock-in, no minimum term, no penalty. Most clients don't cancel — because by month two the systems are running and the value is visible in the Notion hub. But the option is always there.</div></div>
+    <div class="faq"><div class="faq-q">What if AI doesn't work for my business?<span class="faq-icon">+</span></div><div class="faq-a">That's what the assessment is for. If we can't find clear opportunities, we'll say so on the call. The report is yours either way. No wasted money.</div></div>
+    <div class="faq"><div class="faq-q">Do I need to be technical?<span class="faq-icon">+</span></div><div class="faq-a">No. If you can describe how your business runs, I can identify what to automate. You don't touch the tools. I do.</div></div>
+    <div class="faq"><div class="faq-q">What do I actually get each month on the retainer?<span class="faq-icon">+</span></div><div class="faq-a">Two working sessions where we build or optimise something specific. Unlimited async support between sessions. A shared Notion hub that tracks every automation and the time it saves. Something ships every cycle.</div></div>
+    <div class="faq"><div class="faq-q">How is this different from hiring a consultant?<span class="faq-icon">+</span></div><div class="faq-a">Most consultants deliver a strategy document after 4-8 weeks. I deliver a working automation on call one. The retainer means I stay embedded in your business, not handing off a deck.</div></div>
+    <div class="faq"><div class="faq-q">What happens if I want to pause?<span class="faq-icon">+</span></div><div class="faq-a">You pause. No questions, no exit fees, no guilt. Pick back up when you're ready. Your Notion hub and automations stay yours.</div></div>
+    <div class="faq"><div class="faq-q">What tools do you use?<span class="faq-icon">+</span></div><div class="faq-a">Yours. The whole point is wiring AI into the tools you already pay for. I don't sell software, subscriptions, or platforms. If a new tool is genuinely needed, I'll tell you — but it's never the starting point.</div></div>
+    <div class="faq"><div class="faq-q">Can I just do the assessment and not continue?<span class="faq-icon">+</span></div><div class="faq-a">Absolutely. The assessment is a standalone product. You get a full report with specific recommendations and a 90-day roadmap. Many owners implement the quick wins themselves. The retainer exists for owners who want someone doing the work alongside them.</div></div>
   </div>
 </section>
 
-<section class="section" style="padding-top:0">
+<!-- 14. WE'RE SELECTIVE -->
+<section class="section white">
   <div class="sec-label"><div class="sec-label-dot"></div>Is this right for you</div>
   <h2 class="sec-h">We're selective.<br><em>And so should you be.</em></h2>
   <p class="sec-body">This isn't a software product with unlimited seats. It's a retained relationship — which means we need to be selective, and so do you.</p>
   <div class="fit-grid">
-    <div class="fit-col"><div class="fit-col-head yes">Good fit</div><div class="fit-item yes"><span class="fit-check">✓</span>Running $500K–$5M, owner-led</div><div class="fit-item yes"><span class="fit-check">✓</span>Already tried AI. Frustrated it didn't stick.</div><div class="fit-item yes"><span class="fit-check">✓</span>Ready to invest in something that works</div><div class="fit-item yes"><span class="fit-check">✓</span>Want outcomes, not tutorials</div><div class="fit-item yes"><span class="fit-check">✓</span>Decision-maker who moves quickly</div></div>
+    <div class="fit-col"><div class="fit-col-head">Good fit</div><div class="fit-item yes"><span class="fit-check">✓</span>Running $500K–$5M, owner-led</div><div class="fit-item yes"><span class="fit-check">✓</span>Already tried AI. Frustrated it didn't stick.</div><div class="fit-item yes"><span class="fit-check">✓</span>Ready to invest in something that works</div><div class="fit-item yes"><span class="fit-check">✓</span>Want outcomes, not tutorials</div><div class="fit-item yes"><span class="fit-check">✓</span>Decision-maker who moves quickly</div></div>
     <div class="fit-col"><div class="fit-col-head">Not a fit</div><div class="fit-item"><span class="fit-cross">✗</span>Looking for generic AI training</div><div class="fit-item"><span class="fit-cross">✗</span>Want a handoff report to implement yourself</div><div class="fit-item"><span class="fit-cross">✗</span>Not yet sure if AI is worth it</div><div class="fit-item"><span class="fit-cross">✗</span>Need sign-off from multiple stakeholders</div><div class="fit-item"><span class="fit-cross">✗</span>Startup pre-revenue</div></div>
   </div>
 </section>
 
+<!-- 15. FINAL CTA -->
 <section class="close">
-  <div class="close-glow"></div>
   <div class="close-pre">The only question left</div>
-  <h2 class="close-h">How long will you keep paying for tools<br>that <em>nobody has wired together</em>?</h2>
-  <p class="close-sub">Complete a 10-minute intake form. We analyse it before we speak. You leave call one with at least one automation already running — whether you continue or not.</p>
+  <h2 class="close-h">How long will you keep paying for tools<br><em>nobody's wired together</em>?</h2>
   <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
   <div class="close-micro">No pitch deck. No pressure. No new subscriptions.</div>
 </section>
 
+<!-- 16. FOOTER -->
 <footer>
   <div class="footer-logo">VerusLink</div>
   <div class="footer-links">
