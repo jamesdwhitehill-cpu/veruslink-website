@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink Sync — Manage availability</title>
+<title>VerusLink Sync: Manage availability</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,7 +31,7 @@
 
   <div id="dashboard" class="hidden">
     <div class="eyebrow">Your availability</div>
-    <h1 id="label-h">—</h1>
+    <h1 id="label-h">-</h1>
 
     <!-- Code + share -->
     <div class="card">
@@ -82,7 +82,7 @@
         <div class="wn-left">
           <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
           <button class="navbtn" id="next-week" aria-label="Next week">›</button>
-          <span class="range" id="week-range">—</span>
+          <span class="range" id="week-range">-</span>
         </div>
         <button class="btn btn-ghost today-btn" id="today-btn" style="padding:8px 14px">Today</button>
       </div>
@@ -95,7 +95,7 @@
         <span><span class="swatch empty"></span>Not set</span>
         <span class="faint" style="margin-left:auto">● = override for a specific date</span>
       </div>
-      <div class="bulk-hint">Tip: drag across cells — or Shift-click two cells — to bulk-edit a block. On touch, long-press a cell to start a selection.</div>
+      <div class="bulk-hint">Tip: drag across cells, or Shift-click two cells, to bulk-edit a block. On touch, long-press a cell to start a selection.</div>
 
       <div class="row-actions" style="margin-top:22px">
         <button class="btn btn-primary" id="save-btn">Save &amp; notify subscribers</button>
@@ -148,7 +148,7 @@ function showError(m){ banner.className='banner err'; banner.textContent=m; }
 function denied(msg){ gate.classList.remove('hidden'); gate.innerHTML=`<h2>Can't open this dashboard</h2><p class="muted" style="margin-top:8px">${msg}</p><p style="margin-top:16px"><a href="/sync/">Create a new code →</a></p>`; }
 
 // Owner-auth gate: ask the owner to email themselves a magic link. The email
-// address on file is never revealed to the browser — proof of ownership comes
+// address on file is never revealed to the browser, proof of ownership comes
 // from clicking the emailed link, not from a guessable URL param.
 function showLinkGate(code, note){
   gate.classList.remove('hidden');
@@ -178,7 +178,7 @@ function toast(msg, ok=true){ const t=document.createElement('div'); t.className
 async function init(){
   // Auth is established by an httpOnly session cookie set after the owner clicks
   // their emailed magic link. The browser proves ownership to the server, which
-  // returns the code data — there is NO client-side email/string comparison.
+  // returns the code data, there is NO client-side email/string comparison.
   let c = null;
   try{
     const r = await fetch(`/api/sync-owner?session=1&code=${encodeURIComponent(codeParam)}`, { credentials:'same-origin' });
@@ -258,7 +258,7 @@ function render(){
     days.push({ date, dow:d, iso:isoDate(date), weekend:d>=5, isToday: startOfDay(date).getTime()===TODAY0.getTime() });
   }
 
-  // header — day columns are clickable to set/clear the whole day at once
+  // header, day columns are clickable to set/clear the whole day at once
   let html='<thead><tr><th></th>';
   for(const dy of days){
     let cls = (dy.weekend?'weekend ':'') + (dy.isToday?'is-today':'');
@@ -312,7 +312,7 @@ function isSlotPast(date, slot){
 }
 
 // All-day toggle: cycle every editable slot in a column through the same
-// three states as a single cell — empty/mixed → available → unavailable → clear.
+// three states as a single cell, empty/mixed → available → unavailable → clear.
 // Respects the current Recurring vs This-week-only mode (via setCellState).
 function toggleDayColumn(dow, iso){
   clearBulk();
@@ -510,7 +510,7 @@ function slotEnd(slot){ return toHM(toMin(slot)+codeRow.slot_duration_minutes); 
 async function saveSettings(patch){
   const r = await fetch('/api/sync-save',{ method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
     body:JSON.stringify({ action:'settings', ...patch }) });
-  if(r.status===401){ showError('Your session expired — request a new sign-in link.'); return false; }
+  if(r.status===401){ showError('Your session expired, request a new sign-in link.'); return false; }
   if(!r.ok){ const j=await r.json().catch(()=>({})); showError('Could not save settings: '+(j.error||r.status)); return false; }
   return true;
 }
@@ -533,10 +533,10 @@ async function save(){
     });
 
     // All writes (delete blocks, insert blocks, change_log, touch updated_at)
-    // run server-side under the verified owner session — no direct anon writes.
+    // run server-side under the verified owner session, no direct anon writes.
     const sr = await fetch('/api/sync-save',{ method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
       body:JSON.stringify({ action:'save-blocks', blocks }) });
-    if(sr.status===401){ throw new Error('Your session expired — request a new sign-in link from /sync/manage.html'); }
+    if(sr.status===401){ throw new Error('Your session expired, request a new sign-in link from /sync/manage.html'); }
     if(!sr.ok){ const j=await sr.json().catch(()=>({})); throw new Error(j.error||('save failed ('+sr.status+')')); }
 
     let extra='';

@@ -104,7 +104,7 @@ export default async function handler(req, res) {
       }
       await sbSend('POST', 'vl_change_log', {
         code_id: codeId,
-        change_summary: `Availability updated — ${blocks.length} block(s)`,
+        change_summary: `Availability updated, ${blocks.length} block(s)`,
       });
       await sbSend('PATCH', `vl_codes?id=eq.${encodeURIComponent(codeId)}`, { updated_at: new Date().toISOString() });
       return res.status(200).json({ ok: true, blocks: blocks.length });

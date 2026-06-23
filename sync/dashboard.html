@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink Sync — Your dashboard</title>
+<title>VerusLink Sync: Your dashboard</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,7 +73,7 @@
       <div>
         <div class="eyebrow">Your availability</div>
         <h1 style="margin-bottom:4px">Your Sync Codes</h1>
-        <div class="owner" id="owner-name">—</div>
+        <div class="owner" id="owner-name">-</div>
       </div>
       <div class="dash-actions">
         <button class="btn btn-primary" id="new-btn">+ Create new sync</button>
@@ -88,7 +88,7 @@
       <form id="create-form">
         <div class="field">
           <label for="c-label">What should people see?</label>
-          <input type="text" id="c-label" placeholder="Dr Smith — Physio" required>
+          <input type="text" id="c-label" placeholder="Dr Smith, Physio" required>
           <div class="hint">The title shown on the public availability page.</div>
         </div>
         <div class="grid-2">
@@ -150,9 +150,9 @@ const esc = (s)=>String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'
 
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function fmtDate(iso){
-  if(!iso) return '—';
+  if(!iso) return '-';
   const d = new Date(iso);
-  if(isNaN(d)) return '—';
+  if(isNaN(d)) return '-';
   let h=d.getHours(); const ap=h<12?'am':'pm'; const h12=((h+11)%12)+1;
   return `${d.getDate()} ${MON[d.getMonth()]} ${d.getFullYear()}, ${h12}:${String(d.getMinutes()).padStart(2,'0')}${ap}`;
 }
@@ -255,7 +255,7 @@ function wireCard(id){
     try{
       const r = await api('POST', { action:'set-active', code_id:c.id, is_active:next });
       const j = await r.json().catch(()=>({}));
-      if(r.status===401){ toast('Session expired — sign in again',false); setTimeout(()=>location.reload(),1200); return; }
+      if(r.status===401){ toast('Session expired, sign in again',false); setTimeout(()=>location.reload(),1200); return; }
       if(!r.ok) throw new Error(j.error||'toggle failed');
       c.is_active = j.is_active;
       renderCards();
@@ -283,7 +283,7 @@ document.getElementById('create-form').addEventListener('submit', async (e)=>{
   try{
     const r = await api('POST', { action:'create', label, slot_duration_minutes:slot, business_hours_start:st, business_hours_end:en });
     const j = await r.json().catch(()=>({}));
-    if(r.status===401){ toast('Session expired — sign in again',false); setTimeout(()=>location.reload(),1200); return; }
+    if(r.status===401){ toast('Session expired, sign in again',false); setTimeout(()=>location.reload(),1200); return; }
     if(!r.ok || !j.code) throw new Error(j.error||'create failed');
     codes.push(j.code);
     closeCreate();

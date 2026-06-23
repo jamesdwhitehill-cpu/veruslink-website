@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink Sync — Stop polling. Start syncing.</title>
+<title>VerusLink Sync: Stop polling. Start syncing.</title>
 <meta name="description" content="Share a single code. Update your availability once. Everyone who needs to know, knows.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -37,7 +37,7 @@
       </div>
       <div class="field">
         <label for="label">What should people see?</label>
-        <input type="text" id="label" placeholder="Dr Sarah — Tuesdays &amp; Thursdays" required>
+        <input type="text" id="label" placeholder="Dr Sarah, Tuesdays &amp; Thursdays" required>
         <div class="hint">This is the title shown on your public availability page.</div>
       </div>
       <button type="submit" class="btn btn-primary btn-full" id="submit-btn">Create my sync code →</button>
@@ -71,7 +71,7 @@ document.getElementById('create-form').addEventListener('submit', async (e) => {
   try {
     // Signup is handled server-side (service key) so the owner/code rows are
     // created safely and an httpOnly session cookie is issued. Writes no longer
-    // go through the anon key. The owner email is the account key — it is never
+    // go through the anon key. The owner email is the account key, it is never
     // trusted from a URL param.
     const r = await fetch('/api/sync-owner', {
       method: 'POST',
@@ -85,7 +85,7 @@ document.getElementById('create-form').addEventListener('submit', async (e) => {
     // Existing email: we never auto-sign-in via the public form (that would be an
     // account takeover). We emailed a sign-in link instead.
     if (j.existing) {
-      showInfo("You already have an account for that email — we've sent you a secure sign-in link. Check your inbox to open your dashboard.");
+      showInfo("You already have an account for that email, we've sent you a secure sign-in link. Check your inbox to open your dashboard.");
       btn.disabled = false;
       btn.textContent = 'Create my sync code →';
       return;
