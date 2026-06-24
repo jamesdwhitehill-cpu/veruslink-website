@@ -12,6 +12,10 @@
 //     -> creates a new code under the session owner. Returns { code:{...,subscriber_count:0} }.
 //   { action:'set-active', code_id, is_active }
 //     -> pause/resume a code the session owner owns. Returns { ok:true, is_active }.
+//   { action:'archive', code_id }
+//     -> archive a code the session owner owns: sets archived_at + is_active=false.
+//        Data (subscribers, blocks) is retained; the code drops off the dashboard
+//        and stops rendering publicly. Reversible. Returns { ok:true }.
 //   { action:'signout' }
 //     -> clears the session cookie. Returns { ok:true }.
 //
@@ -58,7 +62,7 @@ export default async function handler(req, res) {
       const owners = await sbGet(`vl_owners?id=eq.${encodeURIComponent(ownerId)}&select=name`);
       if (!owners.length) return res.status(404).json({ error: 'owner not found' });
       const codes = await sbGet(
-        `vl_codes?owner_id=eq.${encodeURIComponent(ownerId)}&order=created_at.asc&select=${CODE_SELECT}`
+        `vl_codes?owner_id=eq.${encodeURIComponent(ownerId)}&archived_at=is.null&order=created_at.asc&select=${CODE_SELECT}`
       );
       return res.status(200).json({ owner: { name: owners[0].name }, codes: await withCounts(codes) });
     }
@@ -122,6 +126,22 @@ export default async function handler(req, res) {
         await sbSend('PATCH', `vl_codes?id=eq.${encodeURIComponent(codeId)}`,
           { is_active: isActive, updated_at: new Date().toISOString() }, { Prefer: 'return=minimal' });
         return res.status(200).json({ ok: true, is_active: isActive });
+      }
+
+      if (action === 'archive') {
+        const codeId = (req.body.code_id || '').toString();
+        if (!codeId) return res.status(400).json({ error: 'code_id required' });
+        // Verify the code belongs to the session owner before archiving.
+        const codes = await sbGet(`vl_codes?id=eq.${encodeURIComponent(codeId)}&select=owner_id`);
+        if (!codes.length) return res.status(404).json({ error: 'code not found' });
+        if (codes[0].owner_id !== ownerId) return res.status(403).json({ error: 'not your code' });
+        // Soft delete: retain subscribers/blocks, drop from dashboard, and
+        // deactivate so the public view (which requires is_active=true) stops
+        // rendering it. Fully reversible by clearing archived_at.
+        const now = new Date().toISOString();
+        await sbSend('PATCH', `vl_codes?id=eq.${encodeURIComponent(codeId)}`,
+          { archived_at: now, is_active: false, updated_at: now }, { Prefer: 'return=minimal' });
+        return res.status(200).json({ ok: true });
       }
 
       return res.status(400).json({ error: 'unknown action' });

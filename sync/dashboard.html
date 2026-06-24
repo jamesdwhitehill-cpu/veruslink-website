@@ -30,6 +30,8 @@
   .sync-card .meta b{color:#fff}
   .sync-card .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
   .sync-card .actions .btn{padding:10px 14px;font-size:13.5px;flex:1;min-width:84px}
+  .sync-card .actions .btn-del{flex:0 0 auto;min-width:0;color:var(--red);border-color:var(--border-strong)}
+  .sync-card .actions .btn-del:hover{border-color:var(--red);background:rgba(248,113,122,0.10)}
   .create-card{border-style:dashed}
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:480px){.grid-2{grid-template-columns:1fr}}
@@ -226,6 +228,7 @@ function cardHtml(c){
       <button class="btn btn-ghost" data-act="manage">Manage</button>
       <button class="btn btn-ghost" data-act="share">Share</button>
       <button class="btn btn-ghost" data-act="toggle">${active?'Pause':'Resume'}</button>
+      <button class="btn btn-ghost btn-del" data-act="archive" title="Archive this sync">Archive</button>
     </div>
   </div>`;
 }
@@ -261,6 +264,19 @@ function wireCard(id){
       renderCards();
       toast(c.is_active?'Resumed':'Paused');
     }catch(err){ b.disabled=false; b.textContent=c.is_active?'Pause':'Resume'; toast('Could not update: '+(err.message||err),false); }
+  });
+  card.querySelector('[data-act="archive"]').addEventListener('click', async (e)=>{
+    if(!confirm(`Archive sync ${c.code} (${c.label})?\n\nIt will be removed from your dashboard and stop showing publicly. Subscribers and availability are kept, and it can be restored.`)) return;
+    const b=e.currentTarget; b.disabled=true; b.innerHTML='<span class="spinner"></span>';
+    try{
+      const r = await api('POST', { action:'archive', code_id:c.id });
+      const j = await r.json().catch(()=>({}));
+      if(r.status===401){ toast('Session expired, sign in again',false); setTimeout(()=>location.reload(),1200); return; }
+      if(!r.ok) throw new Error(j.error||'archive failed');
+      codes = codes.filter(x=>x.id!==c.id);
+      renderCards();
+      toast('Sync archived');
+    }catch(err){ b.disabled=false; b.textContent='Archive'; toast('Could not archive: '+(err.message||err),false); }
   });
 }
 
