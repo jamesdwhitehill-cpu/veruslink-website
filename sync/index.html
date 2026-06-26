@@ -24,7 +24,19 @@
 
   <div id="banner" class="banner hidden"></div>
 
-  <div class="card">
+  <!-- PASSPHRASE GATE — remove this block when Stripe billing is live -->
+  <div class="card" id="gate-card">
+    <form id="gate-form">
+      <div class="field">
+        <label for="access-code">Access code</label>
+        <input type="text" id="access-code" placeholder="Enter your access code" autocomplete="off" autofocus>
+        <div class="hint" id="gate-error" style="display:none;color:#ffc9cd">That code isn't right. Contact james@veruslink.au for access.</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="gate-btn">Continue →</button>
+    </form>
+  </div>
+
+  <div class="card hidden" id="create-card">
     <form id="create-form">
       <div class="field">
         <label for="name">Your name</label>
@@ -52,6 +64,23 @@
 </footer>
 
 <script>
+// PASSPHRASE GATE — remove this block when Stripe billing is live
+const ACCESS_PASSPHRASE = 'veruslink2026';
+const gateForm = document.getElementById('gate-form');
+const gateError = document.getElementById('gate-error');
+gateForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const entered = document.getElementById('access-code').value.trim();
+  if (entered === ACCESS_PASSPHRASE) {
+    document.getElementById('gate-card').classList.add('hidden');
+    document.getElementById('create-card').classList.remove('hidden');
+    document.getElementById('name').focus();
+  } else {
+    gateError.style.display = 'block';
+  }
+});
+// END PASSPHRASE GATE
+
 const banner = document.getElementById('banner');
 function showError(msg){ banner.className='banner err'; banner.textContent=msg; }
 function showInfo(msg){ banner.className='banner info'; banner.innerHTML=msg; }
