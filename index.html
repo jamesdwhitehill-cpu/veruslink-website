@@ -56,6 +56,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .cta-line{text-align:center;padding:26px 20px;background:var(--bg)}
 .cta-line a{color:var(--accent);font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none}
 .cta-line a:hover{text-decoration:underline}
+.cta-line-sub{display:block;font-size:12px;color:var(--muted);margin-top:8px;letter-spacing:0.01em}
 
 /* ── 2. hero ── */
 .hero{padding:80px max(40px,calc((100% - 1080px)/2)) 64px;text-align:center;background:var(--card)}
@@ -65,7 +66,8 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .hero-h em{font-style:italic;font-weight:400;color:var(--muted)}
 .op-line{font-size:17px;font-weight:500;color:var(--text2);max-width:480px;margin:0 auto 36px;line-height:1.7}
 .op-line strong{color:var(--accent);font-weight:600}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
+.hero-sub{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:56px}
 
 .stat-pills{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
 .stat-pill{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:22px 24px;text-align:center;flex:1;min-width:160px;max-width:240px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
@@ -191,6 +193,9 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .close-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:#fff;line-height:1.2;margin-bottom:28px}
 .close-h em{font-style:italic;font-weight:400;color:var(--accent)}
 .close-micro{font-size:13px;color:rgba(255,255,255,0.45);margin-top:18px;font-style:italic}
+.close-sub{font-size:15px;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto 28px;line-height:1.6}
+.close-secondary{display:block;margin-top:22px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);text-decoration:none}
+.close-secondary:hover{color:rgba(255,255,255,0.8)}
 
 /* ── 16. footer ── */
 footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
@@ -230,7 +235,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
     <a href="#how-it-works" class="nav-link">How it works</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#faqs" class="nav-link">FAQs</a>
-    <a href="https://www.veruslink.au/audit" class="nav-cta">Start the audit</a>
+    <a href="https://www.veruslink.au/audit" class="nav-cta">Start the free audit</a>
   </div>
 </nav>
 
@@ -240,9 +245,10 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   <h1 class="hero-h">You already tried AI. <br><em>That's the problem.</em></h1>
   <p class="op-line">You bought the tools. Nothing stuck. VerusLink is <strong>the missing operator layer between your tools and your Tuesday.</strong></p>
   <div class="hero-btns">
-    <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+    <a href="https://www.veruslink.au/audit" class="btn-primary">Start Your Free AI Audit →</a>
     <a href="#how-it-works" class="btn-ghost">See how it works</a>
   </div>
+  <p class="hero-sub">5 minutes. No call. No commitment.</p>
   <div class="stat-pills">
     <div class="stat-pill"><div class="stat-pill-n">40%</div><div class="stat-pill-l">have not seen measurable results from AI</div><div class="stat-pill-src">ECI AI Readiness Report, 550+ SMB leaders</div></div>
     <div class="stat-pill"><div class="stat-pill-n">42%</div><div class="stat-pill-l">discontinued most of their AI initiatives in 2025</div><div class="stat-pill-src">Alpha Apex Group</div></div>
@@ -262,7 +268,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a><span class="cta-line-sub">5 minutes. No call. We review every one.</span></div>
 
 <!-- WHY NOW (preserved copy) -->
 <div class="whynow">
@@ -274,25 +280,25 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 <!-- 4. HOW IT WORKS, AOA -->
 <section class="section white" id="how-it-works">
   <div class="sec-label"><div class="sec-label-dot"></div>What we actually do</div>
-  <h2 class="sec-h">How it works.<br><em>Audit, Optimise, Automate.</em></h2>
-  <p class="sec-body">A retained relationship where AI gets embedded into how your business actually operates, and we stick around to make sure it keeps working. We fix before we automate.</p>
+  <h2 class="sec-h">How it works.<br><em>Three steps. Start free.</em></h2>
+  <p class="sec-body">The free audit comes first. From there it's a paid assessment, then ongoing implementation. You only move forward if it's worth it.</p>
   <div class="aoa">
     <div class="aoa-step">
       <div class="aoa-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16" y1="16" x2="21" y2="21"/></svg></div>
-      <div class="aoa-name">Audit</div>
-      <div class="aoa-desc">Map what's actually broken before touching a single tool.</div>
+      <div class="aoa-name">Take the Free AI Audit</div>
+      <div class="aoa-desc">Answer a few questions about how your business runs. Takes 5 minutes. We review every one personally.</div>
     </div>
     <div class="aoa-arrow">→</div>
     <div class="aoa-step mid">
-      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg></div>
-      <div class="aoa-name">Optimise</div>
-      <div class="aoa-desc">Fix the process first, automating chaos just gives you faster chaos.</div>
+      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M5 7h14M5 7l1 13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-13M9 7V4h6v3"/></svg></div>
+      <div class="aoa-name">Get Your Assessment</div>
+      <div class="aoa-desc">$999 for a 60-minute deep dive. We record the call, map your operations, and deliver a branded report with a 90-day roadmap. If we can't find you 5 hours a week, you get your money back.</div>
     </div>
     <div class="aoa-arrow">→</div>
     <div class="aoa-step">
       <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M4 17l5-5-5-5M12 19h8"/></svg></div>
-      <div class="aoa-name">Automate</div>
-      <div class="aoa-desc">Wire AI into the tools you already pay for, and ship it.</div>
+      <div class="aoa-name">AI Working For You</div>
+      <div class="aoa-desc">$1,500/month. We implement, monitor, and refine your AI systems. No lock-in. Cancel any month. Your assessment fee is credited to the first month.</div>
     </div>
   </div>
 </section>
@@ -300,9 +306,9 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 <!-- 5. INLINE CTA BAR -->
 <div class="cta-bar">
   <div class="cta-bar-inner">
-    <div class="cta-bar-text">The intake form is <strong>free</strong>. No commitment, no pitch deck.</div>
+    <div class="cta-bar-text">The AI audit is <strong>free</strong>. No commitment, no pitch deck.</div>
     <div class="cta-bar-btns">
-      <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+      <a href="https://www.veruslink.au/audit" class="btn-primary">Start Your Free AI Audit →</a>
     </div>
   </div>
 </div>
@@ -314,9 +320,9 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   <p class="sec-body">Not a course. Not a consultant who hands you a report. Here's what that looks like in practice.</p>
   <div class="dwy">
     <div class="dwy-card">
-      <div class="dwy-badge">Intake form · free</div>
+      <div class="dwy-badge">Free AI audit</div>
       <div class="dwy-title">The audit, map what's actually broken</div>
-      <div class="dwy-body">Complete a 10-minute intake form before we speak. We map your time sinks, existing tools, and biggest bottlenecks, and surface 1–3 AI opportunities before call one. The form is the audit. No prep wasted.</div>
+      <div class="dwy-body">Complete the free AI audit before we speak. It takes 5 minutes. We map your time sinks, existing tools, and biggest bottlenecks, and surface 1–3 AI opportunities. We review every one personally. No prep wasted.</div>
     </div>
     <div class="dwy-card">
       <div class="dwy-badge">Documented ROI by day 30</div>
@@ -331,7 +337,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a><span class="cta-line-sub">5 minutes. No call. We review every one.</span></div>
 
 <!-- WHAT SHIPS IN MONTH ONE -->
 <section class="section white">
@@ -403,7 +409,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a><span class="cta-line-sub">5 minutes. No call. We review every one.</span></div>
 
 <!-- 9. PRICING -->
 <section class="section white">
@@ -415,22 +421,22 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
       <div class="price-name">AI Opportunity Assessment</div>
       <div class="price-n">$999</div>
       <div class="price-term">one-time</div>
-      <div class="price-desc">Everything you need to know about where AI fits your business. A one-time product, not a subscription.</div>
+      <div class="price-desc">Starts with the free AI audit. If we see opportunities worth exploring, we'll invite you to the full assessment.</div>
       <ul class="price-list">
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>60–90 minute recorded discovery call</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>AI analysis of workflows, costs, and opportunities</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Branded assessment report with AI readiness score</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>90-day roadmap with quick wins and strategic plays</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Branded report with AI readiness score, cost analysis, and 90-day roadmap</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Your Perfect Week: before and after</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Three options: do it yourself, done with you, or do nothing</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>5+ hours/week recoverable or your money back</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>The report is yours regardless of what you decide</li>
       </ul>
       <p class="price-credit">Assessment fee credited toward your first retainer month.</p>
-      <a href="https://www.veruslink.au/audit" class="btn-ghost">Book your assessment</a>
+      <a href="https://www.veruslink.au/audit" class="btn-ghost">Start with the Free Audit</a>
     </div>
     <div class="price-card featured">
       <span class="price-badge accent">Recommended</span>
-      <div class="price-name">Ongoing Concierge</div>
+      <div class="price-name">AI Operations Concierge</div>
       <div class="price-n">$1,500</div>
       <div class="price-term">per month. Cancel anytime. No lock-in.</div>
       <div class="price-desc">AI embedded into how you operate. Not a one-off project.</div>
@@ -442,9 +448,10 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Done-for-you builds available as add-on</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Something ships every cycle</li>
         <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Proactive monitoring, we catch issues before you notice them</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Most clients start with the assessment</li>
+        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>No lock-in. Cancel any month.</li>
       </ul>
-      <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+      <p class="price-credit">Assessment fee ($999) credited to your first month.</p>
+      <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the Free Audit →</a>
     </div>
   </div>
 </section>
@@ -453,7 +460,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 <div class="guarantee-wrap">
   <div class="guarantee">
     <div class="guarantee-h">No risk. No lock-in. No pitch deck.</div>
-    <p class="guarantee-body">The assessment report is yours regardless. The retainer is cancel-anytime. The first call ships something real whether you continue or not. If we can't find five hours a week to give you back, we'll tell you on the call.</p>
+    <p class="guarantee-body">The AI audit is free. The assessment comes with a guarantee: if we can't find you five hours a week, you get your $999 back. The retainer is cancel-anytime, and the report is yours regardless of what you decide.</p>
   </div>
 </div>
 
@@ -471,7 +478,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   <p class="proof-note">Every tool listed here was built by James and is running in production today. These are our own businesses and close partners, not hypothetical case studies.</p>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start with the intake form →</a></div>
+<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a><span class="cta-line-sub">5 minutes. No call. We review every one.</span></div>
 
 <!-- 12. FOUNDER -->
 <section class="section white" id="about">
@@ -495,7 +502,9 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   <div class="sec-label"><div class="sec-label-dot"></div>FAQs</div>
   <h2 class="sec-h">Common questions.<br><em>Straight answers.</em></h2>
   <div class="faqs">
-    <div class="faq"><div class="faq-q">What exactly happens on the first call?<span class="faq-icon">+</span></div><div class="faq-a">We come prepared. We've reviewed your intake form and mapped 1–3 specific AI opportunities for your business. On the call, you share your screen, we pick the highest-leverage fix, and we build it together before the call ends. You leave with something running, not a plan.</div></div>
+    <div class="faq"><div class="faq-q">What happens after the audit?<span class="faq-icon">+</span></div><div class="faq-a">I review your answers personally and email you what I find. If there are opportunities worth exploring, I'll suggest the $999 AI Opportunity Assessment. No pressure, no follow-up spam.</div></div>
+    <div class="faq"><div class="faq-q">Do I have to do the free audit first?<span class="faq-icon">+</span></div><div class="faq-a">No. If you already know you want the full assessment, you can book it directly at book.veruslink.au/assessment. But most people prefer to start with the free audit.</div></div>
+    <div class="faq"><div class="faq-q">What exactly happens on the assessment call?<span class="faq-icon">+</span></div><div class="faq-a">We come prepared. We've reviewed your free AI audit and mapped 1–3 specific AI opportunities for your business. On the call, you share your screen, we pick the highest-leverage fix, and we build it together before the call ends. You leave with something running, not a plan.</div></div>
     <div class="faq"><div class="faq-q">Do I need to know anything about AI?<span class="faq-icon">+</span></div><div class="faq-a">No. You need to know your business. That's the part I can't do without you. The AI part is what I bring. We build it together on your screen so you understand what's running and why, but you don't need a technical background.</div></div>
     <div class="faq"><div class="faq-q">Will I need to buy new tools or subscriptions?<span class="faq-icon">+</span></div><div class="faq-a">Almost certainly not. Most clients already have everything we need, they're just not using it properly. One of our proof points is zero new subscriptions added. We work with what you've got.</div></div>
     <div class="faq"><div class="faq-q">What's the difference between done-with-you and done-for-you?<span class="faq-icon">+</span></div><div class="faq-a">Done-with-you means we build together on your screen, you understand what's there and you own it. Done-for-you is available as an upsell, we build independently and hand it over. Most clients start done-with-you and add done-for-you once they see what's possible.</div></div>
@@ -525,8 +534,10 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 <!-- 15. FINAL CTA -->
 <section class="close">
   <div class="close-pre">The only question left</div>
-  <h2 class="close-h">How long will you keep paying for tools <br><em>nobody's wired together</em>?</h2>
-  <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the intake form →</a>
+  <h2 class="close-h">Start with the <em>free audit</em>.</h2>
+  <p class="close-sub">5 minutes. No call. No commitment. We review every one personally and tell you exactly what we find.</p>
+  <a href="https://www.veruslink.au/audit" class="btn-primary">Take the Free AI Audit →</a>
+  <a href="https://book.veruslink.au/intro" class="close-secondary">Prefer to talk? Book a 15-minute intro call.</a>
   <div class="close-micro">No pitch deck. No pressure. No new subscriptions.</div>
 </section>
 
