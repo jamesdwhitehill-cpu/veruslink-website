@@ -151,6 +151,12 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .guarantee-h{font-size:1.5rem;font-weight:900;letter-spacing:-0.5px;color:var(--text);margin-bottom:14px}
 .guarantee-body{font-size:16px;color:var(--text2);line-height:1.7}
 
+/* ── 10b. trust ── */
+.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
+.trust-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:24px}
+.trust-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
+.trust-body{font-size:15px;color:var(--text2);line-height:1.65}
+
 /* ── 11. proof ── */
 .proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
 .proof-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
@@ -208,6 +214,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 @media(max-width:768px){
   .points{grid-template-columns:1fr}
   .dwy{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr}
   .benefits{grid-template-columns:repeat(2,1fr)}
   .pricing{grid-template-columns:1fr}
   .proof-grid{grid-template-columns:1fr}
@@ -241,7 +248,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 
 <!-- 2. HERO -->
 <section class="hero">
-  <div class="hero-pill"><div class="hero-pill-dot"></div>Free · No commitment · No pitch deck</div>
+  <div class="hero-pill"><div class="hero-pill-dot"></div>We handle AI so you never have to.</div>
   <h1 class="hero-h">You already tried AI. <br><em>That's the problem.</em></h1>
   <p class="op-line">VerusLink is <strong>the missing layer between your tools and your Tuesday.</strong></p>
   <div class="hero-btns">
@@ -410,6 +417,31 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   </div>
 </div>
 
+<!-- 10b. TRUST -->
+<section class="section gray">
+  <div class="sec-label"><div class="sec-label-dot"></div>How we work</div>
+  <h2 class="sec-h">Your data stays <em>yours.</em></h2>
+  <p class="sec-body">You're trusting us with your operations. Here's how we earn that.</p>
+  <div class="trust-grid">
+    <div class="trust-card">
+      <div class="trust-title">We work inside your tools</div>
+      <div class="trust-body">Your email, your calendar, your accounting software. We never move your data onto third-party platforms you haven't approved.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-title">You control access</div>
+      <div class="trust-body">You authorise exactly what we can see. You can revoke access any time. Nothing is permanent unless you want it to be.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-title">Human oversight on everything</div>
+      <div class="trust-body">AI drafts. You approve. Nothing sends, publishes, or changes without your sign-off until you tell us otherwise.</div>
+    </div>
+    <div class="trust-card">
+      <div class="trust-title">If something breaks, I fix it</div>
+      <div class="trust-body">You message me. I handle it. Usually same business day. That's what the retainer covers.</div>
+    </div>
+  </div>
+</section>
+
 <!-- 11. PROOF -->
 <section class="section gray">
   <div class="sec-label"><div class="sec-label-dot"></div>Real outcomes</div>
@@ -453,6 +485,8 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
     <div class="faq"><div class="faq-q">What tools do I need?<span class="faq-icon">+</span></div><div class="faq-a">Yours. We wire AI into the tools you already pay for. If something new is genuinely needed I'll tell you, but it's never the starting point.</div></div>
     <div class="faq"><div class="faq-q">What does a typical month look like?<span class="faq-icon">+</span></div><div class="faq-a">Two working sessions where we build or optimise something specific, plus unlimited async support between them. Something ships every cycle.</div></div>
     <div class="faq"><div class="faq-q">How is this different from hiring a consultant?<span class="faq-icon">+</span></div><div class="faq-a">Most consultants deliver a strategy document after weeks. I deliver a working automation on call one and stay embedded, rather than handing off a deck.</div></div>
+    <div class="faq"><div class="faq-q">Why can't I just use ChatGPT myself?<span class="faq-icon">+</span></div><div class="faq-a">You can. Most of our clients already have. The difference is applying it to your actual workflows, not just asking it questions. ChatGPT is a tool. VerusLink is the operator who wires it into your invoicing, your follow-ups, your scheduling, and your reporting so it runs without you thinking about it.</div></div>
+    <div class="faq"><div class="faq-q">What happens if something breaks?<span class="faq-icon">+</span></div><div class="faq-a">You message me and I fix it. Usually same business day. Every automation is documented so nothing is a mystery. If I built it, I support it.</div></div>
     <div class="faq"><div class="faq-q">What if I want to cancel or pause?<span class="faq-icon">+</span></div><div class="faq-a">Cancel or pause anytime. No lock-in, no minimum term, no penalty. Pick back up when you're ready and your automations stay yours.</div></div>
     <div class="faq"><div class="faq-q">Is my data safe?<span class="faq-icon">+</span></div><div class="faq-a">Yes. We work inside your own tools and accounts, so your data stays with you. We never sell it or move it onto third-party platforms.</div></div>
   </div>
