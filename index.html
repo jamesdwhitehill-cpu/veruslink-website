@@ -69,10 +69,11 @@ nav{display:flex;justify-content:space-between;align-items:flex-start;padding:18
 .hero-btns{display:flex;gap:12px;justify-content:center;text-align:center;flex-wrap:wrap;margin-bottom:14px}
 .hero-sub{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:56px}
 /* ── hero split layout (text left, video right) ── */
-.hero-split{display:flex;align-items:flex-start;gap:48px;max-width:1080px;margin:0 auto;padding:0 40px}
-.hero-text{flex:1;text-align:left}
+.hero-split{display:flex;align-items:flex-start;gap:48px;max-width:1200px;margin:0 auto;padding:0 40px}
+.hero-text{flex:1.2;text-align:left}
 .hero-text .hero-h{text-align:left}
 .hero-text .op-line{text-align:left;margin-left:0}
+.hero-text .hero-btns{justify-content:flex-start}
 .hero-video{flex:1;max-width:520px}
 .hero-video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.08);background:#000}
 .hero-video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:16px}
@@ -269,6 +270,10 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
     <div class="hero-text">
       <h1 class="hero-h">You already tried AI. <br><em>That's the problem.</em></h1>
       <p class="op-line">VerusLink is <strong>the missing layer between your tools and your Tuesday.</strong></p>
+      <div class="hero-btns">
+        <a href="https://www.veruslink.au/audit" class="btn-primary">Start Your Free AI Audit →</a>
+        <a href="#how-it-works" class="btn-ghost">See how it works</a>
+      </div>
     </div>
     <div class="hero-video">
       <div class="hero-video-wrap">
@@ -281,10 +286,6 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
         </iframe>
       </div>
     </div>
-  </div>
-  <div class="hero-btns">
-    <a href="https://www.veruslink.au/audit" class="btn-primary">Start Your Free AI Audit →</a>
-    <a href="#how-it-works" class="btn-ghost">See how it works</a>
   </div>
   <p class="hero-sub">5 minutes. No call. No commitment.</p>
   <p style="font-size:13px;color:var(--muted);max-width:640px;margin:0 auto;line-height:1.6;text-align:center">40% of AI tools go unused. 42% of SMEs tried and got nothing. 88% lack the in-house expertise.</p>
