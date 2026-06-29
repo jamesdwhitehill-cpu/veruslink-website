@@ -32,16 +32,16 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-
 .section{padding:64px max(40px,calc((100% - 1080px)/2));position:relative}
 .section.gray{background:var(--bg)}
 .section.white{background:var(--card)}
-.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.sec-label{display:inline-flex;align-items:flex-start;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
 .sec-label-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
 .sec-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:12px;color:var(--text)}
 .sec-h em{font-style:italic;font-weight:400;color:var(--accent)}
 .sec-body{font-size:17px;color:var(--text2);line-height:1.75;margin-bottom:28px;max-width:700px}
 
 /* ── 1. nav ── */
-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
+nav{display:flex;justify-content:space-between;align-items:flex-start;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
 .logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:24px;align-items:center}
+.nav-links{display:flex;gap:24px;align-items:flex-start}
 .nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
 .nav-link:hover{color:#fff}
 .nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
@@ -60,7 +60,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 
 /* ── 2. hero ── */
 .hero{padding:80px max(40px,calc((100% - 1080px)/2)) 64px;text-align:center;background:var(--card)}
-.hero-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid rgba(var(--accent-rgb),0.25);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.04em;margin-bottom:28px}
+.hero-pill{display:inline-flex;align-items:flex-start;gap:8px;background:var(--accent-soft);border:1px solid rgba(var(--accent-rgb),0.25);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.04em;margin-bottom:28px}
 .hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
 .hero-h{font-size:clamp(2.4rem,6vw,3.6rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;color:var(--text)}
 .hero-h em{font-style:italic;font-weight:400;color:var(--muted)}
@@ -69,7 +69,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:14px}
 .hero-sub{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:56px}
 /* ── hero split layout (text left, video right) ── */
-.hero-split{display:flex;align-items:center;gap:48px;max-width:1080px;margin:0 auto;padding:0 40px}
+.hero-split{display:flex;align-items:flex-start;gap:48px;max-width:1080px;margin:0 auto;padding:0 40px}
 .hero-text{flex:1;text-align:left}
 .hero-text .hero-h{text-align:left}
 .hero-text .op-line{text-align:left;margin-left:0}
@@ -87,7 +87,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 /* ── 3. points ── */
 .points{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
 .point{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:24px}
-.point-num{width:34px;height:34px;border-radius:50%;background:var(--black);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:16px}
+.point-num{width:34px;height:34px;border-radius:50%;background:var(--black);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:flex-start;justify-content:center;margin-bottom:16px}
 .point-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
 .point-body{font-size:15px;color:var(--text2);line-height:1.65}
 
@@ -98,11 +98,11 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .aoa{display:flex;align-items:stretch;gap:10px;margin-top:8px}
 .aoa-step{flex:1;background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px 22px;text-align:center}
 .aoa-step.mid{border:1.5px solid var(--accent)}
-.aoa-ico{width:48px;height:48px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.aoa-ico{width:48px;height:48px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:flex-start;justify-content:center;margin:0 auto 16px}
 .aoa-ico svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.8}
 .aoa-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px}
 .aoa-desc{font-size:14px;color:var(--muted);line-height:1.55}
-.aoa-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:26px;font-weight:700;flex-shrink:0}
+.aoa-arrow{display:flex;align-items:flex-start;justify-content:center;color:var(--accent);font-size:26px;font-weight:700;flex-shrink:0}
 
 /* ── 5. inline cta bar ── */
 .cta-bar{background:var(--card);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:36px 20px;text-align:center}
@@ -121,7 +121,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 /* ── 7. benefits grid ── */
 .benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
 .benefit{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:24px}
-.benefit-ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.benefit-ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:flex-start;justify-content:center;margin-bottom:14px}
 .benefit-ico svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8}
 .benefit-label{font-size:15px;font-weight:700;color:var(--text);line-height:1.4}
 
@@ -178,7 +178,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 
 /* ── 12. founder ── */
 .founder-inner{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
-.founder-avatar{width:96px;height:96px;border-radius:20px;background:var(--black);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-1px}
+.founder-avatar{width:96px;height:96px;border-radius:20px;background:var(--black);display:flex;align-items:flex-start;justify-content:center;font-size:30px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-1px}
 .founder-content{flex:1;min-width:240px}
 .founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;color:var(--text)}
 .founder-title{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:18px}
@@ -188,7 +188,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 /* ── 13. faq ── */
 .faqs{display:flex;flex-direction:column;gap:10px;margin-top:20px;max-width:760px}
 .faq{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:20px 22px;cursor:pointer}
-.faq-q{font-size:15px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-q{font-size:15px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
 .faq-icon{font-size:20px;color:var(--accent);flex-shrink:0;transition:transform 0.2s;line-height:1}
 .faq-a{font-size:15px;color:var(--text2);line-height:1.7;margin-top:12px;display:none}
 .faq.open .faq-a{display:block}
@@ -215,7 +215,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .close-secondary:hover{color:rgba(255,255,255,0.8)}
 
 /* ── 16. footer ── */
-footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
 .footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
 .footer-links{display:flex;gap:20px}
 .footer-link{font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none}
@@ -232,7 +232,7 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   .fit-grid{grid-template-columns:1fr}
   .aoa{flex-direction:column}
   .aoa-arrow{transform:rotate(90deg);padding:4px 0}
-  .stat-pills{flex-direction:column;align-items:center}
+  .stat-pills{flex-direction:column;align-items:flex-start}
   .stat-pill{max-width:100%;width:100%}
   .hero-split{flex-direction:column;gap:32px;padding:0 20px}
   .hero-text{text-align:center}
