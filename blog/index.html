@@ -1,226 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blog: VerusLink | AI Operations for Australian Small Business</title>
-  <meta name="description" content="Insights on AI business operations, invoice automation, and how Australian small businesses are replacing virtual assistants with AI teams. From the VerusLink team.">
-  <link rel="canonical" href="https://veruslink.au/blog">
-  <meta property="og:title" content="Blog: VerusLink">
-  <meta property="og:description" content="Insights on AI business operations, invoice automation, and how Australian small businesses are replacing virtual assistants with AI teams.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://veruslink.au/blog">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0A0A0A;
-      --bg-card: #111111;
-      --bg-surface: #0F0F10;
-      --accent: #2D9CDB;
-      --accent-hover: #3AAFEF;
-      --text: #FFFFFF;
-      --text-secondary: #B0B0B0;
-      --text-tertiary: #808080;
-      --border: #1A1A1A;
-      --radius: 8px;
-      --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-
-    html { scroll-behavior: smooth; background: var(--bg); }
-
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
-
-    /* ── NAV BAR ── */
-    .site-nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      height: 56px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 32px;
-      background: rgba(10, 10, 15, 0.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-logo {
-      font-family: var(--font);
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text);
-      text-decoration: none;
-    }
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: 28px;
-    }
-    .nav-link {
-      font-size: 0.9rem;
-      font-weight: 500;
-      color: var(--text-secondary);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .nav-link:hover { color: var(--text); }
-    .nav-btn {
-      font-size: 0.85rem;
-      font-weight: 600;
-      padding: 8px 18px;
-      background: var(--accent);
-      color: #fff;
-      border-radius: var(--radius);
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .nav-btn:hover { background: var(--accent-hover); }
-
-    /* ── BLOG LISTING ── */
-    .blog-header {
-      padding: 120px 32px 48px;
-      text-align: center;
-    }
-    .blog-header h1 {
-      font-size: 2.4rem;
-      font-weight: 800;
-      margin-bottom: 12px;
-    }
-    .blog-header p {
-      font-size: 1.1rem;
-      color: var(--text-secondary);
-      max-width: 540px;
-      margin: 0 auto;
-    }
-
-    .blog-grid {
-      max-width: 860px;
-      margin: 0 auto;
-      padding: 0 32px 80px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .blog-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 32px;
-      transition: border-color 0.2s, transform 0.2s;
-    }
-    .blog-card:hover {
-      border-color: var(--accent);
-      transform: translateY(-2px);
-    }
-    .blog-card-date {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--text-tertiary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
-    .blog-card h2 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      margin-bottom: 12px;
-      line-height: 1.3;
-    }
-    .blog-card h2 a {
-      color: var(--text);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .blog-card h2 a:hover { color: var(--accent); }
-    .blog-card p {
-      font-size: 0.95rem;
-      color: var(--text-secondary);
-      line-height: 1.7;
-      margin-bottom: 16px;
-    }
-    .blog-card .read-more {
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--accent);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-    .blog-card .read-more:hover { color: var(--accent-hover); }
-
-    /* ── FOOTER ── */
-    .site-footer {
-      text-align: center;
-      padding: 40px 32px;
-      border-top: 1px solid var(--border);
-      color: var(--text-tertiary);
-      font-size: 0.85rem;
-    }
-
-    @media (max-width: 600px) {
-      .blog-header h1 { font-size: 1.8rem; }
-      .blog-card { padding: 24px; }
-      .blog-card h2 { font-size: 1.2rem; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Concierge Insights | VerusLink Blog</title>
+<meta name="description" content="What we're seeing, building, and learning as an AI concierge for Australian small business. Plain-English insights, real examples, no hype.">
+<link rel="canonical" href="https://veruslink.au/blog">
+<meta property="og:title" content="AI Concierge Insights | VerusLink Blog">
+<meta property="og:description" content="What we're seeing, building, and learning as an AI concierge for Australian small business.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://veruslink.au/blog">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f4f5;--card:#ffffff;--accent:#2D9CDB;--accent-rgb:45,156,219;
+  --accent-soft:rgba(45,156,219,0.08);--text:#111111;--text2:#555555;
+  --muted:#888888;--black:#111111;--border:#e0e0e0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+/* nav (matches main site) */
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
+.logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none}
+.nav-link:hover,.nav-link.active{color:#fff}
+.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;text-decoration:none}
+/* header */
+.blog-hero{padding:72px 40px 40px;text-align:center}
+.blog-hero .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.blog-hero .kicker .dot{width:4px;height:4px;border-radius:50%;background:var(--accent)}
+.blog-hero h1{font-size:clamp(2rem,5vw,2.8rem);font-weight:900;letter-spacing:-1.5px;line-height:1.08;color:var(--text);margin-bottom:14px}
+.blog-hero p{font-size:17px;color:var(--text2);max-width:520px;margin:0 auto;line-height:1.7}
+/* grid */
+.blog-grid{flex:1;max-width:960px;width:100%;margin:0 auto;padding:24px 40px 80px;display:grid;grid-template-columns:repeat(2,1fr);gap:24px}
+.blog-card{display:flex;flex-direction:column;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:28px;text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.03);transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.blog-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 8px 24px rgba(0,0,0,0.06)}
+.pill{align-self:flex-start;display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:16px}
+.pill-insight{background:var(--accent-soft);color:var(--accent)}
+.pill-build{background:rgba(22,163,74,0.10);color:#16a34a}
+.pill-client{background:rgba(245,158,11,0.12);color:#b45309}
+.pill-guide{background:#eceef0;color:#555}
+.blog-card h2{font-size:1.3rem;font-weight:800;letter-spacing:-0.5px;line-height:1.25;color:var(--text);margin-bottom:10px}
+.blog-card .excerpt{font-size:15px;color:var(--text2);line-height:1.6;margin-bottom:20px;flex:1}
+.blog-card .meta{font-size:12px;font-weight:500;color:var(--muted);letter-spacing:0.02em}
+.blog-empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:60px 0;font-size:15px}
+/* footer (matches main site) */
+footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.footer-links{display:flex;gap:20px}
+.footer-link{font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none}
+.footer-link:hover{color:#fff}
+@media (max-width:760px){
+  .blog-grid{grid-template-columns:1fr;padding:20px 20px 64px}
+}
+@media (max-width:600px){
+  nav{padding:16px 20px}
+  .nav-links .nav-link{display:none}
+  .blog-hero{padding:48px 20px 24px}
+  footer{padding:20px;flex-direction:column}
+}
+</style>
 </head>
 <body>
 
-  <nav class="site-nav">
-    <a href="/" class="nav-logo">VERUSLINK</a>
-    <div class="nav-links">
-      <a href="/blog" class="nav-link">Blog</a>
-      <a href="/" class="nav-btn">Get Started</a>
-    </div>
-  </nav>
-
-  <header class="blog-header">
-    <h1>The VerusLink Blog</h1>
-    <p>Practical insights on AI operations for Australian small businesses. No hype, no fluff.</p>
-  </header>
-
-  <div class="blog-grid">
-
-    <article class="blog-card">
-      <div class="blog-card-date">28 March 2026</div>
-      <h2><a href="/blog/ai-business-assistant-australia.html">Why Australian Small Businesses Are Hiring AI Operations Teams in 2026</a></h2>
-      <p>The shift from virtual assistants to AI teams is accelerating. Here is what is driving it, what it actually costs, and what Day 1 looks like when you plug in an AI operations crew instead of hiring another body.</p>
-      <a href="/blog/ai-business-assistant-australia.html" class="read-more">Read article &rarr;</a>
-    </article>
-
-    <article class="blog-card">
-      <div class="blog-card-date">28 March 2026</div>
-      <h2><a href="/blog/ai-invoice-management-small-business.html">How Finnegan Handles Your Invoices So You Don't Have To</a></h2>
-      <p>Meet Finnegan, the AI agent that turns a voice command into a branded invoice, chases late payers, and reconciles everything. No spreadsheets, no chasing, no forgetting.</p>
-      <a href="/blog/ai-invoice-management-small-business.html" class="read-more">Read article &rarr;</a>
-    </article>
-
-    <article class="blog-card">
-      <div class="blog-card-date">28 March 2026</div>
-      <h2><a href="/blog/ai-assistant-vs-virtual-assistant-australia.html">AI Assistant vs Virtual Assistant: What Actually Makes Sense for a Small Business</a></h2>
-      <p>An honest comparison of AI assistants and human virtual assistants. Where VAs still win, where AI wins by a mile, and how the smart play might be using both.</p>
-      <a href="/blog/ai-assistant-vs-virtual-assistant-australia.html" class="read-more">Read article &rarr;</a>
-    </article>
-
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+  <div class="nav-links">
+    <a href="/#how-it-works" class="nav-link">How it works</a>
+    <a href="/#about" class="nav-link">About</a>
+    <a href="/blog" class="nav-link active">Blog</a>
+    <a href="/#faqs" class="nav-link">FAQs</a>
+    <a href="/audit" class="nav-cta">Start the free audit</a>
   </div>
+</nav>
 
-  <footer class="site-footer">
-    &copy; 2026 VerusLink Australia. All rights reserved.
-  </footer>
+<header class="blog-hero">
+  <div class="kicker"><span class="dot"></span>The VerusLink Blog</div>
+  <h1>AI Concierge Insights</h1>
+  <p>What we're seeing, building, and learning. No hype, no jargon, just what actually works.</p>
+</header>
+
+<main class="blog-grid" id="grid">
+  <div class="blog-empty">Loading posts&hellip;</div>
+</main>
+
+<footer>
+  <div class="footer-logo">VerusLink</div>
+  <div class="footer-links">
+    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/terms" class="footer-link">Terms</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var PILLS = {
+    'insight': { label: 'Insight', cls: 'pill-insight' },
+    'build': { label: 'Build', cls: 'pill-build' },
+    'client-story': { label: 'Client Story', cls: 'pill-client' },
+    'guide': { label: 'Guide', cls: 'pill-guide' }
+  };
+  var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+  }); }
+  function fmtDate(iso){
+    var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(iso || ''));
+    if(!m) return esc(iso);
+    return parseInt(m[3],10) + ' ' + MONTHS[parseInt(m[2],10)-1] + ' ' + m[1];
+  }
+  function card(p){
+    var pill = PILLS[p.category] || PILLS.insight;
+    var rt = p.readTime ? (' &middot; ' + p.readTime + ' min read') : '';
+    return '<a class="blog-card" href="/blog/' + encodeURIComponent(p.slug) + '.html">'
+      + '<span class="pill ' + pill.cls + '">' + pill.label + '</span>'
+      + '<h2>' + esc(p.title) + '</h2>'
+      + '<p class="excerpt">' + esc(p.excerpt) + '</p>'
+      + '<div class="meta">' + fmtDate(p.date) + rt + '</div>'
+      + '</a>';
+  }
+  var grid = document.getElementById('grid');
+  fetch('/blog/posts.json', { cache: 'no-cache' })
+    .then(function(r){ if(!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(posts){
+      if(!Array.isArray(posts) || !posts.length){
+        grid.innerHTML = '<div class="blog-empty">No posts yet. Check back soon.</div>';
+        return;
+      }
+      posts.sort(function(a,b){ return a.date < b.date ? 1 : a.date > b.date ? -1 : 0; });
+      grid.innerHTML = posts.map(card).join('');
+    })
+    .catch(function(){
+      grid.innerHTML = '<div class="blog-empty">Posts are taking a moment to load. Please refresh.</div>';
+    });
+})();
+</script>
 
 </body>
 </html>

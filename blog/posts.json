@@ -1,0 +1,42 @@
+[
+  {
+    "slug": "what-ships-in-month-one",
+    "title": "What Ships in Month One (Real Examples)",
+    "excerpt": "Five automations we have already built and run in production. Every one came out of James’s own businesses first.",
+    "category": "build",
+    "date": "2026-07-02",
+    "readTime": 2
+  },
+  {
+    "slug": "i-could-fix-my-own-roof",
+    "title": "I Could Fix My Own Roof",
+    "excerpt": "Knowledge is free. Time is not. That gap is the whole business, and better AI only makes it wider.",
+    "category": "insight",
+    "date": "2026-06-30",
+    "readTime": 2
+  },
+  {
+    "slug": "the-3000-a-month-youre-losing",
+    "title": "The $3,000 a Month You Don't Know You're Losing",
+    "excerpt": "Most owners know admin is slowing them down. Few know by how much. The number is always higher than they expect.",
+    "category": "insight",
+    "date": "2026-06-28",
+    "readTime": 2
+  },
+  {
+    "slug": "what-ai-should-never-do",
+    "title": "What AI Should Never Do in Your Business",
+    "excerpt": "Knowing when not to use AI matters more than knowing when to use it. The line is simpler than you think.",
+    "category": "guide",
+    "date": "2026-06-26",
+    "readTime": 2
+  },
+  {
+    "slug": "you-bought-the-tools-nothing-stuck",
+    "title": "You Bought the Tools. Nothing Stuck. Here's Why.",
+    "excerpt": "Most owners have already tried AI. The problem was never the technology. It was that nobody had the time to make it run.",
+    "category": "insight",
+    "date": "2026-06-24",
+    "readTime": 2
+  }
+]
