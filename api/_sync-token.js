@@ -59,7 +59,10 @@ export function verifyToken(token, requiredKind) {
   if (a.length !== b.length || !crypto.timingSafeEqual(a, b)) return null;
   let payload;
   try { payload = JSON.parse(b64urlDecode(payloadB64).toString('utf8')); } catch { return null; }
-  if (!payload || !payload.code_id || !payload.owner_id || !payload.exp) return null;
+  // owner_id + exp are always required. code_id is OPTIONAL: password/session tokens
+  // for owners with no code yet carry only owner_id; it is present on magic links and
+  // on code-scoped sessions minted by the dashboard "switch" action (manage/save read it).
+  if (!payload || !payload.owner_id || !payload.exp) return null;
   if (Math.floor(Date.now() / 1000) >= payload.exp) return null;
   if (requiredKind && payload.kind !== requiredKind) return null;
   return payload;

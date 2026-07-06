@@ -50,25 +50,6 @@
   <!-- Loading -->
   <div id="loading" class="card"><span class="spinner" style="border-color:rgba(255,255,255,.25);border-top-color:#fff"></span> Loading your dashboard…</div>
 
-  <!-- Sign-in gate -->
-  <div id="signin" class="narrow hidden">
-    <div class="eyebrow">VerusLink Sync</div>
-    <h1>Your sync dashboard</h1>
-    <p class="sub">Enter your email and we'll send you a secure sign-in link.</p>
-    <div class="card center-narrow">
-      <form id="signin-form">
-        <div class="field">
-          <label for="si-email">Email</label>
-          <input type="email" id="si-email" placeholder="you@example.com" autocomplete="email" required>
-          <div class="hint">We'll email a one-time link to the address on file. The link expires in 30 minutes.</div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-full" id="si-btn">Email me a sign-in link</button>
-      </form>
-      <p class="faint" id="si-msg" style="margin-top:14px"></p>
-    </div>
-    <p class="faint" style="text-align:center;font-size:13px">No account yet? <a href="/sync/">Create your first sync code</a></p>
-  </div>
-
   <!-- Dashboard -->
   <div id="dash" class="hidden">
     <div class="dash-head">
@@ -139,7 +120,6 @@
 const SITE = 'https://veruslink.au';
 const banner = document.getElementById('banner');
 const loadingEl = document.getElementById('loading');
-const signinEl = document.getElementById('signin');
 const dashEl = document.getElementById('dash');
 const cardsEl = document.getElementById('cards');
 const emptyEl = document.getElementById('empty');
@@ -175,7 +155,8 @@ async function init(){
   try{ r = await api('GET'); }
   catch(_){ loadingEl.classList.add('hidden'); showError('Could not reach the sign-in service. Please try again.'); return; }
   loadingEl.classList.add('hidden');
-  if(r.status === 401){ showSignin(); return; }
+  // No valid session -> send them to the single sign-in / sign-up entry point.
+  if(r.status === 401){ location.href = '/sync/'; return; }
   let j;
   try{ j = await r.json(); }catch(_){ showError('Unexpected response from server.'); return; }
   if(!r.ok){ showError(j.error || 'Could not load your dashboard.'); return; }
@@ -183,24 +164,6 @@ async function init(){
   codes = j.codes || [];
   dashEl.classList.remove('hidden');
   renderCards();
-}
-
-// ---- sign-in gate ----
-function showSignin(){
-  signinEl.classList.remove('hidden');
-  document.getElementById('signin-form').addEventListener('submit', async (e)=>{
-    e.preventDefault();
-    const email = document.getElementById('si-email').value.trim().toLowerCase();
-    const msg = document.getElementById('si-msg');
-    const btn = document.getElementById('si-btn');
-    if(!email) return;
-    btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Sending…';
-    try{
-      await fetch('/api/sync-owner',{ method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ action:'request-owner-link', email }) });
-      msg.innerHTML = "If that email has an account, a sign-in link is on its way. Check your inbox.";
-    }catch(_){ msg.textContent='Could not send the link. Please try again.'; }
-    finally{ btn.disabled=false; btn.textContent='Email me a sign-in link'; }
-  });
 }
 
 // ---- render ----
@@ -312,7 +275,7 @@ document.getElementById('create-form').addEventListener('submit', async (e)=>{
 // ---- sign out ----
 document.getElementById('signout-btn').addEventListener('click', async ()=>{
   try{ await api('POST', { action:'signout' }); }catch(_){}
-  location.href = '/sync/dashboard.html';
+  location.href = '/sync/';
 });
 
 init();

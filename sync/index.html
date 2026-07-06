@@ -18,45 +18,54 @@
 </nav>
 
 <div class="container narrow">
-  <div class="eyebrow">VerusLink Sync</div>
+  <div class="eyebrow">Your availability</div>
   <h1>Stop polling.<br>Start syncing.</h1>
   <p class="sub">Share a single code. Update your availability once. Everyone who needs to know, knows.</p>
 
   <div id="banner" class="banner hidden"></div>
 
-  <!-- PASSPHRASE GATE — remove this block when Stripe billing is live -->
-  <div class="card" id="gate-card">
-    <form id="gate-form">
+  <!-- SIGN IN -->
+  <div class="card" id="signin-card">
+    <h2 style="margin-bottom:18px">Sign in</h2>
+    <form id="signin-form" autocomplete="on">
       <div class="field">
-        <label for="access-code">Access code</label>
-        <input type="text" id="access-code" placeholder="Enter your access code" autocomplete="off" autofocus>
-        <div class="hint" id="gate-error" style="display:none;color:#ffc9cd">That code isn't right. Contact james@veruslink.au for access.</div>
+        <label for="si-email">Email</label>
+        <input type="email" id="si-email" placeholder="you@example.com" autocomplete="email" required>
       </div>
-      <button type="submit" class="btn btn-primary btn-full" id="gate-btn">Continue →</button>
+      <div class="field">
+        <label for="si-password">Password</label>
+        <input type="password" id="si-password" placeholder="••••••••" autocomplete="current-password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="si-btn">Sign in →</button>
     </form>
+    <p class="faint" style="text-align:center;font-size:13px;margin-top:16px">
+      Don't have an account? <a href="#" id="to-signup">Sign up</a>
+    </p>
   </div>
 
-  <div class="card hidden" id="create-card">
-    <form id="create-form">
+  <!-- SIGN UP -->
+  <div class="card hidden" id="signup-card">
+    <h2 style="margin-bottom:18px">Create your account</h2>
+    <form id="signup-form" autocomplete="on">
       <div class="field">
-        <label for="name">Your name</label>
-        <input type="text" id="name" placeholder="James Whitehill" autocomplete="name" required>
+        <label for="su-name">Name</label>
+        <input type="text" id="su-name" placeholder="Your name" autocomplete="name" required>
       </div>
       <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" placeholder="you@example.com" autocomplete="email" required>
-        <div class="hint">We use this to give you back into your dashboard. No spam.</div>
+        <label for="su-email">Email</label>
+        <input type="email" id="su-email" placeholder="you@example.com" autocomplete="email" required>
       </div>
       <div class="field">
-        <label for="label">What should people see?</label>
-        <input type="text" id="label" placeholder="Dr Sarah, Tuesdays &amp; Thursdays" required>
-        <div class="hint">This is the title shown on your public availability page.</div>
+        <label for="su-password">Password</label>
+        <input type="password" id="su-password" placeholder="••••••••" autocomplete="new-password" required minlength="8">
+        <div class="hint">At least 8 characters.</div>
       </div>
-      <button type="submit" class="btn btn-primary btn-full" id="submit-btn">Create my sync code →</button>
+      <button type="submit" class="btn btn-primary btn-full" id="su-btn">Create account →</button>
     </form>
+    <p class="faint" style="text-align:center;font-size:13px;margin-top:16px">
+      Already have an account? <a href="#" id="to-signin">Sign in</a>
+    </p>
   </div>
-
-  <p class="faint" style="text-align:center;font-size:13px">Already have a code? <a href="/sync/view.html">View an availability page</a></p>
 </div>
 
 <footer>
@@ -64,70 +73,73 @@
 </footer>
 
 <script>
-// PASSPHRASE GATE — remove this block when Stripe billing is live
-const ACCESS_PASSPHRASE = 'veruslink2026';
-const gateForm = document.getElementById('gate-form');
-const gateError = document.getElementById('gate-error');
-gateForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const entered = document.getElementById('access-code').value.trim();
-  if (entered === ACCESS_PASSPHRASE) {
-    document.getElementById('gate-card').classList.add('hidden');
-    document.getElementById('create-card').classList.remove('hidden');
-    document.getElementById('name').focus();
-  } else {
-    gateError.style.display = 'block';
-  }
-});
-// END PASSPHRASE GATE
-
 const banner = document.getElementById('banner');
+const signinCard = document.getElementById('signin-card');
+const signupCard = document.getElementById('signup-card');
+
 function showError(msg){ banner.className='banner err'; banner.textContent=msg; }
-function showInfo(msg){ banner.className='banner info'; banner.innerHTML=msg; }
+function clearBanner(){ banner.className='banner hidden'; banner.textContent=''; }
 
-document.getElementById('create-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const name = document.getElementById('name').value.trim();
-  const email = document.getElementById('email').value.trim().toLowerCase();
-  const label = document.getElementById('label').value.trim();
-  if (!name || !email || !label) return;
+// ---- view toggle ----
+document.getElementById('to-signup').addEventListener('click', (e)=>{
+  e.preventDefault(); clearBanner();
+  signinCard.classList.add('hidden'); signupCard.classList.remove('hidden');
+  document.getElementById('su-name').focus();
+});
+document.getElementById('to-signin').addEventListener('click', (e)=>{
+  e.preventDefault(); clearBanner();
+  signupCard.classList.add('hidden'); signinCard.classList.remove('hidden');
+  document.getElementById('si-email').focus();
+});
 
-  const btn = document.getElementById('submit-btn');
+// If already signed in, skip straight to the dashboard.
+(async function checkSession(){
+  try{
+    const r = await fetch('/api/sync-auth', { method:'GET', credentials:'same-origin' });
+    const j = await r.json().catch(()=>({}));
+    if (j && j.authenticated) window.location.href = '/sync/dashboard.html';
+  }catch(_){ /* stay on the sign-in page */ }
+})();
+
+async function auth(body, btn, defaultLabel){
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner"></span> Creating…';
-  banner.className = 'banner hidden';
-
+  btn.innerHTML = '<span class="spinner"></span> Please wait…';
+  clearBanner();
   try {
-    // Signup is handled server-side (service key) so the owner/code rows are
-    // created safely and an httpOnly session cookie is issued. Writes no longer
-    // go through the anon key. The owner email is the account key, it is never
-    // trusted from a URL param.
-    const r = await fetch('/api/sync-owner', {
+    const r = await fetch('/api/sync-auth', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'same-origin',
-      body: JSON.stringify({ action: 'signup', name, email, label }),
+      body: JSON.stringify(body),
     });
     const j = await r.json().catch(() => ({}));
     if (!r.ok) throw new Error(j.error || 'Something went wrong. Please try again.');
-
-    // Existing email: we never auto-sign-in via the public form (that would be an
-    // account takeover). We emailed a sign-in link instead.
-    if (j.existing) {
-      showInfo("You already have an account for that email, we've sent you a secure sign-in link. Check your inbox to open your dashboard.");
-      btn.disabled = false;
-      btn.textContent = 'Create my sync code →';
-      return;
-    }
-
-    // Brand-new account: session cookie is set, go straight to the dashboard.
     window.location.href = '/sync/dashboard.html';
   } catch (err) {
-    console.error(err);
     showError(err.message || 'Something went wrong. Please try again.');
     btn.disabled = false;
-    btn.textContent = 'Create my sync code →';
+    btn.textContent = defaultLabel;
   }
+}
+
+// ---- sign in ----
+document.getElementById('signin-form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const email = document.getElementById('si-email').value.trim().toLowerCase();
+  const password = document.getElementById('si-password').value;
+  if (!email || !password) return;
+  auth({ email, password }, document.getElementById('si-btn'), 'Sign in →');
+});
+
+// ---- sign up ----
+document.getElementById('signup-form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const name = document.getElementById('su-name').value.trim();
+  const email = document.getElementById('su-email').value.trim().toLowerCase();
+  const password = document.getElementById('su-password').value;
+  if (!name || !email || !password) return;
+  if (password.length < 8) { showError('Password must be at least 8 characters.'); return; }
+  auth({ name, email, password }, document.getElementById('su-btn'), 'Create account →');
 });
 </script>
 </body>

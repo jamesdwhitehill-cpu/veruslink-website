@@ -43,7 +43,7 @@ a{color:var(--accent)}
 /* forms */
 .field{margin-bottom:18px}
 label{display:block;font-size:12px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
-input[type=text],input[type=email]{width:100%;background:var(--bg-soft);border:1px solid var(--border);border-radius:11px;color:#fff;font-family:inherit;font-size:15px;padding:13px 15px;transition:border-color .15s,box-shadow .15s}
+input[type=text],input[type=email],input[type=password]{width:100%;background:var(--bg-soft);border:1px solid var(--border);border-radius:11px;color:#fff;font-family:inherit;font-size:15px;padding:13px 15px;transition:border-color .15s,box-shadow .15s}
 input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .hint{font-size:12.5px;color:var(--text-faint);margin-top:6px}
 
