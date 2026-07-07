@@ -185,6 +185,20 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .founder-bio{font-size:16px;color:var(--text2);line-height:1.75;margin-bottom:14px;max-width:640px}
 .tf-strip{display:block;text-align:center;margin-top:8px;background:var(--bg);border:0.5px solid var(--border);border-radius:12px;padding:12px 18px;font-size:13px;color:#888;line-height:1.5;max-width:640px}
 
+/* ── blog strip ── */
+.blog-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.blog-card{display:block;background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:24px;text-decoration:none;transition:border-color .15s ease,transform .15s ease}
+.blog-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.blog-cat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:100px;margin-bottom:14px}
+.blog-title{font-size:16px;font-weight:800;color:var(--text);line-height:1.35;margin-bottom:10px}
+.blog-meta{font-size:12px;color:var(--muted);letter-spacing:0.02em}
+
+/* ── named systems ── */
+.systems{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+.system-card{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:22px 24px}
+.system-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
+.system-desc{font-size:14px;color:var(--text2);line-height:1.6}
+
 /* ── 13. faq ── */
 .faqs{display:flex;flex-direction:column;gap:10px;margin-top:20px;max-width:760px}
 .faq{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:20px 22px;cursor:pointer}
@@ -235,6 +249,8 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   .pricing{grid-template-columns:1fr}
   .proof-grid{grid-template-columns:1fr}
   .fit-grid{grid-template-columns:1fr}
+  .blog-strip{grid-template-columns:1fr}
+  .systems{grid-template-columns:1fr}
   .aoa{flex-direction:column}
   .aoa-arrow{transform:rotate(90deg);padding:4px 0}
   .stat-pills{flex-direction:column;align-items:flex-start}
@@ -321,8 +337,8 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 <!-- 4. HOW IT WORKS, AOA -->
 <section class="section white" id="how-it-works">
   <div class="sec-label"><div class="sec-label-dot"></div>What we actually do</div>
-  <h2 class="sec-h">How it works.<br><em>Three steps. Start free.</em></h2>
-  <p class="sec-body">Free audit first, then a paid assessment, then ongoing implementation. You only move forward if it's worth it.</p>
+  <h2 class="sec-h">How it works.<br><em>Four steps. Start free.</em></h2>
+  <p class="sec-body">Free audit, then a no-pressure intro call, then a paid assessment, then ongoing implementation. You only move forward if it's worth it.</p>
   <div class="aoa">
     <div class="aoa-step">
       <!-- ICON PLACEHOLDER: step-1-audit -->
@@ -331,15 +347,22 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
       <div class="aoa-desc">Answer a few questions about how your business runs. We review every one personally.</div>
     </div>
     <div class="aoa-arrow">→</div>
+    <div class="aoa-step">
+      <!-- ICON PLACEHOLDER: step-2-intro -->
+      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M15.5 3H18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2.5"/><path d="M4 7l6 4-6 4V7z"/></svg></div>
+      <div class="aoa-name">15-Min Intro Call</div>
+      <div class="aoa-desc">We walk through your results. No pitch. No pressure. Just a conversation about what the numbers mean for your business.</div>
+    </div>
+    <div class="aoa-arrow">→</div>
     <div class="aoa-step mid">
-      <!-- ICON PLACEHOLDER: step-2-assessment -->
+      <!-- ICON PLACEHOLDER: step-3-assessment -->
       <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M5 7h14M5 7l1 13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-13M9 7V4h6v3"/></svg></div>
       <div class="aoa-name">Assessment ($999)</div>
-      <div class="aoa-desc">60 minutes. We map your operations and deliver a branded report with a 90-day roadmap. If you proceed, the $999 is credited to your first month.</div>
+      <div class="aoa-desc">60 minutes. We map your operations and deliver a branded report with a two phase build plan. If you proceed, the $999 is credited to your first month.</div>
     </div>
     <div class="aoa-arrow">→</div>
     <div class="aoa-step">
-      <!-- ICON PLACEHOLDER: step-3-concierge -->
+      <!-- ICON PLACEHOLDER: step-4-concierge -->
       <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M4 17l5-5-5-5M12 19h8"/></svg></div>
       <div class="aoa-name">Concierge ($1,500/mo)</div>
       <div class="aoa-desc">We implement, monitor, and refine your AI systems monthly. No lock-in.</div>
@@ -381,6 +404,20 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 </section>
 
 <div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a></div>
+
+<!-- 7b. NAMED SYSTEMS WE INSTALL -->
+<section class="section white">
+  <div class="sec-label"><div class="sec-label-dot"></div>What we install</div>
+  <h2 class="sec-h">Named systems we install.</h2>
+  <p class="sec-body">Not vague "automation." Specific systems, each one built and running in a real business before we bring it to yours.</p>
+  <div class="systems">
+    <div class="system-card"><div class="system-name">The Chase System</div><div class="system-desc">Automated follow-up sequences so no lead or invoice ever goes cold.</div></div>
+    <div class="system-card"><div class="system-name">The Morning Brief</div><div class="system-desc">A daily intelligence summary waiting for you before the first coffee.</div></div>
+    <div class="system-card"><div class="system-name">The Receipts Engine</div><div class="system-desc">Financial document capture that photographs, categorises, and logs every expense.</div></div>
+    <div class="system-card"><div class="system-name">The Intake Engine</div><div class="system-desc">Client onboarding that collects and verifies documents before you touch the file.</div></div>
+    <div class="system-card"><div class="system-name">The Report Builder</div><div class="system-desc">Automated monthly reporting, assembled and formatted without you lifting a finger.</div></div>
+  </div>
+</section>
 
 <!-- 8. COMPARISON TABLE -->
 <section class="section gray">
@@ -496,6 +533,13 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 
 <div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a></div>
 
+<!-- 11b. LATEST INSIGHTS (blog strip) -->
+<section class="section" id="latest-insights" hidden>
+  <div class="sec-label"><div class="sec-label-dot"></div>From the blog</div>
+  <h2 class="sec-h">Latest insights.</h2>
+  <div class="blog-strip" id="blogStrip"></div>
+</section>
+
 <!-- 12. FOUNDER -->
 <section class="section white" id="about">
   <div class="sec-label"><div class="sec-label-dot"></div>Meet the founder</div>
@@ -580,6 +624,32 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     if(t)t.scrollIntoView({behavior:'smooth'});
   });
 });
+
+// Latest insights: fetch blog posts and render the 3 most recent. Degrades
+// gracefully — the section stays hidden if the fetch fails or returns nothing.
+(function(){
+  var sec=document.getElementById('latest-insights');
+  var strip=document.getElementById('blogStrip');
+  if(!sec||!strip)return;
+  fetch('/blog/posts.json',{cache:'no-cache'}).then(function(r){
+    if(!r.ok)throw new Error('posts fetch '+r.status);
+    return r.json();
+  }).then(function(posts){
+    if(!Array.isArray(posts)||!posts.length)return;
+    posts.sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));});
+    var esc=function(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;};
+    var fmtDate=function(s){var d=new Date(s);return isNaN(d)?esc(s):d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});};
+    var html=posts.slice(0,3).map(function(p){
+      var meta=fmtDate(p.date)+(p.readTime?(' · '+p.readTime+' min read'):'');
+      return '<a class="blog-card" href="/blog/'+esc(p.slug)+'">'
+        +(p.category?'<span class="blog-cat">'+esc(p.category)+'</span>':'')
+        +'<div class="blog-title">'+esc(p.title)+'</div>'
+        +'<div class="blog-meta">'+meta+'</div></a>';
+    }).join('');
+    strip.innerHTML=html;
+    sec.hidden=false;
+  }).catch(function(err){/* leave section hidden */});
+})();
 </script>
 
 </body>
