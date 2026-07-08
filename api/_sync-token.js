@@ -121,9 +121,54 @@ export function makeCode() {
   return 'SYNC-' + s;
 }
 
+// A high-entropy, URL-safe token for a participant's auth-free respond link.
+// The token IS the auth for respond.html — treat it like a bearer secret.
+export function makeParticipantToken() {
+  return b64urlEncode(crypto.randomBytes(24)); // 192 bits
+}
+
+// Ensure a code has an 'owner' participant row (idempotent). This lets the
+// overlap engine treat the owner's availability like any other participant's.
+// Returns the owner participant row, or null if the owner has no email on file.
+// Safe to call repeatedly — the UNIQUE(code_id, email) constraint prevents dups.
+export async function ensureOwnerParticipant(codeId, ownerId) {
+  const existing = await sbGet(
+    `vl_participants?code_id=eq.${encodeURIComponent(codeId)}&role=eq.owner&select=id,name,email,token,role,status&limit=1`
+  );
+  if (existing.length) return existing[0];
+
+  const owners = await sbGet(`vl_owners?id=eq.${encodeURIComponent(ownerId)}&select=name,email`);
+  if (!owners.length || !owners[0].email) return null;
+
+  const body = {
+    code_id: codeId,
+    name: owners[0].name || 'Owner',
+    email: owners[0].email,
+    token: makeParticipantToken(),
+    role: 'owner',
+    status: 'responded', // the owner's own grid stands in as their response
+  };
+  const r = await fetch(sbUrl('vl_participants'), {
+    method: 'POST',
+    headers: { ...sbHeaders(), Prefer: 'return=representation' },
+    body: JSON.stringify(body),
+  });
+  if (r.ok) return (await r.json())[0];
+  // A concurrent create may have already inserted the owner row — re-read.
+  const txt = await r.text();
+  if (r.status === 409 || txt.includes('23505')) {
+    const again = await sbGet(
+      `vl_participants?code_id=eq.${encodeURIComponent(codeId)}&role=eq.owner&select=id,name,email,token,role,status&limit=1`
+    );
+    if (again.length) return again[0];
+  }
+  throw new Error(`create owner participant failed: ${r.status} ${txt}`);
+}
+
 // Insert a new vl_codes row for an owner, retrying on code collisions. Returns
 // the created row. Uses the service key (RLS bypass) — callers MUST have already
-// verified the owner (session) or be the unauthenticated signup path.
+// verified the owner (session) or be the unauthenticated signup path. Also seeds
+// an 'owner' participant row so the owner's blocks join the overlap engine.
 export async function createCodeForOwner(ownerId, label, opts = {}) {
   for (let attempt = 0; attempt < 6; attempt++) {
     const body = { owner_id: ownerId, code: makeCode(), label };
@@ -135,7 +180,13 @@ export async function createCodeForOwner(ownerId, label, opts = {}) {
       headers: { ...sbHeaders(), Prefer: 'return=representation' },
       body: JSON.stringify(body),
     });
-    if (r.ok) return (await r.json())[0];
+    if (r.ok) {
+      const row = (await r.json())[0];
+      // Seed the owner participant. Best-effort: if the vl_participants table
+      // isn't migrated yet, don't fail code creation over it.
+      try { await ensureOwnerParticipant(row.id, ownerId); } catch (_) { /* pre-migration tolerance */ }
+      return row;
+    }
     const txt = await r.text();
     if (r.status === 409 || txt.includes('23505')) continue; // unique violation -> new code
     throw new Error(`create code failed: ${r.status} ${txt}`);

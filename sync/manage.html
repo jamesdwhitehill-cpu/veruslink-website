@@ -3,556 +3,359 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink Sync: Manage availability</title>
+<title>Manage sync · VerusLink Sync</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sync/sync.css">
-<style>
-  /* All-day toggle: clickable day headers + column hover preview */
-  .grid th.dayhead{cursor:pointer;border-radius:8px;transition:background .12s}
-  .grid th.dayhead:hover{background:var(--surface-strong)}
-  .grid th.col-hl{background:var(--surface-strong)}
-  .cell.col-hl{border-color:var(--accent);box-shadow:inset 0 0 0 99px rgba(45,156,219,0.06)}
-</style>
 </head>
 <body>
 <nav>
   <a href="/" class="logo">VerusLink</a>
-  <div class="nav-right"><a href="/sync/dashboard.html">← All sync codes</a></div>
+  <div class="nav-right"><a href="/sync/dashboard.html">All sync codes</a></div>
 </nav>
 
 <div class="container">
   <div id="banner" class="banner hidden"></div>
-  <p style="margin-bottom:18px"><a href="/sync/dashboard.html" style="font-size:13px;font-weight:600">← Back to dashboard</a></p>
   <div id="gate" class="card hidden"></div>
 
   <div id="dashboard" class="hidden">
-    <div class="eyebrow">Your availability</div>
+    <p style="margin-bottom:14px"><a href="/sync/dashboard.html" style="font-size:13.5px;font-weight:600">← Back to dashboard</a></p>
+    <div class="eyebrow">Manage sync</div>
     <h1 id="label-h">-</h1>
 
-    <!-- Code + share -->
+    <!-- Share -->
     <div class="card">
       <h2>Your sync code</h2>
-      <p class="muted" style="margin-bottom:16px">Share this code or the link. Anyone with it can view your availability and subscribe to updates.</p>
+      <p class="muted" style="margin:6px 0 16px">Share this code or link so people can view the agreed times and subscribe to updates.</p>
       <div class="code-display"><span class="code-pill" id="code-pill">SYNC-····</span></div>
       <div class="link-row">
         <span class="link-box" id="share-link">https://veruslink.au/sync/view.html?code=…</span>
-        <button class="btn btn-ghost" id="copy-btn">Copy link</button>
+        <button class="btn btn-ghost btn-sm" id="copy-btn">Copy link</button>
       </div>
       <div class="count-badge" id="count-badge" style="margin-top:16px">Checking subscribers…</div>
     </div>
 
-    <!-- Availability grid -->
+    <!-- Your availability -->
     <div class="card">
-      <h2>When are you available?</h2>
-      <p class="muted" style="margin-bottom:18px">Click a slot to cycle <b style="color:var(--green)">available</b> → <b style="color:var(--red)">unavailable</b> → not set.</p>
+      <h2>Your availability</h2>
+      <p class="muted" style="margin:6px 0 18px">Mark when you are free. Tap a slot to cycle <b style="color:var(--green-strong)">available</b> → <b style="color:var(--red)">unavailable</b> → not set.</p>
 
-      <!-- Controls -->
       <div class="controls">
-        <div class="control">
-          <span>Slot length</span>
-          <select id="dur-select">
-            <option value="15">15 min</option>
-            <option value="30">30 min</option>
-            <option value="60">60 min</option>
-          </select>
+        <div class="control"><span>Slot length</span>
+          <select id="dur-select"><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select>
         </div>
-        <div class="control">
-          <span>Day starts</span>
-          <input type="time" id="bh-start" step="900">
-        </div>
-        <div class="control">
-          <span>Day ends</span>
-          <input type="time" id="bh-end" step="900">
-        </div>
-        <div class="control">
-          <span>Editing</span>
-          <div class="seg" id="mode-seg">
-            <button data-mode="recurring" class="active">Recurring schedule</button>
-            <button data-mode="week">This week only</button>
-          </div>
-        </div>
+        <div class="control"><span>Day starts</span><input type="time" id="bh-start" step="900"></div>
+        <div class="control"><span>Day ends</span><input type="time" id="bh-end" step="900"></div>
       </div>
 
-      <!-- Week nav -->
-      <div class="weeknav">
-        <div class="wn-left">
-          <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
-          <button class="navbtn" id="next-week" aria-label="Next week">›</button>
-          <span class="range" id="week-range">-</span>
-        </div>
-        <button class="btn btn-ghost today-btn" id="today-btn" style="padding:8px 14px">Today</button>
-      </div>
-
-      <div class="grid-wrap"><table class="grid" id="grid"></table></div>
-
+      <div class="grid-wrap"><div id="grid"></div></div>
       <div class="legend">
         <span><span class="swatch avail"></span>Available</span>
         <span><span class="swatch unavail"></span>Unavailable</span>
         <span><span class="swatch empty"></span>Not set</span>
-        <span class="faint" style="margin-left:auto">● = override for a specific date</span>
       </div>
-      <div class="bulk-hint">Tip: drag across cells, or Shift-click two cells, to bulk-edit a block. On touch, long-press a cell to start a selection.</div>
-
+      <div class="bulk-hint">Tip: drag across cells, or click a day name to set the whole day.</div>
       <div class="row-actions" style="margin-top:22px">
-        <button class="btn btn-primary" id="save-btn">Save &amp; notify subscribers</button>
+        <button class="btn btn-primary" id="save-btn">Save availability</button>
       </div>
+    </div>
+
+    <!-- People -->
+    <div class="card">
+      <div class="card-head">
+        <div><h2>People</h2><p class="muted" style="margin-top:4px">Invite people to share when they are free.</p></div>
+        <button class="btn btn-ghost btn-sm" id="invite-toggle">+ Invite people</button>
+      </div>
+
+      <div id="invite-form" class="hidden" style="margin-top:16px">
+        <div class="invite-rows" id="invite-rows"></div>
+        <div class="row-actions">
+          <button class="btn btn-ghost btn-sm" id="add-row">+ Add another</button>
+          <button class="btn btn-primary btn-sm" id="send-invites">Send invitations</button>
+        </div>
+      </div>
+
+      <div class="people" id="people" style="margin-top:16px"></div>
+      <div class="people-summary" id="people-summary"></div>
+    </div>
+
+    <!-- Best times -->
+    <div class="card">
+      <h2>Best times</h2>
+      <p class="muted" id="overlap-intro" style="margin:6px 0 6px">Based on everyone's availability.</p>
+      <div id="overlap-body"></div>
     </div>
   </div>
 </div>
 
 <footer>Powered by <a href="https://veruslink.au">VerusLink</a></footer>
+<div class="toast-wrap" id="toasts"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/sync/sync-grid.js"></script>
 <script>
-const SB_URL = 'https://tzthoqfzmiifvwjemxmy.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
-const sb = supabase.createClient(SB_URL, SB_KEY);
+const DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYFULL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const params=new URLSearchParams(location.search);
+const codeParam=(params.get('code')||'').trim().toUpperCase();
+const $=(id)=>document.getElementById(id);
+function toast(m,ok){const t=document.createElement('div');t.className='toast '+(ok?'ok':'err');t.textContent=m;$('toasts').appendChild(t);setTimeout(()=>t.remove(),4000);}
+function escapeHtml(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
-const DOW_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const params = new URLSearchParams(location.search);
-const codeParam = (params.get('code') || '').trim().toUpperCase();
+const hm=(t)=>String(t).slice(0,5);
+const toMin=(t)=>{const[h,m]=hm(t).split(':').map(Number);return h*60+m;};
+const toHM=(m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
+const pretty=(t)=>{let[h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
+function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
+function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:date.getDate(),monthLabel:MON[date.getMonth()],weekend:d>=5,isToday:date.getTime()===t0.getTime(),date});}return out;}
+function avatarColor(name){let h=0;for(let i=0;i<name.length;i++)h=name.charCodeAt(i)+((h<<5)-h);const hue=Math.abs(h)%360;return `hsl(${hue},52%,45%)`;}
+function initials(name){return name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';}
 
-const banner = document.getElementById('banner');
-const gate = document.getElementById('gate');
-const dash = document.getElementById('dashboard');
+let codeRow=null, ownerParticipantId=null, grid=null, days=[], slots=[], participants=[], overlap=null, filterId=null;
 
-let codeRow = null;
-let slots = [];
-let weekOffset = 0;
-let editMode = 'recurring';          // 'recurring' | 'week'
-const recurring = new Map();         // `${dow}_${slot}` -> 'avail'|'unavail'
-const overrides = new Map();         // `${YYYY-MM-DD}_${slot}` -> 'avail'|'unavail'
-
-// ---- date/time helpers ----
-const hm = (t)=>String(t).slice(0,5);
-const toMin = (t)=>{const [h,m]=hm(t).split(':').map(Number);return h*60+m;};
-const toHM = (mins)=>`${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
-const pretty = (t)=>{let [h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return `${h12}:${String(m).padStart(2,'0')}${ap}`;};
-const dowMon = (d)=>(d.getDay()+6)%7;                                   // 0=Mon..6=Sun
-const addDays = (d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
-const startOfDay = (d)=>{const x=new Date(d);x.setHours(0,0,0,0);return x;};
-const isoDate = (d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-const parseISO = (s)=>{const [y,m,d]=s.split('-').map(Number);return new Date(y,m-1,d);};
-function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push(toHM(m));return out;}
-
-const NOW = new Date();
-const TODAY0 = startOfDay(NOW);
-const THIS_MONDAY = addDays(TODAY0, -dowMon(TODAY0));
-
-function showError(m){ banner.className='banner err'; banner.textContent=m; }
-function denied(msg){ gate.classList.remove('hidden'); gate.innerHTML=`<h2>Can't open this dashboard</h2><p class="muted" style="margin-top:8px">${msg}</p><p style="margin-top:16px"><a href="/sync/">Create a new code →</a></p>`; }
-
-// Owner-auth gate: ask the owner to email themselves a magic link. The email
-// address on file is never revealed to the browser, proof of ownership comes
-// from clicking the emailed link, not from a guessable URL param.
-function showLinkGate(code, note){
-  gate.classList.remove('hidden');
-  gate.innerHTML = `
-    <h2>Owner sign-in required</h2>
-    <p class="muted" style="margin-top:8px">${note || 'To manage availability for <b>'+(code||'this code')+'</b>, confirm you are the owner. We\'ll email a secure sign-in link to the address on file for this code.'}</p>
-    <div class="field" style="margin-top:16px">
-      <label for="gate-code">Sync code</label>
-      <input type="text" id="gate-code" placeholder="SYNC-XXXX" autocomplete="off" value="${code||''}">
-    </div>
+function showError(m){$('banner').className='banner err';$('banner').textContent=m;}
+function showLinkGate(code,note){
+  $('gate').classList.remove('hidden');
+  $('gate').innerHTML=`<h2>Owner sign-in required</h2>
+    <p class="muted" style="margin-top:8px">${note||'To manage <b>'+escapeHtml(code||'this code')+'</b>, confirm you are the owner. We will email a secure sign-in link to the address on file.'}</p>
+    <div class="field" style="margin-top:16px"><label for="gate-code">Sync code</label><input type="text" id="gate-code" placeholder="SYNC-XXXX" value="${escapeHtml(code||'')}"></div>
     <button class="btn btn-primary" id="gate-send">Email me a sign-in link</button>
     <p class="faint" id="gate-msg" style="margin-top:14px"></p>`;
-  document.getElementById('gate-send').addEventListener('click', async ()=>{
-    const c = (document.getElementById('gate-code').value||'').trim().toUpperCase();
-    const msg = document.getElementById('gate-msg');
-    if(!c){ msg.textContent='Enter your sync code.'; return; }
-    const b = document.getElementById('gate-send'); b.disabled=true; b.innerHTML='<span class="spinner"></span> Sending…';
-    try{
-      await fetch('/api/sync-owner',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action:'request-link', code:c }) });
-      msg.innerHTML = "If that code exists, a sign-in link is on its way to the owner's email. Check your inbox.";
-    }catch(_){ msg.textContent='Could not send the link. Please try again.'; }
-    finally{ b.disabled=false; b.textContent='Email me a sign-in link'; }
+  $('gate-send').addEventListener('click',async()=>{
+    const c=(($('gate-code').value)||'').trim().toUpperCase();const msg=$('gate-msg');
+    if(!c){msg.textContent='Enter your sync code.';return;}
+    const b=$('gate-send');b.disabled=true;b.innerHTML='<span class="spinner"></span> Sending…';
+    try{await fetch('/api/sync-owner',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'request-link',code:c})});msg.textContent="If that code exists, a sign-in link is on its way to the owner's email.";}
+    catch(_){msg.textContent='Could not send the link. Please try again.';}
+    finally{b.disabled=false;b.textContent='Email me a sign-in link';}
   });
 }
-function toast(msg, ok=true){ const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),3000); }
 
 async function init(){
-  // Auth is established by an httpOnly session cookie set after the owner clicks
-  // their emailed magic link. The browser proves ownership to the server, which
-  // returns the code data, there is NO client-side email/string comparison.
-  let c = null;
+  let j=null;
   try{
-    const r = await fetch(`/api/sync-owner?session=1&code=${encodeURIComponent(codeParam)}`, { credentials:'same-origin' });
-    if(r.status === 401){ showLinkGate(codeParam); return; }
-    if(r.status === 403){ showLinkGate(codeParam, 'Your sign-in session is for a different code. Request a fresh link for this one below.'); return; }
-    const j = await r.json();
-    if(!r.ok || !j.code){ denied(j.error || 'Could not open this dashboard.'); return; }
-    c = j.code;
-  }catch(e){ denied('Could not reach the sign-in service. Please try again.'); return; }
-  codeRow = c;
+    const r=await fetch(`/api/sync-owner?session=1&code=${encodeURIComponent(codeParam)}`,{credentials:'same-origin'});
+    if(r.status===401){showLinkGate(codeParam);return;}
+    if(r.status===403){showLinkGate(codeParam,'Your sign-in session is for a different code. Request a fresh link below.');return;}
+    j=await r.json();
+    if(!r.ok||!j.code){$('gate').classList.remove('hidden');$('gate').innerHTML='<h2>Could not open this code</h2><p class="muted" style="margin-top:8px">'+escapeHtml(j.error||'Please try again.')+'</p>';return;}
+  }catch(e){$('gate').classList.remove('hidden');$('gate').innerHTML='<h2>Could not reach the sign-in service</h2>';return;}
 
-  dash.classList.remove('hidden');
-  document.getElementById('label-h').textContent = c.label;
-  document.getElementById('code-pill').textContent = c.code;
-  const link = `https://veruslink.au/sync/view.html?code=${c.code}`;
-  document.getElementById('share-link').textContent = link;
-  document.getElementById('copy-btn').addEventListener('click', ()=>{
-    navigator.clipboard.writeText(link).then(()=>{ const b=document.getElementById('copy-btn'); b.textContent='Copied ✓'; setTimeout(()=>b.textContent='Copy link',1800); });
-  });
+  codeRow=j.code; ownerParticipantId=j.owner_participant_id||null;
+  $('dashboard').classList.remove('hidden');
+  $('label-h').textContent=codeRow.label;
+  $('code-pill').textContent=codeRow.code;
+  const link=`https://veruslink.au/sync/view.html?code=${codeRow.code}`;
+  $('share-link').textContent=link;
+  $('copy-btn').addEventListener('click',()=>{navigator.clipboard.writeText(link).then(()=>{$('copy-btn').textContent='Copied';setTimeout(()=>$('copy-btn').textContent='Copy link',1600);});});
 
-  // init controls from code settings
-  document.getElementById('dur-select').value = String(c.slot_duration_minutes);
-  document.getElementById('bh-start').value = hm(c.business_hours_start);
-  document.getElementById('bh-end').value = hm(c.business_hours_end);
+  $('dur-select').value=String(codeRow.slot_duration_minutes);
+  $('bh-start').value=hm(codeRow.business_hours_start);
+  $('bh-end').value=hm(codeRow.business_hours_end);
 
-  rebuildSlots();
-  await loadBlocks();
-  render();
-  loadSubscriberCount();
+  buildGrid(j.blocks||[]);
   wireControls();
+  loadSubscriberCount();
+  await loadParticipants();
+  await loadOverlap();
 }
 
-function rebuildSlots(){
-  slots = buildSlots(codeRow.business_hours_start, codeRow.business_hours_end, codeRow.slot_duration_minutes);
-}
-
-async function loadBlocks(){
-  recurring.clear(); overrides.clear();
-  const { data, error } = await sb.from('vl_available_blocks')
-    .select('day_of_week,start_time,provider,valid_from').eq('code_id', codeRow.id);
-  if(error){ showError('Could not load saved availability: '+error.message); return; }
-  for(const b of (data||[])){
-    const state = b.provider==='unavailable' ? 'unavail' : 'avail';
-    const slot = hm(b.start_time);
-    if(b.valid_from){ overrides.set(`${b.valid_from}_${slot}`, state); }
-    else { recurring.set(`${b.day_of_week}_${slot}`, state); }
-  }
-}
-
-function maxWeekOffset(){
-  const horizon = addDays(TODAY0, codeRow.days_ahead);
-  let off=0;
-  while(addDays(THIS_MONDAY,(off+1)*7) <= horizon) off++;
-  return off;
-}
-
-function weekStart(){ return addDays(THIS_MONDAY, weekOffset*7); }
-
-function effective(dateISO, dow, slot){
-  const ok = `${dateISO}_${slot}`;
-  if(overrides.has(ok)) return { state: overrides.get(ok), override: true };
-  const r = recurring.get(`${dow}_${slot}`);
-  return { state: r, override: false };
-}
-
-function render(){
-  const ws = weekStart();
-  const we = addDays(ws,6);
-  document.getElementById('week-range').textContent =
-    `${ws.getDate()} ${MON_NAMES[ws.getMonth()]} – ${we.getDate()} ${MON_NAMES[we.getMonth()]}`;
-  document.getElementById('prev-week').disabled = weekOffset<=0;
-  document.getElementById('next-week').disabled = weekOffset>=maxWeekOffset();
-
-  const days = [];
-  for(let d=0; d<7; d++){
-    const date = addDays(ws,d);
-    days.push({ date, dow:d, iso:isoDate(date), weekend:d>=5, isToday: startOfDay(date).getTime()===TODAY0.getTime() });
-  }
-
-  // header, day columns are clickable to set/clear the whole day at once
-  let html='<thead><tr><th></th>';
-  for(const dy of days){
-    let cls = (dy.weekend?'weekend ':'') + (dy.isToday?'is-today':'');
-    // Only future/today columns with at least one editable (non-past) slot are clickable.
-    const editable = slots.some(s=>!isSlotPast(dy.date, s));
-    const headCls = (cls.trim() + (editable?' dayhead':'')).trim();
-    const attrs = editable ? ` data-c="${dy.dow}" data-dow="${dy.dow}" data-iso="${dy.iso}" title="Click to set all day"` : '';
-    html += `<th class="${headCls}"${attrs}>
-      <span class="dow">${DOW_NAMES[dy.dow]}</span>
-      <span class="dnum">${dy.date.getDate()}</span>
-      <span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span>
-    </th>`;
-  }
-  html+='</tr></thead><tbody>';
-
-  // current-time row index (only if today in week)
-  const todayInWeek = days.some(d=>d.isToday);
-  const nowMin = NOW.getHours()*60 + NOW.getMinutes();
-  let nowRowSlot = null;
-  if(todayInWeek){
-    for(const s of slots){ if(toMin(s)<=nowMin && nowMin < toMin(s)+codeRow.slot_duration_minutes){ nowRowSlot=s; break; } }
-  }
-
-  for(let ri=0; ri<slots.length; ri++){
-    const s=slots[ri];
-    const rowCls = (nowRowSlot===s)?' class="now-row"':'';
-    html+=`<tr${rowCls}><td class="time">${pretty(s)}</td>`;
-    for(const dy of days){
-      const slotStart = new Date(dy.date); slotStart.setHours(0,0,0,0); slotStart.setMinutes(toMin(s));
-      const past = slotStart < NOW;
-      const { state, override } = effective(dy.iso, dy.dow, s);
-      let cls='cell';
-      if(state==='avail') cls+=' avail'; else if(state==='unavail') cls+=' unavail';
-      if(override && state!==undefined) cls+=' override';
-      if(dy.weekend) cls+=' weekend';
-      if(past) cls+=' past';
-      html+=`<td><div class="${cls}" data-iso="${dy.iso}" data-dow="${dy.dow}" data-slot="${s}" data-r="${ri}" data-c="${dy.dow}" data-past="${past?1:0}"></div></td>`;
-    }
-    html+='</tr>';
-  }
-  html+='</tbody>';
-  document.getElementById('grid').innerHTML=html;
-  wireDayHeaders();
-}
-
-// True if the slot's start time on this date is already in the past (mirrors the
-// per-cell `past` rule so the all-day toggle skips the same non-editable slots).
-function isSlotPast(date, slot){
-  const ss=new Date(date); ss.setHours(0,0,0,0); ss.setMinutes(toMin(slot));
-  return ss < NOW;
-}
-
-// All-day toggle: cycle every editable slot in a column through the same
-// three states as a single cell, empty/mixed → available → unavailable → clear.
-// Respects the current Recurring vs This-week-only mode (via setCellState).
-function toggleDayColumn(dow, iso){
-  clearBulk();
-  const date = parseISO(iso);
-  const editable = slots.filter(s=>!isSlotPast(date, s));
-  if(!editable.length) return;
-  let allAvail=true, allUnavail=true;
-  for(const s of editable){
-    const { state } = effective(iso, dow, s);
-    if(state!=='avail') allAvail=false;
-    if(state!=='unavail') allUnavail=false;
-  }
-  const target = allAvail ? 'unavail' : allUnavail ? null : 'avail';
-  for(const s of editable) setCellState(iso, dow, s, target);
-  render();
-}
-
-// Preview-highlight a whole column while hovering its header.
-function setColHighlight(c, on){
-  document.querySelectorAll(`#grid th[data-c="${c}"], #grid .cell[data-c="${c}"]`)
-    .forEach(el=>el.classList.toggle('col-hl', on));
-}
-
-// (Re)attach header listeners after every render (innerHTML replaces the nodes).
-function wireDayHeaders(){
-  document.querySelectorAll('#grid th.dayhead').forEach(th=>{
-    const dow=Number(th.dataset.dow), iso=th.dataset.iso, c=th.dataset.c;
-    th.addEventListener('mouseenter', ()=>setColHighlight(c, true));
-    th.addEventListener('mouseleave', ()=>setColHighlight(c, false));
-    th.addEventListener('click', ()=>{ setColHighlight(c, false); toggleDayColumn(dow, iso); });
-  });
-}
-
-const cycle = (st)=> st==='avail' ? 'unavail' : st==='unavail' ? undefined : 'avail';
-
-// Set an explicit state (used by bulk actions). target: 'avail' | 'unavail' | null(=clear)
-function setCellState(iso, dow, slot, target){
-  if(editMode==='recurring'){
-    const k=`${dow}_${slot}`;
-    if(target) recurring.set(k,target); else recurring.delete(k);
-  } else {
-    const ok=`${iso}_${slot}`;
-    const tmpl=recurring.get(`${dow}_${slot}`);
-    if(target===null || target===tmpl) overrides.delete(ok); else overrides.set(ok,target);
-  }
-}
-
-// ---- bulk selection state ----
-let mouseDown=false, dragStart=null, dragMoved=false, suppressNextClick=false;
-let selectMode=false, longPressTimer=null, lastAnchor=null;
-let bulkCells=[];
-let bar=null;
-
-const getInfo=(el)=>({ el, iso:el.dataset.iso, dow:Number(el.dataset.dow), slot:el.dataset.slot, r:Number(el.dataset.r), c:Number(el.dataset.c), past:el.dataset.past==='1' });
-function gridEl(){ return document.getElementById('grid'); }
-function cellsInRect(r1,c1,r2,c2){
-  const rlo=Math.min(r1,r2),rhi=Math.max(r1,r2),clo=Math.min(c1,c2),chi=Math.max(c1,c2);
-  return [...gridEl().querySelectorAll('.cell')].filter(el=>{const r=+el.dataset.r,c=+el.dataset.c;return r>=rlo&&r<=rhi&&c>=clo&&c<=chi;});
-}
-function clearSelectingOnly(){ gridEl().querySelectorAll('.cell.selecting').forEach(c=>c.classList.remove('selecting')); }
-function highlightSelecting(a,b){ clearSelectingOnly(); cellsInRect(a.r,a.c,b.r,b.c).forEach(e=>e.classList.add('selecting')); }
-function finalizeSelecting(){
-  const els=[...gridEl().querySelectorAll('.cell.selecting')];
-  els.forEach(e=>{ e.classList.remove('selecting'); e.classList.add('selected'); });
-  bulkCells=els.map(getInfo); showBar();
-}
-function setBulk(els){ clearBulk(); els.forEach(e=>e.classList.add('selected')); bulkCells=els.map(getInfo); }
-function toggleSelect(info){
-  if(info.el.classList.contains('selected')){ info.el.classList.remove('selected'); bulkCells=bulkCells.filter(i=>i.el!==info.el); }
-  else { info.el.classList.add('selected'); bulkCells.push(info); }
-  showBar();
-}
-function hideBar(){ if(bar) bar.classList.add('hidden'); }
-function clearBulk(){
-  document.querySelectorAll('.cell.selected,.cell.selecting').forEach(c=>c.classList.remove('selected','selecting'));
-  bulkCells=[]; selectMode=false; hideBar();
-}
-function buildBar(){
-  bar=document.createElement('div'); bar.id='bulk-bar'; bar.className='hidden';
-  bar.innerHTML=`<span class="bb-count">0 selected</span>
-    <button class="bb-avail">Set available</button>
-    <button class="bb-unavail">Set unavailable</button>
-    <button class="bb-clear">Clear</button>
-    <button class="bb-done">Done</button>`;
-  document.body.appendChild(bar);
-  bar.querySelector('.bb-avail').addEventListener('click', ()=>applyBulk('avail'));
-  bar.querySelector('.bb-unavail').addEventListener('click', ()=>applyBulk('unavail'));
-  bar.querySelector('.bb-clear').addEventListener('click', ()=>applyBulk(null));
-  bar.querySelector('.bb-done').addEventListener('click', clearBulk);
-}
-function showBar(){
-  if(!bar) buildBar();
-  if(!bulkCells.length){ hideBar(); return; }
-  bar.querySelector('.bb-count').textContent = `${bulkCells.length} selected`;
-  bar.querySelector('.bb-done').style.display = selectMode ? '' : 'none';
-  bar.classList.remove('hidden');
-  let minL=Infinity,maxR=-Infinity,minT=Infinity;
-  bulkCells.forEach(info=>{ const r=info.el.getBoundingClientRect(); minL=Math.min(minL,r.left); maxR=Math.max(maxR,r.right); minT=Math.min(minT,r.top); });
-  const cx=(minL+maxR)/2; const bh=bar.offsetHeight;
-  let top=minT-bh-10; if(top<8) top=minT+44;
-  bar.style.left=cx+'px'; bar.style.top=top+'px';
-}
-function applyBulk(target){
-  bulkCells.forEach(info=>{ if(info.past) return; setCellState(info.iso,info.dow,info.slot,target); applyCell(info.el,info.iso,info.dow,info.slot); });
-  clearBulk();
-}
-
-function onCellClick(cell, e){
-  if(suppressNextClick){ suppressNextClick=false; return; }
-  const info=getInfo(cell);
-  if(selectMode){ toggleSelect(info); return; }
-  if(e.shiftKey && lastAnchor){ setBulk(cellsInRect(lastAnchor.r,lastAnchor.c,info.r,info.c)); showBar(); return; }
-  clearBulk();
-  if(info.past) return;
-  if(editMode==='recurring'){
-    const k=`${info.dow}_${info.slot}`; const next=cycle(recurring.get(k));
-    if(next) recurring.set(k,next); else recurring.delete(k);
-  } else {
-    const ok=`${info.iso}_${info.slot}`; const tmpl=recurring.get(`${info.dow}_${info.slot}`);
-    const curEff = overrides.has(ok) ? overrides.get(ok) : tmpl; const next=cycle(curEff);
-    if(next===undefined || next===tmpl) overrides.delete(ok); else overrides.set(ok,next);
-  }
-  applyCell(cell, info.iso, info.dow, info.slot);
-  lastAnchor={ r:info.r, c:info.c };
-}
-
-function initGridHandlers(){
-  const grid=gridEl();
-  grid.addEventListener('click', e=>{ const el=e.target.closest('.cell'); if(el && grid.contains(el)) onCellClick(el,e); });
-  grid.addEventListener('mousedown', e=>{ if(e.button!==0) return; const el=e.target.closest('.cell'); if(!el) return; suppressNextClick=false; mouseDown=true; dragStart=getInfo(el); dragMoved=false; });
-  grid.addEventListener('mousemove', e=>{ if(!mouseDown||!dragStart) return; const el=e.target.closest('.cell'); if(!el) return; if(+el.dataset.r!==dragStart.r || +el.dataset.c!==dragStart.c) dragMoved=true; if(dragMoved) highlightSelecting(dragStart,getInfo(el)); });
-  document.addEventListener('mouseup', ()=>{ if(!mouseDown) return; mouseDown=false; if(dragMoved){ finalizeSelecting(); suppressNextClick=true; } dragStart=null; });
-  // touch long-press to start a selection
-  grid.addEventListener('touchstart', e=>{ const el=e.target.closest('.cell'); if(!el) return; const info=getInfo(el);
-    longPressTimer=setTimeout(()=>{ longPressTimer=null; suppressNextClick=true; selectMode=true; clearSelectingOnly();
-      if(!info.el.classList.contains('selected')){ info.el.classList.add('selected'); bulkCells.push(info); }
-      showBar(); if(navigator.vibrate) navigator.vibrate(15);
-    }, 450);
-  }, {passive:true});
-  const cancelLP=()=>{ if(longPressTimer){ clearTimeout(longPressTimer); longPressTimer=null; } };
-  grid.addEventListener('touchmove', cancelLP, {passive:true});
-  grid.addEventListener('touchend', cancelLP);
-  // dismiss
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') clearBulk(); });
-  document.addEventListener('click', e=>{ if(!bulkCells.length) return; if(e.target.closest('#bulk-bar')) return; if(e.target.closest('.cell')) return; clearBulk(); });
-}
-
-function applyCell(cell, iso, dow, slot){
-  const { state, override } = effective(iso, dow, slot);
-  cell.classList.remove('avail','unavail','override');
-  if(state==='avail') cell.classList.add('avail'); else if(state==='unavail') cell.classList.add('unavail');
-  if(override && state!==undefined) cell.classList.add('override');
+function buildGrid(blocks){
+  days=buildDays();
+  slots=buildSlots(codeRow.business_hours_start,codeRow.business_hours_end,codeRow.slot_duration_minutes);
+  const state=new Map();
+  const starts=new Set(slots.map(s=>s.start));
+  blocks.forEach(b=>{const st=hm(b.start_time);if(starts.has(st))state.set(`${b.day_of_week}|${st}`, b.provider==='unavailable'?'unavail':'avail');});
+  if(grid) grid.destroy();
+  grid=SyncGrid.editable({mount:$('grid'),days,slots,state});
 }
 
 function wireControls(){
-  document.getElementById('prev-week').addEventListener('click', ()=>{ if(weekOffset>0){weekOffset--; render();} });
-  document.getElementById('next-week').addEventListener('click', ()=>{ if(weekOffset<maxWeekOffset()){weekOffset++; render();} });
-  document.getElementById('today-btn').addEventListener('click', ()=>{ weekOffset=0; render(); });
-
-  document.querySelectorAll('#mode-seg button').forEach(b=> b.addEventListener('click', ()=>{
-    editMode=b.dataset.mode;
-    document.querySelectorAll('#mode-seg button').forEach(x=>x.classList.toggle('active', x===b));
-  }));
-
-  document.getElementById('dur-select').addEventListener('change', async (e)=>{
-    const v=Number(e.target.value); codeRow.slot_duration_minutes=v;
-    await saveSettings({ slot_duration_minutes:v });
-    rebuildSlots(); render();
-  });
-  const onHours = async ()=>{
-    const st=document.getElementById('bh-start').value, en=document.getElementById('bh-end').value;
-    if(!st||!en||toMin(en)<=toMin(st)) return;
-    codeRow.business_hours_start=st; codeRow.business_hours_end=en;
-    await saveSettings({ business_hours_start:st, business_hours_end:en });
-    rebuildSlots(); render();
-  };
-  document.getElementById('bh-start').addEventListener('change', onHours);
-  document.getElementById('bh-end').addEventListener('change', onHours);
-
-  document.getElementById('save-btn').addEventListener('click', save);
-  initGridHandlers();
+  $('dur-select').addEventListener('change',async e=>{const v=Number(e.target.value);codeRow.slot_duration_minutes=v;if(await saveSettings({slot_duration_minutes:v})){reloadGridState();}});
+  const onHours=async()=>{const st=$('bh-start').value,en=$('bh-end').value;if(!st||!en||toMin(en)<=toMin(st))return;codeRow.business_hours_start=st;codeRow.business_hours_end=en;if(await saveSettings({business_hours_start:st,business_hours_end:en})){reloadGridState();}};
+  $('bh-start').addEventListener('change',onHours);
+  $('bh-end').addEventListener('change',onHours);
+  $('save-btn').addEventListener('click',save);
+  $('invite-toggle').addEventListener('click',()=>{const f=$('invite-form');f.classList.toggle('hidden');if(!f.classList.contains('hidden')&&!$('invite-rows').children.length)addInviteRow();});
+  $('add-row').addEventListener('click',addInviteRow);
+  $('send-invites').addEventListener('click',sendInvites);
 }
 
-async function loadSubscriberCount(){
-  const badge=document.getElementById('count-badge');
-  try{
-    const r=await fetch(`/api/sync-notify?code_id=${codeRow.id}`); const j=await r.json();
-    const n=j.count||0; badge.innerHTML=`<b>${n}</b> ${n===1?'person':'people'} will be notified when you update.`;
-  }catch{ badge.textContent=''; }
+// Rebuild the grid preserving the current in-memory marks after a slot/hours change.
+function reloadGridState(){
+  const blocks=grid?grid.getBlocks():[];
+  buildGrid(blocks);
 }
 
-function slotEnd(slot){ return toHM(toMin(slot)+codeRow.slot_duration_minutes); }
-
-// Persist code settings through the session-gated server endpoint (service key).
 async function saveSettings(patch){
-  const r = await fetch('/api/sync-save',{ method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
-    body:JSON.stringify({ action:'settings', ...patch }) });
-  if(r.status===401){ showError('Your session expired, request a new sign-in link.'); return false; }
-  if(!r.ok){ const j=await r.json().catch(()=>({})); showError('Could not save settings: '+(j.error||r.status)); return false; }
+  const r=await fetch('/api/sync-save',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({action:'settings',...patch})});
+  if(r.status===401){showError('Your session expired. Request a new sign-in link.');return false;}
+  if(!r.ok){const j=await r.json().catch(()=>({}));showError('Could not save settings: '+(j.error||r.status));return false;}
   return true;
 }
 
 async function save(){
-  const btn=document.getElementById('save-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Saving…';
-  banner.className='banner hidden';
+  const btn=$('save-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving…';
+  $('banner').className='banner hidden';
   try{
-    const blocks=[];
-    recurring.forEach((state,key)=>{
-      const i=key.indexOf('_'); const dow=Number(key.slice(0,i)); const slot=key.slice(i+1);
-      blocks.push({ day_of_week:dow, start_time:slot, end_time:slotEnd(slot),
-        provider: state==='unavail'?'unavailable':'manual', valid_from:null, valid_until:null });
-    });
-    overrides.forEach((state,key)=>{
-      const i=key.indexOf('_'); const iso=key.slice(0,i); const slot=key.slice(i+1);
-      blocks.push({ day_of_week:dowMon(parseISO(iso)), start_time:slot, end_time:slotEnd(slot),
-        provider: state==='unavail'?'unavailable':'manual', valid_from:iso, valid_until:iso });
-    });
-
-    // All writes (delete blocks, insert blocks, change_log, touch updated_at)
-    // run server-side under the verified owner session, no direct anon writes.
-    const sr = await fetch('/api/sync-save',{ method:'POST', headers:{'Content-Type':'application/json'}, credentials:'same-origin',
-      body:JSON.stringify({ action:'save-blocks', blocks }) });
-    if(sr.status===401){ throw new Error('Your session expired, request a new sign-in link from /sync/manage.html'); }
-    if(!sr.ok){ const j=await sr.json().catch(()=>({})); throw new Error(j.error||('save failed ('+sr.status+')')); }
-
+    const blocks=grid.getBlocks();
+    const sr=await fetch('/api/sync-save',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({action:'save-blocks',blocks})});
+    if(sr.status===401)throw new Error('Your session expired. Request a new sign-in link.');
+    if(!sr.ok){const j=await sr.json().catch(()=>({}));throw new Error(j.error||('save failed ('+sr.status+')'));}
     let extra='';
-    try{
-      const r=await fetch('/api/sync-notify',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ code_id:codeRow.id }) });
-      const j=await r.json();
-      if(j.reason==='rate_limited') extra=' (subscribers already notified recently)';
-      else if(typeof j.notified==='number') extra=` · ${j.notified} notified`;
-    }catch{}
-    toast('Saved'+extra, true);
-    loadSubscriberCount();
-  }catch(err){
-    console.error(err); toast('Could not save: '+(err.message||err), false);
-  }finally{
-    btn.disabled=false; btn.textContent='Save & notify subscribers';
+    try{const r=await fetch('/api/sync-notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code_id:codeRow.id})});const j=await r.json();if(j.reason==='rate_limited')extra=' (subscribers notified recently)';else if(typeof j.notified==='number'&&j.notified>0)extra=` · ${j.notified} notified`;}catch{}
+    toast('Availability saved'+extra,true);
+    await loadOverlap();
+  }catch(err){toast('Could not save: '+(err.message||err),false);}
+  finally{btn.disabled=false;btn.textContent='Save availability';}
+}
+
+async function loadSubscriberCount(){
+  try{const r=await fetch(`/api/sync-notify?code_id=${codeRow.id}`);const j=await r.json();const n=j.count||0;$('count-badge').innerHTML=`<b>${n}</b> ${n===1?'person is':'people are'} subscribed to updates.`;}catch{$('count-badge').textContent='';}
+}
+
+// ---- Participants ----
+function addInviteRow(){
+  const row=document.createElement('div');row.className='invite-row';
+  row.innerHTML=`<input type="text" placeholder="Name" class="in-name"><input type="email" placeholder="Email" class="in-email"><button type="button" class="rm" title="Remove">×</button>`;
+  row.querySelector('.rm').addEventListener('click',()=>row.remove());
+  $('invite-rows').appendChild(row);
+}
+
+async function sendInvites(){
+  const rows=[...$('invite-rows').querySelectorAll('.invite-row')];
+  const people=rows.map(r=>({name:r.querySelector('.in-name').value.trim(),email:r.querySelector('.in-email').value.trim()})).filter(p=>p.name||p.email);
+  if(!people.length){toast('Add at least one name and email',false);return;}
+  for(const p of people){if(!p.name||!p.email){toast('Each person needs a name and email',false);return;}}
+  const btn=$('send-invites');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Sending…';
+  try{
+    const r=await fetch('/api/sync-participants',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({code_id:codeRow.id,participants:people})});
+    const j=await r.json();
+    if(!r.ok)throw new Error(j.error||'Could not send invitations');
+    toast(`${j.participants.length} ${j.participants.length===1?'invitation':'invitations'} sent`,true);
+    $('invite-rows').innerHTML='';$('invite-form').classList.add('hidden');
+    await loadParticipants();await loadOverlap();
+  }catch(err){toast(err.message||'Could not send invitations',false);}
+  finally{btn.disabled=false;btn.textContent='Send invitations';}
+}
+
+async function loadParticipants(){
+  try{
+    const r=await fetch(`/api/sync-participants?code_id=${codeRow.id}`,{credentials:'same-origin'});
+    const j=await r.json();
+    participants=j.participants||[];
+  }catch(_){participants=[];}
+  renderParticipants();
+}
+
+function statusPill(p){
+  if(p.role==='owner')return '<span class="pill owner"><span class="pill-dot"></span>Owner</span>';
+  if(p.status==='responded')return '<span class="pill responded"><span class="pill-dot"></span>Responded</span>';
+  if(p.status==='declined')return '<span class="pill declined"><span class="pill-dot"></span>Declined</span>';
+  return '<span class="pill invited"><span class="pill-dot"></span>Awaiting</span>';
+}
+function agoText(iso){if(!iso)return '';const s=Math.floor((Date.now()-new Date(iso).getTime())/1000);if(s<60)return 'just now';if(s<3600)return Math.floor(s/60)+' min ago';if(s<86400)return Math.floor(s/3600)+' hr ago';return Math.floor(s/86400)+' days ago';}
+
+function renderParticipants(){
+  const box=$('people');box.innerHTML='';
+  participants.forEach(p=>{
+    const row=document.createElement('div');row.className='person';
+    const meta=p.role==='owner'?'Owns this code':(p.status==='responded'?('Responded · '+agoText(p.responded_at)):(p.status==='declined'?'Can\'t make these times':'Invited · awaiting response'));
+    row.innerHTML=`<div class="avatar" style="background:${avatarColor(p.name)}">${escapeHtml(initials(p.name))}</div>
+      <div class="person-main"><div class="person-name">${escapeHtml(p.name)}</div><div class="person-meta">${escapeHtml(meta)}</div></div>
+      ${statusPill(p)}
+      ${p.role==='owner'?'':`<div class="person-menu"><button class="menu-btn" title="More">⋯</button><div class="menu-pop hidden"></div></div>`}`;
+    if(p.role!=='owner'){
+      const btn=row.querySelector('.menu-btn'),pop=row.querySelector('.menu-pop');
+      pop.innerHTML=`<button data-a="resend">Resend invitation</button><button data-a="copy">Copy link</button><button data-a="remove" class="danger">Remove</button>`;
+      btn.addEventListener('click',(e)=>{e.stopPropagation();document.querySelectorAll('.menu-pop').forEach(m=>{if(m!==pop)m.classList.add('hidden');});pop.classList.toggle('hidden');});
+      pop.querySelector('[data-a="resend"]').addEventListener('click',()=>{pop.classList.add('hidden');resendInvite(p);});
+      pop.querySelector('[data-a="copy"]').addEventListener('click',()=>{pop.classList.add('hidden');copyLink(p);});
+      pop.querySelector('[data-a="remove"]').addEventListener('click',()=>{pop.classList.add('hidden');removeParticipant(p);});
+    }
+    box.appendChild(row);
+  });
+  const responded=participants.filter(p=>p.status==='responded').length;
+  const total=participants.length;
+  $('people-summary').innerHTML=`<b>${responded}</b> of <b>${total}</b> responded`;
+}
+document.addEventListener('click',()=>document.querySelectorAll('.menu-pop').forEach(m=>m.classList.add('hidden')));
+
+async function resendInvite(p){
+  try{const r=await fetch('/api/sync-participants',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({action:'resend',participant_id:p.id})});if(!r.ok)throw 0;toast(`Invitation resent to ${p.name}`,true);}catch(_){toast('Could not resend invitation',false);}
+}
+async function copyLink(p){
+  try{const r=await fetch(`/api/sync-participants?link_for=${p.id}`,{credentials:'same-origin'});const j=await r.json();if(!r.ok||!j.respond_url)throw 0;await navigator.clipboard.writeText(j.respond_url);toast('Link copied',true);}catch(_){toast('Could not copy link',false);}
+}
+async function removeParticipant(p){
+  if(!confirm(`Remove ${p.name}? Their availability will be deleted.`))return;
+  try{const r=await fetch(`/api/sync-participants?participant_id=${p.id}`,{method:'DELETE',credentials:'same-origin'});if(!r.ok)throw 0;toast(`${p.name} removed`,true);await loadParticipants();await loadOverlap();}catch(_){toast('Could not remove',false);}
+}
+
+// ---- Overlap ----
+async function loadOverlap(){
+  try{const r=await fetch(`/api/sync-overlap?code_id=${codeRow.id}`);overlap=await r.json();}catch(_){overlap=null;}
+  renderOverlap();
+}
+function renderOverlap(){
+  const body=$('overlap-body');
+  if(!overlap){body.innerHTML='<p class="muted">Could not load the merged view.</p>';return;}
+  const responders=participants.filter(p=>p.status==='responded');
+  if(!participants.length||participants.every(p=>p.role==='owner'&&participants.length===1)){
+    $('overlap-intro').textContent='';
+    body.innerHTML='<div class="empty"><h3>Invite people to find the best time</h3><p>Once people mark their availability, the best times for everyone appear here.</p></div>';
+    return;
   }
+  if(overlap.responded===0){
+    body.innerHTML='<div class="empty"><h3>Waiting for responses</h3><p>Nobody has marked their availability yet. Share the invitations above.</p></div>';
+    return;
+  }
+  $('overlap-intro').textContent=`Based on ${overlap.responded} of ${overlap.total_participants} responses.`;
+
+  // Best times list
+  let html='<div class="best-list">';
+  const best=(overlap.best_slots||[]).filter(s=>s.available_count>0).slice(0,5);
+  if(!best.length)html+='<p class="muted">No overlapping times yet.</p>';
+  best.forEach(s=>{
+    const full=s.is_full_overlap;
+    const nextDate=nextOccurrence(s.day_of_week);
+    html+=`<div class="best-item ${full?'full':''}"><span class="bi-icon">${full?'✅':'🟡'}</span>
+      <span class="bi-when">${DAYFULL[s.day_of_week]} ${nextDate}, ${pretty(s.start_time)}–${pretty(s.end_time)}</span>
+      <span class="bi-who">${full?`All ${overlap.responded} available`:`${s.available_count} of ${overlap.responded}`}</span></div>`;
+  });
+  html+='</div>';
+
+  // Filter tabs
+  html+='<div class="ptabs" id="ptabs"><button class="ptab active" data-id="">Everyone</button>';
+  responders.forEach(p=>{html+=`<button class="ptab" data-id="${p.id}">${escapeHtml(p.name.split(/\s+/)[0])}</button>`;});
+  html+='</div><div class="grid-wrap"><div id="merged"></div></div>';
+  html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch empty"></span>No one</span></div>`;
+  body.innerHTML=html;
+
+  document.querySelectorAll('#ptabs .ptab').forEach(b=>b.addEventListener('click',()=>{
+    document.querySelectorAll('#ptabs .ptab').forEach(x=>x.classList.toggle('active',x===b));
+    filterId=b.dataset.id||null;renderMerged();
+  }));
+  filterId=null;renderMerged();
+}
+
+function renderMerged(){
+  let ov=overlap;
+  if(filterId){
+    const one=(overlap.slots||[]).filter(s=>s.available_by&&s.available_by.includes(filterId))
+      .map(s=>({day_of_week:s.day_of_week,start_time:s.start_time,end_time:s.end_time,available_count:1,available_by:[filterId],is_full_overlap:true}));
+    ov={slots:one,responded:1,participants:overlap.participants};
+  }
+  SyncGrid.heat({mount:$('merged'),days,slots,overlap:ov});
+}
+
+function nextOccurrence(dow){
+  const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const cur=(t0.getDay()+6)%7;let add=(dow-cur+7)%7;const d=new Date(t0);d.setDate(t0.getDate()+add);
+  return `${d.getDate()} ${MON[d.getMonth()]}`;
 }
 
 init();

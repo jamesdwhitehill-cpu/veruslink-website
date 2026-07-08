@@ -3,18 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink Sync: Availability</title>
+<title>Availability · VerusLink Sync</title>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sync/sync.css">
-<style>
-  /* whole-day availability indicator under each day header */
-  .allday{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-top:4px;padding:1px 6px;border-radius:999px;line-height:1.5}
-  .allday.avail{color:var(--green);background:var(--green-soft);border:1px solid var(--green)}
-  .allday.unavail{color:var(--red);background:rgba(248,113,122,0.16);border:1px solid var(--red)}
-</style>
 </head>
 <body>
 <nav>
@@ -36,48 +30,37 @@
           <label for="code-in">Availability code</label>
           <input type="text" id="code-in" placeholder="SYNC-XXXX" autocomplete="off" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-full">View →</button>
+        <button type="submit" class="btn btn-primary btn-full">View</button>
       </form>
     </div>
   </div>
 
-  <!-- Paused code -->
+  <!-- Paused -->
   <div id="paused" class="narrow hidden">
     <div class="eyebrow">VerusLink Sync</div>
     <h1>Availability paused</h1>
     <div class="card">
-      <h2>This availability page is currently paused.</h2>
-      <p class="muted" style="margin-top:8px">The owner has temporarily paused updates. Check back later.</p>
+      <h2>This page is paused</h2>
+      <p class="muted" style="margin-top:8px">The organiser has temporarily paused this sync. Check back later.</p>
     </div>
   </div>
 
-  <!-- Code view -->
+  <!-- View -->
   <div id="view" class="hidden">
-    <div class="eyebrow">Availability</div>
+    <div class="eyebrow">Group availability</div>
     <h1 id="label-h">-</h1>
-    <p class="sub" id="tz-note"></p>
+    <p class="sub" id="status-line"></p>
 
-    <div class="card">
-      <div class="weeknav">
-        <div class="wn-left">
-          <button class="navbtn" id="prev-week" aria-label="Previous week">‹</button>
-          <button class="navbtn" id="next-week" aria-label="Next week">›</button>
-          <span class="range" id="week-range">-</span>
-        </div>
-        <button class="btn btn-ghost today-btn" id="today-btn" style="padding:8px 14px">Today</button>
-      </div>
-      <div class="grid-wrap"><table class="grid" id="grid"></table></div>
-      <div class="legend">
-        <span><span class="swatch avail"></span>Available</span>
-        <span><span class="swatch unavail"></span>Unavailable</span>
-        <span><span class="swatch empty"></span>Not set</span>
-      </div>
+    <div class="card" id="best-card">
+      <h2>Best times</h2>
+      <p class="muted" id="overlap-intro" style="margin:6px 0 14px"></p>
+      <div id="overlap-body"></div>
     </div>
 
     <!-- Subscribe -->
     <div class="card" id="subscribe-card">
       <h2>Get notified when this changes</h2>
-      <p class="muted" style="margin-bottom:18px">We'll email you whenever <span id="label-inline">this person</span> updates their availability.</p>
+      <p class="muted" style="margin:6px 0 18px">We will email you whenever <span id="label-inline">this</span> is updated.</p>
       <form id="sub-form">
         <div class="field">
           <label for="sub-name">Name <span class="faint">(optional)</span></label>
@@ -91,185 +74,105 @@
       </form>
     </div>
     <div class="card hidden" id="sub-success">
-      <h2>You're subscribed ✓</h2>
-      <p class="muted" id="sub-success-msg">You'll get an email when this availability changes.</p>
+      <h2>You're subscribed</h2>
+      <p class="muted" id="sub-success-msg">You'll get an email when this changes.</p>
     </div>
   </div>
 </div>
 
 <footer>Powered by <a href="https://veruslink.au">VerusLink</a> · <a href="/sync/unsubscribe.html">Unsubscribe</a></footer>
+<div class="toast-wrap" id="toasts"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/sync/sync-grid.js"></script>
 <script>
-const SB_URL = 'https://tzthoqfzmiifvwjemxmy.supabase.co';
-const SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
-const sb = supabase.createClient(SB_URL, SB_KEY);
+// A participant landing here from their invite email should go straight to respond.
+const _t = new URLSearchParams(location.search).get('token');
+if (_t) { location.replace('/sync/respond.html?token=' + encodeURIComponent(_t)); }
 
-const DOW_NAMES = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const MON_NAMES = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const params = new URLSearchParams(location.search);
-const codeParam = (params.get('code') || '').trim().toUpperCase();
+const SB_URL='https://tzthoqfzmiifvwjemxmy.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
+const sb=supabase.createClient(SB_URL,SB_KEY);
 
-const banner = document.getElementById('banner');
-let codeRow=null, slots=[], weekOffset=0;
-const recurring=new Map(), overrides=new Map();
+const DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const DAYFULL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const params=new URLSearchParams(location.search);
+const codeParam=(params.get('code')||'').trim().toUpperCase();
+const $=(id)=>document.getElementById(id);
+function toast(m,ok){const t=document.createElement('div');t.className='toast '+(ok?'ok':'err');t.textContent=m;$('toasts').appendChild(t);setTimeout(()=>t.remove(),4000);}
+function showError(m){$('banner').className='banner err';$('banner').textContent=m;}
 
 const hm=(t)=>String(t).slice(0,5);
-const toMin=(t)=>{const [h,m]=hm(t).split(':').map(Number);return h*60+m;};
-const toHM=(mins)=>`${String(Math.floor(mins/60)).padStart(2,'0')}:${String(mins%60).padStart(2,'0')}`;
-const pretty=(t)=>{let [h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return `${h12}:${String(m).padStart(2,'0')}${ap}`;};
-const dowMon=(d)=>(d.getDay()+6)%7;
-const addDays=(d,n)=>{const x=new Date(d);x.setDate(x.getDate()+n);return x;};
-const startOfDay=(d)=>{const x=new Date(d);x.setHours(0,0,0,0);return x;};
-const isoDate=(d)=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push(toHM(m));return out;}
+const toMin=(t)=>{const[h,m]=hm(t).split(':').map(Number);return h*60+m;};
+const toHM=(m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
+const pretty=(t)=>{let[h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
+function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
+function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:date.getDate(),monthLabel:MON[date.getMonth()],weekend:d>=5,isToday:date.getTime()===t0.getTime()});}return out;}
+function nextOccurrence(dow){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const cur=(t0.getDay()+6)%7;let add=(dow-cur+7)%7;const d=new Date(t0);d.setDate(t0.getDate()+add);return `${d.getDate()} ${MON[d.getMonth()]}`;}
 
-const NOW=new Date(), TODAY0=startOfDay(NOW), THIS_MONDAY=addDays(TODAY0,-dowMon(TODAY0));
-function showError(m){ banner.className='banner err'; banner.textContent=m; }
+let codeRow=null;
 
-document.getElementById('lookup-form')?.addEventListener('submit',(e)=>{
-  e.preventDefault();
-  const v=document.getElementById('code-in').value.trim().toUpperCase();
-  if(v) location.href=`/sync/view.html?code=${encodeURIComponent(v)}`;
-});
+$('lookup-form')?.addEventListener('submit',(e)=>{e.preventDefault();const v=$('code-in').value.trim().toUpperCase();if(v)location.href=`/sync/view.html?code=${encodeURIComponent(v)}`;});
 
 async function init(){
-  if(!codeParam){ document.getElementById('lookup').classList.remove('hidden'); return; }
-  const { data:c, error } = await sb.from('vl_codes').select('*').eq('code', codeParam).maybeSingle();
-  if(error){ document.getElementById('lookup').classList.remove('hidden'); showError(error.message); return; }
+  if(!codeParam){ $('lookup').classList.remove('hidden'); return; }
+  const {data:c,error}=await sb.from('vl_codes').select('*').eq('code',codeParam).maybeSingle();
+  if(error){ $('lookup').classList.remove('hidden'); showError(error.message); return; }
   if(!c){
-    // A paused code is invisible to the anon key (RLS allows reads only where
-    // is_active = true), so a paused page and a missing code look identical here.
-    // Ask the server to tell them apart and show a proper "paused" message.
-    try{
-      const r = await fetch(`/api/sync-public?code=${encodeURIComponent(codeParam)}`);
-      const j = await r.json().catch(()=>({}));
-      if(j && j.exists && j.is_active===false){ document.getElementById('paused').classList.remove('hidden'); return; }
-    }catch(_){ /* fall through to generic message */ }
-    document.getElementById('lookup').classList.remove('hidden');
-    showError('That code does not exist or is no longer active.');
-    return;
+    try{const r=await fetch(`/api/sync-public?code=${encodeURIComponent(codeParam)}`);const j=await r.json().catch(()=>({}));if(j&&j.exists&&j.is_active===false){$('paused').classList.remove('hidden');return;}}catch(_){}
+    $('lookup').classList.remove('hidden'); showError('That code does not exist or is no longer active.'); return;
   }
   codeRow=c;
-
-  document.getElementById('view').classList.remove('hidden');
-  document.getElementById('label-h').textContent=c.label;
-  document.getElementById('label-inline').textContent=c.label;
-  document.getElementById('tz-note').textContent=`Times shown in ${c.timezone}.`;
-
-  slots=buildSlots(c.business_hours_start,c.business_hours_end,c.slot_duration_minutes);
-  await loadBlocks();
-  render();
-  wireNav();
-  document.getElementById('sub-form').addEventListener('submit', subscribe);
+  $('view').classList.remove('hidden');
+  $('label-h').textContent=c.label;
+  $('label-inline').textContent=c.label;
+  $('sub-form').addEventListener('submit',subscribe);
+  await loadOverlap();
 }
 
-async function loadBlocks(){
-  recurring.clear(); overrides.clear();
-  const { data, error } = await sb.from('vl_available_blocks')
-    .select('day_of_week,start_time,provider,valid_from').eq('code_id', codeRow.id);
-  if(error){ showError('Could not load availability: '+error.message); return; }
-  for(const b of (data||[])){
-    const state=b.provider==='unavailable'?'unavail':'avail';
-    const slot=hm(b.start_time);
-    if(b.valid_from) overrides.set(`${b.valid_from}_${slot}`,state);
-    else recurring.set(`${b.day_of_week}_${slot}`,state);
+async function loadOverlap(){
+  let overlap=null;
+  try{const r=await fetch(`/api/sync-overlap?code_id=${codeRow.id}`);overlap=await r.json();}catch(_){}
+  const body=$('overlap-body');
+  if(!overlap){ body.innerHTML='<p class="muted">Could not load availability.</p>'; return; }
+
+  $('status-line').textContent = `${overlap.responded} of ${overlap.total_participants} ${overlap.total_participants===1?'person has':'people have'} shared availability.`;
+
+  if(overlap.responded===0){
+    $('overlap-intro').textContent='';
+    body.innerHTML='<div class="empty"><h3>No availability shared yet</h3><p>Once people mark when they are free, the best times appear here.</p></div>';
+    return;
   }
-}
+  $('overlap-intro').textContent=`Based on ${overlap.responded} of ${overlap.total_participants} responses.`;
 
-function maxWeekOffset(){
-  const horizon=addDays(TODAY0, codeRow.days_ahead); let off=0;
-  while(addDays(THIS_MONDAY,(off+1)*7)<=horizon) off++;
-  return off;
-}
-function weekStart(){ return addDays(THIS_MONDAY, weekOffset*7); }
-function effective(iso,dow,slot){
-  const ok=`${iso}_${slot}`;
-  if(overrides.has(ok)) return overrides.get(ok);
-  return recurring.get(`${dow}_${slot}`);
-}
+  const days=buildDays();
+  const slots=buildSlots(codeRow.business_hours_start,codeRow.business_hours_end,codeRow.slot_duration_minutes);
 
-// Whole-column summary so viewers can scan open/blocked days at a glance:
-// 'avail' if every slot is available, 'unavail' if every slot is unavailable,
-// otherwise null (empty or mixed).
-function dayAggregate(dy){
-  if(!slots.length) return null;
-  let allAvail=true, allUnavail=true;
-  for(const s of slots){
-    const st=effective(dy.iso, dy.dow, s);
-    if(st!=='avail') allAvail=false;
-    if(st!=='unavail') allUnavail=false;
-  }
-  return allAvail ? 'avail' : allUnavail ? 'unavail' : null;
-}
-
-function render(){
-  const ws=weekStart(), we=addDays(ws,6);
-  document.getElementById('week-range').textContent=`${ws.getDate()} ${MON_NAMES[ws.getMonth()]} – ${we.getDate()} ${MON_NAMES[we.getMonth()]}`;
-  document.getElementById('prev-week').disabled = weekOffset<=0;
-  document.getElementById('next-week').disabled = weekOffset>=maxWeekOffset();
-
-  const days=[];
-  for(let d=0; d<7; d++){ const date=addDays(ws,d); days.push({ date, dow:d, iso:isoDate(date), weekend:d>=5, isToday:startOfDay(date).getTime()===TODAY0.getTime() }); }
-
-  let html='<thead><tr><th></th>';
-  for(const dy of days){
-    const cls=(dy.weekend?'weekend ':'')+(dy.isToday?'is-today':'');
-    const agg=dayAggregate(dy);
-    const ind = agg==='avail' ? '<span class="allday avail" title="Available all day">All day</span>'
-              : agg==='unavail' ? '<span class="allday unavail" title="Unavailable all day">Blocked</span>'
-              : '';
-    html+=`<th class="${cls.trim()}"><span class="dow">${DOW_NAMES[dy.dow]}</span><span class="dnum">${dy.date.getDate()}</span><span class="mon long-date">${MON_NAMES[dy.date.getMonth()]}</span>${ind}</th>`;
-  }
-  html+='</tr></thead><tbody>';
-
-  const todayInWeek=days.some(d=>d.isToday);
-  const nowMin=NOW.getHours()*60+NOW.getMinutes();
-  let nowRowSlot=null;
-  if(todayInWeek){ for(const s of slots){ if(toMin(s)<=nowMin && nowMin<toMin(s)+codeRow.slot_duration_minutes){ nowRowSlot=s; break; } } }
-
-  for(const s of slots){
-    html+=`<tr${nowRowSlot===s?' class="now-row"':''}><td class="time">${pretty(s)}</td>`;
-    for(const dy of days){
-      const slotStart=new Date(dy.date); slotStart.setHours(0,0,0,0); slotStart.setMinutes(toMin(s));
-      const past=slotStart<NOW;
-      const state=effective(dy.iso,dy.dow,s);
-      let cls='cell readonly';
-      if(state==='avail') cls+=' avail'; else if(state==='unavail') cls+=' unavail';
-      if(dy.weekend) cls+=' weekend';
-      if(past) cls+=' past';
-      html+=`<td><div class="${cls}"></div></td>`;
-    }
-    html+='</tr>';
-  }
-  html+='</tbody>';
-  document.getElementById('grid').innerHTML=html;
-}
-
-function wireNav(){
-  document.getElementById('prev-week').addEventListener('click',()=>{ if(weekOffset>0){weekOffset--; render();} });
-  document.getElementById('next-week').addEventListener('click',()=>{ if(weekOffset<maxWeekOffset()){weekOffset++; render();} });
-  document.getElementById('today-btn').addEventListener('click',()=>{ weekOffset=0; render(); });
+  let html='<div class="best-list">';
+  const best=(overlap.best_slots||[]).filter(s=>s.available_count>0).slice(0,5);
+  if(!best.length)html+='<p class="muted">No overlapping times yet.</p>';
+  best.forEach(s=>{const full=s.is_full_overlap;html+=`<div class="best-item ${full?'full':''}"><span class="bi-icon">${full?'✅':'🟡'}</span><span class="bi-when">${DAYFULL[s.day_of_week]} ${nextOccurrence(s.day_of_week)}, ${pretty(s.start_time)}–${pretty(s.end_time)}</span><span class="bi-who">${full?`All ${overlap.responded}`:`${s.available_count} of ${overlap.responded}`}</span></div>`;});
+  html+='</div><div class="grid-wrap"><div id="merged"></div></div>';
+  html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch empty"></span>No one</span></div>`;
+  body.innerHTML=html;
+  SyncGrid.heat({mount:$('merged'),days,slots,overlap});
 }
 
 async function subscribe(e){
   e.preventDefault();
-  const name=document.getElementById('sub-name').value.trim()||null;
-  const email=document.getElementById('sub-email').value.trim().toLowerCase();
-  if(!email) return;
-  const btn=document.getElementById('sub-btn');
-  btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Subscribing…';
-  banner.className='banner hidden';
+  const name=$('sub-name').value.trim()||null;
+  const email=$('sub-email').value.trim().toLowerCase();
+  if(!email)return;
+  const btn=$('sub-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Subscribing…';
+  $('banner').className='banner hidden';
   try{
-    const { error } = await sb.from('vl_subscribers').insert({ code_id:codeRow.id, email, name });
-    if(error && error.code!=='23505') throw error;
-    document.getElementById('subscribe-card').classList.add('hidden');
-    document.getElementById('sub-success').classList.remove('hidden');
-    document.getElementById('sub-success-msg').textContent=`You'll get an email when ${codeRow.label} updates their availability.`;
-  }catch(err){
-    console.error(err); showError('Could not subscribe: '+(err.message||err));
-    btn.disabled=false; btn.textContent='Subscribe to updates';
-  }
+    const {error}=await sb.from('vl_subscribers').insert({code_id:codeRow.id,email,name});
+    if(error&&error.code!=='23505')throw error;
+    $('subscribe-card').classList.add('hidden');
+    $('sub-success').classList.remove('hidden');
+    $('sub-success-msg').textContent=`You'll get an email when ${codeRow.label} is updated.`;
+  }catch(err){showError('Could not subscribe: '+(err.message||err));btn.disabled=false;btn.textContent='Subscribe to updates';}
 }
 
 init();

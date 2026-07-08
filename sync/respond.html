@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mark your availability · VerusLink Sync</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/sync/sync.css">
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+  <span class="nav-link" style="cursor:default">Sync</span>
+</nav>
+
+<div class="container">
+  <!-- Loading skeleton -->
+  <div id="loading">
+    <div class="skeleton sk-line" style="width:40%;height:28px"></div>
+    <div class="skeleton sk-line" style="width:60%"></div>
+    <div class="card" style="margin-top:24px"><div class="skeleton sk-grid"></div></div>
+  </div>
+
+  <!-- Invalid token -->
+  <div id="invalid" class="card hidden" style="text-align:center;padding:48px 24px">
+    <div style="font-size:40px;margin-bottom:8px">🔗</div>
+    <h2>This link is no longer valid</h2>
+    <p class="muted" style="margin-top:8px">This invitation link has expired or was already replaced. Ask the organiser to send you a fresh one.</p>
+  </div>
+
+  <!-- Main -->
+  <div id="main" class="hidden">
+    <div class="eyebrow" id="owner-eyebrow">A meeting</div>
+    <h1 id="title">Find a time that works</h1>
+    <p class="sub" id="greeting">Mark the times you are available so everyone can find a slot that works.</p>
+    <p class="count-badge" id="counts" style="margin-bottom:26px"></p>
+
+    <div class="card">
+      <div class="card-head">
+        <div>
+          <h2>When are you free?</h2>
+          <p class="muted" style="margin-top:4px">Tap a slot to mark it <b style="color:var(--green-strong)">available</b>. Tap again for <b style="color:var(--red)">unavailable</b>, once more to clear.</p>
+        </div>
+      </div>
+
+      <div class="grid-wrap" style="margin-top:18px"><div id="grid"></div></div>
+
+      <div class="legend">
+        <span><span class="swatch avail"></span>Available</span>
+        <span><span class="swatch unavail"></span>Unavailable</span>
+        <span><span class="swatch empty"></span>Not set</span>
+      </div>
+      <div class="bulk-hint">Tip: drag across cells, or tap a day name to set the whole day. On a phone, long-press to select a block.</div>
+
+      <div class="row-actions" style="margin-top:24px">
+        <button class="btn btn-primary" id="submit-btn">Save my availability</button>
+      </div>
+    </div>
+
+    <p style="text-align:center;margin-top:8px">
+      <a href="#" id="decline-link" style="font-size:13.5px;color:var(--text-2)">I can't make any of these times</a>
+    </p>
+  </div>
+
+  <!-- Success -->
+  <div id="done" class="card hidden" style="text-align:center;padding:48px 24px">
+    <div style="font-size:44px;margin-bottom:10px">✅</div>
+    <h2 id="done-title">You're all set</h2>
+    <p class="muted" id="done-msg" style="margin-top:8px;max-width:420px;margin-left:auto;margin-right:auto"></p>
+    <div class="row-actions" style="justify-content:center;margin-top:22px">
+      <button class="btn btn-ghost" id="edit-btn">Make changes</button>
+    </div>
+  </div>
+</div>
+
+<footer>Powered by <a href="https://veruslink.au">VerusLink</a> · <a href="/privacy">Privacy</a></footer>
+
+<div class="toast-wrap" id="toasts"></div>
+
+<script src="/sync/sync-grid.js"></script>
+<script>
+const DOW = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const token = (new URLSearchParams(location.search).get('token') || '').trim();
+
+const $ = (id) => document.getElementById(id);
+function toast(msg, ok){ const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; $('toasts').appendChild(t); setTimeout(()=>t.remove(),4000); }
+
+const hm = (t)=>String(t).slice(0,5);
+const toMin = (t)=>{const [h,m]=hm(t).split(':').map(Number);return h*60+m;};
+const toHM = (m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
+const pretty = (t)=>{let [h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
+function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
+
+// Upcoming week (Mon..Sun), used only to show real dates against each day-of-week.
+function buildDays(){
+  const now=new Date(); const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const monday=new Date(t0); monday.setDate(t0.getDate()-((t0.getDay()+6)%7));
+  const out=[];
+  for(let d=0; d<7; d++){
+    const date=new Date(monday); date.setDate(monday.getDate()+d);
+    out.push({ dow:d, label:DOW[d], dateNum:date.getDate(), monthLabel:MON[date.getMonth()], weekend:d>=5, isToday:date.getTime()===t0.getTime() });
+  }
+  return out;
+}
+
+let grid=null, participantName='', codeData=null;
+
+function showInvalid(){ $('loading').classList.add('hidden'); $('invalid').classList.remove('hidden'); }
+
+async function load(){
+  if(!token){ showInvalid(); return; }
+  let data;
+  try{
+    const r=await fetch(`/api/sync-respond?token=${encodeURIComponent(token)}`);
+    if(!r.ok){ showInvalid(); return; }
+    data=await r.json();
+  }catch(_){ showInvalid(); return; }
+
+  codeData=data.code; participantName=data.participant.name;
+  const owner=data.owner_name;
+
+  $('owner-eyebrow').textContent = `${owner}'s meeting`;
+  $('title').textContent = codeData.label;
+  $('greeting').innerHTML = `Hi <b>${escapeHtml(participantName)}</b>, mark the times you are available so ${escapeHtml(owner)} can find a slot that works for the group.`;
+  $('counts').innerHTML = `<b>${data.counts.invited}</b> ${data.counts.invited===1?'person':'people'} invited · <b>${data.counts.responded}</b> responded so far`;
+
+  // Build grid
+  const days=buildDays();
+  const slots=buildSlots(codeData.business_hours_start, codeData.business_hours_end, codeData.slot_duration_minutes);
+  const state=new Map();
+  const starts=new Set(slots.map(s=>s.start));
+  (data.blocks||[]).forEach(b=>{ const st=hm(b.start_time); if(starts.has(st)) state.set(`${b.day_of_week}|${st}`, b.provider==='unavailable'?'unavail':'avail'); });
+
+  grid = SyncGrid.editable({ mount:$('grid'), days, slots, state });
+
+  $('loading').classList.add('hidden');
+  $('main').classList.remove('hidden');
+
+  if(data.participant.status==='responded'){
+    $('submit-btn').textContent='Update my availability';
+  }
+
+  wire();
+}
+
+function escapeHtml(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function wire(){
+  $('submit-btn').addEventListener('click', submit);
+  $('decline-link').addEventListener('click', (e)=>{ e.preventDefault(); decline(); });
+  $('edit-btn').addEventListener('click', ()=>{ $('done').classList.add('hidden'); $('main').classList.remove('hidden'); });
+}
+
+async function submit(){
+  const btn=$('submit-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Saving…';
+  try{
+    const blocks=grid.getBlocks();
+    const r=await fetch('/api/sync-respond',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ token, blocks }) });
+    const j=await r.json();
+    if(!r.ok) throw new Error(j.error||'Could not save');
+    showDone(false, j);
+  }catch(err){ toast(err.message||'Could not save your availability', false); btn.disabled=false; btn.textContent='Save my availability'; }
+}
+
+async function decline(){
+  if(!confirm("Let the organiser know you can't make any of these times?")) return;
+  try{
+    const r=await fetch('/api/sync-respond',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ token, action:'decline' }) });
+    const j=await r.json();
+    if(!r.ok) throw new Error(j.error||'Could not send');
+    showDone(true, j);
+  }catch(err){ toast(err.message||'Could not send your reply', false); }
+}
+
+function showDone(declined, j){
+  $('main').classList.add('hidden'); $('done').classList.remove('hidden');
+  if(declined){
+    $('done-title').textContent = 'Thanks for letting us know';
+    $('done-msg').textContent = 'The organiser has been told these times do not suit you. If your plans change, reopen this link and mark your availability.';
+    $('edit-btn').textContent = 'Mark my availability instead';
+  }else{
+    $('done-title').textContent = "You're all set";
+    const extra = j && j.responded!=null ? ` ${j.responded} of ${j.total} have now responded.` : '';
+    $('done-msg').textContent = `Your availability is saved.${extra} You can reopen this link anytime to make changes.`;
+    $('edit-btn').textContent = 'Make changes';
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+load();
+</script>
+</body>
+</html>

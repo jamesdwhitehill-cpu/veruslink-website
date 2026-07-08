@@ -8,33 +8,34 @@
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sync/sync.css">
 <style>
   .dash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:28px}
-  .dash-head .owner{color:var(--text-muted);font-size:15px;margin-top:2px}
+  .dash-head .owner{color:var(--text-2);font-size:15px;margin-top:2px}
   .dash-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-  .sign-out{background:none;border:none;color:var(--text-faint);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 4px}
-  .sign-out:hover{color:#fff}
+  .sign-out{background:none;border:none;color:var(--text-3);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 4px}
+  .sign-out:hover{color:var(--accent)}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
-  .sync-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s}
-  .sync-card.paused{opacity:.72}
+  .sync-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
+  .sync-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .sync-card.paused{opacity:.78}
   .sync-card .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .sync-card .pill{font-family:'Inter',monospace;font-size:20px;font-weight:800;letter-spacing:2px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(45,156,219,0.3);border-radius:10px;padding:7px 13px;cursor:pointer}
+  .sync-card .pill{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:1px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:10px;padding:7px 13px;cursor:pointer}
   .sync-card .pill:hover{border-color:var(--accent)}
-  .status{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap}
-  .status.active{color:var(--green);background:var(--green-soft);border:1px solid var(--green)}
-  .status.paused{color:var(--text-muted);background:var(--surface-strong);border:1px solid var(--border-strong)}
-  .sync-card .label{font-size:17px;font-weight:700;letter-spacing:-0.2px;line-height:1.3;word-break:break-word}
-  .sync-card .meta{font-size:13px;color:var(--text-muted);display:flex;flex-direction:column;gap:3px}
-  .sync-card .meta b{color:#fff}
+  .status{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
+  .status.active{color:var(--green-strong);background:var(--green-soft);border-color:#A7F3C4}
+  .status.paused{color:var(--text-2);background:var(--surface-2);border-color:var(--border-2)}
+  .sync-card .label{font-size:16px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;word-break:break-word;color:var(--text)}
+  .sync-card .meta{font-size:13px;color:var(--text-2);display:flex;flex-direction:column;gap:3px}
+  .sync-card .meta b{color:var(--text)}
   .sync-card .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
-  .sync-card .actions .btn{padding:10px 14px;font-size:13.5px;flex:1;min-width:84px}
-  .sync-card .actions .btn-del{flex:0 0 auto;min-width:0;color:var(--red);border-color:var(--border-strong)}
-  .sync-card .actions .btn-del:hover{border-color:var(--red);background:rgba(248,113,122,0.10)}
-  .create-card{border-style:dashed}
+  .sync-card .actions .btn{height:40px;padding:0 14px;font-size:13.5px;flex:1;min-width:84px}
+  .sync-card .actions .btn-del{flex:0 0 auto;min-width:0;color:var(--red);border-color:var(--border-2)}
+  .sync-card .actions .btn-del:hover{border-color:var(--red);background:var(--red-soft)}
+  .create-card{border-style:dashed;border-color:var(--border-2);box-shadow:none}
   .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media(max-width:480px){.grid-2{grid-template-columns:1fr}}
+  @media(max-width:480px){.grid-2{grid-template-columns:1fr}.sync-card .actions .btn{width:auto}}
   .center-narrow{max-width:460px}
 </style>
 </head>
@@ -48,7 +49,7 @@
   <div id="banner" class="banner hidden"></div>
 
   <!-- Loading -->
-  <div id="loading" class="card"><span class="spinner" style="border-color:rgba(255,255,255,.25);border-top-color:#fff"></span> Loading your dashboard…</div>
+  <div id="loading" class="card"><span class="spinner dark"></span> Loading your dashboard…</div>
 
   <!-- Dashboard -->
   <div id="dash" class="hidden">
@@ -127,7 +128,7 @@ const emptyEl = document.getElementById('empty');
 let codes = [];
 
 function showError(m){ banner.className='banner err'; banner.textContent=m; }
-function toast(msg, ok=true){ const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),2600); }
+function toast(msg, ok=true){ let wrap=document.querySelector('.toast-wrap'); if(!wrap){ wrap=document.createElement('div'); wrap.className='toast-wrap'; document.body.appendChild(wrap); } const t=document.createElement('div'); t.className='toast '+(ok?'ok':'err'); t.textContent=msg; wrap.appendChild(t); setTimeout(()=>t.remove(),2800); }
 const esc = (s)=>String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];

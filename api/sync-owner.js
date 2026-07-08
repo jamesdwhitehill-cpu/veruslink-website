@@ -19,7 +19,7 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, RESEND_API_KEY, SYNC_TOKEN_SECRET.
 
-import { makeToken, verifyToken, sessionFromRequest, sessionCookie, sbGet, sbSend, createCodeForOwner } from './_sync-token.js';
+import { makeToken, verifyToken, sessionFromRequest, sessionCookie, sbGet, sbSend, createCodeForOwner, ensureOwnerParticipant } from './_sync-token.js';
 
 const SITE = 'https://veruslink.au';
 const FROM = 'VerusLink Sync <vero@veruslink.au>';
@@ -135,7 +135,27 @@ export default async function handler(req, res) {
         const c = codes[0];
         // The session is scoped to one code; the URL code must match it.
         if (code && c.code.toUpperCase() !== code) return res.status(403).json({ error: 'session does not match this code' });
-        return res.status(200).json({ code: c });
+
+        // Return the owner's OWN availability (not the whole roster's — participants'
+        // blocks share this code_id now) plus the owner's participant id. Falls back
+        // to the legacy all-blocks read if the participant table isn't migrated yet.
+        let owner_participant_id = null;
+        let blocks = [];
+        try {
+          const op = await ensureOwnerParticipant(c.id, sess.owner_id);
+          owner_participant_id = op ? op.id : null;
+          if (owner_participant_id) {
+            blocks = await sbGet(
+              `vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&or=(participant_id.is.null,participant_id.eq.${encodeURIComponent(owner_participant_id)})&select=day_of_week,start_time,end_time,provider`
+            );
+          } else {
+            blocks = await sbGet(`vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&select=day_of_week,start_time,end_time,provider`);
+          }
+        } catch (_) {
+          // Pre-migration: no participant_id column — read all blocks for the code.
+          blocks = await sbGet(`vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&select=day_of_week,start_time,end_time,provider`);
+        }
+        return res.status(200).json({ code: c, owner_participant_id, blocks });
       } catch (e) {
         return res.status(500).json({ error: e.message });
       }

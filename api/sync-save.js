@@ -13,7 +13,7 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, SYNC_TOKEN_SECRET.
 
-import { sessionFromRequest, sbHeaders, sbUrl, sbGet } from './_sync-token.js';
+import { sessionFromRequest, sbHeaders, sbUrl, sbGet, ensureOwnerParticipant } from './_sync-token.js';
 
 function isTime(s) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/.test(s); }
 function isDate(s) { return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s); }
@@ -74,6 +74,15 @@ export default async function handler(req, res) {
       if (!raw) return res.status(400).json({ error: 'blocks array required' });
       if (raw.length > 5000) return res.status(400).json({ error: 'too many blocks' });
 
+      // Resolve the owner's participant row so the owner's blocks carry a
+      // participant_id (uniform overlap engine). Best-effort: if the
+      // vl_participants table isn't migrated yet, fall back to legacy NULL blocks.
+      let ownerPid = null;
+      try {
+        const op = await ensureOwnerParticipant(codeId, sess.owner_id);
+        ownerPid = op ? op.id : null;
+      } catch (_) { ownerPid = null; /* pre-migration tolerance */ }
+
       // Validate + normalise every block; force code_id to the session's code.
       const blocks = [];
       for (const b of raw) {
@@ -86,7 +95,7 @@ export default async function handler(req, res) {
         const valid_until = b.valid_until == null ? null : (isDate(b.valid_until) ? b.valid_until : null);
         if (b.valid_from != null && valid_from == null) return res.status(400).json({ error: 'invalid valid_from' });
         if (b.valid_until != null && valid_until == null) return res.status(400).json({ error: 'invalid valid_until' });
-        blocks.push({
+        const block = {
           code_id: codeId,
           day_of_week: b.day_of_week,
           start_time: b.start_time,
@@ -94,11 +103,23 @@ export default async function handler(req, res) {
           provider,
           valid_from,
           valid_until,
-        });
+        };
+        if (ownerPid) block.participant_id = ownerPid;
+        blocks.push(block);
       }
 
-      // Replace: delete all existing blocks for this code, then insert the new set.
-      await sbSend('DELETE', `vl_available_blocks?code_id=eq.${encodeURIComponent(codeId)}`);
+      // Replace only the OWNER's blocks. Participants' blocks share this code_id,
+      // so a blanket delete-by-code would wipe everyone's availability. Scope the
+      // delete to the owner's participant_id (plus legacy NULL owner rows).
+      if (ownerPid) {
+        await sbSend(
+          'DELETE',
+          `vl_available_blocks?code_id=eq.${encodeURIComponent(codeId)}&or=(participant_id.is.null,participant_id.eq.${encodeURIComponent(ownerPid)})`
+        );
+      } else {
+        // Pre-migration: no participant_id column yet, old single-party semantics.
+        await sbSend('DELETE', `vl_available_blocks?code_id=eq.${encodeURIComponent(codeId)}`);
+      }
       if (blocks.length) {
         await sbSend('POST', 'vl_available_blocks', blocks);
       }
