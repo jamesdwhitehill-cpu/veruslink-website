@@ -51,6 +51,7 @@
         <div class="control"><span>Day ends</span><input type="time" id="bh-end" step="900"></div>
       </div>
 
+      <p class="grid-caption">Your typical week · repeats every week</p>
       <div class="grid-wrap"><div id="grid"></div></div>
       <div class="legend">
         <span><span class="swatch avail"></span>Available</span>
@@ -110,7 +111,7 @@ const toMin=(t)=>{const[h,m]=hm(t).split(':').map(Number);return h*60+m;};
 const toHM=(m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 const pretty=(t)=>{let[h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
 function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
-function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:date.getDate(),monthLabel:MON[date.getMonth()],weekend:d>=5,isToday:date.getTime()===t0.getTime(),date});}return out;}
+function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:null,monthLabel:null,weekend:d>=5,isToday:false});}return out;}
 function avatarColor(name){let h=0;for(let i=0;i<name.length;i++)h=name.charCodeAt(i)+((h<<5)-h);const hue=Math.abs(h)%360;return `hsl(${hue},52%,45%)`;}
 function initials(name){return name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';}
 
@@ -331,7 +332,7 @@ function renderOverlap(){
   // Filter tabs
   html+='<div class="ptabs" id="ptabs"><button class="ptab active" data-id="">Everyone</button>';
   responders.forEach(p=>{html+=`<button class="ptab" data-id="${p.id}">${escapeHtml(p.name.split(/\s+/)[0])}</button>`;});
-  html+='</div><div class="grid-wrap"><div id="merged"></div></div>';
+  html+='</div><p class="grid-caption">Group availability · typical week</p><div class="grid-wrap"><div id="merged"></div></div>';
   html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch empty"></span>No one</span></div>`;
   body.innerHTML=html;
 

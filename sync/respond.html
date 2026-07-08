@@ -47,7 +47,8 @@
         </div>
       </div>
 
-      <div class="grid-wrap" style="margin-top:18px"><div id="grid"></div></div>
+      <p class="grid-caption">Your typical week · repeats every week</p>
+      <div class="grid-wrap"><div id="grid"></div></div>
 
       <div class="legend">
         <span><span class="swatch avail"></span>Available</span>
@@ -103,7 +104,7 @@ function buildDays(){
   const out=[];
   for(let d=0; d<7; d++){
     const date=new Date(monday); date.setDate(monday.getDate()+d);
-    out.push({ dow:d, label:DOW[d], dateNum:date.getDate(), monthLabel:MON[date.getMonth()], weekend:d>=5, isToday:date.getTime()===t0.getTime() });
+    out.push({ dow:d, label:DOW[d], dateNum:null, monthLabel:null, weekend:d>=5, isToday:false });
   }
   return out;
 }

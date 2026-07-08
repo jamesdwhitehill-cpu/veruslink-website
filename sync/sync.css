@@ -109,6 +109,7 @@ select:focus,input[type=time]:focus{outline:none;border-color:var(--accent);box-
 .control>span{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--text-2)}
 
 /* ---- Grid (shared, sync-grid.js) ---- */
+.grid-caption{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-3);margin:2px 0 10px}
 .grid-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:6px}
 .sg-grid{border-collapse:separate;border-spacing:5px;width:100%;table-layout:fixed;min-width:560px;user-select:none;-webkit-user-select:none}
 .sg-grid .sg-corner,.sg-grid .sg-time{width:60px}
@@ -117,7 +118,7 @@ select:focus,input[type=time]:focus{outline:none;border-color:var(--accent);box-
 .sg-dayhead:hover{background:var(--surface-2)}
 .sg-heat .sg-dayhead:hover{background:transparent}
 .sg-dayhead.col-hl{background:var(--accent-soft)}
-.sg-dow{display:block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--text-2)}
+.sg-dow{display:block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--text-2);padding:4px 0}
 .sg-dnum{display:block;font-size:16px;font-weight:700;color:var(--text);line-height:1.25}
 .sg-mon{display:block;font-size:10px;color:var(--text-3)}
 .sg-dayhead.is-weekend .sg-dow{color:var(--accent)}
@@ -128,8 +129,8 @@ select:focus,input[type=time]:focus{outline:none;border-color:var(--accent);box-
 .sg-cell:hover{border-color:var(--accent)}
 .sg-cell.col-hl{border-color:var(--accent-border)}
 .sg-cell.is-avail{background:var(--green-soft);border-color:var(--green)}
-.sg-cell.is-unavail{background:var(--red-soft);border-color:var(--red)}
-.sg-cell.is-unavail::before{content:"";position:absolute;inset:0;border-radius:6px;background:linear-gradient(135deg,transparent 44%,var(--red) 45%,var(--red) 55%,transparent 56%);opacity:.35}
+.sg-cell.is-unavail{background:var(--red-soft);border-color:var(--border);border-left:3px solid var(--red)}
+.sg-cell.is-unavail:hover{background:#FECACA;border-color:var(--border);border-left-color:var(--red)}
 .sg-cell.is-selecting{outline:2px solid var(--accent);outline-offset:-2px;background:var(--accent-soft)}
 .sg-cell.is-selected{outline:2px solid var(--accent);outline-offset:-2px;box-shadow:inset 0 0 0 99px rgba(37,99,235,0.10)}
 

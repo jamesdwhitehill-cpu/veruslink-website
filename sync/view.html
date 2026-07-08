@@ -108,7 +108,7 @@ const toMin=(t)=>{const[h,m]=hm(t).split(':').map(Number);return h*60+m;};
 const toHM=(m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 const pretty=(t)=>{let[h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
 function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
-function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:date.getDate(),monthLabel:MON[date.getMonth()],weekend:d>=5,isToday:date.getTime()===t0.getTime()});}return out;}
+function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:null,monthLabel:null,weekend:d>=5,isToday:false});}return out;}
 function nextOccurrence(dow){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const cur=(t0.getDay()+6)%7;let add=(dow-cur+7)%7;const d=new Date(t0);d.setDate(t0.getDate()+add);return `${d.getDate()} ${MON[d.getMonth()]}`;}
 
 let codeRow=null;
@@ -153,7 +153,7 @@ async function loadOverlap(){
   const best=(overlap.best_slots||[]).filter(s=>s.available_count>0).slice(0,5);
   if(!best.length)html+='<p class="muted">No overlapping times yet.</p>';
   best.forEach(s=>{const full=s.is_full_overlap;html+=`<div class="best-item ${full?'full':''}"><span class="bi-icon">${full?'✅':'🟡'}</span><span class="bi-when">${DAYFULL[s.day_of_week]} ${nextOccurrence(s.day_of_week)}, ${pretty(s.start_time)}–${pretty(s.end_time)}</span><span class="bi-who">${full?`All ${overlap.responded}`:`${s.available_count} of ${overlap.responded}`}</span></div>`;});
-  html+='</div><div class="grid-wrap"><div id="merged"></div></div>';
+  html+='</div><p class="grid-caption">Group availability · typical week</p><div class="grid-wrap"><div id="merged"></div></div>';
   html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch empty"></span>No one</span></div>`;
   body.innerHTML=html;
   SyncGrid.heat({mount:$('merged'),days,slots,overlap});
