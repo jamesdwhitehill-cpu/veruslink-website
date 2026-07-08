@@ -6,10 +6,10 @@
 // taken from the token, not the request body.
 //
 // POST /api/sync-save
-//   { action:'settings', slot_duration_minutes?, business_hours_start?, business_hours_end? }
+//   { action:'settings', slot_duration_minutes?, business_hours_start?, business_hours_end?, days_ahead? }
 //     -> updates the owner's vl_codes settings row.
-//   { action:'save-blocks', blocks:[{day_of_week,start_time,end_time,provider,valid_from,valid_until}] }
-//     -> replaces all vl_available_blocks for the code + writes a change_log row.
+//   { action:'save-blocks', blocks:[{block_date,start_time,end_time,provider}] }
+//     -> replaces the owner's date-specific vl_available_blocks + writes a change_log row.
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, SYNC_TOKEN_SECRET.
 
@@ -65,6 +65,11 @@ export default async function handler(req, res) {
         if (!isTime(b.business_hours_end)) return res.status(400).json({ error: 'invalid business_hours_end' });
         patch.business_hours_end = b.business_hours_end;
       }
+      if (b.days_ahead != null) {
+        const v = Number(b.days_ahead);
+        if (![7, 14, 30, 60, 90].includes(v)) return res.status(400).json({ error: 'invalid days_ahead' });
+        patch.days_ahead = v;
+      }
       await sbSend('PATCH', `vl_codes?id=eq.${encodeURIComponent(codeId)}`, patch);
       return res.status(200).json({ ok: true });
     }
@@ -84,25 +89,18 @@ export default async function handler(req, res) {
       } catch (_) { ownerPid = null; /* pre-migration tolerance */ }
 
       // Validate + normalise every block; force code_id to the session's code.
+      // New model: each block is a concrete date (block_date) + time range.
       const blocks = [];
       for (const b of raw) {
-        if (!Number.isInteger(b.day_of_week) || b.day_of_week < 0 || b.day_of_week > 6) {
-          return res.status(400).json({ error: 'invalid day_of_week' });
-        }
+        if (!isDate(b.block_date)) return res.status(400).json({ error: 'invalid block_date' });
         if (!isTime(b.start_time) || !isTime(b.end_time)) return res.status(400).json({ error: 'invalid time' });
         const provider = b.provider === 'unavailable' ? 'unavailable' : 'manual';
-        const valid_from = b.valid_from == null ? null : (isDate(b.valid_from) ? b.valid_from : null);
-        const valid_until = b.valid_until == null ? null : (isDate(b.valid_until) ? b.valid_until : null);
-        if (b.valid_from != null && valid_from == null) return res.status(400).json({ error: 'invalid valid_from' });
-        if (b.valid_until != null && valid_until == null) return res.status(400).json({ error: 'invalid valid_until' });
         const block = {
           code_id: codeId,
-          day_of_week: b.day_of_week,
+          block_date: b.block_date,
           start_time: b.start_time,
           end_time: b.end_time,
           provider,
-          valid_from,
-          valid_until,
         };
         if (ownerPid) block.participant_id = ownerPid;
         blocks.push(block);

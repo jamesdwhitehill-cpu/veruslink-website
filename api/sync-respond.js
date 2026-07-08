@@ -5,8 +5,8 @@
 //
 // GET  /api/sync-respond?token=TOKEN
 //   -> { code:{...}, owner_name, participant:{name,status,role}, blocks:[...],
-//        counts:{ invited, responded } }
-// POST /api/sync-respond  { token, blocks:[{day_of_week,start_time,end_time,provider}] }
+//        counts:{ invited, responded } }   (blocks are date-specific: {block_date,...})
+// POST /api/sync-respond  { token, blocks:[{block_date,start_time,end_time,provider}] }
 //   -> { ok:true, blocks, responded, total }
 // POST /api/sync-respond  { token, action:'decline' }
 //   -> { ok:true, declined:true }
@@ -18,9 +18,17 @@ import { computeOverlap } from './_sync-overlap.js';
 
 const SITE = 'https://veruslink.au';
 const FROM = 'VerusLink Sync <vero@veruslink.au>';
-const DAY_NAMES = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+const MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
 function isTime(s) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/.test(s); }
+function isDate(s) { return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s); }
+// Format a 'YYYY-MM-DD' as "Tuesday 15 Jul" (timezone-naive, matches the code's local dates).
+function fmtDate(d) {
+  const [y, m, day] = String(d).slice(0, 10).split('-').map(Number);
+  const dt = new Date(y, m - 1, day);
+  return `${DAY_NAMES[dt.getDay()]} ${day} ${MON[m - 1]}`;
+}
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"']/g, (c) =>
     ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -60,7 +68,7 @@ async function notifyOwner({ codeId, participantName, declined }) {
       const best = ov.best_slots && ov.best_slots[0];
       const progress = `${ov.responded} of ${ov.total_participants} have now responded.`;
       const bestStr = best
-        ? `Best time so far: ${DAY_NAMES[best.day_of_week]} ${fmtTime(best.start_time)} to ${fmtTime(best.end_time)} (${best.available_count} of ${ov.responded} available).`
+        ? `Best time so far: ${fmtDate(best.date)}, ${fmtTime(best.start)} to ${fmtTime(best.end)} (${best.count} of ${ov.responded} available).`
         : '';
       overlapLine = `<p style="color:#4B5563;font-size:15px;line-height:1.65;margin:0 0 8px">${esc(progress)}</p>
         ${bestStr ? `<p style="color:#4B5563;font-size:15px;line-height:1.65;margin:0 0 24px"><b style="color:#1A1A2E">${esc(bestStr)}</b></p>` : ''}`;
@@ -117,7 +125,7 @@ export default async function handler(req, res) {
       };
 
       const blocks = await sbGet(
-        `vl_available_blocks?participant_id=eq.${encodeURIComponent(p.id)}&select=day_of_week,start_time,end_time,provider,valid_from,valid_until`
+        `vl_available_blocks?participant_id=eq.${encodeURIComponent(p.id)}&block_date=not.is.null&select=block_date,start_time,end_time,provider`
       );
 
       // Never leak owner_id or the token back to the browser.
@@ -158,15 +166,13 @@ export default async function handler(req, res) {
 
     const blocks = [];
     for (const b of raw) {
-      if (!Number.isInteger(b.day_of_week) || b.day_of_week < 0 || b.day_of_week > 6) {
-        return res.status(400).json({ error: 'invalid day_of_week' });
-      }
+      if (!isDate(b.block_date)) return res.status(400).json({ error: 'invalid block_date' });
       if (!isTime(b.start_time) || !isTime(b.end_time)) return res.status(400).json({ error: 'invalid time' });
       const provider = b.provider === 'unavailable' ? 'unavailable' : 'manual';
       blocks.push({
         code_id: p.code_id,
         participant_id: p.id,
-        day_of_week: b.day_of_week,
+        block_date: b.block_date,
         start_time: b.start_time,
         end_time: b.end_time,
         provider,

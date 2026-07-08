@@ -146,14 +146,14 @@ export default async function handler(req, res) {
           owner_participant_id = op ? op.id : null;
           if (owner_participant_id) {
             blocks = await sbGet(
-              `vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&or=(participant_id.is.null,participant_id.eq.${encodeURIComponent(owner_participant_id)})&select=day_of_week,start_time,end_time,provider`
+              `vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&block_date=not.is.null&or=(participant_id.is.null,participant_id.eq.${encodeURIComponent(owner_participant_id)})&select=block_date,start_time,end_time,provider`
             );
           } else {
-            blocks = await sbGet(`vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&select=day_of_week,start_time,end_time,provider`);
+            blocks = await sbGet(`vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&block_date=not.is.null&select=block_date,start_time,end_time,provider`);
           }
         } catch (_) {
-          // Pre-migration: no participant_id column — read all blocks for the code.
-          blocks = await sbGet(`vl_available_blocks?code_id=eq.${encodeURIComponent(c.id)}&select=day_of_week,start_time,end_time,provider`);
+          // Pre-migration tolerance: return no owner blocks rather than 500.
+          blocks = [];
         }
         return res.status(200).json({ code: c, owner_participant_id, blocks });
       } catch (e) {

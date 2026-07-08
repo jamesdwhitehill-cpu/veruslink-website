@@ -41,24 +41,36 @@
     <!-- Your availability -->
     <div class="card">
       <h2>Your availability</h2>
-      <p class="muted" style="margin:6px 0 18px">Mark when you are free. Tap a slot to cycle <b style="color:var(--green-strong)">available</b> → <b style="color:var(--red)">unavailable</b> → not set.</p>
+      <p class="muted" style="margin:6px 0 16px">Pick a date, then mark when you are free. Tap a time to cycle <b style="color:var(--green-strong)">available</b> → <b style="color:var(--red)">unavailable</b> → not set.</p>
 
-      <div class="controls">
-        <div class="control"><span>Slot length</span>
-          <select id="dur-select"><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select>
+      <details class="sc-settings">
+        <summary>Schedule settings</summary>
+        <div class="sc-settings-body">
+          <div class="controls">
+            <div class="control"><span>Time window</span>
+              <div style="display:flex;align-items:center;gap:8px"><input type="time" id="bh-start" step="900"><span class="muted" style="font-size:13px">to</span><input type="time" id="bh-end" step="900"></div>
+            </div>
+            <div class="control"><span>Slot length</span>
+              <select id="dur-select"><option value="15">15 min</option><option value="30">30 min</option><option value="60">60 min</option></select>
+            </div>
+            <div class="control"><span>Days ahead</span>
+              <select id="days-select"><option value="7">7 days</option><option value="14">14 days</option><option value="30">30 days</option><option value="60">60 days</option><option value="90">90 days</option></select>
+            </div>
+          </div>
+          <p class="hint" style="margin-top:4px">These settings apply to everyone — they set the time window and horizon on the respond and view pages too.</p>
         </div>
-        <div class="control"><span>Day starts</span><input type="time" id="bh-start" step="900"></div>
-        <div class="control"><span>Day ends</span><input type="time" id="bh-end" step="900"></div>
-      </div>
+      </details>
 
-      <p class="grid-caption">Your typical week · repeats every week</p>
-      <div class="grid-wrap"><div id="grid"></div></div>
+      <div class="sc-panels">
+        <div id="cal-month"></div>
+        <div class="sc-day-panel" id="cal-day"></div>
+      </div>
       <div class="legend">
         <span><span class="swatch avail"></span>Available</span>
         <span><span class="swatch unavail"></span>Unavailable</span>
         <span><span class="swatch none"></span>Not set</span>
       </div>
-      <div class="bulk-hint">Tip: drag across cells, or click a day name to set the whole day.</div>
+      <div class="bulk-hint">Tip: Shift-click to select a date range, or Ctrl/Cmd-click to pick several days, then "Apply to all selected".</div>
       <div class="row-actions" style="margin-top:22px">
         <button class="btn btn-primary" id="save-btn">Save availability</button>
       </div>
@@ -95,11 +107,11 @@
 <footer>Powered by <a href="https://veruslink.au">VerusLink</a></footer>
 <div class="toast-wrap" id="toasts"></div>
 
-<script src="/sync/sync-grid.js"></script>
+<script src="/sync/sync-calendar.js"></script>
 <script>
 const DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-const DAYFULL=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const DAYFULL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const params=new URLSearchParams(location.search);
 const codeParam=(params.get('code')||'').trim().toUpperCase();
 const $=(id)=>document.getElementById(id);
@@ -111,11 +123,14 @@ const toMin=(t)=>{const[h,m]=hm(t).split(':').map(Number);return h*60+m;};
 const toHM=(m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 const pretty=(t)=>{let[h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
 function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
-function buildDays(){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const monday=new Date(t0);monday.setDate(t0.getDate()-((t0.getDay()+6)%7));const out=[];for(let d=0;d<7;d++){const date=new Date(monday);date.setDate(monday.getDate()+d);out.push({dow:d,label:DOW[d],dateNum:null,monthLabel:null,weekend:d>=5,isToday:false});}return out;}
+const pad=(n)=>String(n).padStart(2,'0');
+const isoOf=(d)=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+function dateRange(daysAhead){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const max=new Date(t0);max.setDate(t0.getDate()+(daysAhead||30));return{minISO:isoOf(t0),maxISO:isoOf(max)};}
+function fmtDateShort(ds){const [y,m,d]=ds.split('-').map(Number);const dt=new Date(y,m-1,d);return `${DAYFULL[dt.getDay()]} ${d} ${MON[m-1]}`;}
 function avatarColor(name){let h=0;for(let i=0;i<name.length;i++)h=name.charCodeAt(i)+((h<<5)-h);const hue=Math.abs(h)%360;return `hsl(${hue},52%,45%)`;}
 function initials(name){return name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase()||'?';}
 
-let codeRow=null, ownerParticipantId=null, grid=null, days=[], slots=[], participants=[], overlap=null, filterId=null;
+let codeRow=null, ownerParticipantId=null, cal=null, slots=[], minISO=null, maxISO=null, participants=[], overlap=null;
 
 function showError(m){$('banner').className='banner err';$('banner').textContent=m;}
 function showLinkGate(code,note){
@@ -156,39 +171,41 @@ async function init(){
   $('dur-select').value=String(codeRow.slot_duration_minutes);
   $('bh-start').value=hm(codeRow.business_hours_start);
   $('bh-end').value=hm(codeRow.business_hours_end);
+  $('days-select').value=String(codeRow.days_ahead||30);
 
-  buildGrid(j.blocks||[]);
+  buildCalendar(j.blocks||[]);
   wireControls();
   loadSubscriberCount();
   await loadParticipants();
   await loadOverlap();
 }
 
-function buildGrid(blocks){
-  days=buildDays();
+function buildCalendar(blocks){
   slots=buildSlots(codeRow.business_hours_start,codeRow.business_hours_end,codeRow.slot_duration_minutes);
+  const r=dateRange(codeRow.days_ahead);minISO=r.minISO;maxISO=r.maxISO;
   const state=new Map();
   const starts=new Set(slots.map(s=>s.start));
-  blocks.forEach(b=>{const st=hm(b.start_time);if(starts.has(st))state.set(`${b.day_of_week}|${st}`, b.provider==='unavailable'?'unavail':'avail');});
-  if(grid) grid.destroy();
-  grid=SyncGrid.editable({mount:$('grid'),days,slots,state});
+  blocks.forEach(b=>{const st=hm(b.start_time);const ds=String(b.block_date).slice(0,10);if(starts.has(st)){let m=state.get(ds);if(!m){m=new Map();state.set(ds,m);}m.set(st, b.provider==='unavailable'?'unavail':'avail');}});
+  if(cal&&cal.destroy) cal.destroy();
+  cal=SyncCalendar.editor({monthMount:$('cal-month'),dayMount:$('cal-day'),slots,minISO,maxISO,state});
 }
 
 function wireControls(){
-  $('dur-select').addEventListener('change',async e=>{const v=Number(e.target.value);codeRow.slot_duration_minutes=v;if(await saveSettings({slot_duration_minutes:v})){reloadGridState();}});
-  const onHours=async()=>{const st=$('bh-start').value,en=$('bh-end').value;if(!st||!en||toMin(en)<=toMin(st))return;codeRow.business_hours_start=st;codeRow.business_hours_end=en;if(await saveSettings({business_hours_start:st,business_hours_end:en})){reloadGridState();}};
+  $('dur-select').addEventListener('change',async e=>{const v=Number(e.target.value);codeRow.slot_duration_minutes=v;if(await saveSettings({slot_duration_minutes:v})){reloadCalendarState();}});
+  const onHours=async()=>{const st=$('bh-start').value,en=$('bh-end').value;if(!st||!en||toMin(en)<=toMin(st))return;codeRow.business_hours_start=st;codeRow.business_hours_end=en;if(await saveSettings({business_hours_start:st,business_hours_end:en})){reloadCalendarState();}};
   $('bh-start').addEventListener('change',onHours);
   $('bh-end').addEventListener('change',onHours);
+  $('days-select').addEventListener('change',async e=>{const v=Number(e.target.value);codeRow.days_ahead=v;if(await saveSettings({days_ahead:v})){reloadCalendarState();}});
   $('save-btn').addEventListener('click',save);
   $('invite-toggle').addEventListener('click',()=>{const f=$('invite-form');f.classList.toggle('hidden');if(!f.classList.contains('hidden')&&!$('invite-rows').children.length)addInviteRow();});
   $('add-row').addEventListener('click',addInviteRow);
   $('send-invites').addEventListener('click',sendInvites);
 }
 
-// Rebuild the grid preserving the current in-memory marks after a slot/hours change.
-function reloadGridState(){
-  const blocks=grid?grid.getBlocks():[];
-  buildGrid(blocks);
+// Rebuild the calendar preserving the current in-memory marks after a settings change.
+function reloadCalendarState(){
+  const blocks=cal?cal.getBlocks():[];
+  buildCalendar(blocks);
 }
 
 async function saveSettings(patch){
@@ -202,7 +219,7 @@ async function save(){
   const btn=$('save-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Saving…';
   $('banner').className='banner hidden';
   try{
-    const blocks=grid.getBlocks();
+    const blocks=cal.getBlocks();
     const sr=await fetch('/api/sync-save',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({action:'save-blocks',blocks})});
     if(sr.status===401)throw new Error('Your session expired. Request a new sign-in link.');
     if(!sr.ok){const j=await sr.json().catch(()=>({}));throw new Error(j.error||('save failed ('+sr.status+')'));}
@@ -298,65 +315,40 @@ async function removeParticipant(p){
 
 // ---- Overlap ----
 async function loadOverlap(){
-  try{const r=await fetch(`/api/sync-overlap?code_id=${codeRow.id}`);overlap=await r.json();}catch(_){overlap=null;}
+  try{const r=await fetch(`/api/sync-overlap?code_id=${codeRow.id}&from=${minISO}&to=${maxISO}`);overlap=await r.json();}catch(_){overlap=null;}
   renderOverlap();
 }
 function renderOverlap(){
   const body=$('overlap-body');
   if(!overlap){body.innerHTML='<p class="muted">Could not load the merged view.</p>';return;}
-  const responders=participants.filter(p=>p.status==='responded');
-  if(!participants.length||participants.every(p=>p.role==='owner'&&participants.length===1)){
+  if(!participants.length||(participants.length===1&&participants[0].role==='owner')){
     $('overlap-intro').textContent='';
     body.innerHTML='<div class="empty"><h3>Invite people to find the best time</h3><p>Once people mark their availability, the best times for everyone appear here.</p></div>';
     return;
   }
   if(overlap.responded===0){
+    $('overlap-intro').textContent='';
     body.innerHTML='<div class="empty"><h3>Waiting for responses</h3><p>Nobody has marked their availability yet. Share the invitations above.</p></div>';
     return;
   }
   $('overlap-intro').textContent=`Based on ${overlap.responded} of ${overlap.total_participants} responses.`;
 
-  // Best times list
+  // Best times list (specific dates)
   let html='<div class="best-list">';
-  const best=(overlap.best_slots||[]).filter(s=>s.available_count>0).slice(0,5);
+  const best=(overlap.best_slots||[]).filter(s=>s.count>0).slice(0,5);
   if(!best.length)html+='<p class="muted">No overlapping times yet.</p>';
   best.forEach(s=>{
-    const full=s.is_full_overlap;
-    const nextDate=nextOccurrence(s.day_of_week);
-    html+=`<div class="best-item ${full?'full':''}"><span class="bi-icon">${full?'✅':'🟡'}</span>
-      <span class="bi-when">${DAYFULL[s.day_of_week]} ${nextDate}, ${pretty(s.start_time)}–${pretty(s.end_time)}</span>
-      <span class="bi-who">${full?`All ${overlap.responded} available`:`${s.available_count} of ${overlap.responded}`}</span></div>`;
+    html+=`<div class="best-item ${s.full?'full':''}"><span class="bi-icon">${s.full?'✅':'🟡'}</span>
+      <span class="bi-when">${fmtDateShort(s.date)}, ${pretty(s.start)}–${pretty(s.end)}</span>
+      <span class="bi-who">${s.full?`All ${overlap.responded} available`:`${s.count} of ${overlap.responded}`}</span></div>`;
   });
   html+='</div>';
-
-  // Filter tabs
-  html+='<div class="ptabs" id="ptabs"><button class="ptab active" data-id="">Everyone</button>';
-  responders.forEach(p=>{html+=`<button class="ptab" data-id="${p.id}">${escapeHtml(p.name.split(/\s+/)[0])}</button>`;});
-  html+='</div><p class="grid-caption">Group availability · typical week</p><div class="grid-wrap"><div id="merged"></div></div>';
+  html+='<p class="grid-caption">Group availability · pick a date</p><div class="sc-panels"><div id="ov-month"></div><div class="sc-day-panel" id="ov-day"></div></div>';
   html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch none"></span>No one</span></div>`;
   body.innerHTML=html;
 
-  document.querySelectorAll('#ptabs .ptab').forEach(b=>b.addEventListener('click',()=>{
-    document.querySelectorAll('#ptabs .ptab').forEach(x=>x.classList.toggle('active',x===b));
-    filterId=b.dataset.id||null;renderMerged();
-  }));
-  filterId=null;renderMerged();
-}
-
-function renderMerged(){
-  let ov=overlap;
-  if(filterId){
-    const one=(overlap.slots||[]).filter(s=>s.available_by&&s.available_by.includes(filterId))
-      .map(s=>({day_of_week:s.day_of_week,start_time:s.start_time,end_time:s.end_time,available_count:1,available_by:[filterId],is_full_overlap:true}));
-    ov={slots:one,responded:1,participants:overlap.participants};
-  }
-  SyncGrid.heat({mount:$('merged'),days,slots,overlap:ov});
-}
-
-function nextOccurrence(dow){
-  const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  const cur=(t0.getDay()+6)%7;let add=(dow-cur+7)%7;const d=new Date(t0);d.setDate(t0.getDate()+add);
-  return `${d.getDate()} ${MON[d.getMonth()]}`;
+  const v=SyncCalendar.viewer({monthMount:$('ov-month'),dayMount:$('ov-day'),slots,minISO,maxISO,overlap,mode:'overlap'});
+  v.focusFirstAvailable();
 }
 
 init();

@@ -43,19 +43,21 @@
       <div class="card-head">
         <div>
           <h2>When are you free?</h2>
-          <p class="muted" style="margin-top:4px">Tap a slot to mark it <b style="color:var(--green-strong)">available</b>. Tap again for <b style="color:var(--red)">unavailable</b>, once more to clear.</p>
+          <p class="muted" style="margin-top:4px">Pick a date, then tap a time to mark it <b style="color:var(--green-strong)">available</b>. Tap again for <b style="color:var(--red)">unavailable</b>, once more to clear.</p>
         </div>
       </div>
 
-      <p class="grid-caption">Your typical week · repeats every week</p>
-      <div class="grid-wrap"><div id="grid"></div></div>
+      <div class="sc-panels" style="margin-top:8px">
+        <div id="cal-month"></div>
+        <div class="sc-day-panel" id="cal-day"></div>
+      </div>
 
       <div class="legend">
         <span><span class="swatch avail"></span>Available</span>
         <span><span class="swatch unavail"></span>Unavailable</span>
         <span><span class="swatch none"></span>Not set</span>
       </div>
-      <div class="bulk-hint">Tip: drag across cells, or tap a day name to set the whole day. On a phone, long-press to select a block.</div>
+      <div class="bulk-hint">Tip: Shift-click to select a date range, or Ctrl/Cmd-click to pick several days, then "Apply to all selected".</div>
 
       <div class="row-actions" style="margin-top:24px">
         <button class="btn btn-primary" id="submit-btn">Save my availability</button>
@@ -82,10 +84,8 @@
 
 <div class="toast-wrap" id="toasts"></div>
 
-<script src="/sync/sync-grid.js"></script>
+<script src="/sync/sync-calendar.js"></script>
 <script>
-const DOW = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
-const MON = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const token = (new URLSearchParams(location.search).get('token') || '').trim();
 
 const $ = (id) => document.getElementById(id);
@@ -96,20 +96,11 @@ const toMin = (t)=>{const [h,m]=hm(t).split(':').map(Number);return h*60+m;};
 const toHM = (m)=>`${String(Math.floor(m/60)).padStart(2,'0')}:${String(m%60).padStart(2,'0')}`;
 const pretty = (t)=>{let [h,m]=hm(t).split(':').map(Number);const ap=h<12?'am':'pm';const h12=((h+11)%12)+1;return m===0?`${h12}${ap}`:`${h12}:${String(m).padStart(2,'0')}${ap}`;};
 function buildSlots(s,e,dur){const out=[];for(let m=toMin(s);m+dur<=toMin(e);m+=dur)out.push({start:toHM(m),end:toHM(m+dur),label:pretty(toHM(m))});return out;}
+const pad=(n)=>String(n).padStart(2,'0');
+const isoOf=(d)=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+function dateRange(daysAhead){const now=new Date();const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());const max=new Date(t0);max.setDate(t0.getDate()+(daysAhead||30));return{minISO:isoOf(t0),maxISO:isoOf(max)};}
 
-// Upcoming week (Mon..Sun), used only to show real dates against each day-of-week.
-function buildDays(){
-  const now=new Date(); const t0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-  const monday=new Date(t0); monday.setDate(t0.getDate()-((t0.getDay()+6)%7));
-  const out=[];
-  for(let d=0; d<7; d++){
-    const date=new Date(monday); date.setDate(monday.getDate()+d);
-    out.push({ dow:d, label:DOW[d], dateNum:null, monthLabel:null, weekend:d>=5, isToday:false });
-  }
-  return out;
-}
-
-let grid=null, participantName='', codeData=null;
+let cal=null, participantName='', codeData=null;
 
 function showInvalid(){ $('loading').classList.add('hidden'); $('invalid').classList.remove('hidden'); }
 
@@ -130,14 +121,14 @@ async function load(){
   $('greeting').innerHTML = `Hi <b>${escapeHtml(participantName)}</b>, mark the times you are available so ${escapeHtml(owner)} can find a slot that works for the group.`;
   $('counts').innerHTML = `<b>${data.counts.invited}</b> ${data.counts.invited===1?'person':'people'} invited · <b>${data.counts.responded}</b> responded so far`;
 
-  // Build grid
-  const days=buildDays();
+  // Build calendar
   const slots=buildSlots(codeData.business_hours_start, codeData.business_hours_end, codeData.slot_duration_minutes);
+  const {minISO,maxISO}=dateRange(codeData.days_ahead);
   const state=new Map();
   const starts=new Set(slots.map(s=>s.start));
-  (data.blocks||[]).forEach(b=>{ const st=hm(b.start_time); if(starts.has(st)) state.set(`${b.day_of_week}|${st}`, b.provider==='unavailable'?'unavail':'avail'); });
+  (data.blocks||[]).forEach(b=>{ const st=hm(b.start_time); const ds=String(b.block_date).slice(0,10); if(starts.has(st)){ let m=state.get(ds); if(!m){m=new Map();state.set(ds,m);} m.set(st, b.provider==='unavailable'?'unavail':'avail'); } });
 
-  grid = SyncGrid.editable({ mount:$('grid'), days, slots, state });
+  cal = SyncCalendar.editor({ monthMount:$('cal-month'), dayMount:$('cal-day'), slots, minISO, maxISO, state });
 
   $('loading').classList.add('hidden');
   $('main').classList.remove('hidden');
@@ -160,7 +151,7 @@ function wire(){
 async function submit(){
   const btn=$('submit-btn'); btn.disabled=true; btn.innerHTML='<span class="spinner"></span> Saving…';
   try{
-    const blocks=grid.getBlocks();
+    const blocks=cal.getBlocks();
     const r=await fetch('/api/sync-respond',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ token, blocks }) });
     const j=await r.json();
     if(!r.ok) throw new Error(j.error||'Could not save');
