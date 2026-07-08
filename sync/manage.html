@@ -56,7 +56,7 @@
       <div class="legend">
         <span><span class="swatch avail"></span>Available</span>
         <span><span class="swatch unavail"></span>Unavailable</span>
-        <span><span class="swatch empty"></span>Not set</span>
+        <span><span class="swatch none"></span>Not set</span>
       </div>
       <div class="bulk-hint">Tip: drag across cells, or click a day name to set the whole day.</div>
       <div class="row-actions" style="margin-top:22px">
@@ -333,7 +333,7 @@ function renderOverlap(){
   html+='<div class="ptabs" id="ptabs"><button class="ptab active" data-id="">Everyone</button>';
   responders.forEach(p=>{html+=`<button class="ptab" data-id="${p.id}">${escapeHtml(p.name.split(/\s+/)[0])}</button>`;});
   html+='</div><p class="grid-caption">Group availability · typical week</p><div class="grid-wrap"><div id="merged"></div></div>';
-  html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch empty"></span>No one</span></div>`;
+  html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch none"></span>No one</span></div>`;
   body.innerHTML=html;
 
   document.querySelectorAll('#ptabs .ptab').forEach(b=>b.addEventListener('click',()=>{

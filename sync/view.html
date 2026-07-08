@@ -154,7 +154,7 @@ async function loadOverlap(){
   if(!best.length)html+='<p class="muted">No overlapping times yet.</p>';
   best.forEach(s=>{const full=s.is_full_overlap;html+=`<div class="best-item ${full?'full':''}"><span class="bi-icon">${full?'✅':'🟡'}</span><span class="bi-when">${DAYFULL[s.day_of_week]} ${nextOccurrence(s.day_of_week)}, ${pretty(s.start_time)}–${pretty(s.end_time)}</span><span class="bi-who">${full?`All ${overlap.responded}`:`${s.available_count} of ${overlap.responded}`}</span></div>`;});
   html+='</div><p class="grid-caption">Group availability · typical week</p><div class="grid-wrap"><div id="merged"></div></div>';
-  html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch empty"></span>No one</span></div>`;
+  html+=`<div class="legend"><span><span class="swatch full"></span>Everyone free</span><span><span class="swatch partial"></span>Some free</span><span><span class="swatch none"></span>No one</span></div>`;
   body.innerHTML=html;
   SyncGrid.heat({mount:$('merged'),days,slots,overlap});
 }

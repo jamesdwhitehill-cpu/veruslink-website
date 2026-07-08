@@ -154,7 +154,7 @@ select:focus,input[type=time]:focus{outline:none;border-color:var(--accent);box-
 .swatch{display:inline-block;width:16px;height:16px;border-radius:3px;vertical-align:middle;margin-right:6px;border:1px solid var(--border)}
 .swatch.avail{background:var(--green-soft);border-color:var(--green)}
 .swatch.unavail{background:var(--red-soft);border-color:var(--red)}
-.swatch.empty{background:#E5E7EB;border-color:var(--border-2)}
+.swatch.none{background:#E5E7EB;border-color:var(--border-2)}
 .swatch.full{background:var(--green);border-color:var(--green-strong)}
 .swatch.partial{background:#BFD5F7;border-color:#9DBBF0}
 .bulk-hint{font-size:12px;color:var(--text-3);margin-top:10px}
