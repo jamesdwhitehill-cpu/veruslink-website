@@ -47,14 +47,27 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 .nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
 .nav-link:hover{color:#fff}
 .nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0;background:none;border:none;cursor:pointer}
+.nav-toggle span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform 0.2s ease,opacity 0.2s ease}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{position:absolute;top:100%;left:0;right:0;background:var(--black);flex-direction:column;padding:8px 20px 20px;border-top:1px solid rgba(255,255,255,0.1);box-shadow:0 14px 28px rgba(0,0,0,0.35);z-index:100}
+.mobile-menu[hidden]{display:none}
+.mobile-menu:not([hidden]){display:flex}
+.mobile-link{font-size:15px;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;padding:15px 6px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.mobile-link:hover,.mobile-link:focus-visible{color:#fff}
+.mobile-cta{margin-top:14px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:14px 20px;border-radius:100px;text-decoration:none}
+.mobile-cta:hover,.mobile-cta:focus-visible{filter:brightness(1.08)}
+@media(min-width:769px){.mobile-menu{display:none!important}}
 
 /* ── scroll animations ── */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.4s ease,transform 0.4s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.1s}
-.reveal-delay-2{transition-delay:0.2s}
-.reveal-delay-3{transition-delay:0.3s}
-.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-1{transition-delay:0.05s}
+.reveal-delay-2{transition-delay:0.1s}
+.reveal-delay-3{transition-delay:0.15s}
+.reveal-delay-4{transition-delay:0.2s}
 @media(max-width:600px){.reveal{transform:translateY(16px)}}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
@@ -257,6 +270,8 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
 
 /* ── responsive ── */
 @media(max-width:768px){
+  .nav-links{display:none}
+  .nav-toggle{display:flex}
   .points{grid-template-columns:1fr}
   .dwy{grid-template-columns:1fr}
   .trust-grid{grid-template-columns:1fr}
@@ -298,6 +313,16 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
     <a href="/blog" class="nav-link">Blog</a>
     <a href="#faqs" class="nav-link">FAQs</a>
     <a href="https://www.veruslink.au/audit" class="nav-cta">Start the free audit</a>
+  </div>
+  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="mobile-menu" id="mobileMenu" hidden>
+    <a href="#how-it-works" class="mobile-link">How it works</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="/blog" class="mobile-link">Blog</a>
+    <a href="#faqs" class="mobile-link">FAQs</a>
+    <a href="https://www.veruslink.au/audit" class="mobile-cta">Start the free audit</a>
   </div>
 </nav>
 
@@ -684,8 +709,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     entries.forEach(function(e){
       if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
     });
-  },{threshold:0.15});
+  },{threshold:0,rootMargin:'0px 0px 35% 0px'});
   els.forEach(function(el){obs.observe(el)});
+})();
+</script>
+
+<script>
+(function(){
+  var t=document.getElementById('navToggle'), m=document.getElementById('mobileMenu');
+  if(!t||!m) return;
+  function open(){ m.hidden=false; t.setAttribute('aria-expanded','true'); t.setAttribute('aria-label','Close menu'); }
+  function close(refocus){ m.hidden=true; t.setAttribute('aria-expanded','false'); t.setAttribute('aria-label','Open menu'); if(refocus) t.focus(); }
+  t.addEventListener('click', function(){ m.hidden ? open() : close(false); });
+  m.addEventListener('click', function(e){ if(e.target.closest('a')) close(false); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !m.hidden) close(true); });
+  document.addEventListener('click', function(e){ if(!m.hidden && !m.contains(e.target) && !t.contains(e.target)) close(false); });
 })();
 </script>
 
