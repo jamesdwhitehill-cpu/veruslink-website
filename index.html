@@ -203,7 +203,7 @@ nav{display:flex;justify-content:space-between;align-items:center;padding:18px 4
 
 /* ── 12. founder ── */
 .founder-inner{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
-.founder-avatar{width:96px;height:96px;border-radius:20px;background:var(--black);display:flex;align-items:center;justify-content:center;line-height:1;font-size:30px;font-weight:900;color:#fff;flex-shrink:0;letter-spacing:-1px}
+.founder-avatar{width:132px;height:176px;border-radius:16px;object-fit:cover;object-position:center top;flex-shrink:0;display:block;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.12)}
 .founder-content{flex:1;min-width:240px}
 .founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;color:var(--text)}
 .founder-title{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:18px}
@@ -559,6 +559,22 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   </div>
 </section>
 
+<!-- 12. FOUNDER -->
+<section class="section white" id="about">
+  <div class="sec-label reveal"><div class="sec-label-dot"></div>Meet the founder</div>
+  <div class="founder-inner">
+    <img class="founder-avatar" src="/assets/james-headshot.png" alt="James Whitehill, founder of VerusLink" width="132" height="176">
+    <div class="founder-content">
+      <div class="founder-name">James Whitehill</div>
+      <div class="founder-title">AI Concierge · Chief Connector · VerusLink</div>
+      <p class="founder-bio">The reality is, I run a business like you do. Too much on, not enough hours, and admin that quietly eats the time you'd rather spend on the work that actually pays.</p>
+      <p class="founder-bio">I tried AI to fix that. Watched the demos, opened ChatGPT, and hit the same wall you probably did: this could save me hours, if only I had the time to work out how. So I stopped tinkering and built the systems I actually needed to run my day.</p>
+      <p class="founder-bio">That became Vero, my own AI operating system. Every tool on this page I built for my own business first, and every one runs in production today. VerusLink is run by one person, deliberately. Work with us and you deal directly with the person who built it, not a team you'll never meet.</p>
+      <p class="founder-bio">Fifteen years in advertising production taught me the whole thing runs on trust. I do what I say I'll do, when I said I'd do it.</p>
+    </div>
+  </div>
+</section>
+
 <!-- 11. PROOF -->
 <section class="section gray">
   <div class="sec-label reveal"><div class="sec-label-dot"></div>Real outcomes</div>
@@ -579,23 +595,6 @@ footer{padding:24px 40px;background:var(--black);display:flex;justify-content:sp
   <div class="sec-label reveal"><div class="sec-label-dot"></div>From the blog</div>
   <h2 class="sec-h reveal">Latest insights.</h2>
   <div class="blog-strip" id="blogStrip"></div>
-</section>
-
-<!-- 12. FOUNDER -->
-<section class="section white" id="about">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>Meet the founder</div>
-  <div class="founder-inner">
-    <!-- PHOTO PLACEHOLDER: founder-photo -->
-    <div class="founder-avatar">JW</div>
-    <div class="founder-content">
-      <div class="founder-name">James Whitehill</div>
-      <div class="founder-title">AI Concierge · Chief Connector · VerusLink</div>
-      <p class="founder-bio">The reality is, I run a business like you do. Too much on, not enough hours, and admin that quietly eats the time you'd rather spend on the work that actually pays.</p>
-      <p class="founder-bio">I tried AI to fix that. Watched the demos, opened ChatGPT, and hit the same wall you probably did: this could save me hours, if only I had the time to work out how. So I stopped tinkering and built the systems I actually needed to run my day.</p>
-      <p class="founder-bio">That became Vero, my own AI operating system. Every tool on this page I built for my own business first, and every one runs in production today. VerusLink is run by one person, deliberately. Work with us and you deal directly with the person who built it, not a team you'll never meet.</p>
-      <p class="founder-bio">Fifteen years in advertising production taught me the whole thing runs on trust. I do what I say I'll do, when I said I'd do it.</p>
-    </div>
-  </div>
 </section>
 
 <!-- 13. FAQ -->
