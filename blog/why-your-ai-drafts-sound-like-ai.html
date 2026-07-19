@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why Your AI Drafts Sound Like AI (And the Three Prompts That Fix It) | VerusLink</title>
+<meta name="description" content="Your AI drafts are factually right and still unsendable, and this is why they read as machine written, plus three prompts that fix the tone in about ninety seconds.">
+<link rel="canonical" href="https://veruslink.au/blog/why-your-ai-drafts-sound-like-ai.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Why Your AI Drafts Sound Like AI (And the Three Prompts That Fix It)">
+<meta property="og:description" content="Your AI drafts are factually right and still unsendable, and this is why they read as machine written, plus three prompts that fix the tone in about ninety seconds.">
+<meta property="og:url" content="https://veruslink.au/blog/why-your-ai-drafts-sound-like-ai.html">
+<meta property="article:published_time" content="2026-07-19">
+<meta property="article:author" content="James Whitehill">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Why Your AI Drafts Sound Like AI (And the Three Prompts That Fix It)",
+  "description": "Your AI drafts are factually right and still unsendable, and this is why they read as machine written, plus three prompts that fix the tone in about ninety seconds.",
+  "author": {
+    "@type": "Person",
+    "name": "James Whitehill"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "VerusLink",
+    "url": "https://veruslink.au"
+  },
+  "datePublished": "2026-07-19",
+  "mainEntityOfPage": "https://veruslink.au/blog/why-your-ai-drafts-sound-like-ai.html"
+}
+</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f4f4f5;--card:#ffffff;--accent:#2D9CDB;--accent-rgb:45,156,219;
+  --accent-soft:rgba(45,156,219,0.08);--text:#111111;--text2:#555555;
+  --muted:#888888;--black:#111111;--border:#e0e0e0;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+/* nav (matches main site) */
+nav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
+.logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
+.nav-links{display:flex;gap:24px;align-items:center}
+.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none}
+.nav-link:hover,.nav-link.active{color:#fff}
+.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;text-decoration:none}
+/* article */
+.article-shell{max-width:680px;margin:0 auto;padding:48px 24px 24px}
+.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text2);text-decoration:none;margin-bottom:28px}
+.back-link:hover{color:var(--accent)}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:20px}
+.pill-insight{background:var(--accent-soft);color:var(--accent)}
+.pill-build{background:rgba(22,163,74,0.10);color:#16a34a}
+.pill-client{background:rgba(245,158,11,0.12);color:#b45309}
+.pill-guide{background:#eceef0;color:#555}
+.article-title{font-size:clamp(1.9rem,4.5vw,2.6rem);font-weight:900;line-height:1.12;letter-spacing:-1px;color:var(--text);margin-bottom:16px}
+.article-meta{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0.02em;margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--border)}
+.article-body{font-size:17px;line-height:1.78;color:var(--text2)}
+.article-body p{margin-bottom:22px}
+.article-body h2{font-size:1.5rem;font-weight:800;letter-spacing:-0.5px;color:var(--text);margin:40px 0 14px}
+.article-body h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:32px 0 12px}
+.article-body strong{color:var(--text);font-weight:700}
+.article-body a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.article-body ul,.article-body ol{margin:0 0 22px 22px}
+.article-body li{margin-bottom:10px}
+.article-body blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 22px;margin:0 0 22px;border-radius:0 8px 8px 0;font-style:italic;color:var(--text)}
+.article-body img{max-width:100%;border-radius:8px;margin:8px 0 22px}
+/* CTA */
+.cta-block{max-width:680px;margin:16px auto 0;padding:0 24px 64px}
+.cta-inner{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+.cta-kicker{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.cta-inner h3{font-size:1.4rem;font-weight:900;letter-spacing:-0.5px;color:var(--text);margin-bottom:14px}
+.cta-inner p{font-size:16px;line-height:1.7;color:var(--text2);max-width:520px;margin:0 auto 26px}
+.cta-btn{display:inline-block;background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.06em;padding:14px 30px;border-radius:100px;text-decoration:none}
+.cta-btn:hover{background:#2688c2}
+/* footer (matches main site) */
+footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
+.footer-links{display:flex;gap:20px}
+.footer-link{font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none}
+.footer-link:hover{color:#fff}
+@media (max-width:600px){
+  nav{padding:16px 20px}
+  .nav-links .nav-link{display:none}
+  .article-shell{padding:32px 20px 16px}
+  footer{padding:20px;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+  <div class="nav-links">
+    <a href="/#how-it-works" class="nav-link">How it works</a>
+    <a href="/#about" class="nav-link">About</a>
+    <a href="/blog" class="nav-link active">Blog</a>
+    <a href="/#faqs" class="nav-link">FAQs</a>
+    <a href="/audit" class="nav-cta">Start the free audit</a>
+  </div>
+</nav>
+<article class="article-shell">
+  <a href="/blog" class="back-link">&larr; Back to all posts</a>
+  <span class="pill pill-insight">Insight</span>
+  <h1 class="article-title">Why Your AI Drafts Sound Like AI (And the Three Prompts That Fix It)</h1>
+  <div class="article-meta">19 July 2026 &middot; 5 min read</div>
+  <div class="article-body">
+<p>You read the draft. Every fact is right. The structure is fine. Nothing is wrong, exactly.</p>
+<p>And yet you would not send it.</p>
+<p>Something in it reads as machine-written, and if you can feel that, so can your client. In a profession where your written word is the product, that matters more than it does almost anywhere else.</p>
+<p>Here is what is actually happening, and how to fix it in about ninety seconds.</p>
+<h2>Why it happens</h2>
+<p>Large language models are trained to sound helpful, agreeable and complete. Left alone they pad. They hedge. They reach for the impressive word over the plain one, and they explain what they are about to say before they say it.</p>
+<p>Legal writing rewards the exact opposite. Precision. Brevity. No decoration. Say the position, say the next step, stop.</p>
+<p>So the model is not broken. It is doing what it was built to do. It is just optimising for the wrong thing, and nobody told it otherwise.</p>
+<h2>The three-second test</h2>
+<p>Before anything leaves your firm, scan for these. Two or more and it reads as machine-written.</p>
+<ul><li><strong>Em dashes.</strong> AI loves them. Most lawyers rarely use them. It is the single fastest tell.</li><li><strong>&quot;It is important to note that...&quot;</strong> or any sentence that announces itself before saying anything.</li><li><strong>The rule of three.</strong> &quot;Clear, concise, and compelling.&quot; The model cannot resist a tricolon.</li><li><strong>Hedging stacked on hedging.</strong> &quot;It may potentially be advisable to consider...&quot;</li></ul>
+<h2>The banned list</h2>
+<p>Delete these on sight. None of them survive in precise legal writing.</p>
+<p><strong>Words:</strong> delve, tapestry, testament, underscore, crucial, pivotal, navigate (as in &quot;navigate the complexities&quot;), landscape, realm, robust, comprehensive, myriad, plethora, seamless, unlock, leverage as a verb, utilise, facilitate, foster, holistic, meticulous, intricate, paramount, elevate, streamline, empower, resonate, bespoke.</p>
+<p><strong>Openers:</strong> &quot;I hope this email finds you well.&quot; &quot;In today&#39;s fast-paced legal environment.&quot; &quot;In an era of...&quot;</p>
+<p><strong>Closers:</strong> &quot;By doing so, you can...&quot; &quot;Ultimately, the key is...&quot; &quot;Please do not hesitate to reach out.&quot;</p>
+<p><strong>Structural tells:</strong> bullet points where prose belongs, a closing paragraph that repeats what you just said, and every paragraph running to the same length.</p>
+<h2>Three prompts to copy and paste</h2>
+<h3>1. The client update</h3>
+<blockquote>Act as a partner at an Australian law firm writing to a commercial client. Draft a client update in dry, objective, precise language. Short sentences. No emotive adjectives. No introductory filler. Never open with &quot;I hope this email finds you well.&quot; Do not use em dashes. State the current position, the next step, and the date it is required by. Australian English and Australian spelling. Facts to include: [paste your facts]</blockquote>
+<h3>2. The de-slop pass</h3>
+<p>Use this on any draft the model has already produced.</p>
+<blockquote>Rewrite the text below to remove AI tells. Delete these words entirely: delve, tapestry, testament, underscore, crucial, pivotal, robust, comprehensive, navigate, landscape, realm, myriad, seamless. Remove all em dashes. Delete any sentence beginning with &quot;It is important to note&quot; or &quot;In today&#39;s&quot;. Keep every fact and every legal qualification exactly as written. Do not add anything new. Return only the rewritten text. Text: [paste the draft]</blockquote>
+<h3>3. The voice match</h3>
+<p>This is the one almost nobody uses, and it is the one that actually works.</p>
+<blockquote>Below are three emails I have written to clients. Study my sentence length, my level of formality, and how I open and close. Do not comment on them. [paste three of your own emails] Now draft the following in that same voice, matching my formality exactly. Do not use any word I have not used in those examples. The email to draft: [describe it]</blockquote>
+<p>Generic prompts produce generic writing. Hand it your own writing as the reference and it stops guessing at what a lawyer sounds like.</p>
+<h2>The part nobody tells you</h2>
+<p>Those three prompts will fix your tone today. Use them. They work, and they are yours, no email address required.</p>
+<p>But look at what you have just signed up for.</p>
+<p>Every email now takes a trip to another window, a paste in, a tweak, a paste back, and a read-through to check it has not invented a date or a defined term. Call it ten to fifteen minutes.</p>
+<p>Across five fee earners doing that a few times a day, that is hours every week. You are paying qualified people to act as a copy-paste layer between two browser tabs.</p>
+<p>That is the real problem, and it is worth being honest about it: the tone was never the hard part. A prompt fixes tone. Nothing on this page fixes the time.</p>
+<h2>Where this ends up</h2>
+<p>Most firms land in one of two places. They either give up on AI because the output needs too much babysitting, or they keep it and quietly absorb the cost of all that manual handling, which nobody ever puts on a timesheet.</p>
+<p>There is a third option, which is to stop doing the handling. The repeated work sitting underneath all this, the drafting, the chasing, the status updates, the same five emails every week, can be made to run without a person shepherding it through.</p>
+<p>That is the work I do. I am James Whitehill. I run VerusLink, and I find the repeated work quietly eating your team&#39;s week, then make it run without them. Not a course. Not another tool to learn. You deal directly with the person who builds it.</p>
+<p>If you want to know what that time is actually costing your firm, I will show you. It is free, there is no obligation, and you keep whatever we find.</p>
+<p><strong><a href="https://veruslink.au/audit">Start the free audit</a></strong></p>
+  </div>
+</article>
+<section class="cta-block">
+  <div class="cta-inner">
+    <div class="cta-kicker">About VerusLink</div>
+    <h3>We handle AI so you never have to.</h3>
+    <p>We sit inside your business as your AI concierge and run the admin, follow-ups, scheduling and reporting that eats your week. You run the business. We run the AI.</p>
+    <a href="https://veruslink.au/audit" class="cta-btn">Start the free AI audit &rarr;</a>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo">VerusLink</div>
+  <div class="footer-links">
+    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/terms" class="footer-link">Terms</a>
+    <a href="/blog" class="footer-link">Blog</a>
+  </div>
+</footer>
+</body>
+</html>
