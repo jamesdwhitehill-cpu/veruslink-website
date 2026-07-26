@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VerusLink Sync: Your dashboard</title>
 <meta name="robots" content="noindex">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/sync/sync.css">
 <style>
   .dash-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:28px}
@@ -17,14 +14,14 @@
   .sign-out{background:none;border:none;color:var(--text-3);font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;padding:6px 4px}
   .sign-out:hover{color:var(--accent)}
   .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:18px}
-  .sync-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:var(--shadow-sm);transition:transform .2s,box-shadow .2s}
-  .sync-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md)}
+  .sync-card{background:var(--surface);border:1px solid var(--border);border-radius:0;padding:22px;display:flex;flex-direction:column;gap:14px;box-shadow:none;transition:background .25s ease}
+  .sync-card:hover{background:var(--tint)}
   .sync-card.paused{opacity:.78}
   .sync-card .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
-  .sync-card .pill{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:1px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:10px;padding:7px 13px;cursor:pointer}
+  .sync-card .pill{font-family:var(--mono);font-size:18px;font-weight:700;letter-spacing:1px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--accent-border);border-radius:0;padding:7px 13px;cursor:pointer}
   .sync-card .pill:hover{border-color:var(--accent)}
-  .status{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:999px;white-space:nowrap;border:1px solid transparent}
-  .status.active{color:var(--green-strong);background:var(--green-soft);border-color:#A7F3C4}
+  .status{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:5px 11px;border-radius:0;white-space:nowrap;border:1px solid transparent}
+  .status.active{color:var(--accent);background:var(--tint);border-color:var(--accent)}
   .status.paused{color:var(--text-2);background:var(--surface-2);border-color:var(--border-2)}
   .sync-card .label{font-size:16px;font-weight:700;letter-spacing:-0.01em;line-height:1.3;word-break:break-word;color:var(--text)}
   .sync-card .meta{font-size:13px;color:var(--text-2);display:flex;flex-direction:column;gap:3px}

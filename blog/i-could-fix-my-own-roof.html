@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,68 +32,8 @@
 }
 </script>
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#f4f4f5;--card:#ffffff;--accent:#2D9CDB;--accent-rgb:45,156,219;
-  --accent-soft:rgba(45,156,219,0.08);--text:#111111;--text2:#555555;
-  --muted:#888888;--black:#111111;--border:#e0e0e0;
-}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:inherit}
-/* nav (matches main site) */
-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
-.logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:24px;align-items:center}
-.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none}
-.nav-link:hover,.nav-link.active{color:#fff}
-.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;text-decoration:none}
-/* article */
-.article-shell{max-width:680px;margin:0 auto;padding:48px 24px 24px}
-.back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--text2);text-decoration:none;margin-bottom:28px}
-.back-link:hover{color:var(--accent)}
-.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px;margin-bottom:20px}
-.pill-insight{background:var(--accent-soft);color:var(--accent)}
-.pill-build{background:rgba(22,163,74,0.10);color:#16a34a}
-.pill-client{background:rgba(245,158,11,0.12);color:#b45309}
-.pill-guide{background:#eceef0;color:#555}
-.article-title{font-size:clamp(1.9rem,4.5vw,2.6rem);font-weight:900;line-height:1.12;letter-spacing:-1px;color:var(--text);margin-bottom:16px}
-.article-meta{font-size:13px;font-weight:500;color:var(--muted);letter-spacing:0.02em;margin-bottom:36px;padding-bottom:28px;border-bottom:1px solid var(--border)}
-.article-body{font-size:17px;line-height:1.78;color:var(--text2)}
-.article-body p{margin-bottom:22px}
-.article-body h2{font-size:1.5rem;font-weight:800;letter-spacing:-0.5px;color:var(--text);margin:40px 0 14px}
-.article-body h3{font-size:1.2rem;font-weight:700;color:var(--text);margin:32px 0 12px}
-.article-body strong{color:var(--text);font-weight:700}
-.article-body a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
-.article-body ul,.article-body ol{margin:0 0 22px 22px}
-.article-body li{margin-bottom:10px}
-.article-body blockquote{border-left:3px solid var(--accent);background:var(--accent-soft);padding:16px 22px;margin:0 0 22px;border-radius:0 8px 8px 0;font-style:italic;color:var(--text)}
-.article-body img{max-width:100%;border-radius:8px;margin:8px 0 22px}
-/* CTA */
-.cta-block{max-width:680px;margin:16px auto 0;padding:0 24px 64px}
-.cta-inner{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:36px 32px;text-align:center;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
-.cta-kicker{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-.cta-inner h3{font-size:1.4rem;font-weight:900;letter-spacing:-0.5px;color:var(--text);margin-bottom:14px}
-.cta-inner p{font-size:16px;line-height:1.7;color:var(--text2);max-width:520px;margin:0 auto 26px}
-.cta-btn{display:inline-block;background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.06em;padding:14px 30px;border-radius:100px;text-decoration:none}
-.cta-btn:hover{background:#2688c2}
-/* footer (matches main site) */
-footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
-.footer-logo{font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
-.footer-links{display:flex;gap:20px}
-.footer-link{font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none}
-.footer-link:hover{color:#fff}
-@media (max-width:600px){
-  nav{padding:16px 20px}
-  .nav-links .nav-link{display:none}
-  .article-shell{padding:32px 20px 16px}
-  footer{padding:20px;flex-direction:column}
-}
-</style>
+<link rel="stylesheet" href="/assets/swiss.css">
+<link rel="stylesheet" href="/assets/blog.css">
 </head>
 <body>
 <nav>

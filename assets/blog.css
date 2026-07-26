@@ -1,0 +1,248 @@
+/* ============================================================
+   SWISS / blog layer. Loads on top of swiss.css.
+   Covers both markup families present in the blog:
+     A. .article-shell / .article-title / .cta-block / <nav> / <footer>
+     B. .site-nav / .article-wrapper / .article-byline / .article-cta / .site-footer
+   plus the /blog index cards.
+   ============================================================ */
+
+/* ---------- nav (both families) ---------- */
+nav,.site-nav{
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;padding:0 clamp(20px,4vw,56px);
+  max-width:1320px;margin:0 auto;
+  border-bottom:1px solid var(--rule);
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+}
+.logo,.nav-logo{
+  font-size:16px;font-weight:700;letter-spacing:.02em;text-transform:none;
+  color:var(--ink);text-decoration:none;
+}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.nav-link{
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+  color:var(--ink);text-decoration:none;position:relative;
+}
+.nav-link::after{
+  content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;
+  background:var(--accent);transition:width .25s ease;
+}
+.nav-link:hover::after,.nav-link.active::after{width:100%;}
+.nav-cta,.nav-btn{
+  background:var(--ink);color:#fff!important;text-decoration:none;
+  padding:12px 22px;border-radius:0;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  transition:background .2s ease;
+}
+.nav-cta:hover,.nav-btn:hover{background:var(--accent);}
+@media(max-width:760px){.nav-link{display:none;}}
+
+/* ---------- article shell (both families) ---------- */
+.article-shell,.article-wrapper{
+  max-width:820px;margin:0 auto;
+  padding:clamp(40px,6vw,88px) clamp(20px,4vw,56px) clamp(32px,5vw,56px);
+}
+.back-link{
+  display:inline-block;margin-bottom:clamp(28px,4vw,44px);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+  color:var(--ink);text-decoration:none;
+  border-bottom:1px solid var(--rule);padding-bottom:3px;
+}
+.back-link:hover{color:var(--accent);border-color:var(--accent);}
+
+/* category pill: a hairline rectangle, never a rounded chip */
+.pill{
+  display:inline-block;margin-bottom:18px;
+  border:1px solid var(--rule);border-radius:0;
+  padding:7px 13px;background:transparent;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;
+  color:var(--accent);
+}
+.pill-insight,.pill-guide,.pill-build{color:var(--accent);}
+
+.article-title,.article-wrapper h1{
+  font-size:clamp(34px,5.2vw,66px);
+  line-height:1.0;letter-spacing:-.03em;font-weight:700;
+  text-wrap:balance;
+}
+.article-meta,.article-byline{
+  margin-top:20px;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  color:var(--faint);
+}
+/* family B puts .article-meta above the headline as an eyebrow */
+.article-wrapper .article-meta{
+  margin-top:0;margin-bottom:18px;color:var(--accent);font-weight:600;
+}
+.article-wrapper .article-byline{margin-top:20px;}
+
+/* ---------- article body ---------- */
+.article-body,.article-wrapper > p,.article-wrapper > h2,
+.article-wrapper > h3,.article-wrapper > ul,.article-wrapper > ol,
+.article-wrapper > blockquote,.article-wrapper > table{
+  font-size:17px;line-height:1.65;color:var(--ink);
+}
+.article-body{
+  margin-top:clamp(36px,5vw,60px);
+  padding-top:clamp(32px,4.5vw,52px);
+  border-top:1px solid var(--rule);
+}
+.article-body p,.article-wrapper > p{margin-bottom:1.15em;max-width:38em;}
+.article-body h2,.article-wrapper > h2{
+  font-size:clamp(24px,3vw,38px);font-weight:700;
+  letter-spacing:-.025em;line-height:1.08;
+  margin:1.9em 0 .45em;text-wrap:balance;
+}
+.article-body h3,.article-wrapper > h3{
+  font-size:clamp(19px,2vw,25px);font-weight:700;
+  letter-spacing:-.015em;margin:1.6em 0 .4em;
+}
+.article-body strong,.article-wrapper strong{color:var(--ink);font-weight:700;}
+.article-body a,.article-wrapper a:not(.nav-link):not(.nav-btn):not(.nav-logo):not(.cta-btn):not(.back-link):not(.footer-link){
+  color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);
+}
+.article-body a:hover{color:var(--accent);}
+.article-body ul,.article-body ol,.article-wrapper > ul,.article-wrapper > ol{
+  margin:0 0 1.15em 0;padding-left:1.15em;max-width:38em;
+}
+.article-body li,.article-wrapper li{margin-bottom:.5em;}
+.article-body li::marker,.article-wrapper li::marker{color:var(--accent);}
+.article-body blockquote,.article-wrapper > blockquote{
+  border-left:3px solid var(--accent);
+  background:transparent;border-radius:0;font-style:normal;
+  padding:4px 0 4px clamp(18px,2.5vw,28px);
+  margin:0 0 1.4em;
+  font-size:clamp(19px,2.2vw,26px);line-height:1.35;
+  letter-spacing:-.02em;font-weight:600;color:var(--ink);max-width:26em;
+}
+.article-body img,.article-wrapper img{
+  max-width:100%;border-radius:0;border:1px solid var(--rule);
+  display:block;margin:8px 0 1.4em;
+}
+.article-body hr{border:none;border-top:1px solid var(--rule);margin:2.4em 0;}
+
+/* comparison tables: 1px cells, ink header, tint on the highlighted column */
+.comparison-table{
+  width:100%;border-collapse:collapse;
+  margin:1.6em 0 2em;font-size:15px;
+}
+.comparison-table th,.comparison-table td{
+  border:1px solid var(--rule);
+  padding:clamp(11px,1.6vw,18px);
+  text-align:left;vertical-align:top;
+}
+.comparison-table thead th{
+  background:var(--ink);color:#fff;
+  font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+}
+.comparison-table tbody th{
+  background:var(--paper);font-weight:600;font-size:14px;
+}
+.comparison-table tbody tr:hover td{background:var(--tint);}
+
+/* ---------- closing CTA (both families) ---------- */
+.cta-block,.article-cta{
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  background:transparent;border-radius:0;
+  margin:0;
+}
+.cta-block{padding:clamp(48px,7vw,96px) clamp(20px,4vw,56px);}
+.article-cta{
+  padding:clamp(32px,4.5vw,52px) 0;
+  margin-top:clamp(40px,6vw,72px);
+}
+.cta-inner{max-width:820px;margin:0 auto;}
+.cta-kicker{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;
+  color:var(--accent);margin-bottom:18px;
+}
+.cta-block h3,.article-cta h2,.article-cta h3{
+  font-size:clamp(26px,3.6vw,46px);font-weight:700;
+  letter-spacing:-.03em;line-height:1.05;text-wrap:balance;
+}
+.cta-block p,.article-cta p{
+  margin-top:18px;font-size:clamp(15px,1.5vw,18px);line-height:1.6;
+  color:var(--muted);max-width:38em;
+}
+.cta-btn{
+  display:inline-block;margin-top:clamp(24px,3.5vw,36px);
+  background:var(--ink);color:#fff!important;text-decoration:none;
+  padding:18px 32px;border-radius:0;
+  font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  transition:background .2s ease;
+}
+.cta-btn:hover{background:var(--accent);}
+
+/* ---------- blog index ---------- */
+.blog-hero{
+  max-width:1320px;margin:0 auto;
+  padding:clamp(48px,8vw,110px) clamp(20px,4vw,56px) clamp(36px,5vw,64px);
+  border-bottom:1px solid var(--rule);
+}
+.kicker{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  color:var(--ink);margin-bottom:clamp(24px,4vw,40px);
+}
+.kicker .dot{width:7px;height:7px;background:var(--accent);flex:0 0 auto;border-radius:0;}
+.blog-hero h1{
+  font-size:clamp(40px,7vw,96px);line-height:.98;
+  letter-spacing:-.035em;font-weight:700;text-wrap:balance;
+}
+.blog-hero p{
+  margin-top:clamp(20px,3vw,32px);
+  font-size:clamp(16px,1.7vw,21px);line-height:1.5;
+  max-width:36em;color:var(--muted);
+}
+
+.blog-grid{
+  max-width:1320px;margin:0 auto;
+  padding:0 clamp(20px,4vw,56px) clamp(56px,8vw,110px);
+  border-top:1px solid var(--rule);
+}
+.blog-card{
+  display:block;text-decoration:none;color:var(--ink);
+  border-bottom:1px solid var(--rule);
+  padding:clamp(26px,3.5vw,42px) clamp(16px,2vw,24px);
+  margin:0 clamp(-16px,-2vw,-24px);
+  background:transparent;border-radius:0;
+  transition:background .25s ease;
+}
+.blog-card:hover{background:var(--tint);}
+.blog-card .pill{margin-bottom:14px;}
+.blog-card h2{
+  font-size:clamp(22px,2.8vw,36px);font-weight:700;
+  letter-spacing:-.025em;line-height:1.1;text-wrap:balance;max-width:22em;
+}
+.blog-card .excerpt{
+  margin-top:14px;font-size:15px;line-height:1.55;
+  color:var(--muted);max-width:44em;
+}
+.blog-card .meta{
+  margin-top:16px;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:500;
+  color:var(--faint);
+}
+.blog-empty{
+  padding:clamp(40px,6vw,72px) 0;
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--faint);font-weight:500;
+}
+
+/* ---------- footer (both families) ---------- */
+footer,.site-footer{
+  border-top:1px solid var(--rule);
+  max-width:1320px;margin:0 auto;
+  padding:40px clamp(20px,4vw,56px) 56px;
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:24px;flex-wrap:wrap;
+  background:transparent;
+}
+.footer-logo{font-size:16px;font-weight:700;letter-spacing:.02em;color:var(--ink);}
+.footer-links{display:flex;gap:20px;flex-wrap:wrap;}
+.footer-link{
+  font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:500;
+  color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);
+}
+.footer-link:hover{color:var(--accent);border-color:var(--accent);}
