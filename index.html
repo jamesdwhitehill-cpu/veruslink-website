@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,723 +8,687 @@
 <meta property="og:description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into systems that actually ship.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
-:root{
-  --bg:#f4f4f5;
-  --card:#ffffff;
-  --accent:#2D9CDB;
-  --accent-rgb:45,156,219;
-  --accent-soft:rgba(45,156,219,0.08);
-  --text:#111111;
-  --text2:#555555;
-  --muted:#888888;
-  --black:#111111;
-  --border:#e0e0e0;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);font-size:16px;line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  :root{
+    --ink:#111827;
+    --paper:#ffffff;
+    --accent:#2D9CDB;
+    --tint:#F0F7FC;
+    --rule:rgba(17,24,39,.16);
+    --font:"Helvetica Neue",Helvetica,"Inter",Arial,sans-serif;
+    interpolate-size:allow-keywords;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;
+    line-height:1.5;
+  }
+  ::selection{background:var(--accent);color:#fff;}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,56px);}
 
-/* ── shared ── */
-.section{padding:64px max(40px,calc((100% - 1080px)/2));position:relative}
-.section.gray{background:var(--bg)}
-.section.white{background:var(--card)}
-.sec-label{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
-.sec-label-dot{width:4px;height:4px;border-radius:50%;background:var(--accent);flex-shrink:0}
-.sec-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;line-height:1.12;letter-spacing:-1px;margin-bottom:12px;color:var(--text)}
-.sec-h em{font-style:italic;font-weight:400;color:var(--accent)}
-.sec-h::after{content:'';display:block;width:40px;height:3px;background:var(--accent);margin-top:14px;border-radius:2px}
-.section.centered .sec-h::after{margin-left:auto;margin-right:auto}
-.sec-body{font-size:17px;color:var(--text2);line-height:1.75;margin-bottom:28px;max-width:700px}
+  /* ---------- micro type ---------- */
+  .micro{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  .idx{
+    font-variant-numeric:tabular-nums;
+    color:var(--accent);
+  }
 
-/* ── 1. nav ── */
-nav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;background:var(--black);position:sticky;top:0;z-index:100}
-.logo{font-size:15px;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:#fff;text-decoration:none}
-.nav-links{display:flex;gap:24px;align-items:center}
-.nav-link{font-size:13px;font-weight:500;color:rgba(255,255,255,0.6);letter-spacing:0.04em;text-decoration:none;cursor:pointer}
-.nav-link:hover{color:#fff}
-.nav-cta{font-size:12px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:9px 20px;border-radius:100px;border:none;cursor:pointer;text-decoration:none}
-.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;padding:0;background:none;border:none;cursor:pointer}
-.nav-toggle span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;margin:0 auto;transition:transform 0.2s ease,opacity 0.2s ease}
-.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
-.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.mobile-menu{position:absolute;top:100%;left:0;right:0;background:var(--black);flex-direction:column;padding:8px 20px 20px;border-top:1px solid rgba(255,255,255,0.1);box-shadow:0 14px 28px rgba(0,0,0,0.35);z-index:100}
-.mobile-menu[hidden]{display:none}
-.mobile-menu:not([hidden]){display:flex}
-.mobile-link{font-size:15px;font-weight:500;color:rgba(255,255,255,0.85);text-decoration:none;padding:15px 6px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.mobile-link:hover,.mobile-link:focus-visible{color:#fff}
-.mobile-cta{margin-top:14px;text-align:center;font-size:13px;font-weight:700;letter-spacing:0.06em;background:var(--accent);color:#fff;padding:14px 20px;border-radius:100px;text-decoration:none}
-.mobile-cta:hover,.mobile-cta:focus-visible{filter:brightness(1.08)}
-@media(min-width:769px){.mobile-menu{display:none!important}}
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .bar{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .wordmark{
+    font-weight:700;font-size:16px;letter-spacing:.02em;
+    text-decoration:none;color:var(--ink);
+  }
+  .wordmark span{color:var(--accent);}
+  nav{display:flex;gap:32px;align-items:center;}
+  nav a{
+    text-decoration:none;color:var(--ink);
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    position:relative;
+  }
+  nav a:not(.btn)::after{
+    content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;
+    background:var(--accent);transition:width .25s ease;
+  }
+  nav a:not(.btn):hover::after{width:100%;}
+  .btn{
+    display:inline-block;
+    background:var(--ink);color:#fff!important;
+    padding:12px 22px;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    text-decoration:none;
+    transition:background .2s ease;
+  }
+  .btn:hover{background:var(--accent);}
+  .btn.big{padding:20px 36px;font-size:13px;}
+  .btn.ghost{background:transparent;color:var(--ink)!important;border:1px solid var(--ink);}
+  .btn.ghost:hover{background:var(--ink);color:#fff!important;}
+  @media(max-width:860px){nav a:not(.btn){display:none;}}
 
-/* ── scroll animations ── */
-.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.4s ease,transform 0.4s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-.reveal-delay-1{transition-delay:0.05s}
-.reveal-delay-2{transition-delay:0.1s}
-.reveal-delay-3{transition-delay:0.15s}
-.reveal-delay-4{transition-delay:0.2s}
-@media(max-width:600px){.reveal{transform:translateY(16px)}}
-@media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
+  /* ---------- hero ---------- */
+  .hero{border-bottom:1px solid var(--rule);}
+  .hero-grid{
+    display:grid;grid-template-columns:1fr;gap:0;
+    padding:clamp(56px,9vh,120px) 0 0;
+  }
+  .kicker{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:28px;border-bottom:1px solid var(--rule);margin-bottom:clamp(28px,4vw,48px);
+  }
+  h1{
+    font-size:clamp(44px,9.2vw,138px);
+    line-height:.94;
+    letter-spacing:-.035em;
+    font-weight:700;
+    text-wrap:balance;
+  }
+  h1 .accent{color:var(--accent);}
+  .hero-sub{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+    padding:clamp(36px,5vw,64px) 0 clamp(48px,6vw,80px);
+    align-items:end;
+  }
+  .hero-sub p{
+    grid-column:1/8;
+    font-size:clamp(18px,2vw,24px);line-height:1.4;
+    max-width:34em;font-weight:400;
+  }
+  .hero-sub p strong{font-weight:700;}
+  .hero-cta{grid-column:9/13;justify-self:end;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
+  @media(max-width:900px){
+    .hero-sub{grid-template-columns:1fr;}
+    .hero-sub p,.hero-cta{grid-column:1/-1;justify-self:start;align-items:flex-start;}
+  }
 
-/* ── buttons ── */
-.btn-primary{background:var(--accent);color:#fff;font-size:13px;font-weight:700;letter-spacing:0.06em;padding:14px 28px;border-radius:100px;border:none;cursor:pointer;text-decoration:none;display:inline-block}
-.btn-primary:hover{filter:brightness(1.06)}
-.btn-ghost{background:transparent;color:var(--text);font-size:13px;font-weight:600;padding:14px 28px;border-radius:100px;border:1px solid var(--border);cursor:pointer;text-decoration:none;display:inline-block}
-.btn-ghost:hover{border-color:var(--accent);color:var(--accent)}
+  /* ---------- stat strip ---------- */
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+  }
+  .stat{
+    padding:clamp(28px,4vw,56px) clamp(20px,3vw,48px);
+    border-left:1px solid var(--rule);
+  }
+  .stat:first-child{border-left:none;padding-left:0;}
+  .stat .truth{
+    font-size:clamp(24px,2.6vw,38px);
+    font-weight:700;letter-spacing:-.025em;line-height:1.1;
+    text-wrap:balance;
+  }
+  .stat .truth em{font-style:normal;color:var(--accent);}
+  .stat .lbl{margin-top:14px;font-size:14px;line-height:1.45;max-width:16em;color:rgba(17,24,39,.72);}
+  @media(max-width:760px){
+    .stats{grid-template-columns:1fr;}
+    .stat{border-left:none;border-top:1px solid var(--rule);padding-left:0;}
+    .stat:first-child{border-top:none;}
+  }
 
-/* ── recurring inline cta line ── */
-.cta-line{text-align:center;padding:26px 20px;background:var(--bg)}
-.cta-line a{color:var(--accent);font-size:14px;font-weight:700;letter-spacing:0.04em;text-decoration:none}
-.cta-line a:hover{text-decoration:underline}
-.cta-line-sub{display:block;font-size:12px;color:var(--muted);margin-top:8px;letter-spacing:0.01em}
+  /* ---------- section scaffolding ---------- */
+  section{border-bottom:1px solid var(--rule);}
+  .sect-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:clamp(40px,6vw,72px) 0 clamp(28px,4vw,48px);
+  }
+  h2{
+    font-size:clamp(32px,5vw,72px);
+    letter-spacing:-.03em;line-height:1.02;font-weight:700;
+    text-wrap:balance;
+  }
+  h2 .accent{color:var(--accent);}
 
-/* ── 2. hero ── */
-.hero{padding:80px max(40px,calc((100% - 1080px)/2)) 64px;text-align:center;background:var(--card)}
-.hero-pill{display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid rgba(var(--accent-rgb),0.25);border-radius:100px;padding:6px 16px;font-size:12px;font-weight:600;color:var(--accent);letter-spacing:0.04em;margin-bottom:28px}
-.hero-pill-dot{width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.hero-h{font-size:clamp(2.2rem,5vw,3rem);font-weight:900;line-height:1.08;letter-spacing:-2px;margin-bottom:20px;color:var(--text)}
-.hero-h em{font-style:italic;font-weight:400;color:var(--muted)}
-.op-line{font-size:17px;font-weight:500;color:var(--text2);max-width:480px;margin:0 auto 36px;line-height:1.7}
-.op-line strong{color:var(--accent);font-weight:600}
-.hero-btns{display:flex;gap:12px;justify-content:center;text-align:center;flex-wrap:wrap;margin-bottom:14px}
-.hero-sub{font-size:13px;color:var(--muted);font-style:italic;margin-bottom:56px}
-/* ── hero split layout (text left, video right) ── */
-.hero-split{display:flex;align-items:flex-start;gap:48px;max-width:1200px;margin:0 auto;padding:0 40px}
-.hero-text{flex:1.2;text-align:left}
-.hero-text .hero-h{text-align:left}
-.hero-text .op-line{text-align:left;margin-left:0}
-.hero-text .hero-btns{justify-content:flex-start}
-.hero-video{flex:1;max-width:520px}
-.hero-video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;box-shadow:0 8px 30px rgba(0,0,0,0.08);background:#000}
-.hero-video-wrap iframe{position:absolute;top:0;left:0;width:100%;height:100%;border-radius:16px}
+  /* ---------- statement ---------- */
+  .statement{padding:clamp(64px,10vw,140px) 0;}
+  .statement p{
+    font-size:clamp(30px,4.6vw,64px);
+    line-height:1.08;letter-spacing:-.03em;font-weight:700;
+    max-width:18em;
+  }
+  .statement p .accent{color:var(--accent);}
+  .statement .micro{margin-bottom:24px;display:block;}
 
-.stat-pills{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;max-width:900px;margin:0 auto}
-.stat-pill{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:22px 24px;text-align:center;flex:1;min-width:160px;max-width:240px;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
-.stat-pill-n{font-size:2.1rem;font-weight:900;letter-spacing:-1px;color:var(--accent);line-height:1}
-.stat-pill-l{font-size:12px;font-weight:500;color:var(--text2);margin-top:8px;letter-spacing:0.02em;line-height:1.45}
-.stat-pill-src{font-size:10px;font-weight:500;color:var(--muted);margin-top:8px;letter-spacing:0.02em;line-height:1.4}
+  /* ---------- card grids (why now / done with you / data) ---------- */
+  .cardgrid{
+    display:grid;
+    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    margin-bottom:clamp(48px,7vw,96px);
+  }
+  .cardgrid.c4{grid-template-columns:repeat(4,1fr);}
+  .cardgrid.c3{grid-template-columns:repeat(3,1fr);}
+  .cardgrid.c2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:clamp(24px,3vw,40px);
+    transition:background .25s ease;
+  }
+  .card:hover{background:var(--tint);}
+  .card .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:18px;font-variant-numeric:tabular-nums;}
+  .card h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:10px;}
+  .card p{font-size:14px;color:rgba(17,24,39,.72);line-height:1.5;}
+  @media(max-width:980px){.cardgrid.c4{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:760px){.cardgrid.c3,.cardgrid.c2{grid-template-columns:1fr;}}
+  @media(max-width:560px){.cardgrid.c4{grid-template-columns:1fr;}}
 
-/* ── 3. points ── */
-.points{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:8px}
-.point{background:var(--card);border:0.5px solid var(--border);border-top:3px solid var(--accent);border-radius:14px;padding:24px}
-.point-num{width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;line-height:1;margin-bottom:16px}
-.point-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
-.point-body{font-size:15px;color:var(--text2);line-height:1.65}
+  /* ---------- systems ---------- */
+  .sys-list{border-top:1px solid var(--rule);margin-bottom:clamp(48px,7vw,96px);}
+  .sys{
+    display:grid;
+    grid-template-columns:80px 1fr 1.2fr auto;
+    gap:24px;align-items:center;
+    padding:clamp(22px,3vw,34px) 0;
+    border-bottom:1px solid var(--rule);
+    position:relative;
+    cursor:default;
+  }
+  .sys::before{
+    content:"";position:absolute;inset:0;
+    background:var(--tint);
+    transform:scaleX(0);transform-origin:left;
+    transition:transform .35s cubic-bezier(.4,0,.2,1);
+    z-index:-1;
+  }
+  .sys:hover::before{transform:scaleX(1);}
+  .sys .n{font-size:13px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;}
+  .sys .name{
+    font-size:clamp(20px,2.6vw,32px);font-weight:700;letter-spacing:-.02em;
+  }
+  .sys .brand{
+    display:block;font-size:11px;font-weight:600;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--accent);margin-top:6px;
+  }
+  .sys .desc{font-size:15px;color:rgba(17,24,39,.72);max-width:30em;}
+  .sys .arrow{
+    font-size:22px;color:var(--ink);
+    transition:transform .3s ease,color .3s ease;
+  }
+  .sys:hover .arrow{transform:translateX(6px);color:var(--accent);}
+  @media(max-width:820px){
+    .sys{grid-template-columns:48px 1fr;grid-template-rows:auto auto;}
+    .sys .desc{grid-column:2;}
+    .sys .arrow{display:none;}
+  }
 
-/* ── why now band ── */
-.whynow{padding:48px max(40px,calc((100% - 1080px)/2));background:var(--bg);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
+  /* ---------- plan / ladder ---------- */
+  .ladder{
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    margin-bottom:clamp(48px,7vw,96px);
+  }
+  .step{
+    border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:clamp(24px,3vw,40px);
+    min-height:300px;
+    display:flex;flex-direction:column;justify-content:space-between;
+    transition:background .25s ease;
+  }
+  .step:hover{background:var(--tint);}
+  .step .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:20px;font-variant-numeric:tabular-nums;}
+  .step h3{font-size:clamp(19px,1.8vw,24px);letter-spacing:-.015em;line-height:1.15;margin-bottom:12px;}
+  .step p{font-size:14px;color:rgba(17,24,39,.72);line-height:1.5;}
+  .step .price{
+    margin-top:24px;font-size:clamp(22px,2.2vw,32px);font-weight:700;letter-spacing:-.02em;
+  }
+  .step .price small{display:block;font-size:12px;font-weight:400;color:rgba(17,24,39,.6);letter-spacing:0;margin-top:4px;}
+  .step.free .price{color:var(--accent);}
+  .step .mini{
+    display:inline-block;margin-top:12px;font-size:12px;font-weight:600;
+    color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);
+    letter-spacing:.04em;
+  }
+  .step .mini:hover{color:var(--ink);border-color:var(--ink);}
+  @media(max-width:900px){.ladder{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.ladder{grid-template-columns:1fr;}}
+  .founding{
+    border-left:3px solid var(--accent);
+    padding:20px 0 20px clamp(20px,2.5vw,32px);
+    margin:calc(-1*clamp(24px,4vw,64px)) 0 clamp(48px,7vw,96px);
+  }
+  .founding .micro{display:block;margin-bottom:10px;}
+  .founding p{font-size:clamp(16px,1.6vw,20px);line-height:1.55;max-width:42em;color:rgba(17,24,39,.85);}
+  .founding p strong{color:var(--ink);}
 
-/* ── 4. AOA how it works ── */
-.aoa{display:flex;align-items:stretch;gap:10px;margin-top:8px}
-.aoa-step{flex:1;background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px 22px;text-align:center}
-.aoa-step.mid{border:1.5px solid var(--accent)}
-.aoa-ico{width:48px;height:48px;border-radius:12px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;line-height:1;margin:0 auto 16px}
-.aoa-ico svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.8}
-.aoa-name{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px}
-.aoa-desc{font-size:14px;color:var(--muted);line-height:1.55}
-.aoa-arrow{display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:26px;font-weight:700;flex-shrink:0}
+  /* ---------- comparison ---------- */
+  .compare{width:100%;border-collapse:collapse;margin-bottom:clamp(48px,7vw,96px);}
+  .compare th,.compare td{
+    border:1px solid var(--rule);
+    padding:clamp(12px,1.8vw,22px);
+    text-align:left;vertical-align:top;
+    font-size:15px;
+  }
+  .compare thead th{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    background:var(--paper);
+  }
+  .compare thead th.hl{background:var(--ink);color:#fff;}
+  .compare td.hl{background:var(--tint);font-weight:600;}
+  .compare tbody th{font-weight:600;font-size:14px;width:20%;background:var(--paper);}
+  @media(max-width:700px){
+    .compare thead th:nth-child(2),.compare tbody td:nth-child(2){display:none;}
+  }
 
-/* ── 5. inline cta bar ── */
-.cta-bar{background:var(--card);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border);padding:36px 20px;text-align:center}
-.cta-bar-inner{max-width:500px;margin:0 auto}
-.cta-bar-text{font-size:17px;color:var(--text);font-weight:600;margin-bottom:18px;line-height:1.5}
-.cta-bar-text strong{color:var(--accent)}
-.cta-bar-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  /* ---------- results ---------- */
+  .result .big{
+    font-size:clamp(36px,4.5vw,64px);font-weight:700;letter-spacing:-.03em;line-height:1;
+    color:var(--accent);margin-bottom:14px;font-variant-numeric:tabular-nums;
+  }
+  .result .who{margin-top:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(17,24,39,.55);font-weight:500;}
 
-/* ── 6. done with you cards ── */
-.dwy{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-.dwy-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
-.dwy-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:100px;margin-bottom:14px}
-.dwy-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:8px;line-height:1.35}
-.dwy-body{font-size:15px;color:var(--text2);line-height:1.65}
+  /* ---------- founder ---------- */
+  .founder-grid{
+    display:grid;grid-template-columns:minmax(260px,420px) 1fr;gap:clamp(32px,5vw,80px);
+    align-items:start;
+    padding-bottom:clamp(48px,7vw,96px);
+  }
+  .founder-photo{
+    width:100%;aspect-ratio:4/5;object-fit:cover;
+    filter:grayscale(1) contrast(1.05);
+    border:1px solid var(--rule);
+    display:block;
+    transition:filter .4s ease;
+  }
+  .founder-photo:hover{filter:grayscale(0);}
+  .founder-copy h3{font-size:clamp(24px,2.6vw,36px);letter-spacing:-.02em;margin-bottom:6px;}
+  .founder-copy .role{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:24px;}
+  .founder-copy p{font-size:clamp(16px,1.5vw,19px);line-height:1.6;max-width:36em;margin-bottom:18px;color:rgba(17,24,39,.85);}
+  .founder-copy p strong{color:var(--ink);}
+  .founder-fallback{
+    display:flex;align-items:center;justify-content:center;
+    background:var(--tint);color:var(--accent);
+    font-size:clamp(64px,8vw,120px);font-weight:700;letter-spacing:-.04em;
+  }
+  @media(max-width:820px){.founder-grid{grid-template-columns:1fr;}.founder-photo{max-width:340px;}}
 
-/* ── 7. benefits grid ── */
-.benefits{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-.benefit{background:var(--card);border:0.5px solid var(--border);border-radius:14px;padding:24px}
-.benefit-ico{width:40px;height:40px;border-radius:10px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;line-height:1;margin-bottom:14px}
-.benefit-ico svg{width:22px;height:22px;stroke:var(--accent);fill:none;stroke-width:1.8}
-.benefit-label{font-size:15px;font-weight:700;color:var(--text);line-height:1.4}
+  /* ---------- fit filter ---------- */
+  .fit-grid{
+    display:grid;grid-template-columns:1fr 1fr;
+    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    margin-bottom:clamp(48px,7vw,96px);
+  }
+  .fit-col{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:clamp(24px,3vw,40px);}
+  .fit-col h3{font-size:clamp(18px,1.8vw,24px);letter-spacing:-.015em;margin-bottom:20px;}
+  .fit-col.yes h3{color:var(--accent);}
+  .fit-col ul{list-style:none;}
+  .fit-col li{
+    padding:12px 0;border-bottom:1px solid var(--rule);
+    font-size:15px;display:flex;gap:14px;align-items:baseline;
+  }
+  .fit-col li:last-child{border-bottom:none;}
+  .fit-col .mark{font-weight:700;flex:0 0 auto;}
+  .fit-col.yes .mark{color:var(--accent);}
+  .fit-col.no .mark{color:rgba(17,24,39,.4);}
+  @media(max-width:760px){.fit-grid{grid-template-columns:1fr;}}
 
-/* ── 8. comparison table ── */
-.compare-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
-.compare{width:100%;border-collapse:separate;border-spacing:0;background:var(--card);border:0.5px solid var(--border);border-radius:16px;overflow:hidden;min-width:640px}
-.compare th,.compare td{padding:16px 18px;text-align:left;font-size:14px;border-bottom:0.5px solid var(--border)}
-.compare thead th{font-size:12px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;color:var(--muted);background:var(--bg)}
-.compare thead th.win{background:var(--accent);color:#fff}
-.compare tbody tr:last-child td{border-bottom:none}
-.compare td.rowlabel{font-weight:700;color:var(--text);background:var(--bg);width:24%}
-.compare td{color:var(--text2)}
-.compare td.win{color:var(--text);font-weight:700}
-.compare col.wincol,.compare th.win,.compare td.win{background:var(--accent-soft)}
+  /* ---------- FAQ ---------- */
+  .faq-list{border-top:1px solid var(--rule);margin-bottom:clamp(48px,7vw,96px);}
+  .faq-list details{border-bottom:1px solid var(--rule);}
+  .faq-list summary{
+    list-style:none;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+    padding:clamp(18px,2.4vw,28px) 0;
+    font-size:clamp(17px,1.8vw,22px);font-weight:600;letter-spacing:-.01em;
+    transition:color .2s ease;
+  }
+  .faq-list summary::-webkit-details-marker{display:none;}
+  .faq-list summary:hover{color:var(--accent);}
+  .faq-list summary .pm{
+    flex:0 0 auto;font-weight:400;font-size:22px;color:var(--accent);
+    transition:transform .3s ease;
+  }
+  .faq-list details[open] summary .pm{transform:rotate(45deg);}
+  .faq-list details p{
+    padding:0 0 clamp(20px,2.4vw,28px);
+    font-size:15px;line-height:1.6;color:rgba(17,24,39,.75);max-width:44em;
+  }
+  .faq-list details::details-content{
+    block-size:0;overflow:hidden;
+    transition:block-size .3s ease,content-visibility .3s allow-discrete;
+  }
+  .faq-list details[open]::details-content{block-size:auto;}
 
-/* ── 9. pricing ── */
-.pricing{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:8px;align-items:start}
-.pricing-direct{font-size:13px;color:var(--text2);margin-top:8px;text-align:center}
-.pricing-direct a{color:var(--accent);text-decoration:underline}
-.price-card{background:var(--card);border:0.5px solid var(--border);border-radius:20px;padding:32px;position:relative}
-.price-card.featured{border:1.5px solid var(--accent)}
-.price-badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:18px}
-.price-badge.black{background:var(--black);color:#fff}
-.price-badge.accent{background:var(--accent);color:#fff}
-.price-name{font-size:15px;font-weight:700;color:var(--text);margin-bottom:10px;letter-spacing:0.02em}
-.price-n{font-size:clamp(2.4rem,6vw,3.2rem);font-weight:900;letter-spacing:-2px;color:var(--text);line-height:1}
-.price-term{font-size:13px;color:var(--muted);margin-top:6px;margin-bottom:16px;line-height:1.4}
-.price-desc{font-size:15px;color:var(--text2);line-height:1.6;margin-bottom:20px}
-.price-list{list-style:none;margin-bottom:24px;display:flex;flex-direction:column;gap:10px}
-.price-list li{font-size:14px;color:var(--text2);line-height:1.5;display:flex;gap:10px;align-items:flex-start}
-.price-list li svg{width:16px;height:16px;stroke:var(--accent);fill:none;stroke-width:2.2;flex-shrink:0;margin-top:2px}
-.price-card .btn-primary,.price-card .btn-ghost{display:block;text-align:center}
-.price-credit{font-size:14.5px;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:10px;padding:12px 16px;margin-bottom:24px;line-height:1.5}
+  /* ---------- final CTA ---------- */
+  .final{padding:clamp(72px,12vw,160px) 0;border-bottom:1px solid var(--rule);}
+  .final h2{font-size:clamp(40px,7.5vw,110px);max-width:9.5em;}
+  .final .row{
+    display:flex;gap:20px;flex-wrap:wrap;align-items:center;
+    margin-top:clamp(32px,5vw,56px);
+  }
+  .final .note{font-size:14px;color:rgba(17,24,39,.6);}
 
-/* ── 10. guarantee ── */
-.guarantee-wrap{padding:56px max(40px,calc((100% - 1080px)/2));background:var(--bg)}
-.guarantee{background:var(--accent-soft);border-radius:20px;max-width:600px;margin:0 auto;padding:40px 36px;text-align:center}
-.guarantee-h{font-size:1.5rem;font-weight:900;letter-spacing:-0.5px;color:var(--text);margin-bottom:14px}
-.guarantee-body{font-size:16px;color:var(--text2);line-height:1.7}
+  /* ---------- footer ---------- */
+  footer{padding:40px 0 56px;}
+  .foot{
+    display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;
+  }
+  .foot .micro{color:rgba(17,24,39,.55);}
+  .foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .foot a:hover{border-color:var(--accent);color:var(--accent);}
+  .foot .links{display:flex;gap:20px;flex-wrap:wrap;}
 
-/* ── 10b. trust ── */
-.trust-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:8px}
-.trust-card{background:var(--card);border:0.5px solid var(--border);border-top:3px solid var(--accent);border-radius:14px;padding:24px}
-.trust-title{font-size:15px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.4}
-.trust-body{font-size:15px;color:var(--text2);line-height:1.65}
-
-/* ── 11. proof ── */
-.proof-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
-.proof-card{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
-.proof-n{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:var(--accent);margin-bottom:8px;line-height:1}
-.proof-ctx{font-size:15px;color:var(--text2);line-height:1.55;margin-bottom:12px}
-.proof-from{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted)}
-.proof-note{font-size:14px;color:var(--muted);font-style:italic;line-height:1.6;margin-top:20px;max-width:620px}
-
-/* ── 12. founder ── */
-.founder-inner{display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap}
-.founder-avatar{width:132px;height:176px;border-radius:16px;object-fit:cover;object-position:center top;flex-shrink:0;display:block;border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,0.12)}
-.founder-content{flex:1;min-width:240px}
-.founder-name{font-size:1.6rem;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px;color:var(--text)}
-.founder-title{font-size:13px;color:var(--accent);font-weight:600;margin-bottom:18px}
-.founder-bio{font-size:16px;color:var(--text2);line-height:1.75;margin-bottom:14px;max-width:640px}
-.tf-strip{display:block;text-align:center;margin-top:8px;background:var(--bg);border:0.5px solid var(--border);border-radius:12px;padding:12px 18px;font-size:13px;color:#888;line-height:1.5;max-width:640px}
-
-/* ── blog strip ── */
-.blog-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-.blog-card{display:block;background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:24px;text-decoration:none;transition:border-color .15s ease,transform .15s ease}
-.blog-card:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(var(--accent-rgb),0.14)}
-.blog-cat{display:inline-block;font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 12px;border-radius:100px;margin-bottom:14px}
-.blog-title{font-size:16px;font-weight:800;color:var(--text);line-height:1.35;margin-bottom:10px}
-.blog-meta{font-size:12px;color:var(--muted);letter-spacing:0.02em}
-
-/* ── named systems ── */
-.systems{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
-.system-card{background:var(--card);border:0.5px solid var(--border);border-left:4px solid var(--accent);border-radius:14px;padding:22px 24px}
-.system-ico{width:32px;height:32px;border-radius:8px;background:var(--accent-soft);display:flex;align-items:center;justify-content:center;line-height:1;margin-bottom:12px}
-.system-ico svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.system-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
-.system-desc{font-size:14px;color:var(--text2);line-height:1.6}
-
-/* ── 13. faq ── */
-.faqs{display:flex;flex-direction:column;gap:10px;margin-top:20px;max-width:760px}
-.faq{background:var(--card);border:0.5px solid var(--border);border-radius:12px;padding:20px 22px;cursor:pointer}
-.faq-q{font-size:15px;font-weight:700;color:var(--text);display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
-.faq-icon{font-size:20px;color:var(--accent);flex-shrink:0;transition:transform 0.2s;line-height:1}
-.faq-a{font-size:15px;color:var(--text2);line-height:1.7;margin-top:12px;display:none;border-left:2px solid var(--accent);padding-left:16px;margin-left:2px}
-.faq.open .faq-a{display:block}
-.faq.open .faq-icon{transform:rotate(45deg)}
-
-/* ── 14. fit ── */
-.fit-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
-.fit-col{background:var(--card);border:0.5px solid var(--border);border-radius:16px;padding:26px}
-.fit-col-head{display:inline-block;font-size:12px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#fff;background:var(--black);padding:6px 16px;border-radius:100px;margin-bottom:18px}
-.fit-item{font-size:15px;color:var(--text2);padding:9px 0;border-bottom:0.5px solid var(--border);line-height:1.45;display:flex;align-items:flex-start;gap:10px}
-.fit-item:last-child{border-bottom:none}
-.fit-item.yes{color:var(--text)}
-.fit-check{color:var(--accent);flex-shrink:0;font-weight:700}
-.fit-cross{color:var(--muted);flex-shrink:0}
-
-/* ── 15. close ── */
-.close{padding:80px max(40px,calc((100% - 1080px)/2));text-align:center;background:var(--black)}
-.close-pre{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:20px}
-.close-h{font-size:clamp(1.8rem,4vw,2.4rem);font-weight:900;letter-spacing:-1px;color:#fff;line-height:1.2;margin-bottom:28px}
-.close-h em{font-style:italic;font-weight:400;color:var(--accent)}
-.close-micro{font-size:13px;color:rgba(255,255,255,0.45);margin-top:18px;font-style:italic}
-.close-sub{font-size:15px;color:rgba(255,255,255,0.65);max-width:480px;margin:0 auto 28px;line-height:1.6}
-.close-secondary{display:block;margin-top:22px;font-size:13px;font-weight:500;color:rgba(255,255,255,0.45);text-decoration:none}
-.close-secondary:hover{color:rgba(255,255,255,0.8)}
-
-/* ── 16. footer ── */
-footer{padding:24px 40px;background:var(--black);display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
-.footer-logo{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.4)}
-.footer-mark{display:inline-flex;width:24px;height:24px;border-radius:6px;background:var(--accent);color:#fff;align-items:center;justify-content:center;font-size:14px;font-weight:900;letter-spacing:0;flex-shrink:0}
-.footer-links{display:flex;gap:20px}
-.footer-link{font-size:11px;color:rgba(255,255,255,0.4);text-decoration:none}
-.footer-link:hover{color:#fff}
-.footer-social{display:flex;gap:12px;align-items:center}
-.social-btn{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:var(--accent);text-decoration:none;transition:background-color .15s ease,color .15s ease,transform .15s ease}
-.social-btn svg{width:24px;height:24px;display:block}
-.social-btn:hover,.social-btn:focus-visible{background:var(--accent);color:#fff;transform:translateY(-2px)}
-.social-btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-
-/* ── responsive ── */
-@media(max-width:768px){
-  .nav-links{display:none}
-  .nav-toggle{display:flex}
-  .points{grid-template-columns:1fr}
-  .dwy{grid-template-columns:1fr}
-  .trust-grid{grid-template-columns:1fr}
-  .benefits{grid-template-columns:repeat(2,1fr)}
-  .pricing{grid-template-columns:1fr}
-  .proof-grid{grid-template-columns:1fr}
-  .fit-grid{grid-template-columns:1fr}
-  .blog-strip{grid-template-columns:1fr}
-  .systems{grid-template-columns:1fr}
-  .aoa{flex-direction:column}
-  .aoa-arrow{transform:rotate(90deg);padding:4px 0}
-  .stat-pills{flex-direction:column;align-items:flex-start}
-  .stat-pill{max-width:100%;width:100%}
-  .hero-split{flex-direction:column;gap:32px;padding:0 20px}
-  .hero-text{text-align:center}
-  .hero-text .hero-h{text-align:center}
-  .hero-text .op-line{text-align:center;margin-left:auto;margin-right:auto}
-  .hero-text .hero-btns{justify-content:center}
-  .hero-video{max-width:100%;width:100%}
-}
-@media(max-width:600px){
-  nav{padding:16px 20px}
-  .nav-links .nav-link{display:none}
-  .hero,.section,.whynow,.guarantee-wrap,.close{padding-left:20px;padding-right:20px}
-  .hero-h{font-size:2.2rem}
-  footer{padding:20px}
-}
+  /* ---------- reveal animation ---------- */
+  html.js .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);}
+  html.js .rv.in{opacity:1;transform:none;}
+  .rv.d1{transition-delay:.08s;}
+  .rv.d2{transition-delay:.16s;}
+  .rv.d3{transition-delay:.24s;}
+  @media(prefers-reduced-motion:reduce){
+    html.js .rv{opacity:1;transform:none;transition:none;}
+    .faq-list details::details-content{transition:none;}
+  }
 </style>
-<noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
 </head>
 <body>
 
-<!-- 1. NAV -->
-<nav>
-  <a href="/" class="logo">VerusLink</a>
-  <div class="nav-links">
-    <a href="#how-it-works" class="nav-link">How it works</a>
-    <a href="#about" class="nav-link">About</a>
-    <a href="/blog" class="nav-link">Blog</a>
-    <a href="#faqs" class="nav-link">FAQs</a>
-    <a href="https://www.veruslink.au/audit" class="nav-cta">Start the free audit</a>
+<header>
+  <div class="wrap bar">
+    <a class="wordmark" href="#">VERUS<span>LINK</span></a>
+    <nav>
+      <a href="#plan">How it works</a>
+      <a href="#founder">About</a>
+      <a href="https://www.veruslink.au/blog">Blog</a>
+      <a href="#faqs">FAQs</a>
+      <a class="btn" href="https://www.veruslink.au/audit">Free AI Audit</a>
+    </nav>
   </div>
-  <button class="nav-toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu">
-    <span></span><span></span><span></span>
-  </button>
-  <div class="mobile-menu" id="mobileMenu" hidden>
-    <a href="#how-it-works" class="mobile-link">How it works</a>
-    <a href="#about" class="mobile-link">About</a>
-    <a href="/blog" class="mobile-link">Blog</a>
-    <a href="#faqs" class="mobile-link">FAQs</a>
-    <a href="https://www.veruslink.au/audit" class="mobile-cta">Start the free audit</a>
-  </div>
-</nav>
+</header>
 
-<!-- 2. HERO -->
 <section class="hero">
-  <div class="hero-pill"><div class="hero-pill-dot"></div>We handle AI so you never have to.</div>
-  <div class="hero-split">
-    <div class="hero-text">
-      <h1 class="hero-h">You already tried AI. <br><em>That's the problem.</em></h1>
-      <p class="op-line">You don't need to understand AI. <strong>You need someone who does.</strong></p>
-      <div class="hero-btns">
-        <a href="https://www.veruslink.au/audit" class="btn-primary">Start Your Free AI Audit →</a>
-        <a href="#how-it-works" class="btn-ghost">See how it works</a>
-      </div>
+  <div class="wrap hero-grid">
+    <div class="kicker rv">
+      <span class="micro">Practical AI workflows, installed and run for you</span>
+      <span class="micro">Sydney, Australia</span>
     </div>
-    <div class="hero-video">
-      <div class="hero-video-wrap">
-        <iframe
-          src="https://www.youtube.com/embed/W3Cpc0X0zdc?rel=0&modestbranding=1&playsinline=1"
-          title="Meet VerusLink"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen>
-        </iframe>
+    <h1 class="rv d1">You already tried AI.<br><span class="accent">That&rsquo;s the problem.</span></h1>
+    <div class="hero-sub">
+      <p class="rv d2">You bought the tools. Watched the tutorials. You&rsquo;re still doing 12 jobs at once. <strong>VerusLink builds and runs practical AI workflows inside the tools you already use.</strong> Leads followed up. Admin handled. Nothing important falls through the cracks.</p>
+      <div class="hero-cta rv d3">
+        <a class="btn big" href="https://www.veruslink.au/audit">Find your biggest operational leak</a>
+        <span class="micro">Ten minutes. You leave knowing what to fix first.</span>
       </div>
     </div>
   </div>
-  <p class="hero-sub">5 minutes. No call. No commitment.</p>
-  <p style="font-size:13px;color:var(--muted);max-width:640px;margin:0 auto;line-height:1.6;text-align:center">40% of AI tools go unused. 42% of SMEs tried and got nothing. 88% lack the in-house expertise.</p>
 </section>
 
-<!-- 3. AI DIDN'T FAIL YOU -->
-<section class="section gray">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>What's actually going on</div>
-  <h2 class="sec-h reveal">AI didn't fail you.<br><em>Application did.</em></h2>
-  <p class="sec-body">The gap isn't the tools. It's between what they can do and what's running in your business on a Tuesday afternoon.</p>
-  <div class="points">
-    <div class="point"><div class="point-num">01</div><div class="point-title">Your first win needs to land in 2 weeks or it never sticks.</div></div>
-    <div class="point"><div class="point-num">02</div><div class="point-title">You don't have time to learn, test, and implement.</div></div>
-    <div class="point"><div class="point-num">03</div><div class="point-title">Most consultants deliver decks. Not working systems.</div></div>
+<section class="statwrap">
+  <div class="wrap stats">
+    <div class="stat rv"><div class="truth">Follow-up relies on <em>memory.</em></div><div class="lbl">That&rsquo;s why leads go cold. Not because anyone stopped caring.</div></div>
+    <div class="stat rv d1"><div class="truth">Onboarding is a <em>scavenger hunt.</em></div><div class="lbl">Documents, answers and approvals scattered across inboxes and attachments.</div></div>
+    <div class="stat rv d2"><div class="truth">You are the <em>integration layer.</em></div><div class="lbl">Every system and every person still routes through the owner.</div></div>
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a></div>
+<section class="statement">
+  <div class="wrap">
+    <span class="micro rv idx">01 / The Promise</span>
+    <p class="rv d1">AI didn&rsquo;t fail you. <span class="accent">Application did.</span> The gap isn&rsquo;t the tools. It&rsquo;s between what they can do and what&rsquo;s running in your business on a Tuesday afternoon.</p>
+  </div>
+</section>
 
-<!-- WHY NOW (preserved copy) -->
-<div class="whynow">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>Why now</div>
-  <h2 class="sec-h reveal">Why now.<br><em>The squeeze is real.</em></h2>
-  <p class="sec-body" style="margin-bottom:0">Operating costs are up again. Super is rising. Card surcharge bans land October 2026. AI is now a cost lever, not a gimmick, and every quarter you delay, rising costs eat more margin.</p>
-</div>
-
-<!-- 4. HOW IT WORKS, AOA -->
-<section class="section white" id="how-it-works">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>What we actually do</div>
-  <h2 class="sec-h reveal">How it works.<br><em>Four steps. Start free.</em></h2>
-  <p class="sec-body">Free audit, then a no-pressure intro call, then a paid assessment, then ongoing implementation. You only move forward if it's worth it.</p>
-  <div class="aoa">
-    <div class="aoa-step reveal reveal-delay-1">
-      <!-- ICON PLACEHOLDER: step-1-audit -->
-      <div class="aoa-ico"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16" y1="16" x2="21" y2="21"/></svg></div>
-      <div class="aoa-name">Free AI Audit</div>
-      <div class="aoa-desc">Answer a few questions about how your business runs. We review every one personally.</div>
+<section id="whynow">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Why now.<br><span class="accent">The squeeze is real.</span></h2>
+      <span class="micro rv idx">02 / The Timing</span>
     </div>
-    <div class="aoa-arrow">→</div>
-    <div class="aoa-step reveal reveal-delay-2">
-      <!-- ICON PLACEHOLDER: step-2-intro -->
-      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M15.5 3H18a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2.5"/><path d="M4 7l6 4-6 4V7z"/></svg></div>
-      <div class="aoa-name">15-Min Intro Call</div>
-      <div class="aoa-desc">We walk through your results. No pitch. No pressure. Just a conversation about what the numbers mean for your business.</div>
-    </div>
-    <div class="aoa-arrow">→</div>
-    <div class="aoa-step mid reveal reveal-delay-3">
-      <!-- ICON PLACEHOLDER: step-3-assessment -->
-      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M5 7h14M5 7l1 13a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1l1-13M9 7V4h6v3"/></svg></div>
-      <div class="aoa-name">Assessment ($999)</div>
-      <div class="aoa-desc">60 minutes. We map your operations and deliver a branded report with a two phase build plan. If you proceed, the $999 is credited to your first month.</div>
-    </div>
-    <div class="aoa-arrow">→</div>
-    <div class="aoa-step reveal reveal-delay-4">
-      <!-- ICON PLACEHOLDER: step-4-concierge -->
-      <div class="aoa-ico"><svg viewBox="0 0 24 24"><path d="M4 17l5-5-5-5M12 19h8"/></svg></div>
-      <div class="aoa-name">Concierge ($1,500/mo)</div>
-      <div class="aoa-desc">We implement, monitor, and refine your AI systems monthly. No lock-in.</div>
+    <div class="cardgrid c4">
+      <div class="card rv"><div class="n">01</div><h3>Costs keep climbing</h3><p>Every operating cost is up. Every hour you buy back goes straight to margin.</p></div>
+      <div class="card rv d1"><div class="n">02</div><h3>Payroll costs more</h3><p>Super contributions have risen. The same team costs more this year than last.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>October 2026</h3><p>Card surcharge rules land. Thin-margin businesses feel it first.</p></div>
+      <div class="card rv d3"><div class="n">04</div><h3>AI is now a cost lever</h3><p>Not a gimmick. Every month you wait, the margin walks out the door.</p></div>
     </div>
   </div>
 </section>
 
-<!-- 5. INLINE CTA BAR -->
-<div class="cta-bar">
-  <div class="cta-bar-inner">
-    <div class="cta-bar-btns">
-      <a href="https://www.veruslink.au/audit" class="btn-primary">Start Your Free AI Audit →</a>
+<section id="systems">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Named systems<br>we install.</h2>
+      <span class="micro rv idx">03 / What We Build</span>
     </div>
-  </div>
-</div>
-
-<!-- 6. DONE WITH YOU. NOT DONE FOR YOU. -->
-<section class="section gray">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>The relationship</div>
-  <h2 class="sec-h reveal">Done with you.<br><em>Not done for you.</em></h2>
-  <p class="sec-body">Not a course. Not a consultant who hands you a report.</p>
-  <div class="dwy">
-    <div class="dwy-card">
-      <div class="dwy-badge">The audit</div>
-      <div class="dwy-title">We come prepared</div>
-      <div class="dwy-body">We arrive at call one already knowing where your time goes and which fixes matter most.</div>
-    </div>
-    <div class="dwy-card">
-      <div class="dwy-badge">Every call</div>
-      <div class="dwy-title">Audit, Optimise, Activate</div>
-      <div class="dwy-body">You share your screen. We fix the process first, then wire in AI, because automating chaos just gives you faster chaos. Every call ships at least one working system.</div>
-    </div>
-    <div class="dwy-card">
-      <div class="dwy-badge">Between calls</div>
-      <div class="dwy-title">Always in your corner</div>
-      <div class="dwy-body">Unlimited async support via voice message, answered within 12 business hours. You're never stuck.</div>
+    <div class="sys-list">
+      <div class="sys rv"><span class="n">01</span><span class="name">Never miss a follow-up<span class="brand">The Chase System</span></span><span class="desc">Lead and invoice follow-up that keeps moving until a human needs to step in.</span><span class="arrow">&rarr;</span></div>
+      <div class="sys rv"><span class="n">02</span><span class="name">Your daily owner brief<span class="brand">The Morning Brief</span></span><span class="desc">What needs attention, what&rsquo;s stuck and what&rsquo;s moving, before the first coffee.</span><span class="arrow">&rarr;</span></div>
+      <div class="sys rv"><span class="n">03</span><span class="name">Expenses that file themselves<span class="brand">The Receipts Engine</span></span><span class="desc">Photographs, categorises and logs every expense the moment it happens.</span><span class="arrow">&rarr;</span></div>
+      <div class="sys rv"><span class="n">04</span><span class="name">Friction-free client intake<span class="brand">The Intake Engine</span></span><span class="desc">The right documents, answers and approvals collected before your team chases anything.</span><span class="arrow">&rarr;</span></div>
+      <div class="sys rv"><span class="n">05</span><span class="name">Reports without the late night<span class="brand">The Report Builder</span></span><span class="desc">Monthly reporting, assembled and formatted without you lifting a finger.</span><span class="arrow">&rarr;</span></div>
     </div>
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a></div>
-
-<!-- 7b. NAMED SYSTEMS WE INSTALL -->
-<section class="section white">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>What we install</div>
-  <h2 class="sec-h reveal">Named systems we install.</h2>
-  <p class="sec-body">Not vague "automation." Specific systems, each one built and running in a real business before we bring it to yours.</p>
-  <div class="systems">
-    <div class="system-card reveal reveal-delay-1"><div class="system-ico"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v4h-4"/></svg></div><div class="system-name">The Chase System</div><div class="system-desc">Follow-up that runs itself, so no lead or invoice ever goes cold.</div></div>
-    <div class="system-card reveal reveal-delay-2"><div class="system-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></div><div class="system-name">The Morning Brief</div><div class="system-desc">A daily intelligence summary waiting for you before the first coffee.</div></div>
-    <div class="system-card reveal reveal-delay-3"><div class="system-ico"><svg viewBox="0 0 24 24"><path d="M3 8a2 2 0 0 1 2-2h2l1.5-2h7L17 6h2a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="13" r="3.5"/></svg></div><div class="system-name">The Receipts Engine</div><div class="system-desc">Financial document capture that photographs, categorises, and logs every expense.</div></div>
-    <div class="system-card reveal reveal-delay-1"><div class="system-ico"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="15" rx="2"/><path d="M9 5V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M8.5 11h7M8.5 15h5"/></svg></div><div class="system-name">The Intake Engine</div><div class="system-desc">Client onboarding that collects and verifies documents before you touch the file.</div></div>
-    <div class="system-card reveal reveal-delay-2"><div class="system-ico"><svg viewBox="0 0 24 24"><line x1="3" y1="20" x2="21" y2="20"/><line x1="6" y1="20" x2="6" y2="12"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="18" y1="20" x2="18" y2="9"/></svg></div><div class="system-name">The Report Builder</div><div class="system-desc">Monthly reporting, assembled and formatted without you lifting a finger.</div></div>
+<section id="plan">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Four steps.<br>Start free.</h2>
+      <span class="micro rv idx">04 / The Plan</span>
+    </div>
+    <div class="ladder">
+      <div class="step free rv">
+        <div><div class="n">Step 01</div><h3>Free AI Audit</h3><p>Ten minutes. We find where your business is bleeding hours and show you what AI can actually take off your plate.</p><a class="mini" href="https://www.veruslink.au/audit">Start the audit &rarr;</a></div>
+        <div class="price">Free<small>No obligation</small></div>
+      </div>
+      <div class="step rv d1">
+        <div><div class="n">Step 02</div><h3>Intro Call</h3><p>A straight conversation about your operation. No pitch deck. No pressure. Just where the friction lives.</p><a class="mini" href="https://book.veruslink.au/intro">Book 15 minutes &rarr;</a></div>
+        <div class="price">Free<small>15 minutes</small></div>
+      </div>
+      <div class="step rv d2">
+        <div><div class="n">Step 03</div><h3>AI Opportunity Assessment</h3><p>A full map of your workflows and the exact systems worth building, priced and prioritised. Credited to your first month if you proceed.</p><a class="mini" href="https://book.veruslink.au/assessment">Book and pay directly &rarr;</a></div>
+        <div class="price">$999<small>One-time</small></div>
+      </div>
+      <div class="step rv d3">
+        <div><div class="n">Step 04</div><h3>AI Operations Concierge</h3><p>First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building.</p></div>
+        <div class="price">$1,500<small>Per month. Cancel anytime. No lock-in.</small></div>
+      </div>
+    </div>
+    <div class="founding rv">
+      <span class="micro idx">The Founding Five</span>
+      <p>I&rsquo;m taking on <strong>five businesses this quarter</strong> to build documented, repeatable case studies. They get founder-level access and a clear 30-day implementation focus. In return I need candour, access to the workflow, and permission to measure the before and after.</p>
+    </div>
   </div>
 </section>
 
-<!-- 8. COMPARISON TABLE -->
-<section class="section gray">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>The honest comparison</div>
-  <h2 class="sec-h reveal">Why not just hire&nbsp;a<br><em>consultant or buy a course?</em></h2>
-  <div class="compare-scroll reveal">
-    <table class="compare">
-      <colgroup><col><col><col><col class="wincol"></colgroup>
+<section id="relationship">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Done with you.<br><span class="accent">Not done for you.</span></h2>
+      <span class="micro rv idx">05 / How We Work</span>
+    </div>
+    <div class="cardgrid c3">
+      <div class="card rv"><div class="n">The Audit</div><h3>Audit. Optimise. Activate.</h3><p>We map what&rsquo;s bleeding hours before anything gets built. No guessing, no generic playbook.</p></div>
+      <div class="card rv d1"><div class="n">Every Call</div><h3>Something ships. Every time.</h3><p>Every working session ends with at least one system live in your business. Not homework. Not a recap email.</p></div>
+      <div class="card rv d2"><div class="n">Between Calls</div><h3>Unlimited async support.</h3><p>Stuck at 7am? Send a voice message. You get answers between sessions, not at the next one.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">The honest<br>comparison.</h2>
+      <span class="micro rv idx">06 / Compare</span>
+    </div>
+    <table class="compare rv">
       <thead>
-        <tr><th></th><th><!-- ICON PLACEHOLDER: compare-course -->AI course</th><th><!-- ICON PLACEHOLDER: compare-consultant -->Consultant</th><th class="win"><!-- ICON PLACEHOLDER: compare-veruslink -->VerusLink</th></tr>
+        <tr><th></th><th>AI course</th><th>Consultant</th><th class="hl">VerusLink</th></tr>
       </thead>
       <tbody>
-        <tr><td class="rowlabel">Time to first result</td><td>Weeks of study</td><td>4–8 weeks</td><td class="win">Day 1</td></tr>
-        <tr><td class="rowlabel">What you receive</td><td>Videos and templates</td><td>Strategy deck</td><td class="win">Working systems</td></tr>
-        <tr><td class="rowlabel">Ongoing support</td><td>Forum access</td><td>Ends at delivery</td><td class="win">Unlimited async</td></tr>
-        <tr><td class="rowlabel">New subscriptions needed</td><td>3–5 tools</td><td>2–4 tools</td><td class="win">Zero</td></tr>
-        <tr><td class="rowlabel">Who does the work</td><td>You</td><td>You (after handoff)</td><td class="win">Done with you</td></tr>
-        <tr><td class="rowlabel">Monthly cost</td><td>$50–200 + your time</td><td>$5,000–10,000 project</td><td class="win">$1,500/mo cancel anytime</td></tr>
+        <tr><th>Time to first result</th><td>Weeks of study</td><td>4 to 8 weeks</td><td class="hl">Day 1</td></tr>
+        <tr><th>What you receive</th><td>Videos and templates</td><td>Strategy deck</td><td class="hl">Working systems</td></tr>
+        <tr><th>Ongoing support</th><td>Forum access</td><td>Ends at delivery</td><td class="hl">Unlimited async</td></tr>
+        <tr><th>New subscriptions needed</th><td>3 to 5 tools</td><td>2 to 4 tools</td><td class="hl">Zero</td></tr>
+        <tr><th>Who does the work</th><td>You</td><td>You, after handoff</td><td class="hl">Done with you</td></tr>
+        <tr><th>Monthly cost</th><td>$50 to $200 plus your time</td><td>$5,000 to $10,000 per project</td><td class="hl">$1,500/mo, cancel anytime</td></tr>
       </tbody>
     </table>
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a></div>
-
-<!-- 9. PRICING -->
-<section class="section white">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>Pricing</div>
-  <h2 class="sec-h reveal">Two ways in.<br><em>Start where you're ready.</em></h2>
-  <div class="pricing">
-    <div class="price-card reveal reveal-delay-1">
-      <span class="price-badge black">Start here</span>
-      <div class="price-name">AI Opportunity Assessment</div>
-      <div class="price-n">$999</div>
-      <div class="price-term">one-time</div>
-      <div class="price-desc">Where AI fits your business, mapped in one recorded session.</div>
-      <ul class="price-list">
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>60–90 minute recorded discovery call</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>AI analysis of workflows, costs, and opportunities</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Branded report with AI readiness score, cost analysis, and 90-day roadmap</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Your Perfect Week: before and after</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Three options: do it yourself, done with you, or do nothing</li>
-      </ul>
-      <a href="https://www.veruslink.au/audit" class="btn-ghost">Start with the Free Audit</a>
-      <p class="pricing-direct">Already know you want the assessment? <a href="https://book.veruslink.au/assessment" target="_blank" rel="noopener noreferrer">Book and pay directly.</a></p>
+<section id="results">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Not case studies.<br><span class="accent">Results.</span></h2>
+      <span class="micro rv idx">07 / Real Outcomes</span>
     </div>
-    <div class="price-card featured reveal reveal-delay-2">
-      <span class="price-badge accent">Where the work happens</span>
-      <div class="price-name">AI Operations Concierge</div>
-      <div class="price-n">$1,500</div>
-      <div class="price-term">per month. Cancel anytime. No lock-in.</div>
-      <div class="price-desc">AI embedded into how you operate. Not a one-off project.</div>
-      <ul class="price-list">
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Two done-with-you working sessions per month</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>AOA methodology: Audit, Optimise, Activate</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Unlimited async support via voice message</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Shared operations hub with every system logged and ROI quantified</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Done-for-you builds available as add-on</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Something ships every cycle</li>
-        <li><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg>Proactive monitoring, we catch issues before you notice them</li>
-      </ul>
-      <p class="price-credit">Assessment fee ($999) credited to your first month.</p>
-      <a href="https://www.veruslink.au/audit" class="btn-primary">Start with the Free Audit →</a>
+    <div class="cardgrid c4">
+      <div class="card result rv">
+        <div class="big">6+ hrs</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
+        <div class="who">AI services operator, Sydney</div>
+      </div>
+      <div class="card result rv d1">
+        <div class="big">38x</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
+        <div class="who">Marketing firm, Sydney</div>
+      </div>
+      <div class="card result rv d2">
+        <div class="big">Live</div><h3>Interview analysis</h3><p>Real-time AI analysis during podcast interviews, with coaching prompts as they record.</p>
+        <div class="who">Not-for-profit, Victoria</div>
+      </div>
+      <div class="card result rv d3">
+        <div class="big">Voice</div><h3>To drafted chapters</h3><p>Spoken conversations turned into structured book chapters, ready for the editor.</p>
+        <div class="who">Ghostwriting business, Sydney</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 10. GUARANTEE -->
-<div class="guarantee-wrap">
-  <div class="guarantee">
-    <div class="guarantee-h">It feels like a big bet before you've seen what we find.</div>
-    <p class="guarantee-body">If you proceed to the retainer, the $999 is credited in full to your first month. If you don't, the report is yours to keep. Every recommendation. Every opportunity. No strings.</p>
-  </div>
-</div>
-
-<!-- 10b. TRUST -->
-<section class="section gray">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>How we work</div>
-  <h2 class="sec-h reveal">Your data stays <em>yours.</em></h2>
-  <p class="sec-body">You're trusting us with your operations. Here's how we earn that.</p>
-  <div class="trust-grid">
-    <div class="trust-card reveal reveal-delay-1">
-      <div class="trust-title">We work inside your tools</div>
-      <div class="trust-body">Your email, your calendar, your accounting software. We never move your data onto third-party platforms you haven't approved.</div>
+<section id="data">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Your data<br>stays <span class="accent">yours.</span></h2>
+      <span class="micro rv idx">08 / Trust</span>
     </div>
-    <div class="trust-card reveal reveal-delay-2">
-      <div class="trust-title">You control access</div>
-      <div class="trust-body">You authorise exactly what we can see. You can revoke access any time. Nothing is permanent unless you want it to be.</div>
-    </div>
-    <div class="trust-card reveal reveal-delay-3">
-      <div class="trust-title">Human oversight on everything</div>
-      <div class="trust-body">AI drafts. You approve. Nothing sends, publishes, or changes without your sign-off until you tell us otherwise.</div>
-    </div>
-    <div class="trust-card reveal reveal-delay-4">
-      <div class="trust-title">If something breaks, I fix it</div>
-      <div class="trust-body">You message me. I handle it. Usually same business day. That's what the retainer covers.</div>
+    <div class="cardgrid c4">
+      <div class="card rv"><div class="n">01</div><h3>We work inside your tools</h3><p>Nothing migrates. Nothing gets rebuilt. Your stack stays your stack.</p></div>
+      <div class="card rv d1"><div class="n">02</div><h3>You control access</h3><p>Grant it, limit it, revoke it. Your accounts, your call, always.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>Human oversight on everything</h3><p>No AI action ships without approval. A person signs off before anything moves.</p></div>
+      <div class="card rv d3"><div class="n">04</div><h3>If something breaks, I fix it</h3><p>You deal with the founder directly. Not a ticket queue. Usually same business day.</p></div>
     </div>
   </div>
 </section>
 
-<!-- 12. FOUNDER -->
-<section class="section white" id="about">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>Meet the founder</div>
-  <div class="founder-inner">
-    <img class="founder-avatar" src="/assets/james-headshot.png" alt="James Whitehill, founder of VerusLink" width="132" height="176">
-    <div class="founder-content">
-      <div class="founder-name">James Whitehill</div>
-      <div class="founder-title">AI Concierge · Chief Connector · VerusLink</div>
-      <p class="founder-bio">The reality is, I run a business like you do. Too much on, not enough hours, and admin that quietly eats the time you'd rather spend on the work that actually pays.</p>
-      <p class="founder-bio">I tried AI to fix that. Watched the demos, opened ChatGPT, and hit the same wall you probably did: this could save me hours, if only I had the time to work out how. So I stopped tinkering and built the systems I actually needed to run my day.</p>
-      <p class="founder-bio">That became Vero, my own AI operating system. Every tool on this page I built for my own business first, and every one runs in production today. VerusLink is run by one person, deliberately. Work with us and you deal directly with the person who built it, not a team you'll never meet.</p>
-      <p class="founder-bio">Fifteen years in advertising production taught me the whole thing runs on trust. I do what I say I'll do, when I said I'd do it.</p>
+<section id="founder">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Meet the<br>founder.</h2>
+      <span class="micro rv idx">09 / Who You Get</span>
+    </div>
+    <div class="founder-grid">
+      <img class="founder-photo rv" src="https://www.veruslink.au/assets/james-headshot.png" alt="James Whitehill, founder of VerusLink" loading="lazy"
+           onerror="this.outerHTML='&lt;div class=&quot;founder-photo rv in founder-fallback&quot;&gt;JW&lt;/div&gt;'">
+      <div class="founder-copy">
+        <h3 class="rv">James Whitehill</h3>
+        <div class="role rv">AI Concierge &middot; Chief Connector &middot; VerusLink</div>
+        <p class="rv d1">Fifteen years in advertising production taught me one thing: ideas are cheap, shipping is everything. So I don&rsquo;t sell strategy. I build systems.</p>
+        <p class="rv d2">Every system on this page was built for my own business first. <strong>They&rsquo;re running in production today.</strong> The Receipts Engine logs my expenses. The Morning Brief lands before my first coffee.</p>
+        <p class="rv d3">VerusLink is a one-person operation by design. You talk to the person who builds the thing. When something breaks, you don&rsquo;t raise a ticket. You message me.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 11. PROOF -->
-<section class="section gray">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>Real outcomes</div>
-  <h2 class="sec-h reveal">Not case studies.<br><em>Results.</em></h2>
-  <p class="sec-body">Real tools, running in production for our own businesses and close partners.</p>
-  <div class="proof-grid">
-    <div class="proof-card reveal reveal-delay-1"><!-- ICON PLACEHOLDER: proof-receipts --><div class="proof-n">6+ hrs/month</div><div class="proof-ctx"><strong>Receipt processing, handled</strong><br>Photographs, categorises, and logs every business expense automatically, no manual entry.</div><div class="proof-from">AI services operator, Sydney</div></div>
-    <div class="proof-card reveal reveal-delay-2"><!-- ICON PLACEHOLDER: proof-interview --><div class="proof-n">Real-time</div><div class="proof-ctx"><strong>Interview performance, transformed</strong><br>A live AI producer that analyses podcast interviews as they happen, with coaching and follow-up prompts.</div><div class="proof-from">Not-for-profit, Victoria</div></div>
-    <div class="proof-card reveal reveal-delay-3"><!-- ICON PLACEHOLDER: proof-content --><div class="proof-n">38x</div><div class="proof-ctx"><strong>Content output, multiplied</strong><br>Weekly blogs, social, and SEO pages in the same brand voice at a fraction of the cost.</div><div class="proof-from">Marketing firm, Sydney</div></div>
-    <div class="proof-card reveal reveal-delay-4"><!-- ICON PLACEHOLDER: proof-ghostwriting --><div class="proof-n">Hours back</div><div class="proof-ctx"><strong>Ghostwriting workflow, streamlined</strong><br>A voice-first engine that turns guided conversations into structured chapters, so the writer focuses on craft.</div><div class="proof-from">Ghostwriting business, Sydney</div></div>
+<section id="fit">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">We&rsquo;re selective.<br><span class="accent">So should you be.</span></h2>
+      <span class="micro rv idx">10 / The Fit</span>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-col yes rv">
+        <h3>A good fit</h3>
+        <ul>
+          <li><span class="mark">+</span>$500K to $5M revenue, owner-operated</li>
+          <li><span class="mark">+</span>You&rsquo;ve tried AI and it didn&rsquo;t stick</li>
+          <li><span class="mark">+</span>Ready to invest in proven systems</li>
+          <li><span class="mark">+</span>You want outcomes, not tutorials</li>
+          <li><span class="mark">+</span>You can make a decision without a committee</li>
+        </ul>
+      </div>
+      <div class="fit-col no rv d1">
+        <h3>Not a fit</h3>
+        <ul>
+          <li><span class="mark">&ndash;</span>You want generic AI training</li>
+          <li><span class="mark">&ndash;</span>You want a report to implement yourself</li>
+          <li><span class="mark">&ndash;</span>You&rsquo;re still deciding whether AI is worth it</li>
+          <li><span class="mark">&ndash;</span>Every decision needs multiple sign-offs</li>
+          <li><span class="mark">&ndash;</span>Pre-revenue</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </section>
 
-<div class="cta-line"><a href="https://www.veruslink.au/audit">Start Your Free AI Audit →</a></div>
-
-<!-- 11b. LATEST INSIGHTS (blog strip) -->
-<section class="section" id="latest-insights" hidden>
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>From the blog</div>
-  <h2 class="sec-h reveal">Latest insights.</h2>
-  <div class="blog-strip" id="blogStrip"></div>
-</section>
-
-<!-- 13. FAQ -->
-<section class="section gray" id="faqs">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>FAQs</div>
-  <h2 class="sec-h reveal">Common questions.<br><em>Straight answers.</em></h2>
-  <div class="faqs reveal">
-    <div class="faq"><div class="faq-q">What happens after the audit?<span class="faq-icon">+</span></div><div class="faq-a">I review your answers and email you what I find. If there are opportunities worth exploring, I'll suggest the $999 assessment. No pressure, no spam.</div></div>
-    <div class="faq"><div class="faq-q">Do I have to do the free audit first?<span class="faq-icon">+</span></div><div class="faq-a">No. If you already know you want the full assessment, book it directly at <a href="https://book.veruslink.au/assessment" target="_blank" rel="noopener noreferrer">book.veruslink.au/assessment</a>. But most people start with the free audit.</div></div>
-    <div class="faq"><div class="faq-q">Do I need to be technical?<span class="faq-icon">+</span></div><div class="faq-a">No. If you can describe how your business runs, I can identify what should run without you. You don't touch the tools. I do.</div></div>
-    <div class="faq"><div class="faq-q">What tools do I need?<span class="faq-icon">+</span></div><div class="faq-a">Yours. We wire AI into the tools you already pay for. If something new is genuinely needed I'll tell you, but it's never the starting point.</div></div>
-    <div class="faq"><div class="faq-q">What does a typical month look like?<span class="faq-icon">+</span></div><div class="faq-a">Two working sessions where we build or optimise something specific, plus unlimited async support between them. Something ships every cycle.</div></div>
-    <div class="faq"><div class="faq-q">How is this different from hiring a consultant?<span class="faq-icon">+</span></div><div class="faq-a">Most consultants deliver a strategy document after weeks. I deliver a working system on call one and stay embedded, rather than handing off a deck.</div></div>
-    <div class="faq"><div class="faq-q">Why can't I just use ChatGPT myself?<span class="faq-icon">+</span></div><div class="faq-a">You can. Most of our clients already have. The difference is applying it to your actual workflows, not just asking it questions. ChatGPT is a tool. VerusLink is the operator who wires it into your invoicing, your follow-ups, your scheduling, and your reporting so it runs without you thinking about it.</div></div>
-    <div class="faq"><div class="faq-q">What happens if something breaks?<span class="faq-icon">+</span></div><div class="faq-a">You message me and I fix it. Usually same business day. Every system is documented so nothing is a mystery. If I built it, I support it.</div></div>
-    <div class="faq"><div class="faq-q">What if I want to cancel or pause?<span class="faq-icon">+</span></div><div class="faq-a">Cancel or pause anytime. No lock-in, no minimum term, no penalty. Pick back up when you're ready and your systems stay yours.</div></div>
-    <div class="faq"><div class="faq-q">Is my data safe?<span class="faq-icon">+</span></div><div class="faq-a">Yes. We work inside your own tools and accounts, so your data stays with you. We never sell it or move it onto third-party platforms.</div></div>
+<section id="faqs">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Common questions.<br><span class="accent">Straight answers.</span></h2>
+      <span class="micro rv idx">11 / FAQs</span>
+    </div>
+    <div class="faq-list rv">
+      <details name="faq"><summary>What happens after the audit?<span class="pm">+</span></summary><p>Your results land in your inbox. If there&rsquo;s real opportunity, we&rsquo;ll suggest the $999 assessment. If there isn&rsquo;t, we&rsquo;ll tell you straight.</p></details>
+      <details name="faq"><summary>Do I have to do the free audit first?<span class="pm">+</span></summary><p>No. You can book the assessment directly if you already know you want it. Most people start with the audit.</p></details>
+      <details name="faq"><summary>Do I need to be technical?<span class="pm">+</span></summary><p>No. You describe how your business runs. We handle the tools, the wiring and the jargon.</p></details>
+      <details name="faq"><summary>What tools do I need?<span class="pm">+</span></summary><p>The ones you already have. New subscriptions are rarely needed. We build inside your existing stack.</p></details>
+      <details name="faq"><summary>What does a typical month look like?<span class="pm">+</span></summary><p>Two working sessions plus unlimited async support in between. Something ships every cycle.</p></details>
+      <details name="faq"><summary>How is this different from hiring a consultant?<span class="pm">+</span></summary><p>Consultants leave you a strategy deck after weeks of discovery. We leave you working systems, starting day one.</p></details>
+      <details name="faq"><summary>Why can&rsquo;t I just use ChatGPT myself?<span class="pm">+</span></summary><p>You can. The gap is wiring it into your actual workflows so it runs without you thinking about it. That&rsquo;s the job.</p></details>
+      <details name="faq"><summary>What happens if something breaks?<span class="pm">+</span></summary><p>I fix it. Usually the same business day. You message the founder, not a support queue.</p></details>
+      <details name="faq"><summary>What if I want to cancel or pause?<span class="pm">+</span></summary><p>Anytime. No lock-in, no penalties, no awkward conversation.</p></details>
+      <details name="faq"><summary>Is my data safe?<span class="pm">+</span></summary><p>It stays in your own accounts, under your control. Never sold, never moved, never used to train anything.</p></details>
+    </div>
   </div>
 </section>
 
-<!-- 14. WE'RE SELECTIVE -->
-<section class="section white">
-  <div class="sec-label reveal"><div class="sec-label-dot"></div>Is this right for you</div>
-  <h2 class="sec-h reveal">We're selective.<br><em>And so should you be.</em></h2>
-  <p class="sec-body">This isn't for everyone. Here's how to tell.</p>
-  <div class="fit-grid">
-    <div class="fit-col reveal reveal-delay-1"><div class="fit-col-head"><!-- ICON PLACEHOLDER: fit-check -->Good fit</div><div class="fit-item yes"><span class="fit-check">✓</span>Running $500K–$5M, owner-led</div><div class="fit-item yes"><span class="fit-check">✓</span>Already tried AI. Frustrated it didn't stick.</div><div class="fit-item yes"><span class="fit-check">✓</span>Ready to invest in something that works</div><div class="fit-item yes"><span class="fit-check">✓</span>Want outcomes, not tutorials</div><div class="fit-item yes"><span class="fit-check">✓</span>Decision-maker who moves quickly</div></div>
-    <div class="fit-col reveal reveal-delay-2"><div class="fit-col-head"><!-- ICON PLACEHOLDER: fit-cross -->Not a fit</div><div class="fit-item"><span class="fit-cross">✗</span>Looking for generic AI training</div><div class="fit-item"><span class="fit-cross">✗</span>Want a handoff report to implement yourself</div><div class="fit-item"><span class="fit-cross">✗</span>Not yet sure if AI is worth it</div><div class="fit-item"><span class="fit-cross">✗</span>Need sign-off from multiple stakeholders</div><div class="fit-item"><span class="fit-cross">✗</span>Startup pre-revenue</div></div>
+<section class="final" id="audit">
+  <div class="wrap">
+    <span class="micro rv idx">12 / Start Here</span>
+    <h2 class="rv d1">Stop learning AI.<br><span class="accent">Start using it.</span></h2>
+    <div class="row rv d2">
+      <a class="btn big" href="https://www.veruslink.au/audit">Find your biggest operational leak</a>
+      <a class="btn big ghost" href="https://book.veruslink.au/intro">Book a 15-minute intro call</a>
+      <span class="note">You leave knowing the one workflow worth fixing first.</span>
+    </div>
   </div>
 </section>
 
-<!-- 15. FINAL CTA -->
-<section class="close">
-  <div class="close-pre">The only question left</div>
-  <h2 class="close-h">Start with the <em>free audit</em>.</h2>
-  <p class="close-sub">5 minutes. No call. No commitment.</p>
-  <a href="https://www.veruslink.au/audit" class="btn-primary">Take the Free AI Audit →</a>
-  <a href="https://book.veruslink.au/intro" target="_blank" rel="noopener noreferrer" class="close-secondary">Prefer to talk? Book a 15-minute intro call.</a>
-</section>
-
-<!-- 16. FOOTER -->
 <footer>
-  <div class="footer-logo"><span class="footer-mark">V</span>VerusLink</div>
-  <div class="footer-links">
-    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
-    <a href="/privacy" class="footer-link">Privacy</a>
-    <a href="/terms" class="footer-link">Terms</a>
-  </div>
-  <div class="footer-social">
-    <a href="https://www.linkedin.com/company/veruslink/" target="_blank" rel="noopener noreferrer" aria-label="VerusLink on LinkedIn" class="social-btn">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-    </a>
-    <a href="https://www.instagram.com/veruslink/" target="_blank" rel="noopener noreferrer" aria-label="VerusLink on Instagram" class="social-btn">
-      <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163C8.741 0 8.332.014 7.052.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-    </a>
+  <div class="wrap foot">
+    <a class="wordmark" href="#">VERUS<span>LINK</span></a>
+    <span class="micro">AI Operations Concierge for Australian SMEs</span>
+    <div class="links micro">
+      <a href="mailto:james@veruslink.au">james@veruslink.au</a>
+      <a href="https://www.veruslink.au/privacy">Privacy</a>
+      <a href="https://www.veruslink.au/terms">Terms</a>
+      <a href="https://www.linkedin.com/company/veruslink/">LinkedIn</a>
+      <a href="https://www.instagram.com/veruslink/">Instagram</a>
+    </div>
+    <span class="micro">&copy; 2026 VerusLink</span>
   </div>
 </footer>
 
 <script>
-document.querySelectorAll('.faq').forEach(f=>{
-  f.addEventListener('click',()=>f.classList.toggle('open'));
-});
-document.querySelectorAll('a[href^="#"]').forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const t=document.querySelector(a.getAttribute('href'));
-    if(t)t.scrollIntoView({behavior:'smooth'});
-  });
-});
-
-// Latest insights: fetch blog posts and render the 3 most recent. Degrades
-// gracefully — the section stays hidden if the fetch fails or returns nothing.
-(function(){
-  var sec=document.getElementById('latest-insights');
-  var strip=document.getElementById('blogStrip');
-  if(!sec||!strip)return;
-  fetch('/blog/posts.json',{cache:'no-cache'}).then(function(r){
-    if(!r.ok)throw new Error('posts fetch '+r.status);
-    return r.json();
-  }).then(function(posts){
-    if(!Array.isArray(posts)||!posts.length)return;
-    posts.sort(function(a,b){return String(b.date||'').localeCompare(String(a.date||''));});
-    var esc=function(s){var d=document.createElement('div');d.textContent=s==null?'':String(s);return d.innerHTML;};
-    var fmtDate=function(s){var d=new Date(s);return isNaN(d)?esc(s):d.toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'});};
-    var html=posts.slice(0,3).map(function(p,i){
-      var meta=fmtDate(p.date)+(p.readTime?(' · '+p.readTime+' min read'):'');
-      return '<a class="blog-card reveal reveal-delay-'+(i+1)+'" href="/blog/'+esc(p.slug)+'">'
-        +(p.category?'<span class="blog-cat">'+esc(p.category)+'</span>':'')
-        +'<div class="blog-title">'+esc(p.title)+'</div>'
-        +'<div class="blog-meta">'+meta+'</div></a>';
-    }).join('');
-    strip.innerHTML=html;
-    sec.hidden=false;
-    // Reveal the freshly injected cards (the main observer ran before this fetch).
-    var cards=strip.querySelectorAll('.reveal');
-    if('IntersectionObserver' in window){
-      var bo=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');bo.unobserve(e.target)}});},{threshold:0.15});
-      cards.forEach(function(el){bo.observe(el)});
-    }else{
-      cards.forEach(function(el){el.classList.add('visible')});
-    }
-  }).catch(function(err){/* leave section hidden */});
-})();
-</script>
-
-<script>
-(function(){
-  const els = document.querySelectorAll('.reveal');
-  if (!els.length) return;
-  const obs = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
     });
-  },{threshold:0,rootMargin:'0px 0px 35% 0px'});
-  els.forEach(function(el){obs.observe(el)});
-})();
-</script>
+  },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 
-<script>
-(function(){
-  var t=document.getElementById('navToggle'), m=document.getElementById('mobileMenu');
-  if(!t||!m) return;
-  function open(){ m.hidden=false; t.setAttribute('aria-expanded','true'); t.setAttribute('aria-label','Close menu'); }
-  function close(refocus){ m.hidden=true; t.setAttribute('aria-expanded','false'); t.setAttribute('aria-label','Open menu'); if(refocus) t.focus(); }
-  t.addEventListener('click', function(){ m.hidden ? open() : close(false); });
-  m.addEventListener('click', function(e){ if(e.target.closest('a')) close(false); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape' && !m.hidden) close(true); });
-  document.addEventListener('click', function(e){ if(!m.hidden && !m.contains(e.target) && !t.contains(e.target)) close(false); });
-})();
 </script>
-
 </body>
 </html>
