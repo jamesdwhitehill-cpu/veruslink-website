@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The AI Audit: VerusLink</title>
+<title>The AI Health Check: VerusLink</title>
 <meta name="description" content="Tell us about your business. Takes 5 minutes. We review it before we speak.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
@@ -229,7 +229,7 @@ footer{
   <div class="hero-glow-2"></div>
   <div class="hero-pill"><div class="hero-pill-dot"></div>Free · No commitment · No pitch deck</div>
   <h1 class="hero-h">Most business owners know admin is slowing them down. They just don't know by how much.</h1>
-  <p class="op-line">This audit takes 5 minutes. We review your answers personally and send you back a number. What admin is actually costing your business every month. Plus the 3 places I'd start.</p>
+  <p class="op-line">This Health Check takes 5 minutes. We review your answers personally and send you back a number. What admin is actually costing your business every month. Plus the 3 places I'd start.</p>
   <div class="stat-pills">
     <div class="stat-pill"><div class="stat-pill-n">5 min</div><div class="stat-pill-l">Takes five minutes</div></div>
     <div class="stat-pill"><div class="stat-pill-n">Reviewed</div><div class="stat-pill-l">We read every one personally</div></div>
@@ -397,14 +397,14 @@ footer{
       </div>
     </div>
 
-    <button type="submit" class="submit-btn" id="submitBtn">Send my audit →</button>
+    <button type="submit" class="submit-btn" id="submitBtn">Send my Health Check →</button>
     <div class="form-note">No pitch deck. No pressure. We review it before we speak.</div>
     <div class="form-status" id="formStatus"></div>
   </form>
 
   <div class="form-success" id="formSuccess">
     <div class="fs-card">
-      <h2 class="form-success-h">Your audit is in.</h2>
+      <h2 class="form-success-h">Your Health Check is in.</h2>
       <p class="form-success-p">I'll review your answers personally and email you within 48 hours with one thing: what this is costing you. Not a sales pitch. Not a list of tools. Just a clear figure based on your team size, your time drains, and what you told me. If the number surprises you, we'll talk about what to do about it.</p>
       <a href="https://www.veruslink.au" class="cta-sm">Back to veruslink.au →</a>
     </div>
@@ -503,13 +503,13 @@ footer{
         } else {
           showError((data && data.error) ? data.error : 'Something went wrong. Please try again or email james@veruslink.au.');
           btn.disabled = false;
-          btn.textContent = 'Send my audit →';
+          btn.textContent = 'Send my Health Check →';
         }
       })
       .catch(function () {
         showError('Could not reach the server. Please try again or email james@veruslink.au.');
         btn.disabled = false;
-        btn.textContent = 'Send my audit →';
+        btn.textContent = 'Send my Health Check →';
       });
   });
 })();
