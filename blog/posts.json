@@ -1,13 +1,5 @@
 [
   {
-    "slug": "test-post-keynote-demo-infrastructure-test-delete-me",
-    "title": "TEST POST - Keynote Demo Infrastructure Test (delete me)",
-    "excerpt": "This post exists only to verify the live demo publish pipeline works end to end. It is not real content and should not appear on the live blog.",
-    "category": "insight",
-    "date": "2026-07-30",
-    "readTime": 1
-  },
-  {
     "slug": "why-your-ai-drafts-sound-like-ai",
     "title": "Why Your AI Drafts Sound Like AI (And the Three Prompts That Fix It)",
     "excerpt": "Every fact is right, the structure is fine, and you still would not send it. Here is what makes AI drafts read as machine written, and the three prompts that fix it.",
