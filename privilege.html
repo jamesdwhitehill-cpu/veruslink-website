@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Privilege-Safe AI Rule - VerusLink</title>
+<meta name="description" content="One page. The simple test for what can and can never go near AI in a law firm. Pin it above every desk.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/swiss.css">
+<style>
+body { font-size: 16px; overflow-x: hidden; }
+
+/* ---- nav (matching audit.html pattern) ---- */
+nav {
+  display: flex; justify-content: space-between; align-items: center;
+  height: 64px; padding: 0 clamp(20px,4vw,56px);
+  border-bottom: 1px solid var(--rule);
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(255,255,255,.92); backdrop-filter: blur(8px);
+}
+.logo {
+  font-size: 16px; font-weight: 700; letter-spacing: .02em;
+  color: var(--ink); text-decoration: none;
+}
+
+/* ---- hero / page head ---- */
+.hero {
+  border-bottom: 1px solid var(--rule);
+  padding: clamp(48px,8vw,110px) clamp(20px,4vw,56px) clamp(40px,6vw,72px);
+  max-width: 1320px; margin: 0 auto;
+}
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 500;
+  color: var(--ink); margin-bottom: clamp(24px,4vw,40px);
+}
+.eyebrow-dot { width: 7px; height: 7px; background: var(--accent); flex: 0 0 auto; }
+.hero-h {
+  font-size: clamp(34px,5.4vw,72px);
+  line-height: 1.0; letter-spacing: -.03em; font-weight: 700;
+  text-wrap: balance; max-width: 16em;
+}
+.hero-sub {
+  margin-top: clamp(22px,3vw,34px);
+  font-size: clamp(16px,1.7vw,21px); line-height: 1.5;
+  max-width: 36em; color: var(--muted);
+}
+
+/* ---- three-tier preview ---- */
+.tiers-wrap {
+  max-width: 1320px; margin: 0 auto;
+  padding: clamp(40px,6vw,80px) clamp(20px,4vw,56px) 0;
+  border-bottom: 1px solid var(--rule);
+}
+.tiers-label {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 500;
+  color: var(--muted); margin-bottom: clamp(24px,3vw,40px);
+}
+.tiers {
+  display: grid; grid-template-columns: repeat(3,1fr);
+  border-top: 1px solid var(--rule); border-left: 1px solid var(--rule);
+  margin-bottom: clamp(40px,6vw,80px);
+}
+.tier {
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  padding: clamp(22px,3vw,40px);
+}
+.tier-tag {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 700;
+  margin-bottom: 14px;
+}
+.tier-tag.never { color: #C0392B; }
+.tier-tag.glass { color: var(--accent); }
+.tier-tag.open  { color: #27AE60; }
+.tier-body { font-size: 15px; line-height: 1.55; color: var(--muted); }
+.tier-body strong { color: var(--ink); font-weight: 600; }
+@media(max-width:760px) { .tiers { grid-template-columns: 1fr; } }
+
+/* ---- credibility block ---- */
+.credibility-wrap {
+  max-width: 1320px; margin: 0 auto;
+  padding: clamp(32px,5vw,64px) clamp(20px,4vw,56px);
+  border-bottom: 1px solid var(--rule);
+}
+.credibility {
+  border-left: 3px solid var(--accent);
+  padding: 18px 0 18px clamp(18px,2.5vw,28px);
+  font-size: clamp(14px,1.4vw,16px); line-height: 1.65; color: var(--muted);
+  max-width: 52em;
+}
+.credibility em { font-style: italic; color: var(--ink); }
+
+/* ---- form wrapper ---- */
+.form-outer {
+  max-width: 760px; margin: 0 auto;
+  padding: clamp(40px,6vw,80px) clamp(20px,4vw,56px) clamp(56px,8vw,110px);
+}
+.form-section-label {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 600;
+  color: var(--ink); margin-bottom: clamp(26px,3.5vw,40px);
+  border-top: 1px solid var(--rule); padding-top: clamp(24px,3vw,36px);
+}
+.field { margin-bottom: clamp(20px,3vw,32px); }
+.field-label {
+  display: block;
+  font-size: 11px; letter-spacing: .16em; text-transform: uppercase; font-weight: 600;
+  color: var(--ink); margin-bottom: 12px; line-height: 1.5;
+}
+.req { color: var(--accent); margin-left: 4px; }
+.opt { color: var(--faint); letter-spacing: .16em; font-weight: 500; }
+
+/* consent row */
+.consent-row {
+  display: flex; align-items: flex-start; gap: 14px;
+  border: 1px solid var(--rule); padding: 16px 18px;
+  cursor: pointer; font-size: 15px; line-height: 1.45;
+  transition: background .2s ease, border-color .2s ease;
+}
+.consent-row:hover { background: var(--tint); }
+.consent-row input { margin-top: 3px; flex: 0 0 auto; accent-color: var(--accent); }
+.consent-row.selected { background: var(--tint); border-color: var(--accent); }
+
+/* submit */
+.submit-btn {
+  display: block; width: 100%;
+  margin-top: clamp(28px,4vw,48px);
+  background: var(--ink); color: #fff;
+  border: none; border-radius: 0;
+  padding: 22px 36px;
+  font-family: var(--font); font-size: 13px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase;
+  cursor: pointer; transition: background .2s ease;
+}
+.submit-btn:hover { background: var(--accent); }
+.submit-btn:disabled { background: rgba(17,24,39,.3); cursor: not-allowed; }
+.form-note {
+  margin-top: 16px; font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--faint); font-weight: 500; text-align: center;
+}
+.form-status { margin-top: 20px; font-size: 15px; line-height: 1.55; color: var(--muted); }
+.form-status.error {
+  border-left: 3px solid var(--accent);
+  padding: 14px 0 14px clamp(16px,2.2vw,24px);
+  color: var(--ink); font-weight: 600;
+}
+
+/* success panel */
+.form-success { display: none; }
+.form-success.show { display: block; }
+.fs-card { border: 1px solid var(--rule); padding: clamp(32px,5vw,64px); }
+.form-success-h {
+  font-size: clamp(28px,4vw,56px); letter-spacing: -.03em; line-height: 1.02; font-weight: 700;
+}
+.form-success-p {
+  margin-top: clamp(18px,2.5vw,28px); font-size: clamp(16px,1.6vw,19px);
+  line-height: 1.6; color: var(--muted); max-width: 38em;
+}
+.download-link {
+  display: inline-block; margin-top: clamp(22px,3vw,36px);
+  font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600;
+  color: var(--ink); text-decoration: none;
+  border-bottom: 2px solid var(--accent); padding-bottom: 2px;
+}
+.download-link:hover { color: var(--accent); }
+
+/* footer */
+footer {
+  border-top: 1px solid var(--rule);
+  padding: 40px clamp(20px,4vw,56px) 56px;
+  max-width: 1320px; margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 24px; flex-wrap: wrap;
+}
+.footer-logo { font-size: 16px; font-weight: 700; letter-spacing: .02em; }
+.footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+.footer-link {
+  font-size: 11px; letter-spacing: .18em; text-transform: uppercase; font-weight: 500;
+  color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--rule);
+}
+.footer-link:hover { color: var(--accent); border-color: var(--accent); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="logo">VerusLink</a>
+</nav>
+
+<section class="hero" id="top">
+  <div class="eyebrow"><div class="eyebrow-dot"></div>For Lawyers</div>
+  <h1 class="hero-h">The Privilege-Safe AI Rule</h1>
+  <p class="hero-sub">One page. The simple test for what can and can never go near AI in a law firm. Pin it above every desk.</p>
+</section>
+
+<div class="tiers-wrap">
+  <div class="tiers-label">The three tiers</div>
+  <div class="tiers">
+    <div class="tier">
+      <div class="tier-tag never">Never</div>
+      <p class="tier-body">
+        <strong>Named client matters. Privileged advice.</strong> This never goes into any public AI tool.
+        Full stop. Not for a draft, not for a summary, not to save five minutes.
+        The privilege attached to this work does not survive contact with a consumer AI system.
+      </p>
+    </div>
+    <div class="tier">
+      <div class="tier-tag glass">Behind Glass</div>
+      <p class="tier-body">
+        <strong>The same work, inside a private system that does not train on your data.</strong>
+        A properly configured firm-grade AI environment. This is where the time savings are.
+        Getting here takes setup - but it is where AI earns its place in a law firm.
+      </p>
+    </div>
+    <div class="tier">
+      <div class="tier-tag open">Open</div>
+      <p class="tier-body">
+        <strong>Generic, non-identifying work.</strong> Templates, precedents with no client details,
+        general research summaries, admin drafts. Use freely.
+        If removing the client name makes it safe, it belongs here.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="credibility-wrap">
+  <blockquote class="credibility">
+    In <em>United States v. Heppner</em> (US Federal Court, 17 February 2026) a party lost privilege
+    after putting case details into a public consumer AI tool. This card keeps your firm on the right side of that line.
+  </blockquote>
+</div>
+
+<div class="form-outer">
+
+  <form id="privilegeForm" novalidate>
+
+    <div class="form-section-label">Get the card</div>
+
+    <div class="field">
+      <label class="field-label" for="name">Name <span class="opt">(optional)</span></label>
+      <input type="text" id="name" name="name" autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="email">Work email<span class="req">*</span></label>
+      <input type="email" id="email" name="email" required autocomplete="email">
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="firm">Firm <span class="opt">(optional)</span></label>
+      <input type="text" id="firm" name="firm" autocomplete="organization">
+    </div>
+
+    <div class="field">
+      <label class="consent-row" id="consentRow">
+        <input type="checkbox" id="consent" name="consent" required>
+        <span>Send me the card and the occasional useful note. Unsubscribe anytime.</span>
+      </label>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Send me the card</button>
+    <div class="form-note">No pitch. No pressure. One PDF.</div>
+    <div class="form-status" id="formStatus"></div>
+
+  </form>
+
+  <div class="form-success" id="formSuccess">
+    <div class="fs-card">
+      <h2 class="form-success-h">Check your inbox.</h2>
+      <p class="form-success-p">The card is on its way. Pin it above every desk.</p>
+      <a href="/privilege-safe-rule.pdf" class="download-link" download>Download the card directly &rarr;</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">VerusLink</div>
+  <div class="footer-links">
+    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/terms" class="footer-link">Terms</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('privilegeForm');
+  var btn = document.getElementById('submitBtn');
+  var statusEl = document.getElementById('formStatus');
+  var successEl = document.getElementById('formSuccess');
+  var consentRow = document.getElementById('consentRow');
+  var consentBox = document.getElementById('consent');
+  var ENDPOINT = 'https://book.veruslink.au/api/privilege-submit';
+
+  // Toggle .selected on consent row for visual feedback.
+  consentBox.addEventListener('change', function () {
+    consentRow.classList.toggle('selected', consentBox.checked);
+  });
+
+  function showError(msg) {
+    statusEl.textContent = msg;
+    statusEl.className = 'form-status error';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusEl.className = 'form-status';
+    statusEl.textContent = '';
+
+    var email = form.email.value.trim();
+    if (!email) {
+      showError('Please enter your work email.');
+      form.email.focus();
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError('Please enter a valid email address.');
+      form.email.focus();
+      return;
+    }
+    if (!consentBox.checked) {
+      showError('Please tick the consent box to receive the card.');
+      consentBox.focus();
+      return;
+    }
+
+    var payload = {
+      name: form.name.value.trim() || null,
+      email: email,
+      firm: form.firm.value.trim() || null,
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) { return res.json().catch(function () { return { success: false }; }); })
+      .then(function (data) {
+        if (data && data.success) {
+          form.style.display = 'none';
+          successEl.classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          showError((data && data.error) ? data.error : 'Something went wrong. Please try again or email james@veruslink.au.');
+          btn.disabled = false;
+          btn.textContent = 'Send me the card';
+        }
+      })
+      .catch(function () {
+        showError('Could not reach the server. Please try again or email james@veruslink.au.');
+        btn.disabled = false;
+        btn.textContent = 'Send me the card';
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
