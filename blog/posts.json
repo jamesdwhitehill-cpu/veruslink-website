@@ -1,5 +1,13 @@
 [
   {
+    "slug": "privilege-is-not-security",
+    "title": "Privilege Is Not Security (And Your AI Tools Might Not Know the Difference)",
+    "excerpt": "Your data is encrypted, it stays in your accounts, and it is never sold. All true, and all beside the point. Security keeps data in. Privilege keeps matters apart, and that is a different problem.",
+    "category": "insight",
+    "date": "2026-08-31",
+    "readTime": 4
+  },
+  {
     "slug": "why-your-ai-drafts-sound-like-ai",
     "title": "Why Your AI Drafts Sound Like AI (And the Three Prompts That Fix It)",
     "excerpt": "Every fact is right, the structure is fine, and you still would not send it. Here is what makes AI drafts read as machine written, and the three prompts that fix it.",
