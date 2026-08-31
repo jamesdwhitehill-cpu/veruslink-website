@@ -1,5 +1,13 @@
 [
   {
+    "slug": "admin-is-the-bottleneck",
+    "title": "The Admin Is the Bottleneck, Not the Law",
+    "excerpt": "Most firms picture AI trying to do the lawyering, and they are right to say no. But the hours never went to the law. They went to the chasing, the intake and the reports wrapped around it.",
+    "category": "insight",
+    "date": "2026-08-31",
+    "readTime": 4
+  },
+  {
     "slug": "privilege-is-not-security",
     "title": "Privilege Is Not Security (And Your AI Tools Might Not Know the Difference)",
     "excerpt": "Your data is encrypted, it stays in your accounts, and it is never sold. All true, and all beside the point. Security keeps data in. Privilege keeps matters apart, and that is a different problem.",
