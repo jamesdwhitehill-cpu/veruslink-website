@@ -26,5 +26,42 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/blog/ai-assistant-vs-virtual-assistant-australia.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-assistant-vs-virtual-assistant-australia",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-business-assistant-australia.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-business-assistant-australia",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-invoice-management-small-business.html",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/ai-invoice-management-small-business",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/_retired/:path*",
+      "destination": "/blog",
+      "permanent": true
+    }
   ]
 }
