@@ -1,47 +1,25 @@
 # VerusLink
 
-> VerusLink builds Vero, an AI-native operating system for Australian small businesses. Vero replaces the admin overhead of running a business: receipts, invoicing, CRM, client follow-ups, scheduling, and financial reporting, delivered via Telegram. Designed for tradies, bookkeepers, recruiters, and NFPs who need a full back-office without hiring one.
+> VerusLink is an AI operations concierge for Australian small business owners, based in Sydney. It is not a software tool to learn: VerusLink builds and runs AI workflows inside the tools a business already uses, then operates them, so owners claw back 5 to 10 hours a week. VerusLink is unrelated to Xerox VersaLink printers.
 
-VerusLink is founded by James Whitehill (Chief Connector) and operates as a one-person, multi-client AI infrastructure business. Vero is the product. The underlying platform is OpenClaw, self-hosted on a private VPS.
+## What VerusLink does
 
-Vero is not a chatbot. It is a team of named AI agents, Finnegan (finance), Scout (research), Maven (marketing), Clio (CRM), and Orion (operations), that act on behalf of the business owner through a single Telegram interface.
+- Builds and operates AI workflows: lead follow-up, daily owner briefings, expense and receipt tracking, client intake, report generation.
+- Done with you, not a tool to learn. A human designs and checks everything; safety and confidentiality are built in.
+- Pricing: free AI Health Check, free 15-minute intro call, AI Opportunity Assessment $999 one-time, AI Operations Concierge $1,500/month, cancel anytime.
 
-Pricing is $499/month AUD with a one-time setup fee. One plan. All agents included.
+## Key pages
 
-Target customers: Australian SME owners who are time-poor, admin-heavy, and not technical. Best fit: tradies, bookkeepers, solo recruiters, NFP coordinators.
+- [Home](https://veruslink.au/): the offer, pricing, FAQ.
+- [AI Health Check](https://veruslink.au/audit): free 5-minute assessment, personally reviewed.
+- [Blog](https://veruslink.au/blog/): plain-English essays on AI in small business.
+- [The $3,000 a month you don't know you're losing](https://veruslink.au/blog/the-3000-a-month-youre-losing)
+- [You bought the tools. Nothing stuck. Here's why.](https://veruslink.au/blog/you-bought-the-tools-nothing-stuck)
+- [What ships in month one (real examples)](https://veruslink.au/blog/what-ships-in-month-one)
+- [The admin is the bottleneck, not the law](https://veruslink.au/blog/admin-is-the-bottleneck)
+- [What AI should never do in your business](https://veruslink.au/blog/what-ai-should-never-do)
 
-## Product
+## Contact
 
-- [Home](https://veruslink.au): What Vero is and who it is for
-- [Apply / Audit](https://audit.veruslink.au): Voice-based business audit to assess fit, free, 8 questions, generates a personalised proposal
-- [Sign Up](https://signup.veruslink.au): Start a trial or purchase a plan
-- [Client Portal](https://app.veruslink.au): Existing client login, dashboard, obligations, standing orders, support
-
-## Agents
-
-- **Finnegan**, Finance agent. Handles receipts, invoices, reimbursements, financial summaries, ATO mileage tracking, invoice chasing.
-- **Scout**, Research agent. Delivers pre-meeting briefs, competitive intelligence, opportunity scanning, industry signals.
-- **Maven**, Marketing agent. LinkedIn drafts, prospect scanning, cold outreach sequences, acquisition loop.
-- **Clio**, CRM agent. Contact management, follow-up reminders, relationship tracking, deal radar.
-- **Orion**, Operations agent. Scheduling, standing orders, obligation tracking, system health.
-
-## Key Concepts
-
-- Vero operates via Telegram, no app to install, no dashboard required for daily use
-- All agents share a single business context per client (tenant memory)
-- Shadow mode: all outbound emails are drafted for human approval before sending
-- Tier gating: Command-tier clients get all 5 agents; lower tiers access Finnegan-first
-
-## Verticals We Serve
-
-- **Tradies**: quoting, receipt capture, subcontractor invoicing, job scheduling
-- **Bookkeepers**: client receipt collection, BAS support, invoice chasing, client health summaries
-- **Recruiters**: candidate pipeline, follow-up sequences, placement tracking
-- **NFPs**: grant obligation tracking, donor follow-up, admin reporting
-
-## About
-
-- Founder: James Whitehill, james@veruslink.au
-- Entity: NB Performance Pty Ltd (Australia)
-- Platform: OpenClaw on self-hosted Linux VPS (IONOS, Sydney-adjacent)
-- Built: 2025–2026
+- Email: james@veruslink.au
+- Founder: James Whitehill, Sydney, Australia
