@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Audit — VerusLink</title>
+<meta name="description" content="Tell us about your business. Takes 10 minutes. We review it before we speak.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<style>
+:root {
+  --bg: #0A0A0A;
+  --bg-card: #111111;
+  --bg-surface: #0F0F10;
+  --text: #FFFFFF;
+  --text-secondary: #B0B0B0;
+  --text-tertiary: #808080;
+  --border: #1A1A1A;
+  --radius: 8px;
+  --accent: #2D9CDB;
+  --accent-hover: #3AAFEF;
+  --green-soft: rgba(52,211,153,0.08);
+  --green-text: #34d399;
+  --red-soft: rgba(239,68,68,0.08);
+  --red-text: #f87171;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:#0A0A0A;color:#E8E3DC;font-size:1rem;line-height:1.6}
+
+/* NAV */
+.nav{display:flex;justify-content:space-between;align-items:center;padding:20px 36px;border-bottom:1px solid rgba(232,227,220,0.07);position:sticky;top:0;background:#0A0A0A;z-index:100}
+.logo{font-family:'Inter',sans-serif;font-size:1rem;font-weight:700;letter-spacing:6px;text-transform:uppercase;color:#E8E3DC;text-decoration:none}
+
+/* FORM PAGE */
+.form-wrap{max-width:680px;margin:0 auto;padding:56px 36px 80px}
+.form-head{margin-bottom:44px}
+.form-kicker{font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:rgba(232,227,220,0.35);margin-bottom:20px}
+.form-title{font-family:'Inter',sans-serif;font-size:clamp(2rem,5vw,3rem);font-weight:800;line-height:1.1;letter-spacing:-2px;color:#F0EDE6;margin-bottom:16px}
+.form-sub{font-size:clamp(1.05rem,2.5vw,1.2rem);font-weight:400;color:rgba(232,227,220,0.5);line-height:1.6;max-width:480px}
+
+.fsection{margin-top:40px;padding-top:32px;border-top:1px solid rgba(232,227,220,0.08)}
+.fsection:first-of-type{border-top:none;margin-top:0;padding-top:0}
+.fsection-label{font-size:0.75rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#2D9CDB;margin-bottom:24px}
+
+.field{margin-bottom:28px}
+.field-label{display:block;font-size:0.95rem;font-weight:500;color:#E8E3DC;line-height:1.5;margin-bottom:10px}
+.field-label .opt{font-weight:400;color:rgba(232,227,220,0.3);font-size:0.85rem}
+.field-label .req{color:#2D9CDB;margin-left:2px}
+
+input[type=text],input[type=email],input[type=tel],textarea{
+  width:100%;background:#141414;border:1px solid rgba(232,227,220,0.1);border-radius:2px;
+  color:#E8E3DC;font-family:'Inter',sans-serif;font-size:0.95rem;padding:13px 15px;line-height:1.5;
+}
+input::placeholder,textarea::placeholder{color:rgba(232,227,220,0.25)}
+input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,textarea:focus{
+  outline:none;border-color:#2D9CDB;background:#161616;
+}
+textarea{resize:vertical;min-height:110px}
+
+/* radio + checkbox option lists */
+.opt-list{display:flex;flex-direction:column;gap:2px}
+.opt-row{display:flex;align-items:flex-start;gap:12px;padding:13px 15px;background:#141414;border:1px solid rgba(232,227,220,0.08);border-radius:2px;cursor:pointer;transition:border-color .12s,background .12s}
+.opt-row:hover{border-color:rgba(45,156,219,0.4)}
+.opt-row input{appearance:none;-webkit-appearance:none;width:18px;height:18px;flex-shrink:0;margin-top:1px;border:1px solid rgba(232,227,220,0.3);background:#0A0A0A;cursor:pointer;position:relative}
+.opt-row input[type=radio]{border-radius:50%}
+.opt-row input[type=checkbox]{border-radius:3px}
+.opt-row input:checked{border-color:#2D9CDB;background:#2D9CDB}
+.opt-row input[type=checkbox]:checked::after{content:"";position:absolute;left:5px;top:1px;width:5px;height:10px;border:solid #0A0A0A;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.opt-row input[type=radio]:checked::after{content:"";position:absolute;left:4px;top:4px;width:8px;height:8px;border-radius:50%;background:#0A0A0A}
+.opt-row span{font-size:0.92rem;color:rgba(232,227,220,0.75);line-height:1.45}
+.opt-row:has(input:checked){border-color:#2D9CDB;background:rgba(45,156,219,0.06)}
+
+/* 1-10 scale */
+.scale-wrap{margin-top:4px}
+.scale-row{display:flex;gap:6px;flex-wrap:wrap}
+.scale-item{flex:1;min-width:36px}
+.scale-item input{appearance:none;-webkit-appearance:none;position:absolute;opacity:0;width:0;height:0}
+.scale-item label{display:flex;align-items:center;justify-content:center;height:44px;background:#141414;border:1px solid rgba(232,227,220,0.1);border-radius:2px;font-size:0.9rem;font-weight:500;color:rgba(232,227,220,0.6);cursor:pointer;transition:all .12s}
+.scale-item label:hover{border-color:rgba(45,156,219,0.4)}
+.scale-item input:checked + label{background:#2D9CDB;border-color:#2D9CDB;color:#0A0A0A;font-weight:600}
+.scale-ends{display:flex;justify-content:space-between;margin-top:10px;font-size:0.78rem;color:rgba(232,227,220,0.3);letter-spacing:0.04em}
+
+/* submit */
+.submit-btn{width:100%;background:#2D9CDB;color:#0A0A0A;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.05em;padding:17px 28px;border:none;border-radius:2px;cursor:pointer;margin-top:8px;transition:background .12s}
+.submit-btn:hover{background:#3AAFEF}
+.submit-btn:disabled{opacity:0.5;cursor:not-allowed}
+.form-note{font-size:12px;color:rgba(232,227,220,0.25);margin-top:16px;text-align:center;font-style:italic}
+
+/* status messages */
+.form-status{margin-top:20px;padding:16px 18px;border-radius:2px;font-size:0.92rem;line-height:1.5;display:none}
+.form-status.error{display:block;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.3);color:#f87171}
+.form-success{display:none;text-align:center;padding:64px 20px}
+.form-success.show{display:block}
+.form-success-h{font-family:'Inter',sans-serif;font-size:clamp(1.6rem,4vw,2.2rem);font-weight:800;letter-spacing:-1px;color:#F0EDE6;margin-bottom:14px}
+.form-success-h em{font-style:italic;color:#2D9CDB}
+.form-success-p{font-size:1.05rem;color:rgba(232,227,220,0.5);line-height:1.7;max-width:420px;margin:0 auto}
+
+/* FOOTER */
+.footer{padding:20px 36px;background:#0A0A0A;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(232,227,220,0.05)}
+.footer-logo{font-family:'Inter',sans-serif;font-size:13px;color:rgba(232,227,220,0.2)}
+.footer-links{display:flex;gap:24px}
+.footer-link{font-size:11px;color:rgba(232,227,220,0.15);letter-spacing:0.06em;text-decoration:none}
+
+/* MOBILE */
+@media(max-width:600px){
+  .nav{padding:16px 20px}
+  .form-wrap{padding:40px 20px 64px}
+  .footer{padding:16px 20px}
+  .scale-item{min-width:28px}
+  .scale-item label{height:40px;font-size:0.82rem}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="/" class="logo">VerusLink</a>
+</nav>
+
+<div class="form-wrap">
+  <div class="form-head">
+    <div class="form-kicker">AI Concierge · Sydney, Australia</div>
+    <h1 class="form-title">The AI Audit</h1>
+    <p class="form-sub">Tell us about your business. Takes 10 minutes. We review it before we speak.</p>
+  </div>
+
+  <form id="auditForm" novalidate>
+
+    <!-- SECTION: About You -->
+    <div class="fsection">
+      <div class="fsection-label">About You</div>
+
+      <div class="field">
+        <label class="field-label" for="full_name">Full name<span class="req">*</span></label>
+        <input type="text" id="full_name" name="full_name" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="business_name">Business name<span class="req">*</span></label>
+        <input type="text" id="business_name" name="business_name" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="website">Website <span class="opt">(optional)</span></label>
+        <input type="text" id="website" name="website" placeholder="yourbusiness.com.au">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="business_description">What does your business do?<span class="req">*</span></label>
+        <input type="text" id="business_description" name="business_description" required placeholder="e.g. Residential building inspections, Sydney">
+      </div>
+
+      <div class="field">
+        <label class="field-label">How many people work in the business including you?<span class="req">*</span></label>
+        <div class="opt-list">
+          <label class="opt-row"><input type="radio" name="headcount" value="Just me" required><span>Just me</span></label>
+          <label class="opt-row"><input type="radio" name="headcount" value="2–5"><span>2–5</span></label>
+          <label class="opt-row"><input type="radio" name="headcount" value="6–15"><span>6–15</span></label>
+          <label class="opt-row"><input type="radio" name="headcount" value="15+"><span>15+</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Roughly what's your annual revenue?<span class="req">*</span></label>
+        <div class="opt-list">
+          <label class="opt-row"><input type="radio" name="revenue" value="Under $500K" required><span>Under $500K</span></label>
+          <label class="opt-row"><input type="radio" name="revenue" value="$500K–$1M"><span>$500K–$1M</span></label>
+          <label class="opt-row"><input type="radio" name="revenue" value="$1M–$3M"><span>$1M–$3M</span></label>
+          <label class="opt-row"><input type="radio" name="revenue" value="$3M–$5M"><span>$3M–$5M</span></label>
+          <label class="opt-row"><input type="radio" name="revenue" value="Over $5M"><span>Over $5M</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: Your Week -->
+    <div class="fsection">
+      <div class="fsection-label">Your Week</div>
+
+      <div class="field">
+        <label class="field-label">What eats most of your time that shouldn't require you? <span class="opt">(pick all that apply)</span></label>
+        <div class="opt-list">
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Following up leads and clients"><span>Following up leads and clients</span></label>
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Quoting and proposals"><span>Quoting and proposals</span></label>
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Invoicing and chasing payments"><span>Invoicing and chasing payments</span></label>
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Scheduling and calendar management"><span>Scheduling and calendar management</span></label>
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Reporting and admin"><span>Reporting and admin</span></label>
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Email and messages"><span>Email and messages</span></label>
+          <label class="opt-row"><input type="checkbox" name="time_sinks" value="Something else"><span>Something else</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="fix_one_thing">What's the one thing you keep meaning to fix but never get to?<span class="req">*</span></label>
+        <textarea id="fix_one_thing" name="fix_one_thing" required placeholder="Be specific — the more detail the better"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label">On a scale of 1–10, how much is admin slowing your business growth?<span class="req">*</span></label>
+        <div class="scale-wrap">
+          <div class="scale-row">
+            <div class="scale-item"><input type="radio" id="scale1" name="admin_scale" value="1" required><label for="scale1">1</label></div>
+            <div class="scale-item"><input type="radio" id="scale2" name="admin_scale" value="2"><label for="scale2">2</label></div>
+            <div class="scale-item"><input type="radio" id="scale3" name="admin_scale" value="3"><label for="scale3">3</label></div>
+            <div class="scale-item"><input type="radio" id="scale4" name="admin_scale" value="4"><label for="scale4">4</label></div>
+            <div class="scale-item"><input type="radio" id="scale5" name="admin_scale" value="5"><label for="scale5">5</label></div>
+            <div class="scale-item"><input type="radio" id="scale6" name="admin_scale" value="6"><label for="scale6">6</label></div>
+            <div class="scale-item"><input type="radio" id="scale7" name="admin_scale" value="7"><label for="scale7">7</label></div>
+            <div class="scale-item"><input type="radio" id="scale8" name="admin_scale" value="8"><label for="scale8">8</label></div>
+            <div class="scale-item"><input type="radio" id="scale9" name="admin_scale" value="9"><label for="scale9">9</label></div>
+            <div class="scale-item"><input type="radio" id="scale10" name="admin_scale" value="10"><label for="scale10">10</label></div>
+          </div>
+          <div class="scale-ends"><span>Not at all</span><span>It's a major blocker</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION: Your Tools -->
+    <div class="fsection">
+      <div class="fsection-label">Your Tools</div>
+
+      <div class="field">
+        <label class="field-label">What tools are you currently using? <span class="opt">(pick all that apply)</span></label>
+        <div class="opt-list">
+          <label class="opt-row"><input type="checkbox" name="tools" value="Gmail"><span>Gmail</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Google Workspace"><span>Google Workspace</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Outlook"><span>Outlook</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Microsoft 365"><span>Microsoft 365</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Xero"><span>Xero</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="MYOB"><span>MYOB</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="QuickBooks"><span>QuickBooks</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="HubSpot or another CRM"><span>HubSpot or another CRM</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Zapier or Make.com"><span>Zapier or Make.com</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="ChatGPT"><span>ChatGPT</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Claude"><span>Claude</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="other AI"><span>other AI</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Notion"><span>Notion</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Trello"><span>Trello</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Asana"><span>Asana</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="Calendly or scheduling tool"><span>Calendly or scheduling tool</span></label>
+          <label class="opt-row"><input type="checkbox" name="tools" value="None of the above"><span>None of the above</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label">Have you tried to implement AI before?<span class="req">*</span></label>
+        <div class="opt-list">
+          <label class="opt-row"><input type="radio" name="ai_tried" value="Yes — it didn't really stick" required><span>Yes — it didn't really stick</span></label>
+          <label class="opt-row"><input type="radio" name="ai_tried" value="Yes — it's working but could do more"><span>Yes — it's working but could do more</span></label>
+          <label class="opt-row"><input type="radio" name="ai_tried" value="No — I don't know where to start"><span>No — I don't know where to start</span></label>
+          <label class="opt-row"><input type="radio" name="ai_tried" value="No — I've been sceptical"><span>No — I've been sceptical</span></label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="ai_experience">What happened when you tried? <span class="opt">(optional)</span></label>
+        <textarea id="ai_experience" name="ai_experience" placeholder="What did you try? What went wrong?"></textarea>
+      </div>
+    </div>
+
+    <!-- SECTION: The Close -->
+    <div class="fsection">
+      <div class="fsection-label">The Close</div>
+
+      <div class="field">
+        <label class="field-label" for="success_outcome">What would a successful outcome from working together look like for you?<span class="req">*</span></label>
+        <textarea id="success_outcome" name="success_outcome" required placeholder="What changes in your week? What stops keeping you up at night?"></textarea>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="referral_source">How did you hear about VerusLink? <span class="opt">(optional)</span></label>
+        <input type="text" id="referral_source" name="referral_source">
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="email">Best email to reach you<span class="req">*</span></label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="field">
+        <label class="field-label" for="phone">Best phone number <span class="opt">(optional)</span></label>
+        <input type="tel" id="phone" name="phone">
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="submitBtn">Send my audit →</button>
+    <div class="form-note">No pitch deck. No pressure. We review it before we speak.</div>
+    <div class="form-status" id="formStatus"></div>
+  </form>
+
+  <div class="form-success" id="formSuccess">
+    <h2 class="form-success-h">Got it — <em>thank you.</em></h2>
+    <p class="form-success-p">Your audit is in. We'll review it properly before we speak and come back to you with the highest-leverage opportunities we spot.</p>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-logo">VerusLink</div>
+  <div class="footer-links">
+    <a href="mailto:james@veruslink.au" class="footer-link">james@veruslink.au</a>
+    <a href="/privacy" class="footer-link">Privacy</a>
+    <a href="/terms" class="footer-link">Terms</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var form = document.getElementById('auditForm');
+  var btn = document.getElementById('submitBtn');
+  var statusEl = document.getElementById('formStatus');
+  var successEl = document.getElementById('formSuccess');
+  var ENDPOINT = 'https://vero-audit.veruslink.au/submit-audit';
+
+  function showError(msg) {
+    statusEl.textContent = msg;
+    statusEl.className = 'form-status error';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusEl.className = 'form-status';
+    statusEl.textContent = '';
+
+    if (!form.checkValidity()) {
+      showError('Please fill in the required fields before sending.');
+      var firstInvalid = form.querySelector(':invalid');
+      if (firstInvalid) firstInvalid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    var fd = new FormData(form);
+    var payload = {};
+    fd.forEach(function (value, key) {
+      if (payload[key] === undefined) {
+        payload[key] = value;
+      } else if (Array.isArray(payload[key])) {
+        payload[key].push(value);
+      } else {
+        payload[key] = [payload[key], value];
+      }
+    });
+    // Ensure multi-select fields are always arrays
+    ['time_sinks', 'tools'].forEach(function (k) {
+      if (payload[k] === undefined) payload[k] = [];
+      else if (!Array.isArray(payload[k])) payload[k] = [payload[k]];
+    });
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (res) { return res.json().catch(function () { return { success: false }; }); })
+      .then(function (data) {
+        if (data && data.success) {
+          form.style.display = 'none';
+          successEl.classList.add('show');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          showError((data && data.error) ? data.error : 'Something went wrong. Please try again or email james@veruslink.au.');
+          btn.disabled = false;
+          btn.textContent = 'Send my audit →';
+        }
+      })
+      .catch(function () {
+        showError('Could not reach the server. Please try again or email james@veruslink.au.');
+        btn.disabled = false;
+        btn.textContent = 'Send my audit →';
+      });
+  });
+})();
+</script>
+
+</body>
+</html>
