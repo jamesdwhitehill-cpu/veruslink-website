@@ -46,11 +46,21 @@ h2{font-size:clamp(24px,3.6vw,34px);line-height:1.1;font-weight:700;letter-spaci
   display:inline-block;border:1px solid var(--ink);background:var(--ink);color:#fff;
   font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
   padding:16px 28px;text-decoration:none;cursor:pointer;font-family:var(--font);
+  /* <button> does not inherit the page line-height the way <a> does, so without
+     this the copy buttons sit 4px shorter than the anchor beside them. */
+  line-height:1.5;
 }
 .btn:hover{background:#000;}
-.btn-ghost{background:transparent;color:var(--ink);}
-.btn-ghost:hover{background:var(--tint);}
+/* swiss.css sets `.btn{color:#fff!important}`. Any variant of .btn that wants
+   dark text has to win that !important or it renders as an invisible white box
+   on a white card, which is exactly what the old .btn-ghost did here. The rule
+   for this page: a .btn variant sets its BACKGROUND and keeps the white text. */
+.btn-copy{background:var(--accent);border-color:var(--accent);}
+.btn-copy:hover{background:#2183BC;border-color:#2183BC;}
+.btn-copy[data-copied="1"]{background:#1B6E9E;border-color:#1B6E9E;}
 .btn-note{font-size:14px;color:var(--faint);}
+.paper-link{display:inline-block;font-size:15px;color:var(--accent);}
+.paper-link:hover{text-decoration:underline;}
 
 .steps{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:32px;}
 @media(min-width:680px){.steps{grid-template-columns:repeat(2,1fr);}}
@@ -107,9 +117,9 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
       <p class="body">Most people get beige answers out of AI because they hand it a blank box and no context. This fixes that. Paste one prompt into any AI chat, answer nine plain questions the way you would tell a mate, and you end up with the context any AI tool needs to actually understand your world.</p>
       <div class="btn-row">
         <a class="btn" href="#prompt">Get the prompt</a>
-        <a class="btn btn-ghost" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
+        <button type="button" class="btn btn-copy js-copy">Copy the prompt</button>
       </div>
-      <p class="btn-note" style="margin-top:16px;">One page. The same prompt and the same nine questions, ready to print.</p>
+      <p class="btn-note" style="margin-top:16px;">Prefer paper? <a class="paper-link" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a> &mdash; one page, the same prompt and the same nine questions.</p>
     </div>
   </div>
 </section>
@@ -147,7 +157,7 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
       <p class="body">This is the whole thing. Copy it, paste it into the AI chat you already use, and it will run the interview with you.</p>
       <div class="prompt" id="promptText">You are my business consultant, and you are going to interview me about my business. Ask me the nine questions below one at a time, and wait for my answer before the next. If an answer is thin, ask one quick follow-up, then move on. Keep it warm and plain, like a mate, not a form. When all nine are done, do two things. First, write me a one-page Business Brief: a short snapshot of how my business really runs in my own words, my three biggest time-leaks, and one AI task worth trying this week. Second, give me a short context block I can paste at the top of any future AI chat so it instantly understands my business. The nine questions: 1) What does your business do, and who do you do it for? 2) What is your role, and how many people are on the team? 3) Walk me through a normal week. Where does your time actually go? 4) What is the one job you dread or keep putting off? 5) How do you win work, and who are your best kind of customers? 6) What are your rules? The way you do things a new hire would get wrong. 7) What tools or software do you already run the business on? 8) Where have you tried AI before, and where did it not stick? 9) If you got one day a week back, what would you do with it? Start by asking me question one.</div>
       <div class="btn-row">
-        <button type="button" class="btn" id="copyPrompt">Copy the prompt</button>
+        <button type="button" class="btn btn-copy js-copy" id="copyPrompt">Copy the prompt</button>
         <span class="btn-note" id="copyNote" role="status" aria-live="polite"></span>
       </div>
     </div>
@@ -172,7 +182,8 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
         <li><span class="qnum">09</span><span class="qtext">If you got one day a week back, what would you do with it?</span></li>
       </ol>
       <div class="btn-row">
-        <a class="btn btn-ghost" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
+        <button type="button" class="btn btn-copy js-copy">Copy the prompt</button>
+        <a class="paper-link" href="/assets/business-brief-interview.pdf" download>Or download the interview (PDF)</a>
       </div>
       <p class="closing">Want the whole map? <a href="https://book.veruslink.au/intro">Book a time</a>.</p>
     </div>
@@ -197,12 +208,10 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
 // context and some of them inside one.
 (function () {
   'use strict';
-  var btn = document.getElementById('copyPrompt');
   var src = document.getElementById('promptText');
   var note = document.getElementById('copyNote');
-  if (!btn || !src) return;
-
-  function say(msg) { if (note) { note.textContent = msg; } }
+  var buttons = document.querySelectorAll('.js-copy');
+  if (!src || !buttons.length) return;
 
   function legacyCopy(text) {
     var ta = document.createElement('textarea');
@@ -218,17 +227,39 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
     return ok;
   }
 
-  btn.addEventListener('click', function () {
+  // The label is the feedback. It says COPIED for two seconds and then goes
+  // back to what it said before, so a second copy still reads as a second copy.
+  function flash(btn) {
+    if (btn.dataset.copied === '1') return;
+    var was = btn.textContent;
+    btn.dataset.copied = '1';
+    btn.textContent = 'Copied';
+    window.setTimeout(function () {
+      btn.textContent = was;
+      delete btn.dataset.copied;
+    }, 2000);
+  }
+
+  function failed(msg) { if (note) { note.textContent = msg; } }
+  function succeeded(btn) { if (note) { note.textContent = ''; } flash(btn); }
+
+  function copy(btn) {
     var text = src.textContent;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(function () {
-        say('Copied. Paste it into your AI chat.');
+        succeeded(btn);
       }, function () {
-        say(legacyCopy(text) ? 'Copied. Paste it into your AI chat.' : 'Could not copy. Select the text above and copy it.');
+        if (legacyCopy(text)) { succeeded(btn); }
+        else { failed('Could not copy. Select the text above and copy it.'); }
       });
       return;
     }
-    say(legacyCopy(text) ? 'Copied. Paste it into your AI chat.' : 'Could not copy. Select the text above and copy it.');
+    if (legacyCopy(text)) { succeeded(btn); }
+    else { failed('Could not copy. Select the text above and copy it.'); }
+  }
+
+  Array.prototype.forEach.call(buttons, function (btn) {
+    btn.addEventListener('click', function () { copy(btn); });
   });
 })();
 </script>
