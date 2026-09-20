@@ -11,13 +11,20 @@
 </head>
 <body>
 
+<!-- TODO (pending legal review): the wording of section 4, Business Brief
+     Submissions, and the matching consent copy on /brief have NOT been reviewed
+     by a lawyer. Both were drafted in-house on 20 September 2026. The /brief page
+     must not go live until this section is reviewed, signed off and published.
+     The retention period (24 months) and the licence sentence are the two points
+     to put in front of the lawyer first. -->
+
 <div class="header">
   <a href="/" class="nav-logo">Vero</a>
 </div>
 
 <div class="container">
   <h1>Privacy Policy</h1>
-  <p class="last-updated">Last updated: 28 June 2026</p>
+  <p class="last-updated">Last updated: 20 September 2026</p>
 
   <p>NB Performance Pty Ltd ABN 25 675 763 050, trading as VerusLink, ("we", "us", "our") operates the VerusLink platform, including the website at veruslink.au, the Vero AI assistant, and related services (collectively, the "Service"). This Privacy Policy explains how we collect, use, disclose and protect personal information in accordance with the Australian Privacy Act 1988 (Cth) and the Australian Privacy Principles (APPs).</p>
 
@@ -58,7 +65,21 @@
 
   <p>We do not sell, rent or trade your personal information to any third party.</p>
 
-  <h2>4. Gmail Data Usage</h2>
+  <h2>4. Business Brief Submissions</h2>
+  <p>If you fill in the Business Brief at <a href="/brief">veruslink.au/brief</a>, by talking or by typing, this is what happens to what you tell us. This section is written in plain English on purpose.</p>
+  <ul>
+    <li><strong>What we collect:</strong> your name, your email address, your business name, and your answers to the nine questions about how your business runs. We also record which of the two consent boxes you ticked, the time you submitted, and where you came from (for example, a keynote).</li>
+    <li><strong>Why we collect it:</strong> to generate your one-page Business Brief and email it to you. That email is the thing you asked for, so we send it on the strength of the first, required consent box.</li>
+    <li><strong>Contacting you about it:</strong> only if you ticked the second box. That box is optional, is never ticked for you, and ticking it is the only thing that puts you on any VerusLink marketing list. You can tell us to stop at any time.</li>
+    <li><strong>Voice:</strong> if you answer out loud, your browser does the speech-to-text and we only ever receive the finished text. We do not record, store or receive audio.</li>
+    <li><strong>How it is stored:</strong> in our Supabase database, in a table with row-level security switched on and no public access policies. Only our booking service, using a server-side service key, can read or write it. The anon key our website uses cannot read a single row.</li>
+    <li><strong>Who sees it:</strong> James Whitehill. Your answers are sent to Anthropic's Claude API to draft the Brief, and to Resend to email it to you. That is the whole list. We never sell, rent, share or trade your answers, and we do not use them to train anyone's AI model.</li>
+    <li><strong>How long we keep it:</strong> up to 24 months from submission, so we can re-send your Brief and pick up a conversation where it left off. After that it is deleted. Ask us earlier and we delete it earlier.</li>
+    <li><strong>Who owns it:</strong> you do. You keep your information. You grant VerusLink a licence to use it to build your Brief and improve the service, and nothing beyond that.</li>
+    <li><strong>Access or deletion:</strong> email <a href="mailto:james@veruslink.au">james@veruslink.au</a> and ask to see or delete your Business Brief submission. We will respond within 30 days, and usually the same week.</li>
+  </ul>
+
+  <h2>5. Gmail Data Usage</h2>
   <p>Our use of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements. Specifically:</p>
   <ul>
     <li>We only request the minimum scopes necessary to provide email-related features (<code>gmail.readonly</code> and <code>gmail.compose</code>).</li>
@@ -67,7 +88,7 @@
     <li>We do not transfer Gmail data to third parties except as necessary to provide the Service, as required by law, or with your explicit consent.</li>
   </ul>
 
-  <h2>5. Data Storage and Security</h2>
+  <h2>6. Data Storage and Security</h2>
   <p>Your data is stored in cloud infrastructure provided by Supabase and Vercel. We implement reasonable technical and organisational measures to protect your personal information, including:</p>
   <ul>
     <li>Encryption of data in transit (TLS/HTTPS).</li>
@@ -78,7 +99,7 @@
   </ul>
   <p>No method of electronic storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.</p>
 
-  <h2>6. Data Retention</h2>
+  <h2>7. Data Retention</h2>
   <p>We retain your personal information for as long as your account is active or as needed to provide the Service. Specifically:</p>
   <ul>
     <li><strong>Account and CRM data:</strong> retained while your account is active. Upon cancellation, your data is retained for up to 90 days before deletion to allow for account reactivation.</li>
@@ -88,7 +109,7 @@
   </ul>
   <p>You may request earlier deletion of your data at any time by contacting us.</p>
 
-  <h2>7. Your Rights Under the Australian Privacy Act</h2>
+  <h2>8. Your Rights Under the Australian Privacy Act</h2>
   <p>Under the Privacy Act 1988 (Cth) and the Australian Privacy Principles, you have the right to:</p>
   <ul>
     <li><strong>Access:</strong> request a copy of the personal information we hold about you.</li>
@@ -99,19 +120,19 @@
   </ul>
   <p>To exercise any of these rights, please contact us using the details below. We will respond to your request within 30 days.</p>
 
-  <h2>8. Cookies and Tracking</h2>
+  <h2>9. Cookies and Tracking</h2>
   <p>Our website uses <code>localStorage</code> in your browser to maintain your login session and CRM preferences. We do not use third-party tracking cookies, analytics platforms, or advertising pixels.</p>
 
-  <h2>9. Cross-Border Data Disclosure</h2>
+  <h2>10. Cross-Border Data Disclosure</h2>
   <p>Some of our third-party service providers (Supabase, Stripe, Vercel, Anthropic, Resend) may store or process data outside of Australia, including in the United States. Where this occurs, we take reasonable steps to ensure that overseas recipients handle your personal information in accordance with the Australian Privacy Principles.</p>
 
-  <h2>10. Children's Privacy</h2>
+  <h2>11. Children's Privacy</h2>
   <p>The Service is not directed at individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately.</p>
 
-  <h2>11. Changes to This Policy</h2>
+  <h2>12. Changes to This Policy</h2>
   <p>We may update this Privacy Policy from time to time. Material changes will be communicated via email or a notice on our website. The "Last updated" date at the top of this page indicates when the policy was most recently revised.</p>
 
-  <h2>12. Contact Us</h2>
+  <h2>13. Contact Us</h2>
   <div class="card">
     <p>If you have any questions about this Privacy Policy, wish to exercise your privacy rights, or want to make a complaint, please contact us:</p>
     <p><strong>NB Performance Pty Ltd, trading as VerusLink</strong><br>
