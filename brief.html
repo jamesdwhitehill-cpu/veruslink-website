@@ -4,19 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Business Brief: VerusLink</title>
-<meta name="description" content="Five minutes talking. A map you keep forever. Answer nine plain questions and get a one-page Business Brief with a ready-to-paste context block for any AI tool.">
+<meta name="description" content="Nine plain questions that map how your business really runs. Download the interview sheet, answer it in your own words, and any AI tool finally understands your world.">
 <link rel="canonical" href="https://veruslink.au/brief">
 <meta property="og:url" content="https://veruslink.au/brief">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Your Business Brief: VerusLink">
 <meta property="og:site_name" content="VerusLink">
-<meta property="og:description" content="Five minutes talking. A map you keep forever.">
+<meta property="og:description" content="Nine plain questions. A map you keep forever.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="stylesheet" href="/assets/swiss.css">
 <style>
 /* ---- Brief page. Swiss system, with the F4F4F5 paper and white cards the
-       keynote deck uses. Hairline borders, no shadows, no radius, one accent. ---- */
+       keynote deck uses. Hairline borders, no shadows, no radius, one accent.
+       Static page: nothing here collects anything. ---- */
 body{background:#F4F4F5;font-size:16px;overflow-x:hidden;}
 
 nav{
@@ -37,7 +38,6 @@ section{padding:clamp(40px,6vw,72px) 0;}
 
 h1{font-size:clamp(34px,6vw,58px);line-height:1.04;font-weight:700;letter-spacing:-.02em;}
 h2{font-size:clamp(24px,3.6vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.01em;}
-h3{font-size:18px;font-weight:700;}
 .sub{font-size:clamp(18px,2.4vw,22px);color:var(--accent);font-weight:500;margin-top:14px;}
 .body{font-size:17px;color:var(--muted);line-height:1.6;margin-top:20px;max-width:62ch;}
 
@@ -48,10 +48,7 @@ h3{font-size:18px;font-weight:700;}
   padding:16px 28px;text-decoration:none;cursor:pointer;font-family:var(--font);
 }
 .btn:hover{background:#000;}
-.btn-ghost{background:transparent;color:var(--ink);}
-.btn-ghost:hover{background:var(--tint);}
-.btn:disabled{opacity:.35;cursor:not-allowed;background:var(--ink);}
-.paper-link{display:inline-block;margin-top:18px;font-size:14px;color:var(--accent);}
+.btn-note{font-size:14px;color:var(--faint);}
 
 .steps{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:32px;}
 @media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr);}}
@@ -59,59 +56,20 @@ h3{font-size:18px;font-weight:700;}
 .step .idx{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;}
 .step p{margin-top:12px;font-size:16px;color:var(--muted);line-height:1.55;}
 
-/* ---- form ---- */
-#formWrap[hidden]{display:none;}
-.field{margin-top:28px;}
-.field label{display:block;font-size:16px;font-weight:600;line-height:1.4;}
-.field .qnum{color:var(--accent);font-variant-numeric:tabular-nums;margin-right:8px;}
-.field textarea,.field input{
-  width:100%;margin-top:10px;padding:14px;font:inherit;font-size:16px;
-  border:1px solid var(--rule);background:#fff;color:var(--ink);border-radius:0;
+/* ---- the nine questions, read not filled in ---- */
+.questions{list-style:none;margin:32px 0 0;padding:0;border-top:1px solid var(--rule);}
+.questions li{
+  display:flex;gap:18px;align-items:baseline;
+  border-bottom:1px solid var(--rule);padding:22px 0;
 }
-.field textarea{min-height:104px;resize:vertical;}
-.field textarea:focus,.field input:focus{outline:2px solid var(--accent);outline-offset:-2px;}
-.mic{
-  margin-top:10px;display:inline-flex;align-items:center;gap:8px;
-  border:1px solid var(--rule);background:#fff;color:var(--ink);
-  font:inherit;font-size:13px;padding:8px 14px;cursor:pointer;
+.questions .qnum{
+  flex:none;font-size:12px;letter-spacing:.14em;font-weight:600;color:var(--accent);
+  font-variant-numeric:tabular-nums;min-width:28px;
 }
-.mic:hover{background:var(--tint);}
-.mic[aria-pressed="true"]{border-color:var(--accent);background:var(--tint);color:var(--accent);}
-.mic-dot{width:8px;height:8px;border-radius:50%;background:currentColor;}
-.mic[aria-pressed="true"] .mic-dot{animation:pulse 1s infinite;}
-@keyframes pulse{50%{opacity:.25;}}
-.voice-note{margin-top:8px;font-size:13px;color:var(--faint);}
+.questions .qtext{font-size:17px;line-height:1.5;color:var(--ink);}
 
-.grid2{display:grid;gap:20px;}
-@media(min-width:680px){.grid2{grid-template-columns:1fr 1fr;}}
-
-/* ---- guided (one question at a time) ---- */
-.guided .field{display:none;}
-.guided .field.active{display:block;}
-.guided-nav{display:flex;gap:12px;align-items:center;margin-top:28px;}
-.progress{font-size:13px;color:var(--faint);margin-left:auto;}
-
-/* ---- consent ---- */
-.consent{margin-top:40px;border-top:1px solid var(--rule);padding-top:28px;}
-.check{display:flex;gap:12px;align-items:flex-start;margin-top:16px;font-size:15px;line-height:1.5;}
-.check input{margin-top:4px;width:18px;height:18px;flex:none;accent-color:var(--accent);}
-.smallprint{margin-top:20px;font-size:13px;color:var(--faint);line-height:1.6;}
-.smallprint a{color:var(--accent);}
-
-.status{margin-top:18px;font-size:15px;min-height:1.4em;}
-.status.error{color:#B42318;}
-.status.working{color:var(--accent);}
-
-/* ---- result ---- */
-#result[hidden]{display:none;}
-.leak{border-top:1px solid var(--rule);padding-top:18px;margin-top:18px;}
-.leak h3{font-size:17px;}
-.leak p{margin-top:8px;color:var(--muted);line-height:1.6;}
-.paste{
-  margin-top:14px;background:var(--tint);border:1px solid var(--rule);
-  padding:20px;font-size:15px;line-height:1.65;white-space:pre-wrap;
-}
-.kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;color:var(--accent);}
+.closing{font-size:17px;color:var(--muted);line-height:1.6;margin-top:8px;}
+.closing a{color:var(--accent);}
 
 footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-top:24px;}
 .foot{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;}
@@ -134,13 +92,12 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
   <div class="shell">
     <div class="card">
       <h1>Your Business Brief</h1>
-      <p class="sub">Five minutes talking. A map you keep forever.</p>
-      <p class="body">Most people get beige answers out of AI because they hand it a blank box and no context. This fixes that. Tell us about your business the way you would tell a mate, and we will hand you back a one-page Brief with a ready-to-paste block that makes any AI tool actually understand your world.</p>
+      <p class="sub">Nine questions. A map you keep forever.</p>
+      <p class="body">Most people get beige answers out of AI because they hand it a blank box and no context. This fixes that. Answer nine plain questions about your business the way you would tell a mate, and you end up with the context any AI tool needs to actually understand your world.</p>
       <div class="btn-row">
-        <button type="button" class="btn" id="startVoice">Talk it (5 min)</button>
-        <button type="button" class="btn btn-ghost" id="startTyped">Or type it</button>
+        <a class="btn" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
+        <span class="btn-note">Two pages. Print it, or fill it in on screen.</span>
       </div>
-      <a class="paper-link" href="/assets/business-brief-interview.pdf" download>Prefer paper? Download the PDF</a>
     </div>
   </div>
 </section>
@@ -152,129 +109,41 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
     <div class="steps">
       <div class="step">
         <div class="idx">Step 01</div>
-        <p>Answer nine plain questions, out loud or typed.</p>
+        <p>Download the sheet and answer nine plain questions in your own words.</p>
       </div>
       <div class="step">
         <div class="idx">Step 02</div>
-        <p>We turn them into your one-page Business Brief.</p>
+        <p>What you write is your Business Brief — one page that says how the place really runs.</p>
       </div>
       <div class="step">
         <div class="idx">Step 03</div>
-        <p>Paste the context block into any AI tool. It finally gets your business.</p>
+        <p>Paste it at the top of any AI chat. It finally gets your business.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ THE FORM ============ -->
-<section id="formWrap" hidden>
+<!-- ============ THE NINE QUESTIONS ============ -->
+<section id="questions">
   <div class="shell">
     <div class="card">
-      <form id="briefForm" novalidate>
-        <h2 id="formHeading">Tell us about your business</h2>
-        <p class="voice-note" id="voiceHint"></p>
-
-        <div class="grid2" style="margin-top:28px;">
-          <div class="field" style="margin-top:0;">
-            <label for="full_name">Your name</label>
-            <input id="full_name" name="full_name" type="text" autocomplete="name" required>
-          </div>
-          <div class="field" style="margin-top:0;">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required>
-          </div>
-        </div>
-        <div class="field">
-          <label for="business_name">Business name</label>
-          <input id="business_name" name="business_name" type="text" autocomplete="organization" required>
-        </div>
-
-        <div id="questions"></div>
-
-        <div class="guided-nav" id="guidedNav" hidden>
-          <button type="button" class="btn btn-ghost" id="prevQ">Back</button>
-          <button type="button" class="btn" id="nextQ">Next</button>
-          <span class="progress" id="progress"></span>
-        </div>
-
-        <!-- ============ CONSENT ============ -->
-        <div class="consent" id="consentBlock">
-          <label class="check">
-            <input type="checkbox" id="consent_store" name="consent_store" required>
-            <span>I agree VerusLink can store my answers and email me my Business Brief.</span>
-          </label>
-          <label class="check">
-            <input type="checkbox" id="consent_marketing" name="consent_marketing">
-            <span>I would like VerusLink to contact me about my Brief and how AI could help my business.</span>
-          </label>
-          <p class="smallprint">Your information is collected by VerusLink, a trading name of NB Performance Pty Ltd (ABN 25 675 763 050), to generate your Business Brief and, if you opt in, to contact you about it. It is stored securely, never sold or shared, and you can ask to see or delete it at any time. You keep your information; you grant VerusLink a licence to use it to build your Brief and improve the service. Full detail at <a href="/privacy">veruslink.au/privacy</a>.</p>
-
-          <div class="btn-row">
-            <button type="submit" class="btn" id="submitBtn" disabled>Build my Brief</button>
-          </div>
-          <p class="status" id="status" role="status" aria-live="polite"></p>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WHAT YOU GET BACK ============ -->
-<section id="whatYouGet">
-  <div class="shell">
-    <div class="card">
-      <h2>What you get back</h2>
-      <p class="body">A clean snapshot of your business in your own words. Your three biggest time leaks, named. One AI move to try this week. And the paste-this block: a ready context prompt you drop at the top of any AI chat so it never starts cold again. Brief it once, keep it forever.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ============ RESULT ============ -->
-<section id="result" hidden>
-  <div class="shell">
-    <div class="card">
-      <div class="kicker">Your Business Brief</div>
-      <h2 style="margin-top:14px;" id="resultHeading">Here it is</h2>
-      <p class="body" id="resultIntro"></p>
-
-      <div style="margin-top:36px;">
-        <div class="kicker">Your business, in your words</div>
-        <p class="body" id="rSnapshot"></p>
-      </div>
-
-      <div style="margin-top:36px;">
-        <div class="kicker">Your three biggest time leaks</div>
-        <div id="rLeaks"></div>
-      </div>
-
-      <div style="margin-top:36px;">
-        <div class="kicker">One AI move to try this week</div>
-        <h3 style="margin-top:14px;" id="rMoveTitle"></h3>
-        <p class="body" id="rMoveDetail"></p>
-      </div>
-
-      <div style="margin-top:36px;">
-        <div class="kicker">Paste this</div>
-        <p class="body" style="margin-top:12px;">Drop this at the top of any AI chat before you ask it anything.</p>
-        <div class="paste" id="rPaste"></div>
-        <div class="btn-row">
-          <button type="button" class="btn btn-ghost" id="copyPaste">Copy the block</button>
-          <button type="button" class="btn" id="downloadPdf">Download the PDF</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ NEXT STEP ============ -->
-<section id="next">
-  <div class="shell">
-    <div class="card">
-      <h2>Want the whole map, not just the first corner?</h2>
-      <p class="body">The Brief is the first corner of your map, free. If you would rather someone drew the whole thing with you, book a 15-minute intro or your AI Opportunity Assessment. We find where your time and money are really leaking and hand you a ranked plan before anyone builds a thing.</p>
+      <h2>The nine questions</h2>
+      <p class="body">Nothing here is a trick. They are the nine things anyone would need to know before they could be useful to you.</p>
+      <ol class="questions">
+        <li><span class="qnum">01</span><span class="qtext">What does your business do, and who do you do it for?</span></li>
+        <li><span class="qnum">02</span><span class="qtext">What is your role, and how many people are on the team?</span></li>
+        <li><span class="qnum">03</span><span class="qtext">Walk through a normal week. Where does your time actually go?</span></li>
+        <li><span class="qnum">04</span><span class="qtext">What is the one job you dread or keep putting off?</span></li>
+        <li><span class="qnum">05</span><span class="qtext">How do you win work, and who are your best kind of customers?</span></li>
+        <li><span class="qnum">06</span><span class="qtext">What are your rules? The way you do things a new hire would get wrong.</span></li>
+        <li><span class="qnum">07</span><span class="qtext">What tools or software do you already run the business on?</span></li>
+        <li><span class="qnum">08</span><span class="qtext">Where have you tried AI before, and where did it not stick?</span></li>
+        <li><span class="qnum">09</span><span class="qtext">If you got one day a week back, what would you do with it?</span></li>
+      </ol>
       <div class="btn-row">
-        <a class="btn" href="https://book.veruslink.au/intro">Book a time</a>
+        <a class="btn" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
       </div>
+      <p class="closing">Want the whole map? <a href="https://book.veruslink.au/intro">Book a time</a>.</p>
     </div>
   </div>
 </section>
@@ -289,343 +158,6 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
     </div>
   </div>
 </footer>
-
-<script>
-(function () {
-  'use strict';
-
-  var ENDPOINT = 'https://book.veruslink.au/api/brief-submit';
-  var SOURCE = 'keynote';
-
-  // The nine questions. Keys match lib/brief-questions.js on the server, so a
-  // rename has to happen in both places or the answer arrives empty.
-  var QUESTIONS = [
-    { key: 'q1_what_you_do',   q: 'What does your business do, and who do you do it for?' },
-    { key: 'q2_role_and_team', q: 'What is your role, and how many people are on the team?' },
-    { key: 'q3_normal_week',   q: 'Walk through a normal week. Where does your time actually go?' },
-    { key: 'q4_dreaded_job',   q: 'What is the one job you dread or keep putting off?' },
-    { key: 'q5_winning_work',  q: 'How do you win work, and who are your best kind of customers?' },
-    { key: 'q6_your_rules',    q: 'What are your rules? The way you do things a new hire would get wrong.' },
-    { key: 'q7_tools',         q: 'What tools or software do you already run the business on?' },
-    { key: 'q8_ai_so_far',     q: 'Where have you tried AI before, and where did it not stick?' },
-    { key: 'q9_one_day_back',  q: 'If you got one day a week back, what would you do with it?' }
-  ];
-
-  var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  var voiceSupported = !!SR;
-
-  var el = function (id) { return document.getElementById(id); };
-  var formWrap = el('formWrap');
-  var form = el('briefForm');
-  var questionsHost = el('questions');
-  var statusEl = el('status');
-  var submitBtn = el('submitBtn');
-  var consentStore = el('consent_store');
-  var guidedNav = el('guidedNav');
-
-  var mode = 'typed';      // 'typed' or 'guided'
-  var current = 0;         // index of the visible question in guided mode
-  var pdfBase64 = null;
-  var pdfName = 'business-brief.pdf';
-
-  // ---- build the nine fields ----
-  QUESTIONS.forEach(function (item, i) {
-    var wrap = document.createElement('div');
-    wrap.className = 'field';
-    wrap.setAttribute('data-index', String(i));
-
-    var label = document.createElement('label');
-    label.setAttribute('for', item.key);
-    label.innerHTML = '<span class="qnum">' + (i + 1) + '.</span>';
-    label.appendChild(document.createTextNode(item.q));
-
-    var ta = document.createElement('textarea');
-    ta.id = item.key;
-    ta.name = item.key;
-    ta.rows = 3;
-
-    wrap.appendChild(label);
-    wrap.appendChild(ta);
-
-    // Voice is an addition to the field, never a replacement for it. If the
-    // browser has no SpeechRecognition the button is simply not built and the
-    // textarea behaves exactly as it would have.
-    if (voiceSupported) {
-      var mic = document.createElement('button');
-      mic.type = 'button';
-      mic.className = 'mic';
-      mic.setAttribute('aria-pressed', 'false');
-      mic.innerHTML = '<span class="mic-dot"></span><span class="mic-text">Answer out loud</span>';
-      mic.addEventListener('click', function () { toggleDictation(mic, ta); });
-      wrap.appendChild(mic);
-    }
-
-    questionsHost.appendChild(wrap);
-  });
-
-  // ---- dictation ----
-  var activeRec = null;
-  var activeMic = null;
-
-  function stopDictation() {
-    if (activeRec) { try { activeRec.stop(); } catch (e) { /* already stopped */ } }
-  }
-
-  function resetMic(mic) {
-    if (!mic) return;
-    mic.setAttribute('aria-pressed', 'false');
-    mic.querySelector('.mic-text').textContent = 'Answer out loud';
-  }
-
-  function toggleDictation(mic, field) {
-    if (activeMic === mic) { stopDictation(); return; }
-    stopDictation();
-
-    var rec;
-    try {
-      rec = new SR();
-    } catch (e) {
-      mic.disabled = true;
-      mic.querySelector('.mic-text').textContent = 'Typing only in this browser';
-      return;
-    }
-    rec.lang = 'en-AU';
-    rec.continuous = true;
-    rec.interimResults = true;
-
-    // Anything already typed stays put. Dictation appends, so switching between
-    // talking and typing mid-answer never destroys what is there.
-    var base = field.value ? field.value.replace(/\s+$/, '') + ' ' : '';
-
-    rec.onresult = function (ev) {
-      var settled = '';
-      var pending = '';
-      for (var i = ev.resultIndex; i < ev.results.length; i += 1) {
-        var chunk = ev.results[i][0].transcript;
-        if (ev.results[i].isFinal) { settled += chunk; } else { pending += chunk; }
-      }
-      if (settled) { base = (base + settled).replace(/\s+/g, ' ').trim() + ' '; }
-      field.value = (base + pending).trim();
-    };
-    rec.onerror = function (ev) {
-      resetMic(mic);
-      activeRec = null; activeMic = null;
-      if (ev && (ev.error === 'not-allowed' || ev.error === 'service-not-allowed')) {
-        setStatus('Microphone access was blocked, so type your answer instead.', 'error');
-      }
-    };
-    rec.onend = function () {
-      resetMic(mic);
-      if (activeMic === mic) { activeRec = null; activeMic = null; }
-    };
-
-    try {
-      rec.start();
-    } catch (e) {
-      resetMic(mic);
-      return;
-    }
-    activeRec = rec;
-    activeMic = mic;
-    mic.setAttribute('aria-pressed', 'true');
-    mic.querySelector('.mic-text').textContent = 'Listening, tap to stop';
-  }
-
-  // ---- modes ----
-  var fields = function () { return questionsHost.querySelectorAll('.field'); };
-
-  function showGuided(i) {
-    current = Math.max(0, Math.min(QUESTIONS.length - 1, i));
-    var all = fields();
-    for (var n = 0; n < all.length; n += 1) {
-      all[n].classList.toggle('active', n === current);
-    }
-    el('progress').textContent = 'Question ' + (current + 1) + ' of ' + QUESTIONS.length;
-    el('prevQ').disabled = current === 0;
-    el('nextQ').textContent = current === QUESTIONS.length - 1 ? 'Done' : 'Next';
-    var ta = all[current].querySelector('textarea');
-    if (ta) ta.focus({ preventScroll: true });
-  }
-
-  function openForm(which) {
-    mode = which;
-    formWrap.hidden = false;
-    questionsHost.classList.toggle('guided', which === 'guided');
-    guidedNav.hidden = which !== 'guided';
-    el('consentBlock').hidden = false;
-
-    if (which === 'guided') {
-      el('formHeading').textContent = 'Talk it through';
-      el('voiceHint').textContent = voiceSupported
-        ? 'One question at a time. Tap "Answer out loud" and just talk. You can edit anything you dictate.'
-        : 'This browser cannot listen, so the questions are here to type. Chrome and Edge support talking.';
-      showGuided(0);
-    } else {
-      el('formHeading').textContent = 'Type it out';
-      el('voiceHint').textContent = voiceSupported
-        ? 'All nine at once. Every question still has a microphone if you would rather talk.'
-        : 'All nine at once.';
-      var all = fields();
-      for (var n = 0; n < all.length; n += 1) all[n].classList.remove('active');
-      stopDictation();
-    }
-    formWrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  el('startVoice').addEventListener('click', function () { openForm('guided'); });
-  el('startTyped').addEventListener('click', function () { openForm('typed'); });
-  el('prevQ').addEventListener('click', function () { stopDictation(); showGuided(current - 1); });
-  el('nextQ').addEventListener('click', function () {
-    stopDictation();
-    if (current === QUESTIONS.length - 1) {
-      // Past the last question the whole sheet is shown, so the answers can be
-      // read back and edited before anything is sent.
-      questionsHost.classList.remove('guided');
-      guidedNav.hidden = true;
-      el('formHeading').textContent = 'Read it back before you send';
-      el('consentBlock').scrollIntoView({ behavior: 'smooth', block: 'center' });
-      return;
-    }
-    showGuided(current + 1);
-  });
-
-  // ---- consent gate ----
-  // The button is disabled until the required box is ticked. The server checks
-  // the same flag, so this is the courtesy, not the control.
-  function syncGate() { submitBtn.disabled = !consentStore.checked; }
-  consentStore.addEventListener('change', syncGate);
-  syncGate();
-
-  function setStatus(msg, kind) {
-    statusEl.textContent = msg || '';
-    statusEl.className = 'status' + (kind ? ' ' + kind : '');
-  }
-
-  // ---- submit ----
-  form.addEventListener('submit', function (ev) {
-    ev.preventDefault();
-    stopDictation();
-
-    if (!consentStore.checked) {
-      setStatus('Please tick the first box so we can store your answers and email your Brief.', 'error');
-      return;
-    }
-    var payload = {
-      full_name: el('full_name').value.trim(),
-      business_name: el('business_name').value.trim(),
-      email: el('email').value.trim(),
-      consent_store: consentStore.checked,
-      consent_marketing: el('consent_marketing').checked,
-      source: SOURCE
-    };
-    QUESTIONS.forEach(function (item) { payload[item.key] = el(item.key).value.trim(); });
-
-    if (!payload.full_name || !payload.business_name || !payload.email) {
-      setStatus('We need your name, business name and email to build the Brief.', 'error');
-      return;
-    }
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(payload.email)) {
-      setStatus('That email does not look right. Check it and try again.', 'error');
-      return;
-    }
-    if (!payload.q3_normal_week || !payload.q4_dreaded_job) {
-      setStatus('Answer questions 3 and 4 at least. That is where the time leaks come from.', 'error');
-      return;
-    }
-
-    submitBtn.disabled = true;
-    setStatus('Building your Brief. This takes about twenty seconds.', 'working');
-
-    fetch(ENDPOINT, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, body: j }; }); })
-      .then(function (out) {
-        if (!out.ok || !out.body || !out.body.success) {
-          var msg = (out.body && out.body.error) || 'Something went wrong building your Brief.';
-          if (msg === 'consent_required') msg = 'Please tick the first box so we can store your answers.';
-          if (msg === 'invalid_email') msg = 'That email does not look right. Check it and try again.';
-          throw new Error(msg);
-        }
-        renderBrief(out.body, payload);
-      })
-      .catch(function (err) {
-        submitBtn.disabled = false;
-        setStatus(err.message + ' You can try again, or email james@veruslink.au.', 'error');
-      });
-  });
-
-  // ---- result ----
-  function renderBrief(res, payload) {
-    var brief = res.brief;
-    pdfBase64 = res.pdf_base64 || null;
-    pdfName = 'business-brief-' + (payload.business_name || 'your-business')
-      .replace(/[^a-zA-Z0-9]+/g, '-').replace(/^-+|-+$/g, '').toLowerCase() + '.pdf';
-
-    el('resultIntro').textContent = res.emailed
-      ? 'A copy is on its way to ' + payload.email + '. Here it is in the meantime.'
-      : 'Here it is. The emailed copy did not go out, so download it below and we will follow up.';
-
-    el('rSnapshot').textContent = brief.snapshot;
-
-    var leaks = el('rLeaks');
-    leaks.textContent = '';
-    brief.time_leaks.forEach(function (leak, i) {
-      var box = document.createElement('div');
-      box.className = 'leak';
-      var h = document.createElement('h3');
-      h.textContent = (i + 1) + '. ' + leak.title;
-      var p = document.createElement('p');
-      p.textContent = leak.detail;
-      box.appendChild(h);
-      box.appendChild(p);
-      leaks.appendChild(box);
-    });
-
-    el('rMoveTitle').textContent = brief.ai_move.title;
-    el('rMoveDetail').textContent = brief.ai_move.detail;
-    el('rPaste').textContent = brief.paste_block;
-
-    el('downloadPdf').hidden = !pdfBase64;
-    formWrap.hidden = true;
-    el('whatYouGet').hidden = true;
-    el('result').hidden = false;
-    el('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  el('copyPaste').addEventListener('click', function () {
-    var text = el('rPaste').textContent;
-    var done = function () { el('copyPaste').textContent = 'Copied'; };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(text).then(done, function () { /* nothing to do */ });
-    } else {
-      var t = document.createElement('textarea');
-      t.value = text;
-      document.body.appendChild(t);
-      t.select();
-      try { document.execCommand('copy'); done(); } catch (e) { /* nothing to do */ }
-      document.body.removeChild(t);
-    }
-  });
-
-  el('downloadPdf').addEventListener('click', function () {
-    if (!pdfBase64) return;
-    var bin = atob(pdfBase64);
-    var bytes = new Uint8Array(bin.length);
-    for (var i = 0; i < bin.length; i += 1) bytes[i] = bin.charCodeAt(i);
-    var url = URL.createObjectURL(new Blob([bytes], { type: 'application/pdf' }));
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = pdfName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function () { URL.revokeObjectURL(url); }, 4000);
-  });
-})();
-</script>
 
 </body>
 </html>
