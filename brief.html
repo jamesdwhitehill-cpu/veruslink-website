@@ -4,20 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Your Business Brief: VerusLink</title>
-<meta name="description" content="Nine plain questions that map how your business really runs. Download the interview sheet, answer it in your own words, and any AI tool finally understands your world.">
+<meta name="description" content="One prompt, nine questions. Paste it into any AI chat and it interviews you about your business, then hands you a one-page Business Brief and a context block you keep.">
 <link rel="canonical" href="https://veruslink.au/brief">
 <meta property="og:url" content="https://veruslink.au/brief">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Your Business Brief: VerusLink">
-<meta property="og:site_name" content="VerusLink">
-<meta property="og:description" content="Nine plain questions. A map you keep forever.">
+<meta property="og:description" content="One prompt, nine questions. A map you keep forever.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <link rel="stylesheet" href="/assets/swiss.css">
 <style>
 /* ---- Brief page. Swiss system, with the F4F4F5 paper and white cards the
        keynote deck uses. Hairline borders, no shadows, no radius, one accent.
-       Static page: nothing here collects anything. ---- */
+       Static page: nothing here collects anything. The only script on it copies
+       the prompt to the clipboard. ---- */
 body{background:#F4F4F5;font-size:16px;overflow-x:hidden;}
 
 nav{
@@ -48,13 +48,24 @@ h2{font-size:clamp(24px,3.6vw,34px);line-height:1.1;font-weight:700;letter-spaci
   padding:16px 28px;text-decoration:none;cursor:pointer;font-family:var(--font);
 }
 .btn:hover{background:#000;}
+.btn-ghost{background:transparent;color:var(--ink);}
+.btn-ghost:hover{background:var(--tint);}
 .btn-note{font-size:14px;color:var(--faint);}
 
 .steps{display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule);margin-top:32px;}
-@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr);}}
+@media(min-width:680px){.steps{grid-template-columns:repeat(2,1fr);}}
+@media(min-width:960px){.steps{grid-template-columns:repeat(4,1fr);}}
 .step{background:#fff;padding:28px;}
 .step .idx{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;}
 .step p{margin-top:12px;font-size:16px;color:var(--muted);line-height:1.55;}
+
+/* ---- the prompt, the thing people actually came for ---- */
+.prompt{
+  margin-top:28px;background:var(--tint);border:1px solid var(--rule);
+  padding:clamp(20px,3vw,28px);
+  font-size:15px;line-height:1.7;color:var(--ink);
+  white-space:pre-wrap;overflow-wrap:break-word;
+}
 
 /* ---- the nine questions, read not filled in ---- */
 .questions{list-style:none;margin:32px 0 0;padding:0;border-top:1px solid var(--rule);}
@@ -93,11 +104,12 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
     <div class="card">
       <h1>Your Business Brief</h1>
       <p class="sub">Nine questions. A map you keep forever.</p>
-      <p class="body">Most people get beige answers out of AI because they hand it a blank box and no context. This fixes that. Answer nine plain questions about your business the way you would tell a mate, and you end up with the context any AI tool needs to actually understand your world.</p>
+      <p class="body">Most people get beige answers out of AI because they hand it a blank box and no context. This fixes that. Paste one prompt into any AI chat, answer nine plain questions the way you would tell a mate, and you end up with the context any AI tool needs to actually understand your world.</p>
       <div class="btn-row">
-        <a class="btn" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
-        <span class="btn-note">Two pages. Print it, or fill it in on screen.</span>
+        <a class="btn" href="#prompt">Get the prompt</a>
+        <a class="btn btn-ghost" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
       </div>
+      <p class="btn-note" style="margin-top:16px;">One page. The same prompt and the same nine questions, ready to print.</p>
     </div>
   </div>
 </section>
@@ -109,30 +121,49 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
     <div class="steps">
       <div class="step">
         <div class="idx">Step 01</div>
-        <p>Download the sheet and answer nine plain questions in your own words.</p>
+        <p>Open any AI chat. ChatGPT, Claude, Gemini, whichever one you already use.</p>
       </div>
       <div class="step">
         <div class="idx">Step 02</div>
-        <p>What you write is your Business Brief — one page that says how the place really runs.</p>
+        <p>Copy the prompt below and paste it in.</p>
       </div>
       <div class="step">
         <div class="idx">Step 03</div>
-        <p>Paste it at the top of any AI chat. It finally gets your business.</p>
+        <p>Answer the nine questions it asks you, one at a time, the way you would tell a mate.</p>
+      </div>
+      <div class="step">
+        <div class="idx">Step 04</div>
+        <p>Get back your one-page Business Brief, and a context block you keep forever.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ THE NINE QUESTIONS ============ -->
+<!-- ============ THE PROMPT ============ -->
+<section id="prompt">
+  <div class="shell">
+    <div class="card">
+      <h2>The prompt</h2>
+      <p class="body">This is the whole thing. Copy it, paste it into the AI chat you already use, and it will run the interview with you.</p>
+      <div class="prompt" id="promptText">You are my business consultant, and you are going to interview me about my business. Ask me the nine questions below one at a time, and wait for my answer before the next. If an answer is thin, ask one quick follow-up, then move on. Keep it warm and plain, like a mate, not a form. When all nine are done, do two things. First, write me a one-page Business Brief: a short snapshot of how my business really runs in my own words, my three biggest time-leaks, and one AI task worth trying this week. Second, give me a short context block I can paste at the top of any future AI chat so it instantly understands my business. The nine questions: 1) What does your business do, and who do you do it for? 2) What is your role, and how many people are on the team? 3) Walk me through a normal week. Where does your time actually go? 4) What is the one job you dread or keep putting off? 5) How do you win work, and who are your best kind of customers? 6) What are your rules? The way you do things a new hire would get wrong. 7) What tools or software do you already run the business on? 8) Where have you tried AI before, and where did it not stick? 9) If you got one day a week back, what would you do with it? Start by asking me question one.</div>
+      <div class="btn-row">
+        <button type="button" class="btn" id="copyPrompt">Copy the prompt</button>
+        <span class="btn-note" id="copyNote" role="status" aria-live="polite"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT IT WILL ASK YOU ============ -->
 <section id="questions">
   <div class="shell">
     <div class="card">
-      <h2>The nine questions</h2>
+      <h2>What it will ask you</h2>
       <p class="body">Nothing here is a trick. They are the nine things anyone would need to know before they could be useful to you.</p>
       <ol class="questions">
         <li><span class="qnum">01</span><span class="qtext">What does your business do, and who do you do it for?</span></li>
         <li><span class="qnum">02</span><span class="qtext">What is your role, and how many people are on the team?</span></li>
-        <li><span class="qnum">03</span><span class="qtext">Walk through a normal week. Where does your time actually go?</span></li>
+        <li><span class="qnum">03</span><span class="qtext">Walk me through a normal week. Where does your time actually go?</span></li>
         <li><span class="qnum">04</span><span class="qtext">What is the one job you dread or keep putting off?</span></li>
         <li><span class="qnum">05</span><span class="qtext">How do you win work, and who are your best kind of customers?</span></li>
         <li><span class="qnum">06</span><span class="qtext">What are your rules? The way you do things a new hire would get wrong.</span></li>
@@ -141,7 +172,7 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
         <li><span class="qnum">09</span><span class="qtext">If you got one day a week back, what would you do with it?</span></li>
       </ol>
       <div class="btn-row">
-        <a class="btn" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
+        <a class="btn btn-ghost" href="/assets/business-brief-interview.pdf" download>Download the interview (PDF)</a>
       </div>
       <p class="closing">Want the whole map? <a href="https://book.veruslink.au/intro">Book a time</a>.</p>
     </div>
@@ -158,6 +189,49 @@ footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-to
     </div>
   </div>
 </footer>
+
+<script>
+// The only script on this page. It copies the prompt. Nothing is collected and
+// nothing leaves the browser. The execCommand path is the fallback for browsers
+// that refuse navigator.clipboard, which is most of them outside a secure
+// context and some of them inside one.
+(function () {
+  'use strict';
+  var btn = document.getElementById('copyPrompt');
+  var src = document.getElementById('promptText');
+  var note = document.getElementById('copyNote');
+  if (!btn || !src) return;
+
+  function say(msg) { if (note) { note.textContent = msg; } }
+
+  function legacyCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.setAttribute('readonly', '');
+    ta.style.position = 'fixed';
+    ta.style.top = '-1000px';
+    document.body.appendChild(ta);
+    ta.select();
+    var ok = false;
+    try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    return ok;
+  }
+
+  btn.addEventListener('click', function () {
+    var text = src.textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () {
+        say('Copied. Paste it into your AI chat.');
+      }, function () {
+        say(legacyCopy(text) ? 'Copied. Paste it into your AI chat.' : 'Could not copy. Select the text above and copy it.');
+      });
+      return;
+    }
+    say(legacyCopy(text) ? 'Copied. Paste it into your AI chat.' : 'Could not copy. Select the text above and copy it.');
+  });
+})();
+</script>
 
 </body>
 </html>
