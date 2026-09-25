@@ -9,131 +9,254 @@
 <link rel="canonical" href="https://veruslink.au/cpd-hour">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
+<script>document.documentElement.classList.add('js');</script>
 <link rel="stylesheet" href="/assets/swiss.css">
 <style>
-/* ---- CPD hour. A hidden proposal page for law firms, sent by email only.
-       noindex, not in the sitemap, not linked from anywhere on the site.
-       Same Swiss treatment as the brief page: F4F4F5 paper, white cards,
-       hairline borders, one accent. No scripts. ---- */
-body{background:#F4F4F5;font-size:16px;overflow-x:hidden;}
+/* ---- CPD hour. Hidden proposal page for law firms, reached by email link only:
+       noindex, not in the sitemap, nothing on the site links here.
+       Built on the homepage grammar from swiss.css: full-width grid, numbered
+       accent labels, accent second lines, hairlines, one solid accent band.
+       The only script is the homepage's reveal-on-scroll. ---- */
 
-nav{
-  display:flex;justify-content:space-between;align-items:center;
-  height:64px;padding:0 clamp(20px,4vw,56px);
-  border-bottom:1px solid var(--rule);
-  position:sticky;top:0;z-index:100;
-  background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+/* ---------- hero (same shape as the homepage hero) ---------- */
+.hero-grid{padding-top:clamp(56px,9vh,120px);}
+.kicker{
+  display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+  padding-bottom:28px;border-bottom:1px solid var(--rule);margin-bottom:clamp(28px,4vw,48px);
 }
-.logo{font-size:16px;font-weight:700;color:var(--ink);text-decoration:none;}
-.nav-links{display:flex;gap:24px;align-items:center;}
-.nav-link{font-size:14px;color:var(--muted);text-decoration:none;}
-.nav-link:hover{color:var(--accent);}
+.hero h1{font-size:clamp(44px,8.4vw,124px);line-height:.94;}
+.hero-sub{
+  display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+  padding:clamp(36px,5vw,64px) 0 clamp(48px,6vw,80px);align-items:end;
+}
+.hero-sub p{grid-column:1/8;font-size:clamp(18px,2vw,24px);line-height:1.4;max-width:34em;}
+.hero-sub p strong{font-weight:700;}
+.hero-cta{grid-column:9/13;justify-self:end;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
+@media(max-width:900px){
+  .hero-sub{grid-template-columns:1fr;}
+  .hero-sub p,.hero-cta{grid-column:1/-1;justify-self:start;align-items:flex-start;}
+}
 
-.shell{max-width:880px;margin:0 auto;padding:0 clamp(20px,4vw,40px);}
-.card{background:#fff;border:1px solid var(--rule);padding:clamp(24px,4vw,48px);}
-section{padding:clamp(28px,4vw,44px) 0;}
-section:first-of-type{padding-top:clamp(40px,6vw,72px);}
+/* ---------- stat strip ---------- */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);}
+.stat{padding:clamp(28px,4vw,56px) clamp(20px,3vw,48px);border-left:1px solid var(--rule);}
+.stat:first-child{border-left:none;padding-left:0;}
+.stat .truth{font-size:clamp(24px,2.6vw,38px);font-weight:700;letter-spacing:-.025em;line-height:1.1;text-wrap:balance;}
+.stat .truth em{font-style:normal;color:var(--accent);}
+.stat .lbl{margin-top:14px;font-size:14px;line-height:1.45;max-width:18em;color:var(--muted);}
+@media(max-width:760px){
+  .stats{grid-template-columns:1fr;}
+  .stat{border-left:none;border-top:1px solid var(--rule);padding-left:0;}
+  .stat:first-child{border-top:none;}
+}
 
-h1{font-size:clamp(34px,6vw,58px);line-height:1.04;font-weight:700;letter-spacing:-.02em;}
-h2{font-size:clamp(24px,3.6vw,34px);line-height:1.1;font-weight:700;letter-spacing:-.01em;}
-.body{font-size:17px;color:var(--muted);line-height:1.6;margin-top:20px;max-width:62ch;}
-.body strong{color:var(--ink);font-weight:600;}
-.body a{color:var(--accent);}
-.sign{font-size:15px;color:var(--faint);margin-top:20px;}
-.sign a{color:var(--faint);}
+/* ---------- statement ---------- */
+.statement{padding:clamp(64px,10vw,140px) 0;}
+.statement .micro{display:block;margin-bottom:24px;}
+.statement p{font-size:clamp(30px,4.6vw,64px);line-height:1.08;letter-spacing:-.03em;font-weight:700;max-width:18em;}
 
-footer{border-top:1px solid var(--rule);background:#fff;padding:36px 0;margin-top:24px;}
-.foot{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;}
-.foot a{font-size:14px;color:var(--muted);text-decoration:none;margin-right:18px;}
-.foot a:hover{color:var(--accent);}
+/* ---------- the four topics ---------- */
+.topics .card{padding:clamp(28px,3.4vw,48px);}
+.topics .card h3{font-size:clamp(21px,2vw,28px);margin-bottom:14px;}
+.topics .card p{font-size:16px;line-height:1.6;max-width:34em;}
+.takeaway{
+  border-left:3px solid var(--accent);background:var(--tint);
+  padding:clamp(20px,2.5vw,32px) clamp(20px,2.5vw,32px);
+  margin:calc(-1*clamp(24px,4vw,64px)) 0 clamp(48px,7vw,96px);
+}
+.takeaway .micro{display:block;margin-bottom:10px;}
+.takeaway p{font-size:clamp(17px,1.7vw,22px);line-height:1.45;max-width:40em;font-weight:500;}
+
+/* ---------- the CPD band: the one solid accent block on the page ---------- */
+.band{background:var(--accent);color:#fff;border-bottom:none;}
+.band-grid{
+  display:grid;grid-template-columns:5fr 7fr;gap:clamp(32px,5vw,80px);
+  padding-top:clamp(56px,8vw,120px);padding-bottom:clamp(56px,8vw,120px);align-items:start;
+}
+.band .micro{display:block;margin-bottom:24px;color:#fff;opacity:.85;}
+.band h2{color:#fff;}
+.band .unit{
+  margin-top:clamp(28px,4vw,48px);
+  font-size:clamp(96px,14vw,200px);font-weight:700;letter-spacing:-.05em;line-height:.8;
+  font-variant-numeric:tabular-nums;
+}
+.band .unit small{display:block;font-size:12px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;margin-top:18px;line-height:1.4;}
+/* Body copy sits on white, not on the blue: white on #2D9CDB is too low
+   contrast for 17px text. */
+.band .panel{border:none;color:var(--ink);}
+.band .panel p{font-size:17px;line-height:1.65;color:var(--muted);}
+.band .panel p + p{margin-top:18px;}
+.band .panel .lead{font-size:clamp(19px,1.9vw,24px);line-height:1.4;color:var(--ink);font-weight:500;}
+.papers{list-style:none;margin-top:28px;border-top:1px solid var(--rule);}
+.papers li{
+  display:flex;gap:16px;align-items:baseline;
+  padding:14px 0;border-bottom:1px solid var(--rule);font-size:16px;
+}
+.papers .n{font-size:13px;font-weight:600;color:var(--accent);font-variant-numeric:tabular-nums;flex:none;}
+@media(max-width:860px){.band-grid{grid-template-columns:1fr;}}
+
+/* ---------- heading left, copy right ---------- */
+.split{
+  display:grid;grid-template-columns:5fr 7fr;gap:clamp(24px,5vw,80px);
+  padding-top:clamp(56px,8vw,112px);padding-bottom:clamp(56px,8vw,112px);align-items:start;
+}
+.split .micro{display:block;margin-bottom:20px;}
+.split p{font-size:clamp(19px,1.9vw,26px);line-height:1.45;letter-spacing:-.01em;max-width:30em;}
+.split p strong{font-weight:700;}
+@media(max-width:860px){.split{grid-template-columns:1fr;}}
+
+/* ---------- close ---------- */
+.final{padding:clamp(72px,12vw,160px) 0;}
+.final h2{font-size:clamp(40px,7.5vw,110px);max-width:9.5em;}
+.final .close-copy{margin-top:clamp(28px,4vw,44px);font-size:clamp(18px,2vw,24px);line-height:1.4;max-width:30em;}
+.final .close-copy a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);}
+.final .close-copy a:hover{color:var(--ink);border-color:var(--ink);}
+.final .row{display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:clamp(32px,5vw,56px);}
+.final .sign{font-size:14px;color:var(--faint);}
+.final .sign a{color:var(--faint);}
 </style>
 </head>
 <body>
 
-<nav>
-  <a href="/" class="logo">VerusLink</a>
-  <div class="nav-links">
-    <a href="/blog" class="nav-link">Blog</a>
-    <a href="https://book.veruslink.au/intro" class="nav-link">Book a time</a>
+<header>
+  <div class="wrap bar">
+    <a class="wordmark" href="/">VERUS<span>LINK</span></a>
+    <nav>
+      <a href="#covers">The hour</a>
+      <a href="#cpd">CPD</a>
+      <a href="#need">What you need</a>
+      <a class="btn" href="#book">Book a session</a>
+    </nav>
   </div>
-</nav>
+</header>
 
-<!-- ============ HERO ============ -->
-<section>
-  <div class="shell">
-    <div class="card">
-      <h1>One hour. One CPD unit. At your firm.</h1>
-      <p class="body">I'm James Whitehill. I build the systems around legal practice - the intake, the document flow, the admin drag - never the legal work itself. This is a standing offer to law firms on the Northern Beaches: I'll come to your office, lunchtime or 5pm, and give your solicitors one hour called AI in a Law Firm: What Good Looks Like.</p>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="kicker rv">
+      <span class="micro">A standing offer to Northern Beaches law firms</span>
+      <span class="micro idx">AI in a Law Firm: What Good Looks Like</span>
+    </div>
+    <h1 class="rv d1">One hour. One CPD unit.<br><span class="accent">At your firm.</span></h1>
+    <div class="hero-sub">
+      <p class="rv d2"><strong>I'm James Whitehill.</strong> I build the systems around legal practice - the intake, the document flow, the admin drag - never the legal work itself. This is a standing offer to law firms on the Northern Beaches: I'll come to your office, lunchtime or 5pm, and give your solicitors one hour called AI in a Law Firm: What Good Looks Like.</p>
+      <div class="hero-cta rv d3">
+        <a class="btn big" href="#book">Book a session</a>
+        <span class="micro">No charge. Nothing sold in the room.</span>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ============ WHAT THE HOUR COVERS ============ -->
 <section>
-  <div class="shell">
-    <div class="card">
-      <h2>What the hour covers</h2>
-      <p class="body">Lawyers weigh two things: risk and time. The hour is built on both.</p>
-      <p class="body"><strong>Where AI actually sits in a firm.</strong> What the tools really are, what they're good and bad at, and the shadow-AI problem: when a firm bans AI instead of providing a safe version, people use it in secret, on client work, where you can't see it.</p>
-      <p class="body"><strong>What good looks like.</strong> The three questions that tell you in five minutes whether any tool is safe near a client file, and the standard a firm should hold every tool to: it asks before it acts, a person signs off, and you can always show who was accountable.</p>
-      <p class="body"><strong>The traps.</strong> Why your name on the document means you wrote it, whatever drafted it. Why confidentiality and privilege are not the same thing.</p>
-      <p class="body"><strong>Where your time is best spent.</strong> The admin hours no client pays for - intake, chasing signatures, rekeying, status updates - and which of them systems can win back without adding risk.</p>
-      <p class="body">Everyone leaves with the three-questions test card and a one-page priority card for their own practice.</p>
+  <div class="wrap stats">
+    <div class="stat rv"><div class="truth"><em>1 CPD unit</em> for the hour.</div><div class="lbl">Self-assessed by each solicitor under the 2015 Rules.</div></div>
+    <div class="stat rv d1"><div class="truth">No charge. <em>Nothing sold.</em></div><div class="lbl">Not a product demo. If it's useful, you'll know who to call.</div></div>
+    <div class="stat rv d2"><div class="truth">At <em>your office.</em></div><div class="lbl">Lunchtime or 5pm, whichever suits the firm.</div></div>
+  </div>
+</section>
+
+<section class="statement">
+  <div class="wrap">
+    <span class="micro rv idx">01 / The Premise</span>
+    <p class="rv d1">Lawyers weigh two things: <span class="accent">risk and time.</span> The hour is built on both.</p>
+  </div>
+</section>
+
+<section id="covers">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">What the hour<br><span class="accent">covers.</span></h2>
+      <span class="micro rv idx">02 / The Hour</span>
+    </div>
+    <div class="cardgrid c2 topics">
+      <div class="card rv"><div class="n">01</div><h3>Where AI actually sits in a firm.</h3><p>What the tools really are, what they're good and bad at, and the shadow-AI problem: when a firm bans AI instead of providing a safe version, people use it in secret, on client work, where you can't see it.</p></div>
+      <div class="card rv d1"><div class="n">02</div><h3>What good looks like.</h3><p>The three questions that tell you in five minutes whether any tool is safe near a client file, and the standard a firm should hold every tool to: it asks before it acts, a person signs off, and you can always show who was accountable.</p></div>
+      <div class="card rv"><div class="n">03</div><h3>The traps.</h3><p>Why your name on the document means you wrote it, whatever drafted it. Why confidentiality and privilege are not the same thing.</p></div>
+      <div class="card rv d1"><div class="n">04</div><h3>Where your time is best spent.</h3><p>The admin hours no client pays for - intake, chasing signatures, rekeying, status updates - and which of them systems can win back without adding risk.</p></div>
+    </div>
+    <div class="takeaway rv">
+      <span class="micro idx">What you walk out with</span>
+      <p>Everyone leaves with the three-questions test card and a one-page priority card for their own practice.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ THE CPD PART ============ -->
-<section>
-  <div class="shell">
-    <div class="card">
-      <h2>The CPD part</h2>
-      <p class="body">The session is designed to satisfy the requirements of the Legal Profession Uniform Continuing Professional Development (Solicitors) Rules 2015. Attendees may claim 1 CPD unit for the hour. Under the Rules, solicitors self-assess the eligibility and field of CPD activities - most attendees will find it fits practice management and business skills or professional skills.</p>
-      <p class="body">Every attendee receives the paperwork for their CPD records: the program with timings, the learning outcomes, my presenter statement, and a certificate of attendance.</p>
+<section class="band" id="cpd">
+  <div class="wrap band-grid">
+    <div class="rv">
+      <span class="micro">03 / The CPD Part</span>
+      <h2>The CPD part.</h2>
+      <div class="unit">1<small>CPD unit per attendee,<br>self-assessed</small></div>
+    </div>
+    <div class="panel rv d1">
+      <p class="lead">The session is designed to satisfy the requirements of the Legal Profession Uniform Continuing Professional Development (Solicitors) Rules 2015. Attendees may claim 1 CPD unit for the hour.</p>
+      <p>Under the Rules, solicitors self-assess the eligibility and field of CPD activities - most attendees will find it fits practice management and business skills or professional skills.</p>
+      <p>Every attendee receives the paperwork for their CPD records:</p>
+      <ul class="papers">
+        <li><span class="n">01</span>The program with timings</li>
+        <li><span class="n">02</span>The learning outcomes</li>
+        <li><span class="n">03</span>My presenter statement</li>
+        <li><span class="n">04</span>A certificate of attendance</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- ============ WHAT IT ISN'T ============ -->
-<section>
-  <div class="shell">
-    <div class="card">
-      <h2>What it isn't</h2>
-      <p class="body">It isn't legal advice, and I'm not a lawyer - I present from the systems seat and stay there. It isn't a product demo. Nothing is sold in the room, and there's no charge for the hour. If it's useful, you'll know who to call. That's the whole model.</p>
+<section id="isnt">
+  <div class="wrap split">
+    <div>
+      <span class="micro rv idx">04 / The Boundaries</span>
+      <h2 class="rv d1">What it<br><span class="accent">isn't.</span></h2>
     </div>
+    <p class="rv d2">It isn't legal advice, and I'm not a lawyer - I present from the systems seat and stay there. It isn't a product demo. <strong>Nothing is sold in the room, and there's no charge for the hour.</strong> If it's useful, you'll know who to call. That's the whole model.</p>
   </div>
 </section>
 
-<!-- ============ WHAT YOU NEED ============ -->
-<section>
-  <div class="shell">
-    <div class="card">
-      <h2>What you need</h2>
-      <p class="body">A room, a screen, and an hour. Lunchtime or 5pm, whichever suits the firm. I bring everything else.</p>
+<section id="need">
+  <div class="wrap split">
+    <div>
+      <span class="micro rv idx">05 / The Logistics</span>
+      <h2 class="rv d1">What you<br><span class="accent">need.</span></h2>
     </div>
+    <p class="rv d2"><strong>A room, a screen, and an hour.</strong> Lunchtime or 5pm, whichever suits the firm. I bring everything else.</p>
   </div>
 </section>
 
-<!-- ============ CLOSING ============ -->
-<section>
-  <div class="shell">
-    <div class="card">
-      <p class="body" style="margin-top:0;">To book a session, reply to the email that brought you here, or write to <a href="mailto:james@veruslink.au">james@veruslink.au</a>.</p>
-      <p class="sign">James Whitehill, VerusLink. <a href="/">veruslink.au</a></p>
+<section class="final" id="book">
+  <div class="wrap">
+    <span class="micro rv idx">06 / Book It</span>
+    <h2 class="rv d1">One hour.<br><span class="accent">At your firm.</span></h2>
+    <p class="close-copy rv d2">To book a session, reply to the email that brought you here, or write to <a href="mailto:james@veruslink.au">james@veruslink.au</a>.</p>
+    <div class="row rv d3">
+      <a class="btn big" href="mailto:james@veruslink.au?subject=CPD%20hour%20at%20our%20firm">Email James</a>
+      <span class="sign">James Whitehill, VerusLink. <a href="/">veruslink.au</a></span>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="shell foot">
-    <div style="font-weight:700;">VerusLink</div>
-    <div>
+  <div class="wrap foot">
+    <a class="wordmark" href="/">VERUS<span>LINK</span></a>
+    <span class="micro">AI Operations Concierge for Australian SMEs</span>
+    <div class="links micro">
       <a href="mailto:james@veruslink.au">james@veruslink.au</a>
-      <a href="/privacy">Privacy</a>
-      <a href="/terms">Terms</a>
+      <a href="https://www.veruslink.au/privacy">Privacy</a>
+      <a href="https://www.veruslink.au/terms">Terms</a>
+      <a href="https://www.linkedin.com/company/veruslink/">LinkedIn</a>
+      <a href="https://www.instagram.com/veruslink/">Instagram</a>
     </div>
+    <span class="micro">&copy; 2026 VerusLink</span>
   </div>
 </footer>
 
+<script>
+  // Reveal on scroll, same as the homepage. Nothing is collected.
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
 </body>
 </html>
