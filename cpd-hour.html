@@ -16,8 +16,8 @@
        noindex, not in the sitemap, nothing on the site links here.
        Built on the homepage grammar from swiss.css: full-width grid, numbered
        accent labels, accent second lines, hairlines, one solid accent band.
-       Scripts: the homepage reveal-on-scroll, and the Book the hour form,
-       which posts to /api/cpd-signup (emails James, stores nothing). ---- */
+       The only script is the homepage's reveal-on-scroll. Booking happens on
+       book.veruslink.au/cpd. ---- */
 
 /* ---------- hero (same shape as the homepage hero) ---------- */
 .hero-grid{padding-top:clamp(56px,9vh,120px);}
@@ -106,13 +106,9 @@
 .split p strong{font-weight:700;}
 @media(max-width:860px){.split{grid-template-columns:1fr;}}
 
-/* ---------- book the hour: the one form on the page ---------- */
+/* ---------- book the hour: one button out to the booking page ---------- */
 .signup .intro{font-size:clamp(19px,1.9vw,26px);line-height:1.45;letter-spacing:-.01em;max-width:30em;margin-top:20px;}
-.signup form{max-width:36em;}
-.signup .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
-.signup .msg{font-size:clamp(19px,1.9vw,26px);line-height:1.45;max-width:30em;}
-.signup .msg.err{font-size:17px;color:var(--ink);border-left:3px solid var(--accent);background:var(--tint);padding:16px 20px;margin-top:20px;}
-.signup .msg a{color:var(--accent);}
+.signup .go{align-self:end;}
 
 /* ---------- questions lawyers ask ---------- */
 .faq{border-top:1px solid var(--rule);margin-bottom:clamp(48px,7vw,96px);}
@@ -243,18 +239,10 @@
     <div>
       <span class="micro rv idx">06 / Book It</span>
       <h2 class="rv d1">Book the hour</h2>
-      <p class="intro rv d2">Fill this in and I'll reply within one business day to lock a time.</p>
+      <p class="intro rv d2">Pick a time and I'll come to you.</p>
     </div>
-    <div id="signup-box">
-      <form id="signup" novalidate>
-        <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" name="name" autocomplete="name" maxlength="120" required></div>
-        <div class="field"><label for="f-firm">Firm</label><input type="text" id="f-firm" name="firm" autocomplete="organization" maxlength="160" required></div>
-        <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" autocomplete="email" maxlength="200" required></div>
-        <div class="field"><label for="f-phone">Phone (optional)</label><input type="tel" id="f-phone" name="phone" autocomplete="tel" maxlength="40"></div>
-        <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
-        <button class="btn big" type="submit">Book the hour</button>
-        <p class="msg err" id="signup-err" role="alert" hidden>That didn't go through. Email me instead: <a href="mailto:james@veruslink.au">james@veruslink.au</a></p>
-      </form>
+    <div class="go rv d2">
+      <a class="btn big" href="https://book.veruslink.au/cpd">Book the hour</a>
     </div>
   </div>
 </section>
@@ -313,36 +301,6 @@
     });
   },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
-
-  // Book the hour. Posts to /api/cpd-signup, which emails James. Nothing is stored.
-  (function(){
-    const form = document.getElementById('signup');
-    const err = document.getElementById('signup-err');
-    const btn = form.querySelector('button');
-    form.addEventListener('submit', async (ev)=>{
-      ev.preventDefault();
-      err.hidden = true;
-      if(!form.reportValidity()) return;
-      const data = Object.fromEntries(new FormData(form));
-      // Honeypot filled: drop it silently and look like it worked.
-      if(data.website){ done(); return; }
-      btn.disabled = true;
-      try{
-        const r = await fetch('/api/cpd-signup', {
-          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)
-        });
-        if(!r.ok) throw new Error('status ' + r.status);
-        done();
-      }catch(e){
-        err.hidden = false;
-        btn.disabled = false;
-      }
-    });
-    function done(){
-      document.getElementById('signup-box').innerHTML =
-        '<p class="msg">Done. I\'ll be in touch within one business day.</p>';
-    }
-  })();
 </script>
 </body>
 </html>
