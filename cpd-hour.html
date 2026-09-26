@@ -16,7 +16,8 @@
        noindex, not in the sitemap, nothing on the site links here.
        Built on the homepage grammar from swiss.css: full-width grid, numbered
        accent labels, accent second lines, hairlines, one solid accent band.
-       The only script is the homepage's reveal-on-scroll. ---- */
+       Scripts: the homepage reveal-on-scroll, and the Book the hour form,
+       which posts to /api/cpd-signup (emails James, stores nothing). ---- */
 
 /* ---------- hero (same shape as the homepage hero) ---------- */
 .hero-grid{padding-top:clamp(56px,9vh,120px);}
@@ -104,6 +105,21 @@
 .split p{font-size:clamp(19px,1.9vw,26px);line-height:1.45;letter-spacing:-.01em;max-width:30em;}
 .split p strong{font-weight:700;}
 @media(max-width:860px){.split{grid-template-columns:1fr;}}
+
+/* ---------- book the hour: the one form on the page ---------- */
+.signup .intro{font-size:clamp(19px,1.9vw,26px);line-height:1.45;letter-spacing:-.01em;max-width:30em;margin-top:20px;}
+.signup form{max-width:36em;}
+.signup .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.signup .msg{font-size:clamp(19px,1.9vw,26px);line-height:1.45;max-width:30em;}
+.signup .msg.err{font-size:17px;color:var(--ink);border-left:3px solid var(--accent);background:var(--tint);padding:16px 20px;margin-top:20px;}
+.signup .msg a{color:var(--accent);}
+
+/* ---------- questions lawyers ask ---------- */
+.faq{border-top:1px solid var(--rule);margin-bottom:clamp(48px,7vw,96px);}
+.faq .q{display:grid;grid-template-columns:5fr 7fr;gap:clamp(16px,4vw,64px);padding:clamp(22px,3vw,36px) 0;border-bottom:1px solid var(--rule);}
+.faq h3{font-size:clamp(18px,1.7vw,23px);}
+.faq p{font-size:16px;line-height:1.6;color:var(--muted);max-width:36em;}
+@media(max-width:860px){.faq .q{grid-template-columns:1fr;}}
 
 /* ---------- close ---------- */
 .final{padding:clamp(72px,12vw,160px) 0;}
@@ -222,11 +238,51 @@
   </div>
 </section>
 
-<section class="final" id="book">
+<section class="signup" id="book">
+  <div class="wrap split">
+    <div>
+      <span class="micro rv idx">06 / Book It</span>
+      <h2 class="rv d1">Book the hour</h2>
+      <p class="intro rv d2">Fill this in and I'll reply within one business day to lock a time.</p>
+    </div>
+    <div id="signup-box">
+      <form id="signup" novalidate>
+        <div class="field"><label for="f-name">Name</label><input type="text" id="f-name" name="name" autocomplete="name" maxlength="120" required></div>
+        <div class="field"><label for="f-firm">Firm</label><input type="text" id="f-firm" name="firm" autocomplete="organization" maxlength="160" required></div>
+        <div class="field"><label for="f-email">Email</label><input type="email" id="f-email" name="email" autocomplete="email" maxlength="200" required></div>
+        <div class="field"><label for="f-phone">Phone (optional)</label><input type="tel" id="f-phone" name="phone" autocomplete="tel" maxlength="40"></div>
+        <div class="hp" aria-hidden="true"><label for="f-website">Website</label><input type="text" id="f-website" name="website" tabindex="-1" autocomplete="off"></div>
+        <button class="btn big" type="submit">Book the hour</button>
+        <p class="msg err" id="signup-err" role="alert" hidden>That didn't go through. Email me instead: <a href="mailto:james@veruslink.au">james@veruslink.au</a></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
   <div class="wrap">
-    <span class="micro rv idx">06 / Book It</span>
+    <div class="sect-head">
+      <h2 class="rv">Questions<br><span class="accent">lawyers ask</span></h2>
+      <span class="micro rv idx">07 / Questions</span>
+    </div>
+    <div class="faq">
+      <div class="q rv"><h3>How does the CPD unit work?</h3><p>NSW runs on self-assessment. There's no accreditation body to approve a session - the Legal Profession Uniform CPD (Solicitors) Rules 2015 set the tests for what counts, and this hour is built against them. One hour of activity is one CPD unit. You self-assess the field; most attendees put it under practice management and business skills or professional skills, and I hand everyone the paperwork for their records.</p></div>
+      <div class="q rv"><h3>Is it accredited?</h3><p>No, because nothing is in NSW. Solicitor CPD has no provider accreditation - self-assessment is the system, not a workaround.</p></div>
+      <div class="q rv"><h3>What does it cost?</h3><p>Nothing. I'm building my name with law firms on the Beaches and I'd rather do that by being useful first. If the hour is worth anything, you'll know who to call later.</p></div>
+      <div class="q rv"><h3>Is it a sales pitch?</h3><p>No. No product demos, no slides about my services, nothing for sale in the room. The hour is the product.</p></div>
+      <div class="q rv"><h3>Are you a lawyer?</h3><p>No, and I don't pretend to be. I build the systems around legal practice - intake, document flow, admin - and I stay in that lane. Nothing in the session is legal advice.</p></div>
+      <div class="q rv"><h3>Do we need to prepare anything?</h3><p>A room, a screen and the hour. I don't touch your systems or your files, and nothing confidential is used or discussed.</p></div>
+      <div class="q rv"><h3>Who should be in the room?</h3><p>Anyone whose week the admin eats. Solicitors claim the CPD unit; practice managers and support staff are welcome and usually get the most out of the time-mapping part.</p></div>
+      <div class="q rv"><h3>What if lunch or 5pm doesn't work?</h3><p>Then pick a time that does. Those two just tend to be when a firm can get everyone in one room.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="final" id="close">
+  <div class="wrap">
+    <span class="micro rv idx">08 / Or Just Write</span>
     <h2 class="rv d1">One hour.<br><span class="accent">At your firm.</span></h2>
-    <p class="close-copy rv d2">To book a session, reply to the email that brought you here, or write to <a href="mailto:james@veruslink.au">james@veruslink.au</a>.</p>
+    <p class="close-copy rv d2">Prefer email? <a href="mailto:james@veruslink.au">james@veruslink.au</a> works too.</p>
     <div class="row rv d3">
       <a class="btn big" href="mailto:james@veruslink.au?subject=CPD%20hour%20at%20our%20firm">Email James</a>
       <span class="sign">James Whitehill, VerusLink. <a href="/">veruslink.au</a></span>
@@ -250,13 +306,43 @@
 </footer>
 
 <script>
-  // Reveal on scroll, same as the homepage. Nothing is collected.
+  // Reveal on scroll, same as the homepage.
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
     });
   },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
   document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // Book the hour. Posts to /api/cpd-signup, which emails James. Nothing is stored.
+  (function(){
+    const form = document.getElementById('signup');
+    const err = document.getElementById('signup-err');
+    const btn = form.querySelector('button');
+    form.addEventListener('submit', async (ev)=>{
+      ev.preventDefault();
+      err.hidden = true;
+      if(!form.reportValidity()) return;
+      const data = Object.fromEntries(new FormData(form));
+      // Honeypot filled: drop it silently and look like it worked.
+      if(data.website){ done(); return; }
+      btn.disabled = true;
+      try{
+        const r = await fetch('/api/cpd-signup', {
+          method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)
+        });
+        if(!r.ok) throw new Error('status ' + r.status);
+        done();
+      }catch(e){
+        err.hidden = false;
+        btn.disabled = false;
+      }
+    });
+    function done(){
+      document.getElementById('signup-box').innerHTML =
+        '<p class="msg">Done. I\'ll be in touch within one business day.</p>';
+    }
+  })();
 </script>
 </body>
 </html>
