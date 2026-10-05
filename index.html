@@ -288,9 +288,15 @@
     border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
     padding:clamp(24px,3vw,40px);
     min-height:300px;
-    display:flex;flex-direction:column;justify-content:space-between;
+    display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0;
     transition:background .25s ease;
   }
+  .step>div:first-child{display:contents;}
+  .step .n{grid-row:1;}
+  .step h3{grid-row:2;}
+  .step p{grid-row:3;}
+  .step .mini{grid-row:4;justify-self:start;align-self:start;}
+  .step .price{grid-row:5;align-self:start;}
   .step:hover{background:var(--tint);}
   .step .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:20px;font-variant-numeric:tabular-nums;}
   .step h3{font-size:clamp(19px,1.8vw,24px);letter-spacing:-.015em;line-height:1.15;margin-bottom:12px;}
@@ -303,9 +309,7 @@
   .step .price small{white-space:normal;}
   .step .price:has(.from){position:relative;}
   .step .price .from{position:absolute;left:0;bottom:100%;margin-bottom:-2px;font-size:13px;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);line-height:1.2;}
-  .step .price:has(.from){margin-top:44px;}
   .step .price .per{font-size:.5em;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);margin-left:1px;}
-  @media(min-width:901px){.step .price:has(.from){margin-bottom:-18px;}}
   .step.free .price{color:var(--accent);}
   .step .mini{
     display:inline-block;margin-top:12px;font-size:12px;font-weight:600;
@@ -333,6 +337,16 @@
   .compare tbody th{font-weight:600;font-size:14px;width:20%;background:var(--paper);}
   @media(max-width:700px){
     .compare thead th:nth-child(2),.compare tbody td:nth-child(2){display:none;}
+  }
+  @media(max-width:420px){
+    .compare th,.compare td{padding:10px 8px;font-size:13px;overflow-wrap:anywhere;}
+    .compare thead th{font-size:11px;letter-spacing:.06em;}
+    .compare tbody th{font-size:12.5px;width:30%;}
+  }
+  @media(max-width:360px){
+    .compare th,.compare td{padding:8px 6px;font-size:12.5px;}
+    .compare thead th{font-size:9.5px;letter-spacing:0;padding-left:4px;padding-right:4px;}
+    .compare tbody th{font-size:11px;width:33%;padding-left:5px;padding-right:5px;}
   }
 
   /* ---------- results ---------- */
