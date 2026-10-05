@@ -299,6 +299,13 @@
     margin-top:24px;font-size:clamp(22px,2.2vw,32px);font-weight:700;letter-spacing:-.02em;
   }
   .step .price small{display:block;font-size:12px;font-weight:400;color:rgba(17,24,39,.6);letter-spacing:0;margin-top:4px;}
+  .step .price{white-space:nowrap;}
+  .step .price small{white-space:normal;}
+  .step .price:has(.from){position:relative;}
+  .step .price .from{position:absolute;left:0;bottom:100%;margin-bottom:-2px;font-size:13px;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);line-height:1.2;}
+  .step .price:has(.from){margin-top:44px;}
+  .step .price .per{font-size:.5em;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);margin-left:1px;}
+  @media(min-width:901px){.step .price:has(.from){margin-bottom:-18px;}}
   .step.free .price{color:var(--accent);}
   .step .mini{
     display:inline-block;margin-top:12px;font-size:12px;font-weight:600;
@@ -540,13 +547,12 @@
           {
             "@type": "Offer",
             "name": "AI Operations Concierge",
-            "description": "First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building. Cancel anytime. No lock-in.",
-            "price": "1500",
+            "description": "From $1,500 per month, scoped to your team. First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building. Cancel anytime. No lock-in.",
             "priceCurrency": "AUD",
             "availability": "https://schema.org/InStock",
             "priceSpecification": {
               "@type": "UnitPriceSpecification",
-              "price": "1500",
+              "minPrice": "1500",
               "priceCurrency": "AUD",
               "unitCode": "MON",
               "billingDuration": 1
@@ -894,7 +900,7 @@
       </div>
       <div class="step rv d3">
         <div><div class="n">Step 04</div><h3>AI Operations Concierge</h3><p>First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building.</p></div>
-        <div class="price">From $1,500/mo<small>Scoped to your team. Cancel anytime, no lock-in.</small></div>
+        <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>Scoped to your team. Cancel anytime, no lock-in.</small></div>
       </div>
     </div>
   </div>
