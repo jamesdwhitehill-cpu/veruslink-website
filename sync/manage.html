@@ -29,7 +29,7 @@
       <p class="muted" style="margin:6px 0 16px">Share this code or link so people can view the agreed times and subscribe to updates.</p>
       <div class="code-display"><span class="code-pill" id="code-pill">SYNC-····</span></div>
       <div class="link-row">
-        <span class="link-box" id="share-link">https://veruslink.au/sync/view.html?code=…</span>
+        <span class="link-box" id="share-link">https://www.veruslink.au/sync/view.html?code=…</span>
         <button class="btn btn-ghost btn-sm" id="copy-btn">Copy link</button>
       </div>
       <div class="count-badge" id="count-badge" style="margin-top:16px">Checking subscribers…</div>
@@ -101,7 +101,7 @@
   </div>
 </div>
 
-<footer>Powered by <a href="https://veruslink.au">VerusLink</a></footer>
+<footer>Powered by <a href="https://www.veruslink.au">VerusLink</a></footer>
 <div class="toast-wrap" id="toasts"></div>
 
 <script src="/sync/sync-calendar.js"></script>
@@ -161,7 +161,7 @@ async function init(){
   $('dashboard').classList.remove('hidden');
   $('label-h').textContent=codeRow.label;
   $('code-pill').textContent=codeRow.code;
-  const link=`https://veruslink.au/sync/view.html?code=${codeRow.code}`;
+  const link=`https://www.veruslink.au/sync/view.html?code=${codeRow.code}`;
   $('share-link').textContent=link;
   $('copy-btn').addEventListener('click',()=>{navigator.clipboard.writeText(link).then(()=>{$('copy-btn').textContent='Copied';setTimeout(()=>$('copy-btn').textContent='Copy link',1600);});});
 

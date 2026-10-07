@@ -10,14 +10,14 @@
 
 ## Key pages
 
-- [Home](https://veruslink.au/): the offer, pricing, FAQ.
-- [AI Health Check](https://veruslink.au/audit): free 5-minute assessment, personally reviewed.
-- [Blog](https://veruslink.au/blog/): plain-English essays on AI in small business.
-- [The $3,000 a month you don't know you're losing](https://veruslink.au/blog/the-3000-a-month-youre-losing)
-- [You bought the tools. Nothing stuck. Here's why.](https://veruslink.au/blog/you-bought-the-tools-nothing-stuck)
-- [What ships in month one (real examples)](https://veruslink.au/blog/what-ships-in-month-one)
-- [The admin is the bottleneck, not the law](https://veruslink.au/blog/admin-is-the-bottleneck)
-- [What AI should never do in your business](https://veruslink.au/blog/what-ai-should-never-do)
+- [Home](https://www.veruslink.au/): the offer, pricing, FAQ.
+- [AI Health Check](https://www.veruslink.au/audit): free 5-minute assessment, personally reviewed.
+- [Blog](https://www.veruslink.au/blog/): plain-English essays on AI in small business.
+- [The $3,000 a month you don't know you're losing](https://www.veruslink.au/blog/the-3000-a-month-youre-losing)
+- [You bought the tools. Nothing stuck. Here's why.](https://www.veruslink.au/blog/you-bought-the-tools-nothing-stuck)
+- [What ships in month one (real examples)](https://www.veruslink.au/blog/what-ships-in-month-one)
+- [The admin is the bottleneck, not the law](https://www.veruslink.au/blog/admin-is-the-bottleneck)
+- [What AI should never do in your business](https://www.veruslink.au/blog/what-ai-should-never-do)
 
 ## Contact
 
