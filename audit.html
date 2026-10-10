@@ -147,6 +147,8 @@ textarea{min-height:130px;resize:vertical;line-height:1.5;}
   .scale-item label{height:46px;}
 }
 
+.stl-copy{font-size:15px;line-height:1.5;color:var(--muted);margin-bottom:16px;max-width:40em;}
+[hidden]{display:none !important;}
 /* submit */
 .submit-btn{
   display:block;width:100%;
@@ -407,6 +409,36 @@ footer{
       </div>
     </div>
 
+    <!-- SECTION: Optional speed-to-lead test. A person sends the test; nothing is automated. -->
+    <div class="fsection" id="stlSection">
+      <div class="sec-label"><div class="sec-label-dot"></div>Optional: Reply Speed</div>
+
+      <div class="field">
+        <p class="stl-copy">Want to know how fast your team answers a new enquiry? Give us your website and we'll send one genuine test enquiry, clearly marked as a test, then time your reply. You'll get the result in your report.</p>
+        <div class="opt-list">
+          <label class="opt-row"><input type="checkbox" id="stl_optin" name="speed_to_lead_optin" value="true"><span>Yes, run the test</span></label>
+        </div>
+      </div>
+
+      <div id="stlFields" hidden>
+        <div class="field">
+          <label class="field-label" for="stl_website">Your website<span class="req">*</span></label>
+          <input type="text" id="stl_website" name="speed_to_lead_website" placeholder="yourbusiness.com.au">
+        </div>
+
+        <div class="field">
+          <label class="field-label" for="stl_page">The page where enquiries come in <span class="opt">(optional)</span></label>
+          <input type="text" id="stl_page" name="speed_to_lead_page" placeholder="e.g. yourbusiness.com.au/contact">
+        </div>
+
+        <div class="field">
+          <div class="opt-list">
+            <label class="opt-row"><input type="checkbox" id="stl_consent" name="speed_to_lead_consent" value="true"><span>I'm authorised to approve a marked test enquiry to this business.</span></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <button type="submit" class="submit-btn" id="submitBtn">Send my Health Check →</button>
     <div class="form-note">No pitch deck. No pressure. We review it before we speak.</div>
     <div class="form-status" id="formStatus"></div>
@@ -462,6 +494,20 @@ footer{
     sync();
   });
 
+  // Optional speed-to-lead test: URL + consent are required only when opted in.
+  var stlOptin = document.getElementById('stl_optin');
+  stlFields = document.getElementById('stlFields');
+  var stlWebsite = document.getElementById('stl_website');
+  var stlConsent = document.getElementById('stl_consent');
+  function syncStl() {
+    var on = stlOptin.checked;
+    stlFields.hidden = !on;
+    stlWebsite.required = on;
+    stlConsent.required = on;
+  }
+  stlOptin.addEventListener('change', syncStl);
+  syncStl();
+
   function showError(msg) {
     statusEl.textContent = msg;
     statusEl.className = 'form-status error';
@@ -495,6 +541,11 @@ footer{
       if (payload[k] === undefined) payload[k] = [];
       else if (!Array.isArray(payload[k])) payload[k] = [payload[k]];
     });
+
+    // Not opted in: send none of the speed-to-lead fields.
+    if (!stlOptin.checked) {
+      ['speed_to_lead_optin', 'speed_to_lead_website', 'speed_to_lead_page', 'speed_to_lead_consent'].forEach(function (k) { delete payload[k]; });
+    }
 
     btn.disabled = true;
     btn.textContent = 'Sending…';
