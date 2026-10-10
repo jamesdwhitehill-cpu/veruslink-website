@@ -1,12 +1,12 @@
 # VerusLink
 
-> VerusLink is an AI operations concierge for Australian small business owners, based in Sydney. It is not a software tool to learn: VerusLink builds and runs AI workflows inside the tools a business already uses, then operates them, so owners claw back 5 to 10 hours a week. VerusLink is unrelated to Xerox VersaLink printers.
+> VerusLink is an AI operations concierge for Australian small business owners, based in Sydney. It is not a software tool to learn: VerusLink builds and runs AI workflows inside the tools a business already uses, then operates them, so owners get time back. VerusLink is unrelated to Xerox VersaLink printers.
 
 ## What VerusLink does
 
 - Builds and operates AI workflows: lead follow-up, daily owner briefings, expense and receipt tracking, client intake, report generation.
 - Done with you, not a tool to learn. A human designs and checks everything; safety and confidentiality are built in.
-- Pricing: free AI Health Check, free 15-minute intro call, AI Opportunity Assessment $999 one-time, AI Operations Concierge from $1,500/month (scoped to your team), cancel anytime.
+- Pricing: free AI Health Check, free 15-minute intro call, AI Opportunity Assessment $999 one-time, AI Operations Concierge from $1,500/month for one person (group rate $2,000 to $3,500/month for teams), no lock-in, cancel or pause with 14 days notice. First win in week one.
 
 ## Key pages
 

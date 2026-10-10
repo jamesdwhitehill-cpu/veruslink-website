@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VerusLink: AI Concierge for Business Owners Who Already Tried AI</title>
-<meta name="description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into systems that actually ship.">
+<title>VerusLink | AI operations for law firms, associations and recruitment</title>
+<meta name="description" content="We take one job off your desk and run it, with a person checking the work. For law firms, associations and recruitment firms. Start with a free Health Check.">
 <link rel="canonical" href="https://www.veruslink.au/">
 <meta property="og:url" content="https://www.veruslink.au/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="VerusLink: AI Concierge for Business Owners Who Already Tried AI">
+<meta property="og:title" content="VerusLink | AI operations for law firms, associations and recruitment">
 <meta property="og:site_name" content="VerusLink">
-<meta property="og:description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into systems that actually ship.">
+<meta property="og:description" content="We take one job off your desk and run it, with a person checking the work. For law firms, associations and recruitment firms. Start with a free Health Check.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <script>document.documentElement.classList.add('js');</script>
@@ -94,14 +94,14 @@
   .hero{border-bottom:1px solid var(--rule);}
   .hero-grid{
     display:grid;grid-template-columns:1fr;gap:0;
-    padding:clamp(56px,9vh,120px) 0 0;
+    padding-top:clamp(56px,9vh,120px);
   }
   .kicker{
     display:flex;justify-content:space-between;align-items:baseline;
     padding-bottom:28px;border-bottom:1px solid var(--rule);margin-bottom:clamp(28px,4vw,48px);
   }
   h1{
-    font-size:clamp(44px,9.2vw,138px);
+    font-size:clamp(34px,6.6vw,100px);
     line-height:.94;
     letter-spacing:-.035em;
     font-weight:700;
@@ -188,6 +188,29 @@
   .card .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:18px;font-variant-numeric:tabular-nums;}
   .card h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:10px;}
   .card p{font-size:14px;color:rgba(17,24,39,.72);line-height:1.5;}
+  .card.vert .job{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);}
+  .card.vert .job .micro{display:block;margin-bottom:8px;color:var(--accent);}
+  .card.vert .job p{color:var(--ink);}
+  .incl{border:1px solid var(--rule);padding:clamp(24px,3vw,40px);margin-top:clamp(24px,3vw,40px);}
+  .incl h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:14px;}
+  .incl ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 32px;margin-bottom:18px;}
+  .incl li{font-size:14px;line-height:1.5;color:rgba(17,24,39,.78);padding-left:16px;position:relative;}
+  .incl li:before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:var(--accent);}
+  .incl .pl{font-size:14px;font-weight:600;line-height:1.5;}
+  @media(max-width:760px){.incl ul{grid-template-columns:1fr;}}
+  #plan .ladder{margin-bottom:0;}
+  #plan .incl{margin-bottom:clamp(48px,7vw,96px);}
+  .card.vert>h3{margin-bottom:0;}
+  .cardgrid.c5{grid-template-columns:repeat(6,1fr);border-left:0;}
+  .cardgrid.c5 .card{grid-column:span 2;}
+  .cardgrid.c5 .card:nth-child(1),.cardgrid.c5 .card:nth-child(4){border-left:1px solid var(--rule);}
+  .cardgrid.c5 .card:nth-child(4){grid-column:2/4;}
+  .cardgrid.c5 .card:nth-child(5){grid-column:4/6;}
+  @media(max-width:760px){
+    .cardgrid.c5{grid-template-columns:1fr;border-left:1px solid var(--rule);}
+    .cardgrid.c5 .card:nth-child(n){grid-column:auto;border-left:0;}
+  }
+  .testimonials[hidden]{display:none;}
   @media(max-width:980px){.cardgrid.c4{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:760px){.cardgrid.c3,.cardgrid.c2{grid-template-columns:1fr;}}
   @media(max-width:560px){.cardgrid.c4{grid-template-columns:1fr;}}
@@ -477,16 +500,17 @@
   .roi .footnote{font-size:12px;color:#5A6470;margin:16px 0 0;line-height:1.5;}
 
   /* ---------- reveal animation ---------- */
-  html.js .rv{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,1,.36,1);}
-  html.js .rv.in{opacity:1;transform:none;}
-  .rv.d1{transition-delay:.08s;}
-  .rv.d2{transition-delay:.16s;}
-  .rv.d3{transition-delay:.24s;}
+  /* Resting state is fully visible; the fade-in plays once when an element scrolls into view. */
+  @keyframes rvIn{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+  html.js .rv.in{animation:rvIn .7s cubic-bezier(.22,1,.36,1) both;}
+  html.js .rv.in.d1{animation-delay:.08s;}
+  html.js .rv.in.d2{animation-delay:.16s;}
+  html.js .rv.in.d3{animation-delay:.24s;}
   @media(prefers-reduced-motion:reduce){
-    html.js .rv{opacity:1;transform:none;transition:none;}
+    html.js .rv.in{animation:none;}
     .faq-list details::details-content{transition:none;}
   }
-  .f4t-band{padding:clamp(48px,7vw,88px) 0;}
+  .f4t-band{padding-top:clamp(48px,7vw,88px);padding-bottom:clamp(48px,7vw,88px);}
   .f4t-band .f4t-logo-link{display:block;width:130px;max-width:40vw;margin-bottom:18px;border:0;line-height:0;}
   .f4t-band .f4t-logo-link:hover{border:0;}
   .f4t-band .f4t-logo{display:block;width:100%;height:auto;}
@@ -509,7 +533,7 @@
       "name": "VerusLink",
       "alternateName": "VerusLink AI Operations Concierge",
       "url": "https://www.veruslink.au/",
-      "description": "AI operations concierge for Australian small business owners. VerusLink builds and runs AI workflows inside the tools a business already uses: lead follow-up, daily owner briefings, expense and receipt tracking, client intake, and report generation.",
+      "description": "Concierge for law firms, associations and recruitment firms. VerusLink takes one job off your desk and runs it, inside the tools a business already uses, with a person checking the work: enquiries answered, intake done, follow-ups handled.",
       "email": "james@veruslink.au",
       "founder": {
         "@type": "Person",
@@ -561,7 +585,7 @@
           {
             "@type": "Offer",
             "name": "AI Operations Concierge",
-            "description": "From $1,500 per month, scoped to your team. First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building. Cancel anytime. No lock-in.",
+            "description": "From $1,500 per month for one person. Group rate $2,000 to $3,500 per month. We take one job off your desk and run it, with a person checking the work. One job owned and running in your first 30 days, with a measured before and after. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.",
             "priceCurrency": "AUD",
             "availability": "https://schema.org/InStock",
             "priceSpecification": {
@@ -626,7 +650,7 @@
           "name": "What does a typical month look like?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Two working sessions plus unlimited async support in between. Something ships every cycle."
+            "text": "We run one job for you, with a person checking the work. Two working sessions a month to check in and pick the next job, plus unlimited async support in between. Something ships every cycle."
           }
         },
         {
@@ -658,7 +682,7 @@
           "name": "What if I want to cancel or pause?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Anytime. No lock-in, no penalties, no awkward conversation."
+            "text": "No lock-in. Cancel or pause with 14 days notice."
           }
         },
         {
@@ -704,13 +728,27 @@
       <span class="micro">Practical AI workflows, installed and run for you</span>
       <span class="micro">Sydney, Australia</span>
     </div>
-    <h1 class="rv d1">You already tried AI.<br><span class="accent">That&rsquo;s the problem.</span></h1>
+    <h1 class="rv d1">Enquiries answered.<br>Intake done.<br><span class="accent">Follow-ups handled.</span></h1>
     <div class="hero-sub">
-      <p class="rv d2">You bought the tools. Watched the tutorials. You&rsquo;re still doing 12 jobs at once. <strong>VerusLink builds and runs practical AI workflows inside the tools you already use.</strong> Leads followed up. Admin handled. Nothing important falls through the cracks.</p>
+      <p class="rv d2">For firms and member organisations. <strong>We take one job off your desk. You get the result.</strong></p>
       <div class="hero-cta rv d3">
-        <a class="btn big" href="https://www.veruslink.au/audit">Find your biggest operational leak</a>
-        <span class="micro">Five minutes. You leave knowing what to fix first.</span>
+        <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
+        <span class="micro">Free. Five minutes.</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="verticals">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Who we work with.<br><span class="accent">One job, taken off your desk.</span></h2>
+      <span class="micro rv idx">01 / Who We Work With</span>
+    </div>
+    <div class="cardgrid c3">
+      <div class="card vert rv"><div class="n">Law firms</div><h3>For owner-led firms losing new enquiries while they&rsquo;re in court or with clients.</h3><div class="job"><span class="micro">The job we take off your desk</span><p>New-matter enquiries answered and qualified within minutes, with the details your conflict check needs collected before a lawyer picks it up.</p></div></div>
+      <div class="card vert rv d1"><div class="n">Associations</div><h3>For member bodies stretched thin chasing renewals and member questions.</h3><div class="job"><span class="micro">The job we take off your desk</span><p>Member renewals chased and member enquiries answered, every reply approved before it goes out.</p></div></div>
+      <div class="card vert rv d2"><div class="n">Recruitment</div><h3>For agencies buried in inbound candidate and client enquiries.</h3><div class="job"><span class="micro">The job we take off your desk</span><p>Inbound candidate and client enquiries qualified and routed to the right consultant the same day.</p></div></div>
     </div>
   </div>
 </section>
@@ -725,7 +763,7 @@
 
 <section class="statement">
   <div class="wrap">
-    <span class="micro rv idx">01 / The Promise</span>
+    <span class="micro rv idx">02 / The Promise</span>
     <p class="rv d1">AI didn&rsquo;t fail you. <span class="accent">Application did.</span> The gap isn&rsquo;t the tools. It&rsquo;s between what they can do and what&rsquo;s running in your business on a Tuesday afternoon.</p>
   </div>
 </section>
@@ -734,13 +772,12 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Why now.<br><span class="accent">The squeeze is real.</span></h2>
-      <span class="micro rv idx">02 / The Timing</span>
+      <span class="micro rv idx">03 / The Timing</span>
     </div>
-    <div class="cardgrid c4">
+    <div class="cardgrid c3">
       <div class="card rv"><div class="n">01</div><h3>Costs keep climbing</h3><p>Every operating cost is up. Every hour you buy back goes straight to margin.</p></div>
       <div class="card rv d1"><div class="n">02</div><h3>Payroll costs more</h3><p>Super contributions have risen. The same team costs more this year than last.</p></div>
-      <div class="card rv d2"><div class="n">03</div><h3>October 2026</h3><p>Card surcharge rules land. Thin-margin businesses feel it first.</p></div>
-      <div class="card rv d3"><div class="n">04</div><h3>AI is now a cost lever</h3><p>Not a gimmick. Every month you wait, the margin walks out the door.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>AI is now a cost lever</h3><p>Not a gimmick. Every month you wait, the margin walks out the door.</p></div>
     </div>
   </div>
 </section>
@@ -749,7 +786,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Named systems<br>we install.</h2>
-      <span class="micro rv idx">03 / What We Build</span>
+      <span class="micro rv idx">04 / What We Build</span>
     </div>
     <div class="sys-list">
       <div class="sys-card rv">
@@ -897,7 +934,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Four steps.<br>Start free.</h2>
-      <span class="micro rv idx">04 / The Plan</span>
+      <span class="micro rv idx">05 / The Plan</span>
     </div>
     <div class="ladder">
       <div class="step free rv">
@@ -913,9 +950,22 @@
         <div class="price">$999<small>One-time</small></div>
       </div>
       <div class="step rv d3">
-        <div><div class="n">Step 04</div><h3>AI Operations Concierge</h3><p>First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building.</p></div>
-        <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>Scoped to your team. Cancel anytime, no lock-in.</small></div>
+        <div><div class="n">Step 04</div><h3>Concierge</h3><p>We take one job off your desk and run it, with a person checking the work. You approve anything client-facing. Then we pick the next job.</p></div>
+        <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>For one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice.</small></div>
       </div>
+    </div>
+    <div class="incl rv">
+      <h3>What&rsquo;s included</h3>
+      <ul>
+        <li>One job owned and running in your first 30 days, with a measured before and after.</li>
+        <li>Something ships every cycle.</li>
+        <li>Proactive monitoring. We catch issues before you notice them.</li>
+        <li>Unlimited async support by voice message, answered within 12 business hours.</li>
+        <li>A shared operations hub: every system logged, the hours saved recorded.</li>
+        <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
+        <li>Done-for-you builds available as an add-on, quoted separately.</li>
+      </ul>
+      <p class="pl">From $1,500/month for one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.</p>
     </div>
   </div>
 </section>
@@ -923,8 +973,8 @@
 <section id="relationship">
   <div class="wrap">
     <div class="sect-head">
-      <h2 class="rv">Done with you.<br><span class="accent">Not done for you.</span></h2>
-      <span class="micro rv idx">05 / How We Work</span>
+      <h2 class="rv">We run it.<br><span class="accent">You approve it.</span></h2>
+      <span class="micro rv idx">06 / How We Work</span>
     </div>
     <div class="cardgrid c3">
       <div class="card rv"><div class="n">The Health Check</div><h3>Health Check. Optimise. Activate.</h3><p>We map what&rsquo;s bleeding hours before anything gets built. No guessing, no generic playbook.</p></div>
@@ -938,19 +988,19 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">The honest<br>comparison.</h2>
-      <span class="micro rv idx">06 / Compare</span>
+      <span class="micro rv idx">07 / Compare</span>
     </div>
     <table class="compare rv">
       <thead>
         <tr><th></th><th>AI course</th><th>Consultant</th><th class="hl">VerusLink</th></tr>
       </thead>
       <tbody>
-        <tr><th>Time to first result</th><td>Weeks of study</td><td>4 to 8 weeks</td><td class="hl">Day 1</td></tr>
+        <tr><th>Time to first result</th><td>Weeks of study</td><td>Months</td><td class="hl">Week one</td></tr>
         <tr><th>What you receive</th><td>Videos and templates</td><td>Strategy deck</td><td class="hl">Working systems</td></tr>
         <tr><th>Ongoing support</th><td>Forum access</td><td>Ends at delivery</td><td class="hl">Unlimited async</td></tr>
-        <tr><th>New subscriptions needed</th><td>3 to 5 tools</td><td>2 to 4 tools</td><td class="hl">Zero</td></tr>
-        <tr><th>Who does the work</th><td>You</td><td>You, after handoff</td><td class="hl">Done with you</td></tr>
-        <tr><th>Monthly cost</th><td>$50 to $200 plus your time</td><td>$5,000 to $10,000 per project</td><td class="hl">From $1,500/mo, scoped to your team</td></tr>
+        <tr><th>New subscriptions needed</th><td>Several new tools</td><td>A few new tools</td><td class="hl">Zero</td></tr>
+        <tr><th>Who does the work</th><td>You</td><td>You, after handoff</td><td class="hl">We do. You approve.</td></tr>
+        <tr><th>Monthly cost</th><td>Low fee, plus your time</td><td>A large project fee</td><td class="hl">From $1,500/month for one person. Group rate for teams.</td></tr>
       </tbody>
     </table>
   </div>
@@ -960,15 +1010,15 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Not case studies.<br><span class="accent">Results.</span></h2>
-      <span class="micro rv idx">07 / Real Outcomes</span>
+      <span class="micro rv idx">08 / Real Outcomes</span>
     </div>
     <div class="cardgrid c4">
       <div class="card result rv">
-        <div class="big">6+ hrs</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
+        <div class="big">Logged</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
         <div class="who">AI services operator, Sydney</div>
       </div>
       <div class="card result rv d1">
-        <div class="big">38x</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
+        <div class="big">Scaled</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
         <div class="who">Marketing firm, Sydney</div>
       </div>
       <div class="card result rv d2">
@@ -980,6 +1030,11 @@
         <div class="who">Ghostwriting business, Sydney</div>
       </div>
     </div>
+    <!-- Testimonials: hidden placeholders. Real words to be supplied before publishing. -->
+    <div class="cardgrid c2 testimonials" hidden style="display:none">
+      <div class="card testimonial" id="testimonial-1" data-testimonial="testimonial-1" hidden style="display:none"><div class="n"></div><p></p><div class="who"></div></div>
+      <div class="card testimonial" id="testimonial-2" data-testimonial="testimonial-2" hidden style="display:none"><div class="n"></div><p></p><div class="who"></div></div>
+    </div>
   </div>
 </section>
 
@@ -987,13 +1042,14 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Your data<br>stays <span class="accent">yours.</span></h2>
-      <span class="micro rv idx">08 / Trust</span>
+      <span class="micro rv idx">09 / Trust</span>
     </div>
-    <div class="cardgrid c4">
-      <div class="card rv"><div class="n">01</div><h3>We work inside your tools</h3><p>Nothing migrates. Nothing gets rebuilt. Your stack stays your stack.</p></div>
-      <div class="card rv d1"><div class="n">02</div><h3>You control access</h3><p>Grant it, limit it, revoke it. Your accounts, your call, always.</p></div>
-      <div class="card rv d2"><div class="n">03</div><h3>Human oversight on everything</h3><p>No AI action ships without approval. A person signs off before anything moves.</p></div>
-      <div class="card rv d3"><div class="n">04</div><h3>If something breaks, I fix it</h3><p>You deal with the founder directly. Not a ticket queue. Usually same business day.</p></div>
+    <div class="cardgrid c5">
+      <div class="card rv"><div class="n">01</div><h3>Your own workspace</h3><p>Every client gets their own folder. Nothing in it is shared with any other client.</p></div>
+      <div class="card rv d1"><div class="n">02</div><h3>Plain text you can read</h3><p>One job per folder, written in plain text, so you can see exactly what we hold and why. We call this ICM (Interpretable Context Methodology): a simple folder method anyone can check.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>Every action logged</h3><p>You can see what was done, when, and why.</p></div>
+      <div class="card rv d3"><div class="n">04</div><h3>A person approves it first</h3><p>Anything client-facing is checked and approved by a human before it goes out.</p></div>
+      <div class="card rv"><div class="n">05</div><h3>It stays in your accounts</h3><p>Your data lives in your own accounts. Never sold. Never used to train AI models.</p></div>
     </div>
   </div>
 </section>
@@ -1002,7 +1058,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Meet the<br>founder.</h2>
-      <span class="micro rv idx">09 / Who You Get</span>
+      <span class="micro rv idx">10 / Who You Get</span>
     </div>
     <div class="founder-grid">
       <img class="founder-photo rv" src="https://www.veruslink.au/assets/james-headshot.png" alt="James Whitehill, founder of VerusLink" loading="lazy"
@@ -1010,7 +1066,7 @@
       <div class="founder-copy">
         <h3 class="rv">James Whitehill</h3>
         <div class="role rv">AI Concierge &middot; Chief Connector &middot; VerusLink</div>
-        <p class="rv d1">Fifteen years in advertising production taught me one thing: ideas are cheap, shipping is everything. So I don&rsquo;t sell strategy. I build systems.</p>
+        <p class="rv d1">I spent years producing films before I built VerusLink. Producing teaches you one thing: ideas are cheap, shipping is everything. So I don&rsquo;t sell strategy. I build systems.</p>
         <p class="rv d2">Every system on this page was built for my own business first. <strong>They&rsquo;re running in production today.</strong> The Receipts Engine logs my expenses. The Morning Brief lands before my first coffee.</p>
         <p class="rv d3">VerusLink is a one-person operation by design. You talk to the person who builds the thing. When something breaks, you don&rsquo;t raise a ticket. You message me.</p>
       </div>
@@ -1030,7 +1086,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">We&rsquo;re selective.<br><span class="accent">So should you be.</span></h2>
-      <span class="micro rv idx">10 / The Fit</span>
+      <span class="micro rv idx">11 / The Fit</span>
     </div>
     <div class="fit-grid">
       <div class="fit-col yes rv">
@@ -1061,18 +1117,18 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Common questions.<br><span class="accent">Straight answers.</span></h2>
-      <span class="micro rv idx">11 / FAQs</span>
+      <span class="micro rv idx">12 / FAQs</span>
     </div>
     <div class="faq-list rv">
       <details name="faq"><summary>What happens after the Health Check?<span class="pm">+</span></summary><p>Your results land in your inbox. If there&rsquo;s real opportunity, we&rsquo;ll suggest the $999 assessment. If there isn&rsquo;t, we&rsquo;ll tell you straight.</p></details>
       <details name="faq"><summary>Do I have to do the free Health Check first?<span class="pm">+</span></summary><p>No. You can book the assessment directly if you already know you want it. Most people start with the Health Check.</p></details>
       <details name="faq"><summary>Do I need to be technical?<span class="pm">+</span></summary><p>No. You describe how your business runs. We handle the tools, the wiring and the jargon.</p></details>
       <details name="faq"><summary>What tools do I need?<span class="pm">+</span></summary><p>The ones you already have. New subscriptions are rarely needed. We build inside your existing stack.</p></details>
-      <details name="faq"><summary>What does a typical month look like?<span class="pm">+</span></summary><p>Two working sessions plus unlimited async support in between. Something ships every cycle.</p></details>
+      <details name="faq"><summary>What does a typical month look like?<span class="pm">+</span></summary><p>We run one job for you, with a person checking the work. Two working sessions a month to check in and pick the next job, plus unlimited async support in between. Something ships every cycle.</p></details>
       <details name="faq"><summary>How is this different from hiring a consultant?<span class="pm">+</span></summary><p>Consultants leave you a strategy deck after weeks of discovery. We leave you working systems, starting day one.</p></details>
       <details name="faq"><summary>Why can&rsquo;t I just use ChatGPT myself?<span class="pm">+</span></summary><p>You can. The gap is wiring it into your actual workflows so it runs without you thinking about it. That&rsquo;s the job.</p></details>
       <details name="faq"><summary>What happens if something breaks?<span class="pm">+</span></summary><p>I fix it. Usually the same business day. You message the founder, not a support queue.</p></details>
-      <details name="faq"><summary>What if I want to cancel or pause?<span class="pm">+</span></summary><p>Anytime. No lock-in, no penalties, no awkward conversation.</p></details>
+      <details name="faq"><summary>What if I want to cancel or pause?<span class="pm">+</span></summary><p>No lock-in. Cancel or pause with 14 days notice.</p></details>
       <details name="faq"><summary>Is my data safe?<span class="pm">+</span></summary><p>It stays in your own accounts, under your control. Never sold, never moved, never used to train anything.</p></details>
     </div>
   </div>
@@ -1080,10 +1136,10 @@
 
 <section class="final" id="audit">
   <div class="wrap">
-    <span class="micro rv idx">12 / Start Here</span>
+    <span class="micro rv idx">13 / Start Here</span>
     <h2 class="rv d1">Stop learning AI.<br><span class="accent">Start using it.</span></h2>
     <div class="row rv d2">
-      <a class="btn big" href="https://www.veruslink.au/audit">Find your biggest operational leak</a>
+      <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
       <a class="btn big ghost" href="https://book.veruslink.au/intro">Book a 15-minute intro call</a>
       <span class="note">You leave knowing the one workflow worth fixing first.</span>
     </div>
