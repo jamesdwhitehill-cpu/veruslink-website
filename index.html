@@ -330,6 +330,7 @@
   .step .price small{display:block;font-size:12px;font-weight:400;color:rgba(17,24,39,.6);letter-spacing:0;margin-top:4px;}
   .step .price{white-space:nowrap;}
   .step .price small{white-space:normal;}
+  .step .price--quote{white-space:normal;font-size:clamp(20px,1.9vw,26px);line-height:1.15;}
   .step .price:has(.from){position:relative;}
   .step .price .from{position:absolute;left:0;bottom:100%;margin-bottom:-2px;font-size:13px;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);line-height:1.2;}
   .step .price .per{font-size:.5em;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);margin-left:1px;}
@@ -585,16 +586,9 @@
           {
             "@type": "Offer",
             "name": "AI Operations Concierge",
-            "description": "From $1,500 per month for one person. Group rate $2,000 to $3,500 per month. We take one job off your desk and run it, with a person checking the work. One job owned and running in your first 30 days, with a measured before and after. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.",
+            "description": "Price on application. A fixed monthly fee, quoted after your Assessment. We take one job off your desk and run it, with a person checking the work. One job owned and running in your first 30 days, with a measured before and after. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.",
             "priceCurrency": "AUD",
-            "availability": "https://schema.org/InStock",
-            "priceSpecification": {
-              "@type": "UnitPriceSpecification",
-              "minPrice": "1500",
-              "priceCurrency": "AUD",
-              "unitCode": "MON",
-              "billingDuration": 1
-            }
+            "availability": "https://schema.org/InStock"
           }
         ]
       }
@@ -951,7 +945,7 @@
       </div>
       <div class="step rv d3">
         <div><div class="n">Step 04</div><h3>Concierge</h3><p>We take one job off your desk and run it, with a person checking the work. You approve anything client-facing. Then we pick the next job.</p></div>
-        <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>For one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice.</small></div>
+        <div class="price price--quote">Quoted after your Assessment<small>No lock-in. Cancel or pause with 14 days notice.</small></div>
       </div>
     </div>
     <div class="incl rv">
@@ -965,7 +959,7 @@
         <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
         <li>Done-for-you builds available as an add-on, quoted separately.</li>
       </ul>
-      <p class="pl">From $1,500/month for one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.</p>
+      <p class="pl">Price on application. A fixed monthly fee, quoted after your Assessment. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.</p>
     </div>
   </div>
 </section>
@@ -1000,7 +994,7 @@
         <tr><th>Ongoing support</th><td>Forum access</td><td>Ends at delivery</td><td class="hl">Unlimited async</td></tr>
         <tr><th>New subscriptions needed</th><td>Several new tools</td><td>A few new tools</td><td class="hl">Zero</td></tr>
         <tr><th>Who does the work</th><td>You</td><td>You, after handoff</td><td class="hl">We do. You approve.</td></tr>
-        <tr><th>Monthly cost</th><td>Low fee, plus your time</td><td>A large project fee</td><td class="hl">From $1,500/month for one person. Group rate for teams.</td></tr>
+        <tr><th>Monthly cost</th><td>Low fee, plus your time</td><td>A large project fee</td><td class="hl">Quoted after your Assessment.</td></tr>
       </tbody>
     </table>
   </div>
