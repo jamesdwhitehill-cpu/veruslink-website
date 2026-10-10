@@ -94,7 +94,7 @@
   .hero{border-bottom:1px solid var(--rule);}
   .hero-grid{
     display:grid;grid-template-columns:1fr;gap:0;
-    padding:clamp(56px,9vh,120px) 0 0;
+    padding-top:clamp(56px,9vh,120px);
   }
   .kicker{
     display:flex;justify-content:space-between;align-items:baseline;
@@ -497,7 +497,7 @@
     html.js .rv{opacity:1;transform:none;transition:none;}
     .faq-list details::details-content{transition:none;}
   }
-  .f4t-band{padding:clamp(48px,7vw,88px) 0;}
+  .f4t-band{padding-top:clamp(48px,7vw,88px);padding-bottom:clamp(48px,7vw,88px);}
   .f4t-band .f4t-logo-link{display:block;width:130px;max-width:40vw;margin-bottom:18px;border:0;line-height:0;}
   .f4t-band .f4t-logo-link:hover{border:0;}
   .f4t-band .f4t-logo{display:block;width:100%;height:auto;}
@@ -761,11 +761,10 @@
       <h2 class="rv">Why now.<br><span class="accent">The squeeze is real.</span></h2>
       <span class="micro rv idx">02 / The Timing</span>
     </div>
-    <div class="cardgrid c4">
+    <div class="cardgrid c3">
       <div class="card rv"><div class="n">01</div><h3>Costs keep climbing</h3><p>Every operating cost is up. Every hour you buy back goes straight to margin.</p></div>
       <div class="card rv d1"><div class="n">02</div><h3>Payroll costs more</h3><p>Super contributions have risen. The same team costs more this year than last.</p></div>
-      <div class="card rv d2"><div class="n">03</div><h3>October 2026</h3><p>Card surcharge rules land. Thin-margin businesses feel it first.</p></div>
-      <div class="card rv d3"><div class="n">04</div><h3>AI is now a cost lever</h3><p>Not a gimmick. Every month you wait, the margin walks out the door.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>AI is now a cost lever</h3><p>Not a gimmick. Every month you wait, the margin walks out the door.</p></div>
     </div>
   </div>
 </section>
@@ -938,7 +937,7 @@
         <div class="price">$999<small>One-time</small></div>
       </div>
       <div class="step rv d3">
-        <div><div class="n">Step 04</div><h3>Concierge. We take the job off your desk and run it.</h3><p>You hand us one job your team does by hand. We run it, with a person checking the work, and hand back the result like a good team member would. You get the result and the receipts: every action logged, anything client-facing approved by you. Then we pick the next job.</p></div>
+        <div><div class="n">Step 04</div><h3>Concierge. We take the job off your desk and run it.</h3><p>You hand us one job your team does by hand. We run it, with a person checking the work, and hand back the result like a good team member would. You get the result and the receipts: every action logged, anything client-facing approved by you. Then we pick the next job. Two working sessions a month are how we check in.</p></div>
         <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>For one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice.</small></div>
       </div>
     </div>
@@ -948,7 +947,7 @@
         <li>One job owned and running in your first 30 days, with a measured before and after.</li>
         <li>Something ships every cycle.</li>
         <li>Proactive monitoring. We catch issues before you notice them.</li>
-        <li>Unlimited async support by voice message, between sessions.</li>
+        <li>Unlimited async support by voice message, answered within 12 business hours.</li>
         <li>A shared operations hub: every system logged, the hours saved recorded.</li>
         <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
         <li>Done-for-you builds available as an add-on, quoted separately.</li>
@@ -984,12 +983,12 @@
         <tr><th></th><th>AI course</th><th>Consultant</th><th class="hl">VerusLink</th></tr>
       </thead>
       <tbody>
-        <tr><th>Time to first result</th><td>Weeks of study</td><td>4 to 8 weeks</td><td class="hl">Day 1</td></tr>
+        <tr><th>Time to first result</th><td>Weeks of study</td><td>Months</td><td class="hl">Week one</td></tr>
         <tr><th>What you receive</th><td>Videos and templates</td><td>Strategy deck</td><td class="hl">Working systems</td></tr>
         <tr><th>Ongoing support</th><td>Forum access</td><td>Ends at delivery</td><td class="hl">Unlimited async</td></tr>
-        <tr><th>New subscriptions needed</th><td>3 to 5 tools</td><td>2 to 4 tools</td><td class="hl">Zero</td></tr>
+        <tr><th>New subscriptions needed</th><td>Several new tools</td><td>A few new tools</td><td class="hl">Zero</td></tr>
         <tr><th>Who does the work</th><td>You</td><td>You, after handoff</td><td class="hl">Done with you</td></tr>
-        <tr><th>Monthly cost</th><td>$50 to $200 plus your time</td><td>$5,000 to $10,000 per project</td><td class="hl">From $1,500/mo, scoped to your team</td></tr>
+        <tr><th>Monthly cost</th><td>Low fee, plus your time</td><td>A large project fee</td><td class="hl">From $1,500/month for one person. Group rate for teams.</td></tr>
       </tbody>
     </table>
   </div>
@@ -1019,10 +1018,10 @@
         <div class="who">Ghostwriting business, Sydney</div>
       </div>
     </div>
-    <!-- Testimonials: hidden placeholders. James supplies the real words. Do not publish until supplied. -->
+    <!-- Testimonials: hidden placeholders. Real words to be supplied before publishing. -->
     <div class="cardgrid c2 testimonials" hidden style="display:none">
-      <div class="card testimonial" id="TESTIMONIAL-TONY-MYERS" data-testimonial="TESTIMONIAL-TONY-MYERS" hidden><div class="n">TESTIMONIAL-TONY-MYERS</div><p>TESTIMONIAL-TONY-MYERS</p><div class="who">Tony Myers</div></div>
-      <div class="card testimonial" id="TESTIMONIAL-JOSH-NAYLOR" data-testimonial="TESTIMONIAL-JOSH-NAYLOR" hidden><div class="n">TESTIMONIAL-JOSH-NAYLOR</div><p>TESTIMONIAL-JOSH-NAYLOR</p><div class="who">Josh Naylor, Frameless Glass Online</div></div>
+      <div class="card testimonial" id="testimonial-1" data-testimonial="testimonial-1" hidden style="display:none"><div class="n"></div><p></p><div class="who"></div></div>
+      <div class="card testimonial" id="testimonial-2" data-testimonial="testimonial-2" hidden style="display:none"><div class="n"></div><p></p><div class="who"></div></div>
     </div>
   </div>
 </section>
@@ -1055,7 +1054,7 @@
       <div class="founder-copy">
         <h3 class="rv">James Whitehill</h3>
         <div class="role rv">AI Concierge &middot; Chief Connector &middot; VerusLink</div>
-        <p class="rv d1">Fifteen years in advertising production taught me one thing: ideas are cheap, shipping is everything. So I don&rsquo;t sell strategy. I build systems.</p>
+        <p class="rv d1">I spent years producing films before I built VerusLink. Producing teaches you one thing: ideas are cheap, shipping is everything. So I don&rsquo;t sell strategy. I build systems.</p>
         <p class="rv d2">Every system on this page was built for my own business first. <strong>They&rsquo;re running in production today.</strong> The Receipts Engine logs my expenses. The Morning Brief lands before my first coffee.</p>
         <p class="rv d3">VerusLink is a one-person operation by design. You talk to the person who builds the thing. When something breaks, you don&rsquo;t raise a ticket. You message me.</p>
       </div>
