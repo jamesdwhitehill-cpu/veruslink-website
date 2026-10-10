@@ -898,7 +898,7 @@
 
 <script>
 (function(){
-  var RETAINER=1500;
+  var ADMIN_COST_THRESHOLD=2000;
   var rate=document.getElementById('roiRate'),hours=document.getElementById('roiHours');
   var rateOut=document.getElementById('roiRateOut'),hoursOut=document.getElementById('roiHoursOut');
   var monthlyEl=document.getElementById('roiMonthly'),annualEl=document.getElementById('roiAnnual'),compare=document.getElementById('roiCompare');
@@ -911,12 +911,12 @@
     monthlyEl.textContent=money(Math.round(monthly/50)*50);
     annualEl.textContent=money(Math.round(annual/100)*100);
     var html='';
-    if(monthly>RETAINER*1.15){
-      html=`<p>Here’s the good news hiding in that number. What you’d spend to hand this off is a fraction of what it’s quietly taking from you now. So the real question isn’t the price, it’s just where to start.<span class="breakeven">That’s exactly what the free Business Health Check is for.</span></p>`;
-    }else if(monthly>=RETAINER*0.85){
-      html=`<p>You’re right around the line here, which makes this a proper conversation rather than an obvious yes, and that’s completely fine. A free Business Health Check is the honest way to see whether the numbers really stack up for you.</p>`;
+    if(monthly>ADMIN_COST_THRESHOLD*1.15){
+      html=`<p>That’s real money leaving every month. Worth a proper look.</p>`;
+    }else if(monthly>=ADMIN_COST_THRESHOLD*0.85){
+      html=`<p>Worth knowing exactly where those hours go.</p>`;
     }else{
-      html=`<p>At this level I’ll be straight with you: a monthly retainer probably isn’t your move just yet. Start with a free Business Health Check and I’ll point you at the one quick win worth doing first. No push either way.</p>`;
+      html=`<p>Smaller leak, but still yours to fix. The free Health Check will show you where.</p>`;
     }
     compare.innerHTML=html;
   }
