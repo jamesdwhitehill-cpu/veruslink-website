@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VerusLink: AI Concierge for Business Owners Who Already Tried AI</title>
-<meta name="description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into systems that actually ship.">
+<meta name="description" content="Enquiries answered. Intake done. Follow-ups handled. For law firms, associations and recruitment firms: VerusLink takes one job off your desk and runs it, with a person checking the work.">
 <link rel="canonical" href="https://www.veruslink.au/">
 <meta property="og:url" content="https://www.veruslink.au/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="VerusLink: AI Concierge for Business Owners Who Already Tried AI">
 <meta property="og:site_name" content="VerusLink">
-<meta property="og:description" content="Nothing has actually stuck. You bought the tools, watched the tutorials, and you're still doing 12 jobs at once. VerusLink is the operator layer that wires your existing tools into systems that actually ship.">
+<meta property="og:description" content="Enquiries answered. Intake done. Follow-ups handled. For law firms, associations and recruitment firms: VerusLink takes one job off your desk and runs it, with a person checking the work.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <script>document.documentElement.classList.add('js');</script>
@@ -188,6 +188,17 @@
   .card .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:18px;font-variant-numeric:tabular-nums;}
   .card h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:10px;}
   .card p{font-size:14px;color:rgba(17,24,39,.72);line-height:1.5;}
+  .card.vert .job{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);}
+  .card.vert .job .micro{display:block;margin-bottom:8px;color:var(--accent);}
+  .card.vert .job p{color:var(--ink);}
+  .incl{border:1px solid var(--rule);padding:clamp(24px,3vw,40px);margin-top:clamp(24px,3vw,40px);}
+  .incl h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:14px;}
+  .incl ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 32px;margin-bottom:18px;}
+  .incl li{font-size:14px;line-height:1.5;color:rgba(17,24,39,.78);padding-left:16px;position:relative;}
+  .incl li:before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:var(--accent);}
+  .incl .pl{font-size:14px;font-weight:600;line-height:1.5;}
+  @media(max-width:760px){.incl ul{grid-template-columns:1fr;}}
+  .testimonials[hidden]{display:none;}
   @media(max-width:980px){.cardgrid.c4{grid-template-columns:repeat(2,1fr);}}
   @media(max-width:760px){.cardgrid.c3,.cardgrid.c2{grid-template-columns:1fr;}}
   @media(max-width:560px){.cardgrid.c4{grid-template-columns:1fr;}}
@@ -509,7 +520,7 @@
       "name": "VerusLink",
       "alternateName": "VerusLink AI Operations Concierge",
       "url": "https://www.veruslink.au/",
-      "description": "AI operations concierge for Australian small business owners. VerusLink builds and runs AI workflows inside the tools a business already uses: lead follow-up, daily owner briefings, expense and receipt tracking, client intake, and report generation.",
+      "description": "Concierge for law firms, associations and recruitment firms. VerusLink takes one job off your desk and runs it, inside the tools a business already uses, with a person checking the work: enquiries answered, intake done, follow-ups handled.",
       "email": "james@veruslink.au",
       "founder": {
         "@type": "Person",
@@ -561,7 +572,7 @@
           {
             "@type": "Offer",
             "name": "AI Operations Concierge",
-            "description": "From $1,500 per month, scoped to your team. First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building. Cancel anytime. No lock-in.",
+            "description": "From $1,500 per month for one person. Group rate $2,000 to $3,500 per month. We take one job off your desk and run it, with a person checking the work. One job owned and running in your first 30 days, with a measured before and after. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.",
             "priceCurrency": "AUD",
             "availability": "https://schema.org/InStock",
             "priceSpecification": {
@@ -626,7 +637,7 @@
           "name": "What does a typical month look like?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Two working sessions plus unlimited async support in between. Something ships every cycle."
+            "text": "We run one job for you, with a person checking the work. Two working sessions a month to check in and pick the next job, plus unlimited async support in between. Something ships every cycle."
           }
         },
         {
@@ -658,7 +669,7 @@
           "name": "What if I want to cancel or pause?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "Anytime. No lock-in, no penalties, no awkward conversation."
+            "text": "No lock-in. Cancel or pause with 14 days notice."
           }
         },
         {
@@ -704,13 +715,27 @@
       <span class="micro">Practical AI workflows, installed and run for you</span>
       <span class="micro">Sydney, Australia</span>
     </div>
-    <h1 class="rv d1">You already tried AI.<br><span class="accent">That&rsquo;s the problem.</span></h1>
+    <h1 class="rv d1">Enquiries answered.<br>Intake done.<br><span class="accent">Follow-ups handled.</span></h1>
     <div class="hero-sub">
-      <p class="rv d2">You bought the tools. Watched the tutorials. You&rsquo;re still doing 12 jobs at once. <strong>VerusLink builds and runs practical AI workflows inside the tools you already use.</strong> Leads followed up. Admin handled. Nothing important falls through the cracks.</p>
+      <p class="rv d2">For firms and member organisations. <strong>We take one job off your desk. You get the result.</strong></p>
       <div class="hero-cta rv d3">
-        <a class="btn big" href="https://www.veruslink.au/audit">Find your biggest operational leak</a>
-        <span class="micro">Five minutes. You leave knowing what to fix first.</span>
+        <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
+        <span class="micro">Free. Five minutes.</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<section id="verticals">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Who we work with.<br><span class="accent">One job, taken off your desk.</span></h2>
+      <span class="micro rv idx">Law firms &middot; Associations &middot; Recruitment</span>
+    </div>
+    <div class="cardgrid c3">
+      <div class="card vert rv"><div class="n">Law firms</div><p>I help owner-led law firms who are losing new enquiries while they&rsquo;re in court or with clients get every enquiry answered and qualified within minutes without client data leaving accounts they control.</p><div class="job"><span class="micro">The job we take off your desk</span><p>New-matter enquiries answered and qualified within minutes, with the details your conflict check needs collected before a lawyer picks it up.</p></div></div>
+      <div class="card vert rv d1"><div class="n">Associations</div><p>I help associations and member bodies who are stretched thin chasing renewals and member questions get every member followed up on time without adding staff or another system to manage.</p><div class="job"><span class="micro">The job we take off your desk</span><p>Member renewals chased and member enquiries answered, every reply approved before it goes out.</p></div></div>
+      <div class="card vert rv d2"><div class="n">Recruitment</div><p>I help recruitment firms who are buried in inbound candidate and client enquiries get each one qualified and routed the same day without a consultant losing hours to the inbox.</p><div class="job"><span class="micro">The job we take off your desk</span><p>Inbound candidate and client enquiries qualified and routed to the right consultant the same day.</p></div></div>
     </div>
   </div>
 </section>
@@ -913,9 +938,23 @@
         <div class="price">$999<small>One-time</small></div>
       </div>
       <div class="step rv d3">
-        <div><div class="n">Step 04</div><h3>AI Operations Concierge</h3><p>First 30 days: one expensive bottleneck, one working workflow live, a measured before and after. Then we keep building.</p></div>
-        <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>Scoped to your team. Cancel anytime, no lock-in.</small></div>
+        <div><div class="n">Step 04</div><h3>Concierge. We take the job off your desk and run it.</h3><p>You hand us one job your team does by hand. We run it, with a person checking the work, and hand back the result like a good team member would. You get the result and the receipts: every action logged, anything client-facing approved by you. Then we pick the next job.</p></div>
+        <div class="price"><span class="from">From</span>$1,500<span class="per">/mo</span><small>For one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice.</small></div>
       </div>
+    </div>
+    <div class="incl rv">
+      <h3>What&rsquo;s included</h3>
+      <ul>
+        <li>One job owned and running in your first 30 days, with a measured before and after.</li>
+        <li>Something ships every cycle.</li>
+        <li>Proactive monitoring. We catch issues before you notice them.</li>
+        <li>Unlimited async support by voice message, between sessions.</li>
+        <li>A shared operations hub: every system logged, the hours saved recorded.</li>
+        <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
+        <li>Done-for-you builds available as an add-on, quoted separately.</li>
+      </ul>
+      <p class="pl">From $1,500/month for one person. Group rate $2,000 to $3,500/month. No lock-in. Cancel or pause with 14 days notice. Your $999 Assessment is credited in full to your first month.</p>
+</div>
     </div>
   </div>
 </section>
@@ -964,11 +1003,11 @@
     </div>
     <div class="cardgrid c4">
       <div class="card result rv">
-        <div class="big">6+ hrs</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
+        <div class="big">Logged</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
         <div class="who">AI services operator, Sydney</div>
       </div>
       <div class="card result rv d1">
-        <div class="big">38x</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
+        <div class="big">Scaled</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
         <div class="who">Marketing firm, Sydney</div>
       </div>
       <div class="card result rv d2">
@@ -980,6 +1019,11 @@
         <div class="who">Ghostwriting business, Sydney</div>
       </div>
     </div>
+    <!-- Testimonials: hidden placeholders. James supplies the real words. Do not publish until supplied. -->
+    <div class="cardgrid c2 testimonials" hidden style="display:none">
+      <div class="card testimonial" id="TESTIMONIAL-TONY-MYERS" data-testimonial="TESTIMONIAL-TONY-MYERS" hidden><div class="n">TESTIMONIAL-TONY-MYERS</div><p>TESTIMONIAL-TONY-MYERS</p><div class="who">Tony Myers</div></div>
+      <div class="card testimonial" id="TESTIMONIAL-JOSH-NAYLOR" data-testimonial="TESTIMONIAL-JOSH-NAYLOR" hidden><div class="n">TESTIMONIAL-JOSH-NAYLOR</div><p>TESTIMONIAL-JOSH-NAYLOR</p><div class="who">Josh Naylor, Frameless Glass Online</div></div>
+    </div>
   </div>
 </section>
 
@@ -989,11 +1033,12 @@
       <h2 class="rv">Your data<br>stays <span class="accent">yours.</span></h2>
       <span class="micro rv idx">08 / Trust</span>
     </div>
-    <div class="cardgrid c4">
-      <div class="card rv"><div class="n">01</div><h3>We work inside your tools</h3><p>Nothing migrates. Nothing gets rebuilt. Your stack stays your stack.</p></div>
-      <div class="card rv d1"><div class="n">02</div><h3>You control access</h3><p>Grant it, limit it, revoke it. Your accounts, your call, always.</p></div>
-      <div class="card rv d2"><div class="n">03</div><h3>Human oversight on everything</h3><p>No AI action ships without approval. A person signs off before anything moves.</p></div>
-      <div class="card rv d3"><div class="n">04</div><h3>If something breaks, I fix it</h3><p>You deal with the founder directly. Not a ticket queue. Usually same business day.</p></div>
+    <div class="cardgrid c3">
+      <div class="card rv"><div class="n">01</div><h3>Your own workspace</h3><p>Every client gets their own folder. Nothing in it is shared with any other client.</p></div>
+      <div class="card rv d1"><div class="n">02</div><h3>Plain text you can read</h3><p>One job per folder, written in plain text, so you can see exactly what we hold and why. We call this ICM (Interpretable Context Methodology): a simple folder method anyone can check.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>Every action logged</h3><p>You can see what was done, when, and why.</p></div>
+      <div class="card rv d3"><div class="n">04</div><h3>A person approves it first</h3><p>Anything client-facing is checked and approved by a human before it goes out.</p></div>
+      <div class="card rv"><div class="n">05</div><h3>It stays in your accounts</h3><p>Your data lives in your own accounts. Never sold. Never used to train AI models.</p></div>
     </div>
   </div>
 </section>
@@ -1068,11 +1113,11 @@
       <details name="faq"><summary>Do I have to do the free Health Check first?<span class="pm">+</span></summary><p>No. You can book the assessment directly if you already know you want it. Most people start with the Health Check.</p></details>
       <details name="faq"><summary>Do I need to be technical?<span class="pm">+</span></summary><p>No. You describe how your business runs. We handle the tools, the wiring and the jargon.</p></details>
       <details name="faq"><summary>What tools do I need?<span class="pm">+</span></summary><p>The ones you already have. New subscriptions are rarely needed. We build inside your existing stack.</p></details>
-      <details name="faq"><summary>What does a typical month look like?<span class="pm">+</span></summary><p>Two working sessions plus unlimited async support in between. Something ships every cycle.</p></details>
+      <details name="faq"><summary>What does a typical month look like?<span class="pm">+</span></summary><p>We run one job for you, with a person checking the work. Two working sessions a month to check in and pick the next job, plus unlimited async support in between. Something ships every cycle.</p></details>
       <details name="faq"><summary>How is this different from hiring a consultant?<span class="pm">+</span></summary><p>Consultants leave you a strategy deck after weeks of discovery. We leave you working systems, starting day one.</p></details>
       <details name="faq"><summary>Why can&rsquo;t I just use ChatGPT myself?<span class="pm">+</span></summary><p>You can. The gap is wiring it into your actual workflows so it runs without you thinking about it. That&rsquo;s the job.</p></details>
       <details name="faq"><summary>What happens if something breaks?<span class="pm">+</span></summary><p>I fix it. Usually the same business day. You message the founder, not a support queue.</p></details>
-      <details name="faq"><summary>What if I want to cancel or pause?<span class="pm">+</span></summary><p>Anytime. No lock-in, no penalties, no awkward conversation.</p></details>
+      <details name="faq"><summary>What if I want to cancel or pause?<span class="pm">+</span></summary><p>No lock-in. Cancel or pause with 14 days notice.</p></details>
       <details name="faq"><summary>Is my data safe?<span class="pm">+</span></summary><p>It stays in your own accounts, under your control. Never sold, never moved, never used to train anything.</p></details>
     </div>
   </div>
@@ -1083,7 +1128,7 @@
     <span class="micro rv idx">12 / Start Here</span>
     <h2 class="rv d1">Stop learning AI.<br><span class="accent">Start using it.</span></h2>
     <div class="row rv d2">
-      <a class="btn big" href="https://www.veruslink.au/audit">Find your biggest operational leak</a>
+      <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
       <a class="btn big ghost" href="https://book.veruslink.au/intro">Book a 15-minute intro call</a>
       <span class="note">You leave knowing the one workflow worth fixing first.</span>
     </div>
