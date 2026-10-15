@@ -11,7 +11,7 @@ Deploy only when James's message says deploy, ship or push. Otherwise build, ver
 Read the whole ask first, then pick: Haiku 4.5 for trivial edits, Sonnet 5 for anything substantive or when unsure. Never Opus or above without James naming it with a spend cap and expiry. State your choice in one line before starting.
 
 ## Rules
-- Commit as James Whitehill <jamesdwhitehill@gmail.com>. No Co-Authored-By, no session links, no AI mention in commits, code comments or files.
+- Commit as James Whitehill <262982010+jamesdwhitehill-cpu@users.noreply.github.com>. No Co-Authored-By, no session links, no AI mention in commits, code comments or files.
 - Never modify passwords, keys, tokens, sudoers or auth. Print what James must land.
 - Never write a secret value into any file. Reference the env var name.
 - Verify before reporting: run the thing, check is-active or the live URL, and say what you saw. "Should work" is not a report.
