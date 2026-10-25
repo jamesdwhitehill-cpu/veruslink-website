@@ -110,5 +110,13 @@
     "category": "insight",
     "date": "2026-06-24",
     "readTime": 2
+  },
+  {
+    "slug": "ai-operations-small-business",
+    "title": "AI Operations for Small Business: Where to Start",
+    "excerpt": "AI operations for small business means fixing admin structure, not buying software. What it covers, what to avoid, and where to start the audit.",
+    "category": "guide",
+    "date": "2026-10-26",
+    "readTime": 6
   }
 ]

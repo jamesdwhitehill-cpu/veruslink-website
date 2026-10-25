@@ -18,6 +18,7 @@
 - [What ships in month one (real examples)](https://www.veruslink.au/blog/what-ships-in-month-one)
 - [The admin is the bottleneck, not the law](https://www.veruslink.au/blog/admin-is-the-bottleneck)
 - [What AI should never do in your business](https://www.veruslink.au/blog/what-ai-should-never-do)
+- [AI Operations for Small Business: Where to Start](https://www.veruslink.au/blog/ai-operations-small-business): AI operations for small business means fixing admin structure, not buying software. What it covers, what to avoid, and where to start the audit.
 
 ## Contact
 
