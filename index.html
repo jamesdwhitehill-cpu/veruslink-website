@@ -572,6 +572,84 @@
   .fn-recap b{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-right:8px;}
   @media(max-width:560px){.fn-card{padding:22px 18px;min-height:0;}.fn-tile{grid-template-columns:30px 1fr;gap:12px;padding:16px 14px;}.fn-arrow{display:none;}.fn-key{width:30px;height:30px;}}
   @media(prefers-reduced-motion:reduce){.fn-step.is-active,.fn-tick svg{animation:none;stroke-dashoffset:0;}.fn-tile:hover{transform:none;}}
+
+  /* ---------- depth: elevation, rhythm, layers ---------- */
+  :root{
+    --navy:#0B1526;
+    --accent-on-dark:#5BB8EA;
+    --e1:0 1px 2px rgba(17,24,39,.05),0 4px 12px rgba(17,24,39,.05);
+    --e2:0 2px 4px rgba(17,24,39,.04),0 18px 40px -12px rgba(17,24,39,.18);
+    --e3:0 4px 8px rgba(17,24,39,.05),0 40px 80px -24px rgba(17,24,39,.35);
+  }
+  .btn{box-shadow:0 8px 20px -10px rgba(17,24,39,.55);}
+  .btn.ghost{box-shadow:none;}
+  .card,.fit-col,.incl,.compare{box-shadow:var(--e1);}
+  .step,.roi__card,.testimonial{box-shadow:var(--e2);}
+  .fn-card{box-shadow:var(--e3);}
+  .card,.step{transition:background .25s ease,transform .25s ease,box-shadow .25s ease;}
+  .card:hover,.step:hover{transform:translateY(-4px);box-shadow:var(--e3);}
+
+  /* rhythm */
+  #verticals,#relationship,#founder,.roi-band{background:var(--tint);}
+  .dark{background:var(--navy);color:#fff;border-bottom-color:transparent;}
+  .dark h2,.dark h3{color:#fff;}
+  .dark h2 .accent,.dark .idx{color:var(--accent-on-dark);}
+
+  /* systems on navy: the white cards carry the section */
+  #systems .sys-card{box-shadow:var(--e3);border-color:transparent;}
+  #systems .sys-card h3{color:var(--ink);}
+
+  /* results on navy with a glow behind the proof */
+  #results{position:relative;overflow:hidden;}
+  #results::before{content:"";position:absolute;width:min(1100px,140vw);aspect-ratio:1;left:50%;top:38%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(45,156,219,.30),rgba(45,156,219,.08) 40%,transparent 65%);pointer-events:none;}
+  #results .wrap{position:relative;}
+  #results .card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);box-shadow:none;}
+  #results .card:hover{background:rgba(255,255,255,.08);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+  #results .card p{color:rgba(255,255,255,.72);}
+  #results .result .big{color:var(--accent-on-dark);text-shadow:0 0 40px rgba(45,156,219,.55);}
+  #results .who{color:rgba(255,255,255,.5);}
+
+  /* how it works: step cards overlap the edge of a navy band */
+  #plan{position:relative;}
+  #plan::before{content:"";position:absolute;left:0;right:0;top:0;background:var(--navy);
+    height:calc(clamp(40px,6vw,72px) + clamp(32px,5vw,72px)*2.04 + clamp(28px,4vw,48px) + clamp(90px,10vw,150px));}
+  #plan .wrap{position:relative;}
+  #plan .sect-head h2{color:#fff;}
+  #plan .sect-head h2 .accent,#plan .sect-head .idx{color:var(--accent-on-dark);}
+  #plan .step{border-color:transparent;}
+  @media(max-width:560px){#plan::before{height:calc(clamp(40px,6vw,72px) + clamp(32px,5vw,72px)*2.04 + clamp(28px,4vw,48px) + 70px);}}
+
+  /* hero: light, a fading dot grid, and the work happening on top */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+      radial-gradient(900px 480px at 88% 8%,rgba(45,156,219,.20),transparent 70%),
+      radial-gradient(700px 380px at 4% 105%,rgba(64,198,155,.13),transparent 70%);}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(17,24,39,.10) 1px,transparent 1px);background-size:24px 24px;
+    -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%);mask-image:linear-gradient(180deg,#000,transparent 80%);}
+  .hero .wrap{position:relative;z-index:1;}
+  .kicker{border-bottom-color:rgba(17,24,39,.10);}
+  .hero-cta .btn.ghost{background:rgba(255,255,255,.7);}
+  .hero-btns{display:flex;flex-wrap:wrap;gap:12px;justify-content:flex-end;}
+  @media(max-width:900px){.hero-btns{justify-content:flex-start;}}
+  .hero-live{position:absolute;z-index:2;right:clamp(20px,4vw,56px);top:clamp(150px,19vh,230px);width:300px;height:330px;}
+  .hl-card{position:absolute;width:280px;background:rgba(255,255,255,.96);border:1px solid var(--rule);border-radius:var(--r);
+    box-shadow:var(--e3);padding:14px 16px;font-size:13px;line-height:1.4;animation:hlBob 6s ease-in-out infinite;}
+  .hl-card b{display:block;font-size:14px;margin-bottom:2px;}
+  .hl-card small{color:#5A6470;font-size:12.5px;}
+  .hl-pill{float:right;margin-left:8px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:#E6F7F0;color:#1f8f6c;}
+  .hl-pill.wait{background:var(--tint);color:var(--accent);}
+  .hl-card:nth-child(1){top:0;right:0;}
+  .hl-card:nth-child(2){top:112px;right:60px;animation-delay:-2s;}
+  .hl-card:nth-child(3){top:224px;right:8px;animation-delay:-4s;}
+  @keyframes hlBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @media(max-width:1239px){
+    .hero-live{position:relative;right:auto;top:auto;width:auto;height:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:clamp(40px,6vw,64px);margin-top:calc(-1 * clamp(16px,3vw,40px));}
+    .hl-card{position:relative;width:auto;top:auto!important;right:auto!important;animation:none;}
+  }
+  @media(max-width:760px){.hero-live{grid-template-columns:1fr;}.hl-card:nth-child(3){display:none;}}
+  @media(prefers-reduced-motion:reduce){.hl-card{animation:none;}.card:hover,.step:hover{transform:none;}}
 </style>
 <script type="application/ld+json">
 {
@@ -770,6 +848,7 @@
       <a href="#founder">About</a>
       <a href="https://www.veruslink.au/blog">Blog</a>
       <a href="#faqs">FAQs</a>
+      <a href="#start">Talk to us</a>
       <a class="btn" href="https://www.veruslink.au/audit">Free Health Check</a>
     </nav>
   </div>
@@ -785,9 +864,18 @@
     <div class="hero-sub">
       <p class="rv d2">For firms and member organisations. <strong>We take one job off your desk. You get the result.</strong></p>
       <div class="hero-cta rv d3">
-        <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
-        <span class="micro">Free. Five minutes.</span>
+        <div class="hero-btns">
+          <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
+          <a class="btn big ghost" href="#start">Tell us where it hurts</a>
+        </div>
+        <span class="micro">Health Check: free, five minutes.</span>
       </div>
+    </div>
+
+    <div class="hero-live rv d3" aria-label="Examples of the work we run for you">
+      <div class="hl-card"><span class="hl-pill">Done</span><b>New enquiry answered</b><small>Qualified and replied within minutes</small></div>
+      <div class="hl-card"><span class="hl-pill wait">Awaiting you</span><b>Renewal reminders drafted</b><small>Ready for your approval</small></div>
+      <div class="hl-card"><span class="hl-pill">Done</span><b>Intake details collected</b><small>Before anyone picks it up</small></div>
     </div>
   </div>
 </section>
@@ -835,7 +923,7 @@
   </div>
 </section>
 
-<section id="systems">
+<section id="systems" class="dark">
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Named systems<br>we install.</h2>
@@ -1059,7 +1147,7 @@
   </div>
 </section>
 
-<section id="results">
+<section id="results" class="dark">
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Not case studies.<br><span class="accent">Results.</span></h2>
