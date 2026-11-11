@@ -21,6 +21,9 @@
     --accent:#2D9CDB;
     --tint:#F0F7FC;
     --rule:rgba(17,24,39,.16);
+    --r-sm:10px;
+    --r:16px;
+    --r-lg:24px;
     --font:"Helvetica Neue",Helvetica,"Inter",Arial,sans-serif;
     interpolate-size:allow-keywords;
   }
@@ -81,7 +84,7 @@
     background:var(--ink);color:#fff!important;
     padding:12px 22px;
     font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
-    text-decoration:none;
+    text-decoration:none;border-radius:var(--r-sm);
     transition:background .2s ease;
   }
   .btn:hover{background:var(--accent);}
@@ -172,15 +175,14 @@
 
   /* ---------- card grids (why now / done with you / data) ---------- */
   .cardgrid{
-    display:grid;
-    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    display:grid;gap:16px;
     margin-bottom:clamp(48px,7vw,96px);
   }
   .cardgrid.c4{grid-template-columns:repeat(4,1fr);}
   .cardgrid.c3{grid-template-columns:repeat(3,1fr);}
   .cardgrid.c2{grid-template-columns:repeat(2,1fr);}
   .card{
-    border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);
     padding:clamp(24px,3vw,40px);
     transition:background .25s ease;
   }
@@ -191,24 +193,23 @@
   .card.vert .job{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);}
   .card.vert .job .micro{display:block;margin-bottom:8px;color:var(--accent);}
   .card.vert .job p{color:var(--ink);}
-  .incl{border:1px solid var(--rule);padding:clamp(24px,3vw,40px);margin-top:clamp(24px,3vw,40px);}
+  .incl{border:1px solid var(--rule);border-radius:var(--r);padding:clamp(24px,3vw,40px);margin-top:clamp(24px,3vw,40px);}
   .incl h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:14px;}
   .incl ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 32px;margin-bottom:18px;}
   .incl li{font-size:14px;line-height:1.5;color:rgba(17,24,39,.78);padding-left:16px;position:relative;}
-  .incl li:before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:var(--accent);}
+  .incl li:before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--accent);}
   .incl .pl{font-size:14px;font-weight:600;line-height:1.5;}
   @media(max-width:760px){.incl ul{grid-template-columns:1fr;}}
   #plan .ladder{margin-bottom:0;}
   #plan .incl{margin-bottom:clamp(48px,7vw,96px);}
   .card.vert>h3{margin-bottom:0;}
-  .cardgrid.c5{grid-template-columns:repeat(6,1fr);border-left:0;}
+  .cardgrid.c5{grid-template-columns:repeat(6,1fr);}
   .cardgrid.c5 .card{grid-column:span 2;}
-  .cardgrid.c5 .card:nth-child(1),.cardgrid.c5 .card:nth-child(4){border-left:1px solid var(--rule);}
   .cardgrid.c5 .card:nth-child(4){grid-column:2/4;}
   .cardgrid.c5 .card:nth-child(5){grid-column:4/6;}
   @media(max-width:760px){
-    .cardgrid.c5{grid-template-columns:1fr;border-left:1px solid var(--rule);}
-    .cardgrid.c5 .card:nth-child(n){grid-column:auto;border-left:0;}
+    .cardgrid.c5{grid-template-columns:1fr;}
+    .cardgrid.c5 .card:nth-child(n){grid-column:auto;}
   }
   .testimonials[hidden]{display:none;}
   .testimonial p{font-size:16px;line-height:1.6;}
@@ -225,7 +226,7 @@
   .sys-list{max-width:1040px;margin:0 auto clamp(48px,7vw,96px);}
   .sys-card{
     display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;
-    background:var(--paper);border:1px solid var(--sys-line);border-radius:18px;
+    background:var(--paper);border:1px solid var(--sys-line);border-radius:var(--r-lg);
     padding:30px 34px;margin-bottom:22px;
     box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 34px rgba(17,24,39,.05);
   }
@@ -239,7 +240,7 @@
   .sys-human svg path,.sys-tick svg path{stroke:var(--paper);}
   .sys-demo{
     background:linear-gradient(180deg,#FBFDFE,var(--tint));
-    border:1px solid var(--sys-line);border-radius:14px;
+    border:1px solid var(--sys-line);border-radius:var(--r);
     padding:18px 18px 38px;min-height:210px;
     display:flex;flex-direction:column;justify-content:center;gap:10px;
     position:relative;overflow:hidden;
@@ -248,7 +249,7 @@
   @keyframes sys-cap{0%,55%{opacity:0}70%,92%{opacity:1}100%{opacity:0}}
   .sys-row{
     display:flex;align-items:center;gap:9px;
-    background:var(--paper);border:1px solid var(--sys-line);border-radius:9px;
+    background:var(--paper);border:1px solid var(--sys-line);border-radius:var(--r-sm);
     padding:9px 11px;font-size:12.5px;line-height:1.35;color:var(--ink);
     flex-wrap:wrap;
     opacity:0;transform:translateY(6px);
@@ -268,7 +269,7 @@
   .sys-approve{
     display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
     background:var(--accent);color:var(--paper);font-size:12.5px;font-weight:600;
-    padding:9px 14px;border-radius:9px;
+    padding:9px 14px;border-radius:var(--r-sm);
     opacity:0;animation:sys-rev 9s infinite;animation-delay:4.2s;
   }
   .sys-tick{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.25);display:inline-flex;align-items:center;justify-content:center;flex:none;}
@@ -276,7 +277,7 @@
   @keyframes sys-tickin{0%,10%{opacity:0;transform:scale(.4)}14%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
   .sys-rcol{display:flex;gap:14px;align-items:center;}
   .sys-fields{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;}
-  .sys-receipt{width:84px;height:104px;background:var(--paper);border:1px solid var(--sys-line);border-radius:8px;position:relative;overflow:hidden;flex:none;}
+  .sys-receipt{width:84px;height:104px;background:var(--paper);border:1px solid var(--sys-line);border-radius:var(--r-sm);position:relative;overflow:hidden;flex:none;}
   .sys-receipt::before{content:"";position:absolute;left:10px;right:10px;top:12px;height:6px;background:#EEF2F6;border-radius:3px;box-shadow:0 12px 0 #EEF2F6,0 24px 0 #EEF2F6,0 36px 0 #F4F6F9,0 48px 0 #F4F6F9;}
   .sys-scan{position:absolute;left:0;right:0;top:0;height:3px;background:var(--accent);box-shadow:0 0 10px rgba(45,156,219,.7);opacity:0;animation:sys-scan 9s infinite;}
   @keyframes sys-scan{0%,4%{transform:translateY(0);opacity:0}8%{transform:translateY(8px);opacity:1}30%{transform:translateY(101px);opacity:1}34%,100%{transform:translateY(101px);opacity:0}}
@@ -305,12 +306,11 @@
 
   /* ---------- plan / ladder ---------- */
   .ladder{
-    display:grid;grid-template-columns:repeat(4,1fr);
-    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
     margin-bottom:clamp(48px,7vw,96px);
   }
   .step{
-    border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);
     padding:clamp(24px,3vw,40px);
     min-height:300px;
     display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0;
@@ -347,9 +347,9 @@
   @media(max-width:560px){.ladder{grid-template-columns:1fr;}}
 
   /* ---------- comparison ---------- */
-  .compare{width:100%;border-collapse:collapse;margin-bottom:clamp(48px,7vw,96px);}
+  .compare{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:clamp(48px,7vw,96px);}
   .compare th,.compare td{
-    border:1px solid var(--rule);
+    border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
     padding:clamp(12px,1.8vw,22px);
     text-align:left;vertical-align:top;
     font-size:15px;
@@ -358,6 +358,8 @@
     font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
     background:var(--paper);
   }
+  .compare tr>:last-child{border-right:0;}
+  .compare tbody tr:last-child>*{border-bottom:0;}
   .compare thead th.hl{background:var(--ink);color:#fff;}
   .compare td.hl{background:var(--tint);font-weight:600;}
   .compare tbody th{font-weight:600;font-size:14px;width:20%;background:var(--paper);}
@@ -391,7 +393,7 @@
   .founder-photo{
     width:100%;aspect-ratio:4/5;object-fit:cover;
     filter:grayscale(1) contrast(1.05);
-    border:1px solid var(--rule);
+    border:1px solid var(--rule);border-radius:var(--r-lg);
     display:block;
     transition:filter .4s ease;
   }
@@ -409,11 +411,10 @@
 
   /* ---------- fit filter ---------- */
   .fit-grid{
-    display:grid;grid-template-columns:1fr 1fr;
-    border-top:1px solid var(--rule);border-left:1px solid var(--rule);
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;
     margin-bottom:clamp(48px,7vw,96px);
   }
-  .fit-col{border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:clamp(24px,3vw,40px);}
+  .fit-col{border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);padding:clamp(24px,3vw,40px);}
   .fit-col h3{font-size:clamp(18px,1.8vw,24px);letter-spacing:-.015em;margin-bottom:20px;}
   .fit-col.yes h3{color:var(--accent);}
   .fit-col ul{list-style:none;}
@@ -480,7 +481,7 @@
   .roi__eyebrow{font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 10px;}
   .roi__title{font-size:30px;line-height:1.15;font-weight:800;margin:0 0 8px;letter-spacing:-.01em;}
   .roi__sub{font-size:16px;line-height:1.5;color:#5A6470;margin:0 0 28px;max-width:56ch;}
-  .roi__card{background:var(--paper);border:1px solid #E4E9F0;border-radius:16px;padding:32px;box-shadow:0 1px 2px rgba(17,24,39,.04),0 12px 32px rgba(17,24,39,.06);}
+  .roi__card{background:var(--paper);border:1px solid #E4E9F0;border-radius:var(--r);padding:32px;box-shadow:0 1px 2px rgba(17,24,39,.04),0 12px 32px rgba(17,24,39,.06);}
   .roi__grid{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px;}
   @media(max-width:640px){.roi__grid{grid-template-columns:1fr;gap:24px;}.roi__title{font-size:25px;}.roi__card{padding:22px;}}
   .roi .field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px;}
@@ -494,11 +495,11 @@
   .roi .result__big{font-size:44px;font-weight:800;letter-spacing:-.02em;margin:0;line-height:1.05;}
   .roi .result__big em{font-style:normal;color:var(--accent);}
   .roi .result__year{font-size:15px;color:#5A6470;margin:8px 0 0;}
-  .roi .compare{margin-top:24px;background:var(--tint);border-radius:12px;padding:20px 22px;}
+  .roi .compare{margin-top:24px;background:var(--tint);border-radius:var(--r-sm);padding:20px 22px;}
   .roi .compare p{margin:0;font-size:15.5px;line-height:1.55;color:var(--ink);}
   .roi .compare .strong{font-weight:700;}
   .roi .compare .breakeven{display:block;margin-top:8px;font-size:13.5px;color:#5A6470;}
-  .roi .cta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 22px;border-radius:10px;transition:background .15s;}
+  .roi .cta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600;font-size:15px;padding:14px 22px;border-radius:var(--r-sm);transition:background .15s;}
   .roi .cta:hover{background:#2589c4;}
   .roi .footnote{font-size:12px;color:#5A6470;margin:16px 0 0;line-height:1.5;}
 
@@ -529,10 +530,10 @@
   @media(max-width:900px){.fn-grid{grid-template-columns:1fr;}}
   .fn-intro h2{margin:14px 0 20px;}
   .fn-intro p{color:rgba(17,24,39,.7);max-width:26em;}
-  .fn-card{background:var(--paper);border:1px solid var(--rule);padding:clamp(24px,4vw,48px);min-height:440px;position:relative;box-shadow:0 30px 60px -40px rgba(17,24,39,.35);}
+  .fn-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-lg);padding:clamp(24px,4vw,48px);min-height:440px;position:relative;box-shadow:0 30px 60px -40px rgba(17,24,39,.35);}
   .fn-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px;min-height:20px;}
   .fn-bar{display:flex;gap:6px;flex:1;max-width:180px;}
-  .fn-bar i{flex:1;height:3px;background:var(--rule);transition:background .35s ease;}
+  .fn-bar i{flex:1;height:3px;border-radius:3px;background:var(--rule);transition:background .35s ease;}
   .fn-bar i.on{background:var(--accent);}
   .fn-count{color:rgba(17,24,39,.55);}
   .fn-back{background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:4px 0;opacity:.6;}
@@ -543,10 +544,10 @@
   .fn-q{font-size:clamp(26px,3.2vw,40px);line-height:1.05;letter-spacing:-.025em;font-weight:700;margin-bottom:8px;outline:none;}
   .fn-sub{color:rgba(17,24,39,.6);font-size:15px;margin-bottom:28px;}
   .fn-tiles{display:grid;gap:12px;}
-  .fn-tile{display:grid;grid-template-columns:36px 1fr 20px;gap:16px;align-items:center;width:100%;text-align:left;background:var(--paper);border:1px solid var(--rule);padding:20px 22px;font:inherit;color:var(--ink);cursor:pointer;transition:border-color .2s ease,transform .2s ease,background .2s ease,box-shadow .2s ease;}
+  .fn-tile{border-radius:var(--r);display:grid;grid-template-columns:36px 1fr 20px;gap:16px;align-items:center;width:100%;text-align:left;background:var(--paper);border:1px solid var(--rule);padding:20px 22px;font:inherit;color:var(--ink);cursor:pointer;transition:border-color .2s ease,transform .2s ease,background .2s ease,box-shadow .2s ease;}
   .fn-tile:hover,.fn-tile:focus-visible{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 14px 28px -18px rgba(45,156,219,.6);outline:none;}
   .fn-tile.is-picked{background:var(--tint);border-color:var(--accent);}
-  .fn-key{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--rule);font-size:12px;font-weight:700;letter-spacing:.08em;transition:all .2s ease;}
+  .fn-key{border-radius:var(--r-sm);width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--rule);font-size:12px;font-weight:700;letter-spacing:.08em;transition:all .2s ease;}
   .fn-tile:hover .fn-key,.fn-tile.is-picked .fn-key{background:var(--accent);border-color:var(--accent);color:#fff;}
   .fn-tile strong{display:block;font-size:17px;font-weight:600;line-height:1.25;}
   .fn-tile span.d{display:block;font-size:14px;color:rgba(17,24,39,.6);margin-top:3px;line-height:1.4;}
@@ -554,7 +555,7 @@
   .fn-tile:hover .fn-arrow,.fn-tile:focus-visible .fn-arrow{opacity:1;transform:none;}
   .fn-fields{display:grid;gap:14px;margin-bottom:24px;}
   .fn-fields label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
-  .fn-fields input{width:100%;font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:0;transition:border-color .2s ease;}
+  .fn-fields input{width:100%;font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:var(--r-sm);transition:border-color .2s ease;}
   .fn-fields input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,156,219,.15);}
   .fn-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
   .fn-submit{border:0;cursor:pointer;width:100%;font-family:inherit;}
@@ -1204,9 +1205,9 @@
         <h3 class="fn-q" tabindex="-1">What do you need help with?</h3>
         <p class="fn-sub">Pick the one that costs you most.</p>
         <div class="fn-tiles">
-          <button type="button" class="fn-tile" data-field="need" data-value="enquiries"><span class="fn-key">A</span><span><strong>New enquiries slipping through</strong><span class="d">They arrive while you&rsquo;re busy and go cold before anyone replies.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="need" data-value="admin"><span class="fn-key">B</span><span><strong>Admin and intake eating the week</strong><span class="d">Forms, details, data entry and paperwork that never ends.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="need" data-value="followups"><span class="fn-key">C</span><span><strong>Follow-ups and renewals done by hand</strong><span class="d">Chasing clients, members or candidates one email at a time.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="need" data-value="admin"><span class="fn-key">A</span><span><strong>I&rsquo;m drowning in repetitive admin</strong><span class="d">The same jobs every week, eating hours you&rsquo;d rather spend on clients.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="need" data-value="leads"><span class="fn-key">B</span><span><strong>Leads go cold before we reply</strong><span class="d">Enquiries land while you&rsquo;re busy and someone else gets the work.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="need" data-value="start"><span class="fn-key">C</span><span><strong>I know AI could help but don&rsquo;t know where to start</strong><span class="d">Too many tools, too much noise, no clear first step.</span></span><span class="fn-arrow">&rarr;</span></button>
         </div>
       </div>
 
@@ -1214,9 +1215,9 @@
         <h3 class="fn-q" tabindex="-1">What&rsquo;s your goal?</h3>
         <p class="fn-sub">If we fixed that, what would it get you?</p>
         <div class="fn-tiles">
-          <button type="button" class="fn-tile" data-field="goal" data-value="win"><span class="fn-key">A</span><span><strong>Win more of the work already coming in</strong><span class="d">Every enquiry answered fast, none lost.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="goal" data-value="time"><span class="fn-key">B</span><span><strong>Get hours back for the real work</strong><span class="d">Less admin, more of what you&rsquo;re actually good at.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="goal" data-value="grow"><span class="fn-key">C</span><span><strong>Grow without adding headcount</strong><span class="d">Take on more without another hire.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="goal" data-value="time"><span class="fn-key">A</span><span><strong>Save time</strong><span class="d">Hours back every week for the work that matters.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="goal" data-value="win"><span class="fn-key">B</span><span><strong>Win more work</strong><span class="d">Every enquiry answered fast, none lost.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="goal" data-value="cost"><span class="fn-key">C</span><span><strong>Cut costs</strong><span class="d">Do more without adding headcount.</span></span><span class="fn-arrow">&rarr;</span></button>
         </div>
       </div>
 

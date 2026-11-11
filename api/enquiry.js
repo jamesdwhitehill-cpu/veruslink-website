@@ -11,14 +11,14 @@ const FROM = 'VerusLink Website <vero@veruslink.au>';
 const ALERT_TO = 'james@veruslink.au';
 
 const NEEDS = {
-  enquiries: 'New enquiries slipping through',
-  admin: 'Admin and intake eating the week',
-  followups: 'Follow-ups and renewals done by hand',
+  admin: "Drowning in repetitive admin",
+  leads: 'Leads go cold before we reply',
+  start: "Knows AI could help, doesn't know where to start",
 };
 const GOALS = {
-  win: 'Win more of the work already coming in',
-  time: 'Get hours back for the real work',
-  grow: 'Grow without adding headcount',
+  time: 'Save time',
+  win: 'Win more work',
+  cost: 'Cut costs',
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
