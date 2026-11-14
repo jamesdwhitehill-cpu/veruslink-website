@@ -524,55 +524,6 @@
   .f4t-band a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);}
   .f4t-band a:hover{color:var(--ink);border-color:var(--ink);}
 
-  /* ---------- enquiry funnel ---------- */
-  #start{padding:clamp(72px,10vw,140px) 0;background:var(--tint);}
-  .fn-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start;}
-  @media(max-width:900px){.fn-grid{grid-template-columns:1fr;}}
-  .fn-intro h2{margin:14px 0 20px;}
-  .fn-intro p{color:rgba(17,24,39,.7);max-width:26em;}
-  .fn-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-lg);padding:clamp(24px,4vw,48px);min-height:440px;position:relative;box-shadow:0 30px 60px -40px rgba(17,24,39,.35);}
-  .fn-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px;min-height:20px;}
-  .fn-bar{display:flex;gap:6px;flex:1;max-width:180px;}
-  .fn-bar i{flex:1;height:3px;border-radius:3px;background:var(--rule);transition:background .35s ease;}
-  .fn-bar i.on{background:var(--accent);}
-  .fn-count{color:rgba(17,24,39,.55);}
-  .fn-back{background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:4px 0;opacity:.6;}
-  .fn-back:hover{opacity:1;color:var(--accent);}
-  .fn-step{display:none;}
-  .fn-step.is-active{display:block;animation:fnIn .45s cubic-bezier(.2,.7,.2,1) both;}
-  @keyframes fnIn{from{opacity:0;transform:translateX(24px);}to{opacity:1;transform:none;}}
-  .fn-q{font-size:clamp(26px,3.2vw,40px);line-height:1.05;letter-spacing:-.025em;font-weight:700;margin-bottom:8px;outline:none;}
-  .fn-sub{color:rgba(17,24,39,.6);font-size:15px;margin-bottom:28px;}
-  .fn-tiles{display:grid;gap:12px;}
-  .fn-tile{border-radius:var(--r);display:grid;grid-template-columns:36px 1fr 20px;gap:16px;align-items:center;width:100%;text-align:left;background:var(--paper);border:1px solid var(--rule);padding:20px 22px;font:inherit;color:var(--ink);cursor:pointer;transition:border-color .2s ease,transform .2s ease,background .2s ease,box-shadow .2s ease;}
-  .fn-tile:hover,.fn-tile:focus-visible{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 14px 28px -18px rgba(45,156,219,.6);outline:none;}
-  .fn-tile.is-picked{background:var(--tint);border-color:var(--accent);}
-  .fn-key{border-radius:var(--r-sm);width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--rule);font-size:12px;font-weight:700;letter-spacing:.08em;transition:all .2s ease;}
-  .fn-tile:hover .fn-key,.fn-tile.is-picked .fn-key{background:var(--accent);border-color:var(--accent);color:#fff;}
-  .fn-tile strong{display:block;font-size:17px;font-weight:600;line-height:1.25;}
-  .fn-tile span.d{display:block;font-size:14px;color:rgba(17,24,39,.6);margin-top:3px;line-height:1.4;}
-  .fn-arrow{opacity:0;transform:translateX(-6px);transition:all .2s ease;color:var(--accent);font-weight:700;}
-  .fn-tile:hover .fn-arrow,.fn-tile:focus-visible .fn-arrow{opacity:1;transform:none;}
-  .fn-fields{display:grid;gap:14px;margin-bottom:24px;}
-  .fn-fields label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
-  .fn-fields input{width:100%;font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:var(--r-sm);transition:border-color .2s ease;}
-  .fn-fields input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,156,219,.15);}
-  .fn-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
-  .fn-submit{border:0;cursor:pointer;width:100%;font-family:inherit;}
-  .fn-submit[disabled]{opacity:.6;cursor:wait;}
-  .fn-err{color:#b42318;font-size:14px;margin-top:14px;min-height:1em;}
-  .fn-err a{color:inherit;}
-  .fn-fine{font-size:13px;color:rgba(17,24,39,.5);margin-top:14px;}
-  .fn-done{text-align:left;padding-top:12px;}
-  .fn-tick{width:56px;height:56px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin-bottom:28px;}
-  .fn-tick svg{width:26px;height:26px;stroke:#fff;stroke-width:3;fill:none;stroke-dasharray:30;stroke-dashoffset:30;animation:fnTick .5s .2s ease forwards;}
-  @keyframes fnTick{to{stroke-dashoffset:0;}}
-  .fn-done p{color:rgba(17,24,39,.7);max-width:30em;margin-bottom:32px;}
-  .fn-recap{border-top:1px solid var(--rule);padding-top:20px;margin-bottom:32px;display:grid;gap:8px;font-size:15px;}
-  .fn-recap b{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-right:8px;}
-  @media(max-width:560px){.fn-card{padding:22px 18px;min-height:0;}.fn-tile{grid-template-columns:30px 1fr;gap:12px;padding:16px 14px;}.fn-arrow{display:none;}.fn-key{width:30px;height:30px;}}
-  @media(prefers-reduced-motion:reduce){.fn-step.is-active,.fn-tick svg{animation:none;stroke-dashoffset:0;}.fn-tile:hover{transform:none;}}
-
   /* ---------- depth: elevation, rhythm, layers ---------- */
   :root{
     --navy:#0B1526;
@@ -650,6 +601,32 @@
   }
   @media(max-width:760px){.hero-live{grid-template-columns:1fr;}.hl-card:nth-child(3){display:none;}}
   @media(prefers-reduced-motion:reduce){.hl-card{animation:none;}.card:hover,.step:hover{transform:none;}}
+
+  /* ---------- reorder: problem, maths line, compare box, insights, giving ---------- */
+  .problem-lead{font-size:clamp(18px,2vw,24px);line-height:1.4;max-width:34em;color:rgba(17,24,39,.75);margin-bottom:clamp(8px,2vw,16px);}
+  #problem .stats{padding-bottom:clamp(24px,4vw,48px);}
+  .roi__why{font-size:15px;color:#5A6470;margin:-8px 0 22px;font-weight:600;}
+  .hero-alt{font-size:14px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);padding:10px 0 2px;}
+  .hero-alt:hover{color:var(--accent);}
+  .compare-box{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--e1);margin-bottom:clamp(48px,7vw,96px);background:var(--paper);}
+  .compare-box .compare{border:0;border-radius:0;box-shadow:none;overflow:visible;margin-bottom:0;}
+  @media(max-width:760px){
+    .compare-box .compare{min-width:640px;}
+    .compare-box .compare thead th:nth-child(2),.compare-box .compare tbody td:nth-child(2){display:table-cell;}
+    .compare-box .compare th,.compare-box .compare td{padding:12px 10px;font-size:13.5px;overflow-wrap:normal;}
+    .compare-box .compare thead th{font-size:11px;letter-spacing:.08em;}
+    .compare-box .compare tbody th{width:auto;font-size:13px;}
+  }
+  #insights[hidden]{display:none;}
+  .card.insight{display:block;text-decoration:none;color:var(--ink);}
+  .card.insight h3{margin-bottom:10px;}
+  .insights-all{margin:-24px 0 clamp(48px,7vw,96px);}
+  .insights-all a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--accent);font-size:14px;font-weight:600;}
+  .insights-all a:hover{color:var(--accent);}
+  .giving{padding:28px 0 0;}
+  .giving p{font-size:13px;line-height:1.55;color:rgba(17,24,39,.55);max-width:52em;}
+  .giving a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);}
+  .giving a:hover{color:var(--accent);border-color:var(--accent);}
 </style>
 <script type="application/ld+json">
 {
@@ -844,11 +821,11 @@
   <div class="wrap bar">
     <a class="wordmark" href="#">VERUS<span>LINK</span></a>
     <nav>
-      <a href="#plan">How it works</a>
-      <a href="#founder">About</a>
-      <a href="https://www.veruslink.au/blog">Blog</a>
+      <a href="#systems">Systems</a>
+      <a href="#results">Results</a>
+      <a href="#plan">Pricing</a>
+      <a href="#insights">Insights</a>
       <a href="#faqs">FAQs</a>
-      <a href="#start">Talk to us</a>
       <a class="btn" href="https://www.veruslink.au/audit">Free Health Check</a>
     </nav>
   </div>
@@ -866,9 +843,9 @@
       <div class="hero-cta rv d3">
         <div class="hero-btns">
           <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
-          <a class="btn big ghost" href="#start">Tell us where it hurts</a>
         </div>
         <span class="micro">Health Check: free, five minutes.</span>
+        <a class="hero-alt" href="/where-it-hurts">Or tell us where it hurts &rarr;</a>
       </div>
     </div>
 
@@ -894,32 +871,18 @@
   </div>
 </section>
 
-<section class="statwrap">
-  <div class="wrap stats">
+<section id="problem">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">AI didn&rsquo;t fail you.<br><span class="accent">Application did.</span></h2>
+      <span class="micro rv idx">02 / The Problem</span>
+    </div>
+    <p class="problem-lead rv d1">The gap isn&rsquo;t the tools. It&rsquo;s between what they can do and what&rsquo;s running in your business on a Tuesday afternoon.</p>
+  </div>
+<div class="wrap stats">
     <div class="stat rv"><div class="truth">Follow-up relies on <em>memory.</em></div><div class="lbl">That&rsquo;s why leads go cold. Not because anyone stopped caring.</div></div>
     <div class="stat rv d1"><div class="truth">Onboarding is a <em>scavenger hunt.</em></div><div class="lbl">Documents, answers and approvals scattered across inboxes and attachments.</div></div>
     <div class="stat rv d2"><div class="truth">You are the <em>integration layer.</em></div><div class="lbl">Every system and every person still routes through the owner.</div></div>
-  </div>
-</section>
-
-<section class="statement">
-  <div class="wrap">
-    <span class="micro rv idx">02 / The Promise</span>
-    <p class="rv d1">AI didn&rsquo;t fail you. <span class="accent">Application did.</span> The gap isn&rsquo;t the tools. It&rsquo;s between what they can do and what&rsquo;s running in your business on a Tuesday afternoon.</p>
-  </div>
-</section>
-
-<section id="whynow">
-  <div class="wrap">
-    <div class="sect-head">
-      <h2 class="rv">Why now.<br><span class="accent">The squeeze is real.</span></h2>
-      <span class="micro rv idx">03 / The Timing</span>
-    </div>
-    <div class="cardgrid c3">
-      <div class="card rv"><div class="n">01</div><h3>Costs keep climbing</h3><p>Every operating cost is up. Every hour you buy back goes straight to margin.</p></div>
-      <div class="card rv d1"><div class="n">02</div><h3>Payroll costs more</h3><p>Super contributions have risen. The same team costs more this year than last.</p></div>
-      <div class="card rv d2"><div class="n">03</div><h3>AI is now a cost lever</h3><p>Not a gimmick. Every month you wait, the margin walks out the door.</p></div>
-    </div>
   </div>
 </section>
 
@@ -927,7 +890,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Named systems<br>we install.</h2>
-      <span class="micro rv idx">04 / What We Build</span>
+      <span class="micro rv idx">03 / What We Build</span>
     </div>
     <div class="sys-list">
       <div class="sys-card rv">
@@ -1015,6 +978,7 @@
       <p class="roi__eyebrow">The maths</p>
       <h2 class="roi__title">What&rsquo;s all that admin really costing you?</h2>
       <p class="roi__sub">Slide the two below. It&rsquo;s your own numbers, your own money, and there&rsquo;s no email to hand over.</p>
+      <p class="roi__why">Costs are up and payroll costs more this year. Every hour you buy back goes straight to margin.</p>
       <div class="roi__card">
         <div class="roi__grid">
           <div class="field">
@@ -1071,6 +1035,33 @@
 })();
 </script>
 
+<section id="results" class="dark">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Not case studies.<br><span class="accent">Results.</span></h2>
+      <span class="micro rv idx">04 / Real Outcomes</span>
+    </div>
+    <div class="cardgrid c4">
+      <div class="card result rv">
+        <div class="big">Logged</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
+        <div class="who">AI services operator, Sydney</div>
+      </div>
+      <div class="card result rv d1">
+        <div class="big">Scaled</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
+        <div class="who">Marketing firm, Sydney</div>
+      </div>
+      <div class="card result rv d2">
+        <div class="big">Live</div><h3>Interview analysis</h3><p>Real-time AI analysis during podcast interviews, with coaching prompts as they record.</p>
+        <div class="who">Not-for-profit, Victoria</div>
+      </div>
+      <div class="card result rv d3">
+        <div class="big">Voice</div><h3>To drafted chapters</h3><p>Spoken conversations turned into structured book chapters, ready for the editor.</p>
+        <div class="who">Ghostwriting business, Sydney</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="plan">
   <div class="wrap">
     <div class="sect-head">
@@ -1111,27 +1102,14 @@
   </div>
 </section>
 
-<section id="relationship">
-  <div class="wrap">
-    <div class="sect-head">
-      <h2 class="rv">We run it.<br><span class="accent">You approve it.</span></h2>
-      <span class="micro rv idx">06 / How We Work</span>
-    </div>
-    <div class="cardgrid c3">
-      <div class="card rv"><div class="n">The Health Check</div><h3>Health Check. Optimise. Activate.</h3><p>We map what&rsquo;s bleeding hours before anything gets built. No guessing, no generic playbook.</p></div>
-      <div class="card rv d1"><div class="n">Every Call</div><h3>Something ships. Every time.</h3><p>Every working session ends with at least one system live in your business. Not homework. Not a recap email.</p></div>
-      <div class="card rv d2"><div class="n">Between Calls</div><h3>Unlimited async support.</h3><p>Stuck at 7am? Send a voice message. You get answers between sessions, not at the next one.</p></div>
-    </div>
-  </div>
-</section>
-
 <section id="compare">
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">The honest<br>comparison.</h2>
-      <span class="micro rv idx">07 / Compare</span>
+      <span class="micro rv idx">06 / Compare</span>
     </div>
-    <table class="compare rv">
+    <div class="compare-box rv">
+    <table class="compare">
       <thead>
         <tr><th></th><th>AI course</th><th>Consultant</th><th class="hl">VerusLink</th></tr>
       </thead>
@@ -1144,52 +1122,6 @@
         <tr><th>Monthly cost</th><td>Low fee, plus your time</td><td>A large project fee</td><td class="hl">Quoted after your Assessment.</td></tr>
       </tbody>
     </table>
-  </div>
-</section>
-
-<section id="results" class="dark">
-  <div class="wrap">
-    <div class="sect-head">
-      <h2 class="rv">Not case studies.<br><span class="accent">Results.</span></h2>
-      <span class="micro rv idx">08 / Real Outcomes</span>
-    </div>
-    <div class="cardgrid c4">
-      <div class="card result rv">
-        <div class="big">Logged</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
-        <div class="who">AI services operator, Sydney</div>
-      </div>
-      <div class="card result rv d1">
-        <div class="big">Scaled</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
-        <div class="who">Marketing firm, Sydney</div>
-      </div>
-      <div class="card result rv d2">
-        <div class="big">Live</div><h3>Interview analysis</h3><p>Real-time AI analysis during podcast interviews, with coaching prompts as they record.</p>
-        <div class="who">Not-for-profit, Victoria</div>
-      </div>
-      <div class="card result rv d3">
-        <div class="big">Voice</div><h3>To drafted chapters</h3><p>Spoken conversations turned into structured book chapters, ready for the editor.</p>
-        <div class="who">Ghostwriting business, Sydney</div>
-      </div>
-    </div>
-    <div class="cardgrid c2 testimonials">
-      <div class="card testimonial" id="testimonial-1" data-testimonial="testimonial-1"><p>&ldquo;I&rsquo;d like to thank James for taking control of the whole process. Not coming from a technical background, previous website and SEO companies were quite confusing and you never really knew what the result would be. James was very professional and thorough, asking plenty of questions and, by the end, pre-empting questions I might have had in relation to the functionality of the website. The result is fantastic.&rdquo;</p><div class="who">Josh Naylor, A&amp;D Frameless Glass</div></div>
-      <div class="card testimonial" id="testimonial-2" data-testimonial="testimonial-2" hidden style="display:none"><div class="n"></div><p></p><div class="who"></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="data">
-  <div class="wrap">
-    <div class="sect-head">
-      <h2 class="rv">Your data<br>stays <span class="accent">yours.</span></h2>
-      <span class="micro rv idx">09 / Trust</span>
-    </div>
-    <div class="cardgrid c5">
-      <div class="card rv"><div class="n">01</div><h3>Your own workspace</h3><p>Every client gets their own folder. Nothing in it is shared with any other client.</p></div>
-      <div class="card rv d1"><div class="n">02</div><h3>Plain text you can read</h3><p>One job per folder, written in plain text, so you can see exactly what we hold and why. We call this ICM (Interpretable Context Methodology): a simple folder method anyone can check.</p></div>
-      <div class="card rv d2"><div class="n">03</div><h3>Every action logged</h3><p>You can see what was done, when, and why.</p></div>
-      <div class="card rv d3"><div class="n">04</div><h3>A person approves it first</h3><p>Anything client-facing is checked and approved by a human before it goes out.</p></div>
-      <div class="card rv"><div class="n">05</div><h3>It stays in your accounts</h3><p>Your data lives in your own accounts. Never sold. Never used to train AI models.</p></div>
     </div>
   </div>
 </section>
@@ -1198,7 +1130,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Meet the<br>founder.</h2>
-      <span class="micro rv idx">10 / Who You Get</span>
+      <span class="micro rv idx">07 / Who You Get</span>
     </div>
     <div class="founder-grid">
       <img class="founder-photo rv" src="https://www.veruslink.au/assets/james-headshot.png" alt="James Whitehill, founder of VerusLink" loading="lazy"
@@ -1214,11 +1146,19 @@
   </div>
 </section>
 
-<section id="f4t">
-  <div class="wrap f4t-band">
-    <a class="f4t-logo-link rv" href="https://food4thought.org.au/" target="_blank" rel="noopener" aria-label="Food4Thought"><svg class="f4t-logo" role="img" aria-label="Food4Thought" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 994.74 902.24"><defs><style>.f4t-e,.f4t-f,.f4t-g{fill:none;}.f4t-e,.f4t-h,.f4t-i,.f4t-j{stroke-width:0px;}.f4t-f{stroke:#fff;stroke-width:15.51px;}.f4t-g{stroke:#b51800;stroke-miterlimit:1;stroke-width:4.85px;}.f4t-k{clip-path:url(#f4t-clip-d);}.f4t-l{clip-path:url(#f4t-clip-b);}.f4t-m{clip-path:url(#f4t-clip-c);}.f4t-h{fill:#b42025;}.f4t-i{fill:#b51800;}.f4t-j{fill:#fff;}</style><clipPath id="f4t-clip-b"><rect class="f4t-e" x="62.88" y="0" width="864.82" height="902.23"/></clipPath><clipPath id="f4t-clip-c"><rect class="f4t-e" x="62.88" y="0" width="864.82" height="902.23"/></clipPath><clipPath id="f4t-clip-d"><rect class="f4t-e" x="62.88" y="0" width="864.82" height="902.23"/></clipPath></defs><g class="f4t-l"><path class="f4t-j" d="M65.31,698.9v200.91h722.58c75.76,0,137.17-61.34,137.17-137v-63.44l-859.75-.47Z"/><path class="f4t-g" d="M65.31,698.9v200.91h722.58c75.76,0,137.17-61.34,137.17-137v-63.44l-859.75-.47Z"/><path class="f4t-i" d="M263.55,0C152.75,0,62.92,89.82,62.92,200.62v501.51l864.56-.57s.22,1.1.22-21.44V0H263.55Z"/><path class="f4t-f" d="M500.2,649.81c158.06,0,286.2-128.14,286.2-286.2S658.26,77.41,500.2,77.41,213.99,205.54,213.99,363.61s128.14,286.2,286.2,286.2Z"/></g><rect class="f4t-i" x="180.44" y="234.23" width="57.64" height="325.24"/><rect class="f4t-i" x="215.43" y="275.39" width="57.64" height="69.99"/><g class="f4t-m"><path class="f4t-j" d="M440.42,268.4c-12.68,0-22.97,10.28-22.97,22.97v159.04c0,12.68,10.29,22.97,22.97,22.97h.76c12.68,0,22.97-10.28,22.97-22.97v-159.04c0-12.69-10.28-22.97-22.97-22.97h-.76Z"/><path class="f4t-j" d="M515.69,358.1c-11.31,0-20.48,9.17-20.48,20.48v138.03c0,11.31,9.17,20.48,20.48,20.48s20.48-9.17,20.48-20.48v-138.03c0-11.31-9.17-20.48-20.48-20.48"/><rect class="f4t-j" x="418.12" y="426.69" width="179.89" height="46.7" rx="22.97" ry="22.97"/><path class="f4t-f" d="M763.3,242.39c-38.13-112.07-142.76-192.54-265.86-192.54-137.72,0-252.31,100.71-276.55,233.71"/></g><rect class="f4t-i" x="647.57" y="203.06" width="210.83" height="72.73"/><rect class="f4t-i" x="148.09" y="199.14" width="193.94" height="86.19"/><g class="f4t-k"><path class="f4t-j" d="M204.7,212.08c-13.46,0-24.37,10.91-24.37,24.37v278.96c0,13.46,10.91,24.37,24.37,24.37s24.37-10.91,24.37-24.37V212.08h-24.37Z"/><path class="f4t-j" d="M397.25,236.46c0-13.46-10.91-24.37-24.37-24.37h-144.24c-13.47,0-24.38,10.91-24.38,24.37s10.91,24.37,24.38,24.37h144.24c13.46,0,24.37-10.91,24.37-24.37"/><path class="f4t-j" d="M359.85,372.6c0-13.46-10.91-24.37-24.37-24.37h-126.28c-13.47,0-24.38,10.91-24.38,24.37s10.91,24.37,24.38,24.37h126.28c13.46,0,24.37-10.91,24.37-24.37"/><path class="f4t-j" d="M812.77,240.96c0-13.68-11.09-24.78-24.78-24.78h-219.57c-13.68,0-24.77,11.09-24.77,24.78s11.09,24.78,24.77,24.78h219.57c13.68,0,24.78-11.09,24.78-24.78"/><path class="f4t-j" d="M677.9,219.22c-13.68,0-24.78,11.09-24.78,24.78v269.59c0,13.68,11.09,24.78,24.78,24.78s24.78-11.09,24.78-24.78V244c0-13.68-11.09-24.78-24.78-24.78"/><path class="f4t-i" d="M317.98,777.06c1.17-.27,3.25-.54,6.23-.54,11.92,0,19.32,6.23,19.32,19.32,0,14.54-8.22,21.4-20.77,21.3-1.62,0-3.61,0-4.78-.27v-39.81ZM304.26,826.98c3.34.45,8.48.9,15.62.9,11.91,0,21.76-2.53,28.16-7.85,5.78-4.97,10.02-13,10.02-24.65,0-10.83-3.97-18.42-10.29-23.11-5.78-4.42-13.36-6.32-25.01-6.32-6.86,0-13.45.45-18.51,1.35v59.67ZM265.89,817.32c-9.21,0-14.72-8.94-14.72-20.41s5.33-20.58,14.8-20.58,14.63,9.39,14.63,20.31c0,11.91-5.33,20.67-14.63,20.67h-.09ZM265.44,828.25c17.78,0,29.79-12.01,29.79-32.05,0-16.79-10.2-30.79-28.89-30.79s-29.61,13.63-29.61,31.87,10.65,30.97,28.62,30.97h.09ZM201.16,817.32c-9.21,0-14.71-8.94-14.71-20.41s5.33-20.58,14.8-20.58,14.62,9.39,14.62,20.31c0,11.91-5.33,20.67-14.62,20.67h-.09ZM200.7,828.25c17.79,0,29.79-12.01,29.79-32.05,0-16.79-10.2-30.79-28.89-30.79s-29.61,13.63-29.61,31.87,10.65,30.97,28.62,30.97h.09ZM127.31,827.25h13.72v-24.47h21.85v-11.2h-21.85v-13.9h23.38v-11.28h-37.1v60.85Z"/><path class="f4t-i" d="M812.74,828.96h13.72v-49.29h16.61v-11.55h-46.77v11.55h16.43v49.29ZM738.8,768.11v60.85h13.72v-25.37h22.66v25.37h13.72v-60.85h-13.72v23.47h-22.66v-23.47h-13.72ZM727.96,794.11h-22.66v10.74h9.39v12.82c-1.08.45-3.61.81-6.68.81-11.28,0-19.23-7.31-19.23-19.95s8.76-19.68,20.22-19.68c6.68,0,10.74,1.09,14.08,2.62l2.89-11.1c-2.98-1.35-9.03-2.89-16.89-2.89-19.95,0-34.66,11.56-34.76,31.78,0,8.93,3.07,16.88,8.58,22.21,5.6,5.33,13.63,8.12,24.74,8.12,8.03,0,16.07-1.98,20.31-3.43v-32.05ZM615.57,768.11v33.95c0,19.32,8.93,27.9,24.28,27.9s25.37-8.94,25.37-27.72v-34.12h-13.72v34.93c0,10.84-3.97,15.89-11.2,15.89s-11.01-5.33-11.01-15.89v-34.93h-13.72ZM577.2,819.03c-9.21,0-14.72-8.94-14.72-20.41s5.33-20.58,14.81-20.58,14.62,9.39,14.62,20.31c0,11.91-5.33,20.67-14.62,20.67h-.09ZM576.75,829.95c17.78,0,29.79-12.01,29.79-32.05,0-16.79-10.2-30.79-28.89-30.79s-29.61,13.63-29.61,31.87,10.66,30.97,28.62,30.97h.09ZM488.72,768.11v60.85h13.72v-25.37h22.66v25.37h13.72v-60.85h-13.72v23.47h-22.66v-23.47h-13.72ZM450.99,828.96h13.72v-49.29h16.61v-11.55h-46.77v11.55h16.43v49.29Z"/><path class="f4t-h" d="M385.62,767.2c-4.03,0-7.29,3.26-7.29,7.29v42.01c0,4.02,3.26,7.29,7.29,7.29s7.29-3.26,7.29-7.29v-42.01c0-4.03-3.26-7.29-7.29-7.29"/><path class="f4t-h" d="M410.06,797.65c-3.53,0-6.39,2.86-6.39,6.39v30.93c0,3.53,2.86,6.39,6.39,6.39s6.39-2.86,6.39-6.39v-30.93c0-3.53-2.86-6.39-6.39-6.39"/><path class="f4t-h" d="M430.69,817.33c0-3.56-2.89-6.45-6.45-6.45h-39.26c-3.56,0-6.45,2.89-6.45,6.45s2.89,6.45,6.45,6.45h39.26c3.56,0,6.45-2.89,6.45-6.45"/></g></svg></a>
-    <span class="micro rv idx">Where some of the money goes</span>
-    <p class="rv d1">A fixed share of every VerusLink month goes to <strong>Food4Thought</strong>, the values-based business community I help grow across NSW and the ACT. Not a marketing line. A standing commitment, good month or lean one. Business networking with a difference: a proper dinner, a speaker, and open space to explore faith and purpose with good people. If that resonates, <a href="https://food4thought.org.au/" rel="noopener">pull up a chair</a>.</p>
+<section id="data">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Your data<br>stays <span class="accent">yours.</span></h2>
+      <span class="micro rv idx">08 / Trust</span>
+    </div>
+    <div class="cardgrid c5">
+      <div class="card rv"><div class="n">01</div><h3>Your own workspace</h3><p>Every client gets their own folder. Nothing in it is shared with any other client.</p></div>
+      <div class="card rv d1"><div class="n">02</div><h3>Plain text you can read</h3><p>One job per folder, written in plain text, so you can see exactly what we hold and why. We call this ICM (Interpretable Context Methodology): a simple folder method anyone can check.</p></div>
+      <div class="card rv d2"><div class="n">03</div><h3>Every action logged</h3><p>You can see what was done, when, and why.</p></div>
+      <div class="card rv d3"><div class="n">04</div><h3>A person approves it first</h3><p>Anything client-facing is checked and approved by a human before it goes out.</p></div>
+      <div class="card rv"><div class="n">05</div><h3>It stays in your accounts</h3><p>Your data lives in your own accounts. Never sold. Never used to train AI models.</p></div>
+    </div>
   </div>
 </section>
 
@@ -1226,7 +1166,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">We&rsquo;re selective.<br><span class="accent">So should you be.</span></h2>
-      <span class="micro rv idx">11 / The Fit</span>
+      <span class="micro rv idx">09 / The Fit</span>
     </div>
     <div class="fit-grid">
       <div class="fit-col yes rv">
@@ -1253,11 +1193,22 @@
   </div>
 </section>
 
+<section id="insights" hidden>
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">This week in AI<br><span class="accent">for firms.</span></h2>
+      <span class="micro rv idx">10 / Insights</span>
+    </div>
+    <div class="cardgrid c3" id="insightsGrid"></div>
+    <p class="insights-all"><a href="/blog">See all &rarr;</a></p>
+  </div>
+</section>
+
 <section id="faqs">
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Common questions.<br><span class="accent">Straight answers.</span></h2>
-      <span class="micro rv idx">12 / FAQs</span>
+      <span class="micro rv idx">11 / FAQs</span>
     </div>
     <div class="faq-list rv">
       <details name="faq"><summary>What happens after the Health Check?<span class="pm">+</span></summary><p>Your results land in your inbox. If there&rsquo;s real opportunity, we&rsquo;ll suggest the $999 + GST assessment. If there isn&rsquo;t, we&rsquo;ll tell you straight.</p></details>
@@ -1274,79 +1225,23 @@
   </div>
 </section>
 
-<section id="start">
-  <div class="wrap fn-grid">
-    <div class="fn-intro rv">
-      <span class="micro idx">Talk to us</span>
-      <h2>Tell us where it <span class="accent">hurts.</span></h2>
-      <p>Three quick taps. No forms to wade through. James reads every one himself and comes back to you personally with the one job worth fixing first.</p>
-    </div>
-
-    <div class="fn-card rv d1" id="funnel" aria-live="polite">
-      <div class="fn-top" id="fnTop">
-        <button type="button" class="fn-back micro" id="fnBack" hidden>&larr; Back</button>
-        <div class="fn-bar" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
-        <span class="fn-count micro" id="fnCount">Step 1 of 3</span>
-      </div>
-
-      <div class="fn-step is-active" data-step="1">
-        <h3 class="fn-q" tabindex="-1">What do you need help with?</h3>
-        <p class="fn-sub">Pick the one that costs you most.</p>
-        <div class="fn-tiles">
-          <button type="button" class="fn-tile" data-field="need" data-value="admin"><span class="fn-key">A</span><span><strong>I&rsquo;m drowning in repetitive admin</strong><span class="d">The same jobs every week, eating hours you&rsquo;d rather spend on clients.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="need" data-value="leads"><span class="fn-key">B</span><span><strong>Leads go cold before we reply</strong><span class="d">Enquiries land while you&rsquo;re busy and someone else gets the work.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="need" data-value="start"><span class="fn-key">C</span><span><strong>I know AI could help but don&rsquo;t know where to start</strong><span class="d">Too many tools, too much noise, no clear first step.</span></span><span class="fn-arrow">&rarr;</span></button>
-        </div>
-      </div>
-
-      <div class="fn-step" data-step="2">
-        <h3 class="fn-q" tabindex="-1">What&rsquo;s your goal?</h3>
-        <p class="fn-sub">If we fixed that, what would it get you?</p>
-        <div class="fn-tiles">
-          <button type="button" class="fn-tile" data-field="goal" data-value="time"><span class="fn-key">A</span><span><strong>Save time</strong><span class="d">Hours back every week for the work that matters.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="goal" data-value="win"><span class="fn-key">B</span><span><strong>Win more work</strong><span class="d">Every enquiry answered fast, none lost.</span></span><span class="fn-arrow">&rarr;</span></button>
-          <button type="button" class="fn-tile" data-field="goal" data-value="cost"><span class="fn-key">C</span><span><strong>Cut costs</strong><span class="d">Do more without adding headcount.</span></span><span class="fn-arrow">&rarr;</span></button>
-        </div>
-      </div>
-
-      <div class="fn-step" data-step="3">
-        <h3 class="fn-q" tabindex="-1">Where can we reach you?</h3>
-        <p class="fn-sub">So James can come back to you with what he&rsquo;d fix first.</p>
-        <form id="fnForm" novalidate>
-          <div class="fn-fields">
-            <div><label for="fnName">Your name</label><input id="fnName" name="name" autocomplete="name" required maxlength="80"></div>
-            <div><label for="fnEmail">Email</label><input id="fnEmail" name="email" type="email" autocomplete="email" required maxlength="160"></div>
-            <div><label for="fnBiz">Business name</label><input id="fnBiz" name="business" autocomplete="organization" required maxlength="120"></div>
-            <div class="fn-hp" aria-hidden="true"><label for="fnWeb">Website</label><input id="fnWeb" name="website" tabindex="-1" autocomplete="off"></div>
-          </div>
-          <button type="submit" class="btn big fn-submit" id="fnSubmit">Send it to James &rarr;</button>
-          <p class="fn-err" id="fnErr" role="alert"></p>
-          <p class="fn-fine">No newsletter. No sales sequence. One personal reply.</p>
-        </form>
-      </div>
-
-      <div class="fn-step fn-done" data-step="4">
-        <div class="fn-tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
-        <h3 class="fn-q" tabindex="-1">Thanks, <span id="fnThanksName">there</span>.</h3>
-        <p>Got it. James will read this himself and get back to you personally, usually within one business day.</p>
-        <div class="fn-recap" id="fnRecap"></div>
-        <button type="button" class="btn ghost" id="fnRestart">Start again</button>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section class="final" id="audit">
   <div class="wrap">
-    <span class="micro rv idx">13 / Start Here</span>
+    <span class="micro rv idx">12 / Start Here</span>
     <h2 class="rv d1">Stop learning AI.<br><span class="accent">Start using it.</span></h2>
     <div class="row rv d2">
-      <a class="btn big" href="https://www.veruslink.au/audit">Find the job to hand over first</a>
+      <a class="btn big" href="/where-it-hurts">Tell us where it hurts</a>
       <a class="btn big ghost" href="https://book.veruslink.au/intro">Book a 15-minute intro call</a>
       <span class="note">You leave knowing the one workflow worth fixing first.</span>
     </div>
   </div>
 </section>
+
+<aside class="giving">
+  <div class="wrap">
+    <p>A fixed share of every VerusLink month goes to <a href="https://food4thought.org.au/" target="_blank" rel="noopener">Food4Thought</a>, the values-based business community James helps grow across NSW and the ACT. A standing commitment, good month or lean one.</p>
+  </div>
+</aside>
 
 <footer>
   <div class="wrap foot">
@@ -1354,6 +1249,7 @@
     <span class="micro">AI Operations Concierge for Australian SMEs</span>
     <div class="links micro">
       <a href="mailto:james@veruslink.au">james@veruslink.au</a>
+      <a href="/where-it-hurts">Tell us where it hurts</a>
       <a href="https://www.veruslink.au/privacy">Privacy</a>
       <a href="https://www.veruslink.au/terms">Terms</a>
       <a href="https://www.linkedin.com/company/veruslink/">LinkedIn</a>
@@ -1375,57 +1271,23 @@
 </script>
 <script>
 (function(){
-  var card=document.getElementById('funnel'); if(!card) return;
-  var steps=card.querySelectorAll('.fn-step'), bars=card.querySelectorAll('.fn-bar i');
-  var top=document.getElementById('fnTop'), back=document.getElementById('fnBack'), count=document.getElementById('fnCount');
-  var form=document.getElementById('fnForm'), err=document.getElementById('fnErr'), submit=document.getElementById('fnSubmit');
-  var state={need:'',goal:''}, labels={}, current=1;
-
-  function go(n,focus){
-    current=n;
-    steps.forEach(function(s){s.classList.toggle('is-active',+s.dataset.step===n);});
-    bars.forEach(function(b,i){b.classList.toggle('on',i<Math.min(n,3));});
-    top.style.visibility=n===4?'hidden':'visible';
-    back.hidden=n===1||n===4;
-    count.textContent='Step '+Math.min(n,3)+' of 3';
-    if(focus!==false){var q=card.querySelector('.fn-step.is-active .fn-q'); if(q) q.focus({preventScroll:true});}
-  }
-
-  card.querySelectorAll('.fn-tile').forEach(function(t){
-    t.addEventListener('click',function(){
-      var f=t.dataset.field;
-      state[f]=t.dataset.value; labels[f]=t.querySelector('strong').textContent;
-      t.parentNode.querySelectorAll('.fn-tile').forEach(function(x){x.classList.toggle('is-picked',x===t);});
-      setTimeout(function(){go(current+1);},220);
+  var sec=document.getElementById('insights'), grid=document.getElementById('insightsGrid');
+  if(!sec||!grid||!window.fetch) return;
+  fetch('/blog/posts.json').then(function(r){return r.ok?r.json():[];}).then(function(posts){
+    if(!Array.isArray(posts)||!posts.length) return;
+    posts=posts.filter(function(p){return p&&p.slug&&p.title&&p.date;})
+      .sort(function(a,b){return a.date===b.date?(a.slug<b.slug?1:-1):(a.date<b.date?1:-1);}).slice(0,3);
+    if(!posts.length) return;
+    posts.forEach(function(p,i){
+      var a=document.createElement('a'); a.className='card insight rv in'+(i?' d'+i:''); a.href='/blog/'+encodeURIComponent(p.slug);
+      var d=document.createElement('div'); d.className='n';
+      d.textContent=new Date(p.date+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'long',year:'numeric'});
+      var t=document.createElement('h3'); t.textContent=p.title;
+      var e=document.createElement('p'); e.textContent=p.excerpt||'';
+      a.appendChild(d); a.appendChild(t); a.appendChild(e); grid.appendChild(a);
     });
-  });
-  back.addEventListener('click',function(){go(current-1);});
-
-  form.addEventListener('submit',function(e){
-    e.preventDefault(); err.textContent='';
-    var d={need:state.need,goal:state.goal,name:form.name.value.trim(),email:form.email.value.trim(),business:form.business.value.trim(),website:form.website.value};
-    if(!d.name||!d.business||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)){err.textContent='Please add your name, a valid email and your business name.';return;}
-    if(!d.need||!d.goal){go(1);return;}
-    submit.disabled=true; submit.textContent='Sending...';
-    fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
-      .then(function(r){if(!r.ok) throw new Error(r.status); return r.json();})
-      .then(function(){
-        document.getElementById('fnThanksName').textContent=d.name.split(/\s+/)[0];
-        var rc=document.getElementById('fnRecap'); rc.textContent='';
-        [['Help with',labels.need],['Goal',labels.goal],['Business',d.business]].forEach(function(p){
-          var row=document.createElement('div'),b=document.createElement('b');b.textContent=p[0];row.appendChild(b);row.appendChild(document.createTextNode(p[1]));rc.appendChild(row);
-        });
-        go(4);
-      })
-      .catch(function(){err.innerHTML='That didn&rsquo;t send. Please try again, or email <a href="mailto:james@veruslink.au">james@veruslink.au</a>.';})
-      .then(function(){submit.disabled=false; submit.innerHTML='Send it to James &rarr;';});
-  });
-
-  document.getElementById('fnRestart').addEventListener('click',function(){
-    state={need:'',goal:''}; labels={}; form.reset(); err.textContent='';
-    card.querySelectorAll('.fn-tile.is-picked').forEach(function(x){x.classList.remove('is-picked');});
-    go(1);
-  });
+    sec.hidden=false;
+  }).catch(function(){});
 })();
 </script>
 </body>

@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tell us where it hurts | VerusLink</title>
+<meta name="description" content="Three taps. James reads every one and tells you the one job worth fixing first. Free.">
+<link rel="canonical" href="https://www.veruslink.au/where-it-hurts">
+<meta property="og:url" content="https://www.veruslink.au/where-it-hurts">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tell us where it hurts | VerusLink">
+<meta property="og:site_name" content="VerusLink">
+<meta property="og:description" content="Three taps. James reads every one and tells you the one job worth fixing first. Free.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tell us where it hurts | VerusLink">
+<meta name="twitter:description" content="Three taps. James reads every one and tells you the one job worth fixing first. Free.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#111827;
+    --paper:#ffffff;
+    --accent:#2D9CDB;
+    --tint:#F0F7FC;
+    --rule:rgba(17,24,39,.16);
+    --r-sm:10px;
+    --r:16px;
+    --r-lg:24px;
+    --font:"Helvetica Neue",Helvetica,"Inter",Arial,sans-serif;
+    interpolate-size:allow-keywords;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;
+    line-height:1.5;
+  }
+  ::selection{background:var(--accent);color:#fff;}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,56px);}
+
+  /* ---------- micro type ---------- */
+  .micro{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  .idx{
+    font-variant-numeric:tabular-nums;
+    color:var(--accent);
+  }
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .bar{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .wordmark{
+    font-weight:700;font-size:16px;letter-spacing:.02em;
+    text-decoration:none;color:var(--ink);
+  }
+  .wordmark span{color:var(--accent);}
+  nav{display:flex;gap:32px;align-items:center;}
+  nav a{
+    text-decoration:none;color:var(--ink);
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    position:relative;
+  }
+  nav a:not(.btn)::after{
+    content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;
+    background:var(--accent);transition:width .25s ease;
+  }
+  nav a:not(.btn):hover::after{width:100%;}
+  .btn{
+    display:inline-block;
+    background:var(--ink);color:#fff!important;
+    padding:12px 22px;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    text-decoration:none;border-radius:var(--r-sm);
+    transition:background .2s ease;
+  }
+  .btn:hover{background:var(--accent);}
+  .btn.big{padding:20px 36px;font-size:13px;}
+  .btn.ghost{background:transparent;color:var(--ink)!important;border:1px solid var(--ink);}
+  .btn.ghost:hover{background:var(--ink);color:#fff!important;}
+  @media(max-width:860px){nav a:not(.btn){display:none;}}
+
+  /* ---------- section scaffolding ---------- */
+  section{border-bottom:1px solid var(--rule);}
+  .sect-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:clamp(40px,6vw,72px) 0 clamp(28px,4vw,48px);
+  }
+  h2{
+    font-size:clamp(32px,5vw,72px);
+    letter-spacing:-.03em;line-height:1.02;font-weight:700;
+    text-wrap:balance;
+  }
+  h2 .accent{color:var(--accent);}
+
+  /* ---------- footer ---------- */
+  footer{padding:40px 0 56px;}
+  .foot{
+    display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;
+  }
+  .foot .micro{color:rgba(17,24,39,.55);}
+  .foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .foot a:hover{border-color:var(--accent);color:var(--accent);}
+  .foot .links{display:flex;gap:20px;flex-wrap:wrap;}
+
+  /* ---------- reveal animation ---------- */
+  /* Resting state is fully visible; the fade-in plays once when an element scrolls into view. */
+  @keyframes rvIn{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+  html.js .rv.in{animation:rvIn .7s cubic-bezier(.22,1,.36,1) both;}
+  html.js .rv.in.d1{animation-delay:.08s;}
+  html.js .rv.in.d2{animation-delay:.16s;}
+  html.js .rv.in.d3{animation-delay:.24s;}
+  @media(prefers-reduced-motion:reduce){
+    html.js .rv.in{animation:none;}
+    .faq-list details::details-content{transition:none;}
+  }
+  /* ---------- enquiry funnel ---------- */
+  #start{padding:clamp(72px,10vw,140px) 0;background:var(--tint);}
+  .fn-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start;}
+  @media(max-width:900px){.fn-grid{grid-template-columns:1fr;}}
+  .fn-intro h2{margin:14px 0 20px;}
+  .fn-intro p{color:rgba(17,24,39,.7);max-width:26em;}
+  .fn-card{background:var(--paper);border:1px solid var(--rule);border-radius:var(--r-lg);padding:clamp(24px,4vw,48px);min-height:440px;position:relative;box-shadow:0 30px 60px -40px rgba(17,24,39,.35);}
+  .fn-top{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:28px;min-height:20px;}
+  .fn-bar{display:flex;gap:6px;flex:1;max-width:180px;}
+  .fn-bar i{flex:1;height:3px;border-radius:3px;background:var(--rule);transition:background .35s ease;}
+  .fn-bar i.on{background:var(--accent);}
+  .fn-count{color:rgba(17,24,39,.55);}
+  .fn-back{background:none;border:0;font:inherit;color:var(--ink);cursor:pointer;padding:4px 0;opacity:.6;}
+  .fn-back:hover{opacity:1;color:var(--accent);}
+  .fn-step{display:none;}
+  .fn-step.is-active{display:block;animation:fnIn .45s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes fnIn{from{opacity:0;transform:translateX(24px);}to{opacity:1;transform:none;}}
+  .fn-q{font-size:clamp(26px,3.2vw,40px);line-height:1.05;letter-spacing:-.025em;font-weight:700;margin-bottom:8px;outline:none;}
+  .fn-sub{color:rgba(17,24,39,.6);font-size:15px;margin-bottom:28px;}
+  .fn-tiles{display:grid;gap:12px;}
+  .fn-tile{border-radius:var(--r);display:grid;grid-template-columns:36px 1fr 20px;gap:16px;align-items:center;width:100%;text-align:left;background:var(--paper);border:1px solid var(--rule);padding:20px 22px;font:inherit;color:var(--ink);cursor:pointer;transition:border-color .2s ease,transform .2s ease,background .2s ease,box-shadow .2s ease;}
+  .fn-tile:hover,.fn-tile:focus-visible{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 14px 28px -18px rgba(45,156,219,.6);outline:none;}
+  .fn-tile.is-picked{background:var(--tint);border-color:var(--accent);}
+  .fn-key{border-radius:var(--r-sm);width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--rule);font-size:12px;font-weight:700;letter-spacing:.08em;transition:all .2s ease;}
+  .fn-tile:hover .fn-key,.fn-tile.is-picked .fn-key{background:var(--accent);border-color:var(--accent);color:#fff;}
+  .fn-tile strong{display:block;font-size:17px;font-weight:600;line-height:1.25;}
+  .fn-tile span.d{display:block;font-size:14px;color:rgba(17,24,39,.6);margin-top:3px;line-height:1.4;}
+  .fn-arrow{opacity:0;transform:translateX(-6px);transition:all .2s ease;color:var(--accent);font-weight:700;}
+  .fn-tile:hover .fn-arrow,.fn-tile:focus-visible .fn-arrow{opacity:1;transform:none;}
+  .fn-fields{display:grid;gap:14px;margin-bottom:24px;}
+  .fn-fields label{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;margin-bottom:6px;}
+  .fn-fields input{width:100%;font:inherit;font-size:17px;padding:14px 16px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:var(--r-sm);transition:border-color .2s ease;}
+  .fn-fields input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(45,156,219,.15);}
+  .fn-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+  .fn-submit{border:0;cursor:pointer;width:100%;font-family:inherit;}
+  .fn-submit[disabled]{opacity:.6;cursor:wait;}
+  .fn-err{color:#b42318;font-size:14px;margin-top:14px;min-height:1em;}
+  .fn-err a{color:inherit;}
+  .fn-fine{font-size:13px;color:rgba(17,24,39,.5);margin-top:14px;}
+  .fn-done{text-align:left;padding-top:12px;}
+  .fn-tick{width:56px;height:56px;border-radius:50%;background:var(--accent);display:grid;place-items:center;margin-bottom:28px;}
+  .fn-tick svg{width:26px;height:26px;stroke:#fff;stroke-width:3;fill:none;stroke-dasharray:30;stroke-dashoffset:30;animation:fnTick .5s .2s ease forwards;}
+  @keyframes fnTick{to{stroke-dashoffset:0;}}
+  .fn-done p{color:rgba(17,24,39,.7);max-width:30em;margin-bottom:32px;}
+  .fn-recap{border-top:1px solid var(--rule);padding-top:20px;margin-bottom:32px;display:grid;gap:8px;font-size:15px;}
+  .fn-recap b{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-right:8px;}
+  @media(max-width:560px){.fn-card{padding:22px 18px;min-height:0;}.fn-tile{grid-template-columns:30px 1fr;gap:12px;padding:16px 14px;}.fn-arrow{display:none;}.fn-key{width:30px;height:30px;}}
+  @media(prefers-reduced-motion:reduce){.fn-step.is-active,.fn-tick svg{animation:none;stroke-dashoffset:0;}.fn-tile:hover{transform:none;}}
+
+  /* ---------- depth: elevation, rhythm, layers ---------- */
+  :root{
+    --navy:#0B1526;
+    --accent-on-dark:#5BB8EA;
+    --e1:0 1px 2px rgba(17,24,39,.05),0 4px 12px rgba(17,24,39,.05);
+    --e2:0 2px 4px rgba(17,24,39,.04),0 18px 40px -12px rgba(17,24,39,.18);
+    --e3:0 4px 8px rgba(17,24,39,.05),0 40px 80px -24px rgba(17,24,39,.35);
+  }
+  .btn{box-shadow:0 8px 20px -10px rgba(17,24,39,.55);}
+  .btn.ghost{box-shadow:none;}
+
+  /* ---------- where it hurts page ---------- */
+  .wih{min-height:calc(100vh - 65px);display:flex;align-items:center;border-bottom:0;}
+  .wih .fn-intro h1{font-size:clamp(40px,6vw,84px);line-height:.98;letter-spacing:-.035em;margin:14px 0 20px;text-wrap:balance;}
+  .wih .fn-intro h1 .accent{color:var(--accent);}
+  .fn-back{min-height:44px;}
+  @media(max-width:760px){.wih{min-height:0;display:block;}#start.wih{padding:36px 0 56px;}.wih .fn-intro p{font-size:16px;}}
+  .fn-tile{min-height:56px;}
+  .wih-home{margin-top:22px;font-size:14px;}
+  .wih-home a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .wih-home a:hover{color:var(--accent);border-color:var(--accent);}
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L524B34JQF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L524B34JQF');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="wordmark" href="/">VERUS<span>LINK</span></a>
+    <nav>
+      <a href="/#systems">Systems</a>
+      <a href="/#results">Results</a>
+      <a href="/#plan">Pricing</a>
+      <a href="/#insights">Insights</a>
+      <a href="/#faqs">FAQs</a>
+      <a class="btn" href="https://www.veruslink.au/audit">Free Health Check</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section id="start" class="wih">
+  <div class="wrap fn-grid">
+    <div class="fn-intro rv">
+      <span class="micro idx">Talk to us</span>
+      <h1>Tell us where it <span class="accent">hurts.</span></h1>
+      <p>Three quick taps. No forms to wade through. James reads every one himself and comes back to you personally with the one job worth fixing first.</p>
+      <p class="wih-home"><a href="/">See how VerusLink works &rarr;</a></p>
+    </div>
+
+    <div class="fn-card rv d1" id="funnel" aria-live="polite">
+      <div class="fn-top" id="fnTop">
+        <button type="button" class="fn-back micro" id="fnBack" hidden>&larr; Back</button>
+        <div class="fn-bar" aria-hidden="true"><i class="on"></i><i></i><i></i></div>
+        <span class="fn-count micro" id="fnCount">Step 1 of 3</span>
+      </div>
+
+      <div class="fn-step is-active" data-step="1">
+        <h3 class="fn-q" tabindex="-1">What do you need help with?</h3>
+        <p class="fn-sub">Pick the one that costs you most.</p>
+        <div class="fn-tiles">
+          <button type="button" class="fn-tile" data-field="need" data-value="admin"><span class="fn-key">A</span><span><strong>I&rsquo;m drowning in repetitive admin</strong><span class="d">The same jobs every week, eating hours you&rsquo;d rather spend on clients.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="need" data-value="leads"><span class="fn-key">B</span><span><strong>Leads go cold before we reply</strong><span class="d">Enquiries land while you&rsquo;re busy and someone else gets the work.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="need" data-value="start"><span class="fn-key">C</span><span><strong>I know AI could help but don&rsquo;t know where to start</strong><span class="d">Too many tools, too much noise, no clear first step.</span></span><span class="fn-arrow">&rarr;</span></button>
+        </div>
+      </div>
+
+      <div class="fn-step" data-step="2">
+        <h3 class="fn-q" tabindex="-1">What&rsquo;s your goal?</h3>
+        <p class="fn-sub">If we fixed that, what would it get you?</p>
+        <div class="fn-tiles">
+          <button type="button" class="fn-tile" data-field="goal" data-value="time"><span class="fn-key">A</span><span><strong>Save time</strong><span class="d">Hours back every week for the work that matters.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="goal" data-value="win"><span class="fn-key">B</span><span><strong>Win more work</strong><span class="d">Every enquiry answered fast, none lost.</span></span><span class="fn-arrow">&rarr;</span></button>
+          <button type="button" class="fn-tile" data-field="goal" data-value="cost"><span class="fn-key">C</span><span><strong>Cut costs</strong><span class="d">Do more without adding headcount.</span></span><span class="fn-arrow">&rarr;</span></button>
+        </div>
+      </div>
+
+      <div class="fn-step" data-step="3">
+        <h3 class="fn-q" tabindex="-1">Where can we reach you?</h3>
+        <p class="fn-sub">So James can come back to you with what he&rsquo;d fix first.</p>
+        <form id="fnForm" novalidate>
+          <div class="fn-fields">
+            <div><label for="fnName">Your name</label><input id="fnName" name="name" autocomplete="name" required maxlength="80"></div>
+            <div><label for="fnEmail">Email</label><input id="fnEmail" name="email" type="email" autocomplete="email" required maxlength="160"></div>
+            <div><label for="fnBiz">Business name</label><input id="fnBiz" name="business" autocomplete="organization" required maxlength="120"></div>
+            <div class="fn-hp" aria-hidden="true"><label for="fnWeb">Website</label><input id="fnWeb" name="website" tabindex="-1" autocomplete="off"></div>
+          </div>
+          <button type="submit" class="btn big fn-submit" id="fnSubmit">Send it to James &rarr;</button>
+          <p class="fn-err" id="fnErr" role="alert"></p>
+          <p class="fn-fine">No newsletter. No sales sequence. One personal reply.</p>
+        </form>
+      </div>
+
+      <div class="fn-step fn-done" data-step="4">
+        <div class="fn-tick"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+        <h3 class="fn-q" tabindex="-1">Thanks, <span id="fnThanksName">there</span>.</h3>
+        <p>Got it. James will read this himself and get back to you personally, usually within one business day.</p>
+        <div class="fn-recap" id="fnRecap"></div>
+        <button type="button" class="btn ghost" id="fnRestart">Start again</button>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="wordmark" href="/">VERUS<span>LINK</span></a>
+    <span class="micro">AI Operations Concierge for Australian SMEs</span>
+    <div class="links micro">
+      <a href="mailto:james@veruslink.au">james@veruslink.au</a>
+      <a href="/where-it-hurts">Tell us where it hurts</a>
+      <a href="https://www.veruslink.au/privacy">Privacy</a>
+      <a href="https://www.veruslink.au/terms">Terms</a>
+      <a href="https://www.linkedin.com/company/veruslink/">LinkedIn</a>
+      <a href="https://www.instagram.com/veruslink/">Instagram</a>
+    </div>
+    <span class="micro">&copy; 2026 VerusLink</span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+</script>
+<script>
+(function(){
+  var card=document.getElementById('funnel'); if(!card) return;
+  var steps=card.querySelectorAll('.fn-step'), bars=card.querySelectorAll('.fn-bar i');
+  var top=document.getElementById('fnTop'), back=document.getElementById('fnBack'), count=document.getElementById('fnCount');
+  var form=document.getElementById('fnForm'), err=document.getElementById('fnErr'), submit=document.getElementById('fnSubmit');
+  var state={need:'',goal:''}, labels={}, current=1;
+
+  function go(n,focus){
+    current=n;
+    steps.forEach(function(s){s.classList.toggle('is-active',+s.dataset.step===n);});
+    bars.forEach(function(b,i){b.classList.toggle('on',i<Math.min(n,3));});
+    top.style.visibility=n===4?'hidden':'visible';
+    back.hidden=n===1||n===4;
+    count.textContent='Step '+Math.min(n,3)+' of 3';
+    if(focus!==false){var q=card.querySelector('.fn-step.is-active .fn-q'); if(q) q.focus({preventScroll:true});}
+  }
+
+  card.querySelectorAll('.fn-tile').forEach(function(t){
+    t.addEventListener('click',function(){
+      var f=t.dataset.field;
+      state[f]=t.dataset.value; labels[f]=t.querySelector('strong').textContent;
+      t.parentNode.querySelectorAll('.fn-tile').forEach(function(x){x.classList.toggle('is-picked',x===t);});
+      setTimeout(function(){go(current+1);},220);
+    });
+  });
+  back.addEventListener('click',function(){go(current-1);});
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault(); err.textContent='';
+    var d={need:state.need,goal:state.goal,name:form.name.value.trim(),email:form.email.value.trim(),business:form.business.value.trim(),website:form.website.value};
+    if(!d.name||!d.business||!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email)){err.textContent='Please add your name, a valid email and your business name.';return;}
+    if(!d.need||!d.goal){go(1);return;}
+    submit.disabled=true; submit.textContent='Sending...';
+    fetch('/api/enquiry',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)})
+      .then(function(r){if(!r.ok) throw new Error(r.status); return r.json();})
+      .then(function(){
+        document.getElementById('fnThanksName').textContent=d.name.split(/\s+/)[0];
+        var rc=document.getElementById('fnRecap'); rc.textContent='';
+        [['Help with',labels.need],['Goal',labels.goal],['Business',d.business]].forEach(function(p){
+          var row=document.createElement('div'),b=document.createElement('b');b.textContent=p[0];row.appendChild(b);row.appendChild(document.createTextNode(p[1]));rc.appendChild(row);
+        });
+        go(4);
+      })
+      .catch(function(){err.innerHTML='That didn&rsquo;t send. Please try again, or email <a href="mailto:james@veruslink.au">james@veruslink.au</a>.';})
+      .then(function(){submit.disabled=false; submit.innerHTML='Send it to James &rarr;';});
+  });
+
+  document.getElementById('fnRestart').addEventListener('click',function(){
+    state={need:'',goal:''}; labels={}; form.reset(); err.textContent='';
+    card.querySelectorAll('.fn-tile.is-picked').forEach(function(x){x.classList.remove('is-picked');});
+    go(1);
+  });
+})();
+</script>
+</body>
+</html>
