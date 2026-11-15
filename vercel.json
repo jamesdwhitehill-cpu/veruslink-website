@@ -33,5 +33,19 @@
       "destination": "/blog",
       "permanent": true
     }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/booking/dates",
+      "destination": "https://book.veruslink.au/api/dates"
+    },
+    {
+      "source": "/api/booking/slots",
+      "destination": "https://book.veruslink.au/api/slots"
+    },
+    {
+      "source": "/api/booking/book",
+      "destination": "https://book.veruslink.au/api/book"
+    }
   ]
 }

@@ -627,6 +627,9 @@
   .giving p{font-size:13px;line-height:1.55;color:rgba(17,24,39,.55);max-width:52em;}
   .giving a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);}
   .giving a:hover{color:var(--accent);border-color:var(--accent);}
+  /* ---------- inline booking ---------- */
+  .book-wrap{margin-top:clamp(48px,7vw,88px);scroll-margin-top:88px;}
+  .book-label{color:var(--accent);margin-bottom:16px;}
 </style>
 <script type="application/ld+json">
 {
@@ -1231,8 +1234,13 @@
     <h2 class="rv d1">Stop learning AI.<br><span class="accent">Start using it.</span></h2>
     <div class="row rv d2">
       <a class="btn big" href="/where-it-hurts">Tell us where it hurts</a>
-      <a class="btn big ghost" href="https://book.veruslink.au/intro">Book a 15-minute intro call</a>
+      <a class="btn big ghost" href="#book">Book a 15-minute intro call</a>
       <span class="note">You leave knowing the one workflow worth fixing first.</span>
+    </div>
+    <div class="book-wrap rv d3" id="book">
+      <p class="micro book-label">Or pick a time now</p>
+      <div data-booking></div>
+      <noscript><p><a href="https://book.veruslink.au/intro">Book a 15-minute intro call</a></p></noscript>
     </div>
   </div>
 </section>
@@ -1290,5 +1298,6 @@
   }).catch(function(){});
 })();
 </script>
+<script src="/assets/booking.js" defer></script>
 </body>
 </html>
