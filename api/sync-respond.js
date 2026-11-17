@@ -13,7 +13,7 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, RESEND_API_KEY.
 
-import { sbGet, sbSend } from './_sync-token.js';
+import { sbGet, sbSend, serverError } from './_sync-token.js';
 import { computeOverlap } from './_sync-overlap.js';
 
 const SITE = 'https://veruslink.au';
@@ -202,6 +202,6 @@ export default async function handler(req, res) {
       total: roster.length,
     });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    return serverError(res, e, 'sync-respond');
   }
 }

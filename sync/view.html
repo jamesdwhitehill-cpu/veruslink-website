@@ -80,16 +80,12 @@
 <footer>Powered by <a href="https://www.veruslink.au">VerusLink</a> · <a href="/sync/unsubscribe.html">Unsubscribe</a></footer>
 <div class="toast-wrap" id="toasts"></div>
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/sync/sync-calendar.js"></script>
 <script>
 // A participant landing here from their invite email should go straight to respond.
 const _t = new URLSearchParams(location.search).get('token');
 if (_t) { location.replace('/sync/respond.html?token=' + encodeURIComponent(_t)); }
 
-const SB_URL='https://tzthoqfzmiifvwjemxmy.supabase.co';
-const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR6dGhvcWZ6bWlpZnZ3amVteG15Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTcxNDMsImV4cCI6MjA4NzY3MzE0M30.EezjbC8FS_ZXGSNtWi2Pg_dDMuSMRw9OhWW9B-B1b6E';
-const sb=supabase.createClient(SB_URL,SB_KEY);
 
 const DOW=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -116,12 +112,12 @@ $('lookup-form')?.addEventListener('submit',(e)=>{e.preventDefault();const v=$('
 
 async function init(){
   if(!codeParam){ $('lookup').classList.remove('hidden'); return; }
-  const {data:c,error}=await sb.from('vl_codes').select('*').eq('code',codeParam).maybeSingle();
-  if(error){ $('lookup').classList.remove('hidden'); showError(error.message); return; }
-  if(!c){
-    try{const r=await fetch(`/api/sync-public?code=${encodeURIComponent(codeParam)}`);const j=await r.json().catch(()=>({}));if(j&&j.exists&&j.is_active===false){$('paused').classList.remove('hidden');return;}}catch(_){}
-    $('lookup').classList.remove('hidden'); showError('That code does not exist or is no longer active.'); return;
-  }
+  let j=null;
+  try{const r=await fetch(`/api/sync-public?code=${encodeURIComponent(codeParam)}`);j=await r.json().catch(()=>null);if(!r.ok)j=null;}catch(_){j=null;}
+  if(!j){ $('lookup').classList.remove('hidden'); showError('Could not load that code. Please try again.'); return; }
+  if(j.exists&&j.is_active===false){ $('paused').classList.remove('hidden'); return; }
+  if(!j.exists){ $('lookup').classList.remove('hidden'); showError('That code does not exist or is no longer active.'); return; }
+  const c=j;
   codeRow=c;
   $('view').classList.remove('hidden');
   $('label-h').textContent=c.label;
@@ -167,8 +163,8 @@ async function subscribe(e){
   const btn=$('sub-btn');btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Subscribing…';
   $('banner').className='banner hidden';
   try{
-    const {error}=await sb.from('vl_subscribers').insert({code_id:codeRow.id,email,name});
-    if(error&&error.code!=='23505')throw error;
+    const r=await fetch('/api/sync-public',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code:codeParam,email,name})});
+    if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'Please try again.');}
     $('subscribe-card').classList.add('hidden');
     $('sub-success').classList.remove('hidden');
     $('sub-success-msg').textContent=`You'll get an email when ${codeRow.label} is updated.`;

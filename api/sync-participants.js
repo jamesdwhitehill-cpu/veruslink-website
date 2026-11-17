@@ -23,7 +23,7 @@
 
 import {
   sessionFromRequest, sbGet, sbSend, sbUrl, sbHeaders,
-  makeParticipantToken, ensureOwnerParticipant,
+  makeParticipantToken, ensureOwnerParticipant, serverError,
 } from './_sync-token.js';
 
 const SITE = 'https://veruslink.au';
@@ -199,6 +199,6 @@ export default async function handler(req, res) {
 
     return res.status(200).json({ participants: results });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    return serverError(res, e, 'sync-participants');
   }
 }

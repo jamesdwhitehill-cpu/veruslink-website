@@ -2,8 +2,13 @@
 // GET  /api/sync-notify?code_id=UUID   -> { count }            (active subscriber count)
 // POST /api/sync-notify { code_id }     -> { notified }         (emails subscribers, rate-limited 1/hour)
 //
+// Both require the owner session cookie (vl_sync_owner) and that the signed-in
+// owner owns code_id: 401 without a session, 403 for someone else's code.
+//
 // Zero-dependency: uses global fetch against the Supabase REST API (service key,
 // bypasses RLS) and the Resend API. Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, RESEND_API_KEY.
+
+import { sessionFromRequest, sbGet, sbHeaders, sbUrl, serverError } from './_sync-token.js';
 
 const SITE = 'https://veruslink.au';
 const FROM = 'VerusLink Sync <vero@veruslink.au>';
@@ -92,18 +97,15 @@ async function escalate(code, failures) {
   }
 }
 
-function sbHeaders() {
-  const key = process.env.SUPABASE_SERVICE_KEY;
-  return { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
-}
-function sbUrl(path) {
-  return `${process.env.SUPABASE_URL}/rest/v1/${path}`;
-}
-
-async function sbGet(path) {
-  const r = await fetch(sbUrl(path), { headers: sbHeaders() });
-  if (!r.ok) throw new Error(`Supabase GET ${r.status}: ${await r.text()}`);
-  return r.json();
+// Resolves the session and confirms it owns codeId. Sends the 401/403 itself and
+// returns null when the caller is not allowed.
+async function requireOwner(req, res, codeId) {
+  const sess = sessionFromRequest(req);
+  if (!sess) { res.status(401).json({ error: 'not authenticated' }); return null; }
+  if (!/^[0-9a-fA-F-]{36}$/.test(codeId)) { res.status(400).json({ error: 'invalid code_id' }); return null; }
+  const codes = await sbGet(`vl_codes?id=eq.${encodeURIComponent(codeId)}&select=owner_id`);
+  if (!codes.length || codes[0].owner_id !== sess.owner_id) { res.status(403).json({ error: 'not your code' }); return null; }
+  return sess;
 }
 
 function esc(s) {
@@ -137,21 +139,25 @@ export default async function handler(req, res) {
   // ---- GET: active subscriber count ----
   if (req.method === 'GET') {
     const codeId = (req.query.code_id || '').toString();
+    if (!sessionFromRequest(req)) return res.status(401).json({ error: 'not authenticated' });
     if (!codeId) return res.status(400).json({ error: 'code_id required' });
     try {
+      if (!(await requireOwner(req, res, codeId))) return;
       const rows = await sbGet(`vl_subscribers?code_id=eq.${encodeURIComponent(codeId)}&unsubscribed_at=is.null&select=id`);
       return res.status(200).json({ count: rows.length });
     } catch (e) {
-      return res.status(500).json({ error: e.message });
+      return serverError(res, e, 'sync-notify');
     }
   }
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'GET or POST only' });
 
   const codeId = (req.body && req.body.code_id || '').toString();
+  if (!sessionFromRequest(req)) return res.status(401).json({ error: 'not authenticated' });
   if (!codeId) return res.status(400).json({ error: 'code_id required' });
 
   try {
+    if (!(await requireOwner(req, res, codeId))) return;
     // ---- Rate limit: skip if a notification went out in the last hour ----
     const recent = await sbGet(
       `vl_change_log?code_id=eq.${encodeURIComponent(codeId)}&notified=is.true&order=changed_at.desc&limit=1&select=changed_at`
@@ -213,6 +219,6 @@ export default async function handler(req, res) {
     // `notified` is confirmed deliveries only. Never report an unsent email as sent.
     return res.status(200).json({ notified: sent, ids, failed: failures.length, failures });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    return serverError(res, e, 'sync-notify');
   }
 }

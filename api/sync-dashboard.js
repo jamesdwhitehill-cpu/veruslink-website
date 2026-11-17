@@ -21,7 +21,7 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, SYNC_TOKEN_SECRET.
 
-import { sessionFromRequest, sbGet, sbSend, createCodeForOwner, clearCookie, makeToken, sessionCookie } from './_sync-token.js';
+import { sessionFromRequest, sbGet, sbSend, createCodeForOwner, clearCookie, makeToken, sessionCookie, serverError } from './_sync-token.js';
 
 function isTime(s) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/.test(s); }
 
@@ -149,6 +149,6 @@ export default async function handler(req, res) {
 
     return res.status(405).json({ error: 'GET or POST only' });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    return serverError(res, e, 'sync-dashboard');
   }
 }

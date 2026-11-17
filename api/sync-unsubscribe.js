@@ -30,11 +30,15 @@ export default async function handler(req, res) {
         body: JSON.stringify({ unsubscribed_at: new Date().toISOString() }),
       }
     );
-    if (!r.ok) return res.status(500).json({ error: `Supabase ${r.status}` });
+    if (!r.ok) {
+      console.error(`[sync-unsubscribe] Supabase ${r.status}: ${await r.text()}`);
+      return res.status(500).json({ error: 'Something went wrong. Please try again.' });
+    }
     const rows = await r.json();
     // rows empty = already unsubscribed or unknown id; treat as success (idempotent)
     return res.status(200).json({ ok: true, updated: rows.length });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    console.error('[sync-unsubscribe]', e && e.stack ? e.stack : e);
+    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 }

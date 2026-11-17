@@ -100,7 +100,10 @@ export function sbUrl(path) {
 }
 export async function sbGet(path) {
   const r = await fetch(sbUrl(path), { headers: sbHeaders() });
-  if (!r.ok) throw new Error(`Supabase GET ${r.status}: ${await r.text()}`);
+  if (!r.ok) {
+    console.error(`[sync] Supabase GET ${r.status}: ${await r.text()}`);
+    throw new Error(`Supabase GET ${r.status}`);
+  }
   return r.json();
 }
 export async function sbSend(method, path, body, extraHeaders = {}) {
@@ -109,8 +112,17 @@ export async function sbSend(method, path, body, extraHeaders = {}) {
     headers: { ...sbHeaders(), ...extraHeaders },
     body: body == null ? undefined : JSON.stringify(body),
   });
-  if (!r.ok) throw new Error(`Supabase ${method} ${r.status}: ${await r.text()}`);
+  if (!r.ok) {
+    console.error(`[sync] Supabase ${method} ${r.status}: ${await r.text()}`);
+    throw new Error(`Supabase ${method} ${r.status}`);
+  }
   return r;
+}
+
+// Log the real failure server-side; give the browser a generic message only.
+export function serverError(res, e, tag = 'sync') {
+  console.error(`[${tag}]`, e && e.stack ? e.stack : e);
+  return res.status(500).json({ error: 'Something went wrong. Please try again.' });
 }
 
 // Unambiguous code alphabet (no 0/O/1/I) — matches the original client generator.
@@ -162,7 +174,8 @@ export async function ensureOwnerParticipant(codeId, ownerId) {
     );
     if (again.length) return again[0];
   }
-  throw new Error(`create owner participant failed: ${r.status} ${txt}`);
+  console.error(`[sync] create owner participant failed: ${r.status} ${txt}`);
+  throw new Error(`create owner participant failed: ${r.status}`);
 }
 
 // Insert a new vl_codes row for an owner, retrying on code collisions. Returns
@@ -189,7 +202,8 @@ export async function createCodeForOwner(ownerId, label, opts = {}) {
     }
     const txt = await r.text();
     if (r.status === 409 || txt.includes('23505')) continue; // unique violation -> new code
-    throw new Error(`create code failed: ${r.status} ${txt}`);
+    console.error(`[sync] create code failed: ${r.status} ${txt}`);
+    throw new Error(`create code failed: ${r.status}`);
   }
   throw new Error('could not generate a unique code');
 }

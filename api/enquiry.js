@@ -5,7 +5,11 @@
 // refuses the message, the enquiry is emailed to James instead, so a lead is never
 // dropped silently. Success means at least one channel confirmed delivery.
 //
+// Rate limited per IP (api/_rate-limit.js) on top of the honeypot.
+//
 // Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (primary), RESEND_API_KEY (fallback).
+
+import { rateLimit, clientIp, tooMany } from './_rate-limit.js';
 
 const FROM = 'VerusLink Website <vero@veruslink.au>';
 const ALERT_TO = 'james@veruslink.au';
@@ -73,7 +77,7 @@ async function sendEmail(subject, html) {
   }
 }
 
-module.exports = async function handler(req, res) {
+export default async function handler(req, res) {
   if (req.method !== 'POST') {
     res.setHeader('Allow', 'POST');
     return res.status(405).json({ ok: false, error: 'method not allowed' });
@@ -99,6 +103,8 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ ok: false, error: 'missing or invalid fields' });
   }
 
+  if (!(await rateLimit('enquiry-ip', clientIp(req), { limit: 5, windowSec: 3600 }))) return tooMany(res);
+
   const when = new Date().toLocaleString('en-AU', { timeZone: 'Australia/Sydney', dateStyle: 'medium', timeStyle: 'short' });
   const lines = [
     '<b>New website enquiry</b>',
@@ -121,4 +127,4 @@ module.exports = async function handler(req, res) {
 
   console.error('enquiry: NOT DELIVERED', mail.reason, JSON.stringify({ name, email, business, need, goal }));
   return res.status(502).json({ ok: false, error: 'not delivered' });
-};
+}

@@ -21,6 +21,19 @@
 
   <div id="banner" class="banner hidden"></div>
 
+  <!-- SET PASSWORD (reached from the emailed link) -->
+  <div class="card hidden" id="setpw-card">
+    <h2 style="margin-bottom:18px">Choose a password</h2>
+    <form id="setpw-form" autocomplete="on">
+      <div class="field">
+        <label for="sp-password">New password</label>
+        <input type="password" id="sp-password" placeholder="••••••••" autocomplete="new-password" required minlength="8">
+        <div class="hint">At least 8 characters.</div>
+      </div>
+      <button type="submit" class="btn btn-primary btn-full" id="sp-btn">Save password →</button>
+    </form>
+  </div>
+
   <!-- SIGN IN -->
   <div class="card" id="signin-card">
     <h2 style="margin-bottom:18px">Sign in</h2>
@@ -89,11 +102,18 @@ document.getElementById('to-signin').addEventListener('click', (e)=>{
   document.getElementById('si-email').focus();
 });
 
-// If already signed in, skip straight to the dashboard.
+// If already signed in, skip straight to the dashboard, unless the owner arrived
+// from a set-password link and still has no password.
 (async function checkSession(){
   try{
     const r = await fetch('/api/sync-auth', { method:'GET', credentials:'same-origin' });
     const j = await r.json().catch(()=>({}));
+    if (j && j.authenticated && j.needs_password) {
+      signinCard.classList.add('hidden'); signupCard.classList.add('hidden');
+      document.getElementById('setpw-card').classList.remove('hidden');
+      document.getElementById('sp-password').focus();
+      return;
+    }
     if (j && j.authenticated) window.location.href = '/sync/dashboard.html';
   }catch(_){ /* stay on the sign-in page */ }
 })();
@@ -126,6 +146,14 @@ document.getElementById('signin-form').addEventListener('submit', (e)=>{
   const password = document.getElementById('si-password').value;
   if (!email || !password) return;
   auth({ email, password }, document.getElementById('si-btn'), 'Sign in →');
+});
+
+// ---- set password ----
+document.getElementById('setpw-form').addEventListener('submit', (e)=>{
+  e.preventDefault();
+  const password = document.getElementById('sp-password').value;
+  if (password.length < 8) { showError('Password must be at least 8 characters.'); return; }
+  auth({ action:'set-password', password }, document.getElementById('sp-btn'), 'Save password →');
 });
 
 // ---- sign up ----

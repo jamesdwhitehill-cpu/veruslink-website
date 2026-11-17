@@ -221,7 +221,7 @@ async function save(){
     if(sr.status===401)throw new Error('Your session expired. Request a new sign-in link.');
     if(!sr.ok){const j=await sr.json().catch(()=>({}));throw new Error(j.error||('save failed ('+sr.status+')'));}
     let extra='';
-    try{const r=await fetch('/api/sync-notify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({code_id:codeRow.id})});const j=await r.json();if(j.reason==='rate_limited')extra=' (subscribers notified recently)';else if(typeof j.notified==='number'&&j.notified>0)extra=` · ${j.notified} notified`;}catch{}
+    try{const r=await fetch('/api/sync-notify',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',body:JSON.stringify({code_id:codeRow.id})});const j=await r.json();if(j.reason==='rate_limited')extra=' (subscribers notified recently)';else if(typeof j.notified==='number'&&j.notified>0)extra=` · ${j.notified} notified`;}catch{}
     toast('Availability saved'+extra,true);
     await loadOverlap();
   }catch(err){toast('Could not save: '+(err.message||err),false);}
@@ -229,7 +229,7 @@ async function save(){
 }
 
 async function loadSubscriberCount(){
-  try{const r=await fetch(`/api/sync-notify?code_id=${codeRow.id}`);const j=await r.json();const n=j.count||0;$('count-badge').innerHTML=`<b>${n}</b> ${n===1?'person is':'people are'} subscribed to updates.`;}catch{$('count-badge').textContent='';}
+  try{const r=await fetch(`/api/sync-notify?code_id=${codeRow.id}`,{credentials:'same-origin'});const j=await r.json();const n=j.count||0;$('count-badge').innerHTML=`<b>${n}</b> ${n===1?'person is':'people are'} subscribed to updates.`;}catch{$('count-badge').textContent='';}
 }
 
 // ---- Participants ----

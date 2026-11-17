@@ -1,3 +1,7 @@
 .vercel
 *.bak
 *.bak
+
+# Local env files (never commit secrets)
+.env*
+!.env.example

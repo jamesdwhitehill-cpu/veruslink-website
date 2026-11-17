@@ -13,7 +13,7 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, SYNC_TOKEN_SECRET.
 
-import { sessionFromRequest, sbHeaders, sbUrl, sbGet, ensureOwnerParticipant } from './_sync-token.js';
+import { sessionFromRequest, sbHeaders, sbUrl, sbGet, ensureOwnerParticipant, serverError } from './_sync-token.js';
 
 function isTime(s) { return typeof s === 'string' && /^([01]\d|2[0-3]):[0-5]\d(:[0-5]\d)?$/.test(s); }
 function isDate(s) { return typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s); }
@@ -24,7 +24,10 @@ async function sbSend(method, path, body) {
     headers: { ...sbHeaders(), Prefer: 'return=minimal' },
     body: body == null ? undefined : JSON.stringify(body),
   });
-  if (!r.ok) throw new Error(`Supabase ${method} ${r.status}: ${await r.text()}`);
+  if (!r.ok) {
+    console.error(`[sync-save] Supabase ${method} ${r.status}: ${await r.text()}`);
+    throw new Error(`Supabase ${method} ${r.status}`);
+  }
   return r;
 }
 
@@ -131,6 +134,6 @@ export default async function handler(req, res) {
 
     return res.status(400).json({ error: 'unknown action' });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    return serverError(res, e, 'sync-save');
   }
 }

@@ -34,7 +34,8 @@ export default async function handler(req, res) {
     const overlap = await computeOverlap(codeId, range);
     return res.status(200).json(overlap);
   } catch (e) {
-    const status = /code not found/.test(e.message) ? 404 : 500;
-    return res.status(status).json({ error: e.message });
+    if (/code not found/.test(e && e.message)) return res.status(404).json({ error: 'code not found' });
+    console.error('[sync-overlap]', e && e.stack ? e.stack : e);
+    return res.status(500).json({ error: 'Something went wrong. Please try again.' });
   }
 }

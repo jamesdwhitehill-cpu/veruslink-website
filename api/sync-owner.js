@@ -19,7 +19,8 @@
 //
 // Env: SUPABASE_URL, SUPABASE_SERVICE_KEY, RESEND_API_KEY, SYNC_TOKEN_SECRET.
 
-import { makeToken, verifyToken, sessionFromRequest, sessionCookie, sbGet, sbSend, createCodeForOwner, ensureOwnerParticipant } from './_sync-token.js';
+import { makeToken, verifyToken, sessionFromRequest, sessionCookie, sbGet, sbSend, createCodeForOwner, ensureOwnerParticipant, serverError } from './_sync-token.js';
+import { rateLimit, clientIp, tooMany } from './_rate-limit.js';
 
 const SITE = 'https://veruslink.au';
 const FROM = 'VerusLink Sync <vero@veruslink.au>';
@@ -105,6 +106,14 @@ export default async function handler(req, res) {
         res.setHeader('Content-Type', 'text/html');
         return res.status(400).send('<p style="font-family:sans-serif">This link is invalid or has expired. Request a new one from the dashboard page.</p>');
       }
+      // Set-password links (api/sync-auth.js) carry no code: owner-scoped session,
+      // then the sign-in page asks the owner to choose a password.
+      if (payload.dest === 'set-password') {
+        const session = makeToken({ owner_id: payload.owner_id, kind: 'session' });
+        res.setHeader('Set-Cookie', sessionCookie(session));
+        res.setHeader('Location', '/sync/index.html?set_password=1');
+        return res.status(302).end();
+      }
       // Resolve the code string for a clean redirect (no email in URL).
       let codeStr = '';
       try {
@@ -157,7 +166,7 @@ export default async function handler(req, res) {
         }
         return res.status(200).json({ code: c, owner_participant_id, blocks });
       } catch (e) {
-        return res.status(500).json({ error: e.message });
+        return serverError(res, e, 'sync-owner');
       }
     }
 
@@ -170,6 +179,9 @@ export default async function handler(req, res) {
   const action = (req.body && req.body.action || '').toString();
 
   try {
+    // Every public POST here either emails someone or creates rows: cap per IP.
+    if (!(await rateLimit('owner-ip', clientIp(req), { limit: 10, windowSec: 900 }))) return tooMany(res);
+
     // (1) Code-scoped magic link (manage.html gate) — emails the owner on file.
     if (action === 'request-link') {
       const code = (req.body && req.body.code || '').toString().trim().toUpperCase();
@@ -239,6 +251,6 @@ export default async function handler(req, res) {
 
     return res.status(400).json({ error: 'unknown action' });
   } catch (e) {
-    return res.status(500).json({ error: e.message });
+    return serverError(res, e, 'sync-owner');
   }
 }
