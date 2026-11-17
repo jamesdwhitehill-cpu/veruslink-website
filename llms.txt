@@ -12,7 +12,8 @@
 
 - [Home](https://www.veruslink.au/): the offer, pricing, FAQ.
 - [AI Health Check](https://www.veruslink.au/audit): free 5-minute assessment, personally reviewed.
-- [Blog](https://www.veruslink.au/blog/): plain-English essays on AI in small business.
+- [AI for law firms in Sydney](https://www.veruslink.au/ai-for-law-firms-sydney): enquiry answering, intake, follow-ups and matter admin for small and mid-size Sydney firms, human-checked, with confidentiality built in.
+- [Blog](https://www.veruslink.au/blog): plain-English essays on AI in small business.
 - [The $3,000 a month you don't know you're losing](https://www.veruslink.au/blog/the-3000-a-month-youre-losing)
 - [You bought the tools. Nothing stuck. Here's why.](https://www.veruslink.au/blog/you-bought-the-tools-nothing-stuck)
 - [What ships in month one (real examples)](https://www.veruslink.au/blog/what-ships-in-month-one)
