@@ -7,13 +7,19 @@
     <priority>1.0</priority>
   </url>
   <url>
+    <loc>https://www.veruslink.au/ai-for-law-firms-sydney</loc>
+    <lastmod>2026-11-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.veruslink.au/where-it-hurts</loc>
     <lastmod>2026-11-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.veruslink.au/blog/</loc>
+    <loc>https://www.veruslink.au/blog</loc>
     <lastmod>2026-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -47,12 +53,6 @@
     <lastmod>2026-10-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.veruslink.au/apply</loc>
-    <lastmod>2026-10-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.veruslink.au/privacy</loc>
@@ -92,7 +92,7 @@
   </url>
   <url>
     <loc>https://www.veruslink.au/blog/privilege-is-not-security</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-17</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
