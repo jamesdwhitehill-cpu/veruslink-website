@@ -5,6 +5,9 @@
 // refuses the message, the enquiry is emailed to James instead, so a lead is never
 // dropped silently. Success means at least one channel confirmed delivery.
 //
+// Each enquiry is also saved to the lead store. A later job copies it into the CRM;
+// the CRM is never on this request path, and a storage fault cannot fail the submit.
+//
 // Rate limited per IP (api/_rate-limit.js) on top of the honeypot.
 //
 // Env: TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID (primary), RESEND_API_KEY (fallback).
@@ -13,6 +16,7 @@ import { rateLimit, clientIp, tooMany } from './_rate-limit.js';
 
 const FROM = 'VerusLink Website <vero@veruslink.au>';
 const ALERT_TO = 'james@veruslink.au';
+const LEAD_STORE_URL = 'https://ssgjsktotbmpyylgegur.supabase.co/functions/v1/site-lead';
 
 const NEEDS = {
   admin: "Drowning in repetitive admin",
@@ -58,6 +62,22 @@ async function sendTelegram(html) {
     return { ok: false, reason: `telegram ${r.status} ${JSON.stringify(body).slice(0, 200)}` };
   } catch (e) {
     return { ok: false, reason: `telegram network error ${e.message}` };
+  }
+}
+
+// Save the lead for the CRM sync. Never throws.
+async function storeLead(lead) {
+  try {
+    const r = await fetch(LEAD_STORE_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site: 'veruslink', path: 'enquiry', ...lead }),
+      signal: AbortSignal.timeout(6000),
+    });
+    if (r.ok) return { ok: true };
+    return { ok: false, reason: `store ${r.status}` };
+  } catch (e) {
+    return { ok: false, reason: `store network error ${e.message}` };
   }
 }
 
@@ -118,12 +138,15 @@ export default async function handler(req, res) {
     `<i>${esc(when)} Sydney, veruslink.au</i>`,
   ];
 
+  const stored = await storeLead({ name, email, business, answers: { 'Needs help with': need, Goal: goal }, page: '/where-it-hurts' });
+  if (!stored.ok) console.error('enquiry: lead not stored:', stored.reason);
+
   const tg = await sendTelegram(lines.join('\n'));
   if (tg.ok) return res.status(200).json({ ok: true });
 
   console.error('enquiry: telegram failed, falling back to email:', tg.reason);
   const mail = await sendEmail(`Website enquiry: ${name}, ${business}`, lines.join('<br>'));
-  if (mail.ok) return res.status(200).json({ ok: true });
+  if (mail.ok || stored.ok) return res.status(200).json({ ok: true });
 
   console.error('enquiry: NOT DELIVERED', mail.reason, JSON.stringify({ name, email, business, need, goal }));
   return res.status(502).json({ ok: false, error: 'not delivered' });
