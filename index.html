@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>VerusLink | AI operations for law firms and associations</title>
-<meta name="description" content="We take one job off your desk and run it, with a person checking the work. For law firms and associations. Tell us where it hurts in three taps.">
+<meta name="description" content="We take one job off your desk and run it, with a person checking the work. For law firms, associations and recruitment firms. Tell us where it hurts in three taps.">
 <link rel="canonical" href="https://www.veruslink.au/">
 <meta property="og:url" content="https://www.veruslink.au/">
 <meta property="og:image" content="https://www.veruslink.au/assets/james-headshot.png">
 <meta property="og:type" content="website">
 <meta property="og:title" content="VerusLink | AI operations for law firms and associations">
 <meta property="og:site_name" content="VerusLink">
-<meta property="og:description" content="We take one job off your desk and run it, with a person checking the work. For law firms and associations. Tell us where it hurts in three taps.">
+<meta property="og:description" content="We take one job off your desk and run it, with a person checking the work. For law firms, associations and recruitment firms. Tell us where it hurts in three taps.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="apple-touch-icon" href="/favicon.svg">
 <script>document.documentElement.classList.add('js');</script>
@@ -157,6 +157,7 @@
     display:grid;gap:16px;
     margin-bottom:clamp(48px,7vw,96px);
   }
+  .cardgrid.c3{grid-template-columns:repeat(3,1fr);}
   .cardgrid.c2{grid-template-columns:repeat(2,1fr);}
   .card{
     border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);
@@ -174,7 +175,7 @@
   .testimonials[hidden]{display:none;}
   .testimonial p{font-size:16px;line-height:1.6;}
   .testimonial .who{margin-top:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(17,24,39,.55);font-weight:500;}
-  @media(max-width:760px){.cardgrid.c2{grid-template-columns:1fr;}}
+  @media(max-width:760px){.cardgrid.c3,.cardgrid.c2{grid-template-columns:1fr;}}
 
   /* ---------- systems: five named systems, each shown working ----------
      CSS only. Every keyframe moves transform and opacity, nothing else.
@@ -574,7 +575,7 @@
       "legalName": "NB Performance Pty Ltd",
       "alternateName": "VerusLink AI Operations Concierge",
       "url": "https://www.veruslink.au/",
-      "description": "VerusLink, Sydney: AI operations installed and run for law firms and associations.",
+      "description": "VerusLink, Sydney: AI operations installed and run for law firms, associations and recruitment firms.",
       "email": "james@veruslink.au",
       "logo": "https://www.veruslink.au/favicon.svg",
       "founder": {
@@ -807,9 +808,10 @@
       <h2 class="rv">Who we work with.<br><span class="accent">One job, taken off your desk.</span></h2>
       <span class="micro rv idx">01 / Who We Work With</span>
     </div>
-    <div class="cardgrid c2">
+    <div class="cardgrid c3">
       <div class="card vert rv"><div class="n">Law firms</div><h3>For owner-led firms losing new enquiries while they&rsquo;re in court or with clients.</h3><div class="job"><span class="micro">The job we take off your desk</span><p>New-matter enquiries answered and qualified within minutes, with the details your conflict check needs collected before a lawyer picks it up.</p><p style="margin-top:10px"><a href="/ai-for-law-firms-sydney">AI for law firms in Sydney &rarr;</a></p></div></div>
       <div class="card vert rv d1"><div class="n">Associations</div><h3>For member bodies stretched thin chasing renewals and member questions.</h3><div class="job"><span class="micro">The job we take off your desk</span><p>Member renewals chased and member enquiries answered, every reply approved before it goes out.</p></div></div>
+      <div class="card vert rv d2"><div class="n">Recruitment</div><h3>For agencies buried in inbound candidate and client enquiries.</h3><div class="job"><span class="micro">The job we take off your desk</span><p>Inbound candidate and client enquiries qualified and routed to the right consultant the same day.</p></div></div>
     </div>
     <p class="fit-line rv"><span class="micro">A good fit</span><span>Owner-operated, $500K to $5M revenue. You&rsquo;ve tried AI and it didn&rsquo;t stick. You can decide without a committee.</span></p>
   </div>
