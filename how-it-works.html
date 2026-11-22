@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How it works | VerusLink</title>
+<meta name="description" content="The named systems we install, the four-step plan and pricing, how we compare, who it fits and the questions people ask. VerusLink runs one job off your desk, with a person checking the work.">
+<link rel="canonical" href="https://www.veruslink.au/how-it-works">
+<meta property="og:url" content="https://www.veruslink.au/how-it-works">
+<meta property="og:image" content="https://www.veruslink.au/assets/james-headshot.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="How it works | VerusLink">
+<meta property="og:site_name" content="VerusLink">
+<meta property="og:description" content="The named systems we install, the four-step plan and pricing, how we compare, who it fits and the questions people ask. VerusLink runs one job off your desk, with a person checking the work.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How it works | VerusLink">
+<meta name="twitter:description" content="The named systems we install, the four-step plan and pricing, how we compare, who it fits and the questions people ask. VerusLink runs one job off your desk, with a person checking the work.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="apple-touch-icon" href="/favicon.svg">
+<script>document.documentElement.classList.add('js');</script>
+<style>
+  :root{
+    --ink:#111827;
+    --paper:#ffffff;
+    --accent:#2D9CDB;
+    --tint:#F0F7FC;
+    --rule:rgba(17,24,39,.16);
+    --r-sm:10px;
+    --r:16px;
+    --r-lg:24px;
+    --font:"Helvetica Neue",Helvetica,"Inter",Arial,sans-serif;
+    interpolate-size:allow-keywords;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--font);
+    background:var(--paper);
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    font-size:17px;
+    line-height:1.5;
+  }
+  ::selection{background:var(--accent);color:#fff;}
+  .wrap{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,56px);}
+
+  /* ---------- micro type ---------- */
+  .micro{
+    font-size:11px;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-weight:500;
+  }
+  .idx{
+    font-variant-numeric:tabular-nums;
+    color:var(--accent);
+  }
+
+  /* ---------- top bar ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(255,255,255,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--rule);
+  }
+  .bar{
+    display:flex;align-items:center;justify-content:space-between;
+    height:64px;
+  }
+  .wordmark{
+    font-weight:700;font-size:16px;letter-spacing:.02em;
+    text-decoration:none;color:var(--ink);
+  }
+  .wordmark span{color:var(--accent);}
+  nav{display:flex;gap:32px;align-items:center;}
+  nav a{
+    text-decoration:none;color:var(--ink);
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;
+    position:relative;
+  }
+  nav a:not(.btn)::after{
+    content:"";position:absolute;left:0;bottom:-4px;height:1px;width:0;
+    background:var(--accent);transition:width .25s ease;
+  }
+  nav a:not(.btn):hover::after{width:100%;}
+  .btn{
+    display:inline-block;
+    background:var(--ink);color:#fff!important;
+    padding:12px 22px;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    text-decoration:none;border-radius:var(--r-sm);
+    transition:background .2s ease;
+  }
+  .btn:hover{background:var(--accent);}
+  .btn.big{padding:20px 36px;font-size:13px;}
+  .btn.ghost{background:transparent;color:var(--ink)!important;border:1px solid var(--ink);}
+  .btn.ghost:hover{background:var(--ink);color:#fff!important;}
+  @media(max-width:860px){nav a:not(.btn){display:none;}}
+
+  /* ---------- hero ---------- */
+  .hero{border-bottom:1px solid var(--rule);}
+  .hero-grid{
+    display:grid;grid-template-columns:1fr;gap:0;
+    padding-top:clamp(56px,9vh,120px);
+  }
+  .kicker{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:28px;border-bottom:1px solid var(--rule);margin-bottom:clamp(28px,4vw,48px);
+  }
+  h1{
+    font-size:clamp(34px,6.6vw,100px);
+    line-height:.94;
+    letter-spacing:-.035em;
+    font-weight:700;
+    text-wrap:balance;
+  }
+  h1 .accent{color:var(--accent);}
+  .hero-sub{
+    display:grid;grid-template-columns:repeat(12,1fr);gap:24px;
+    padding:clamp(36px,5vw,64px) 0 clamp(48px,6vw,80px);
+    align-items:end;
+  }
+  .hero-sub p{
+    grid-column:1/8;
+    font-size:clamp(18px,2vw,24px);line-height:1.4;
+    max-width:34em;font-weight:400;
+  }
+  .hero-sub p strong{font-weight:700;}
+  .hero-cta{grid-column:9/13;justify-self:end;display:flex;flex-direction:column;gap:12px;align-items:flex-end;}
+  @media(max-width:900px){
+    .hero-sub{grid-template-columns:1fr;}
+    .hero-sub p,.hero-cta{grid-column:1/-1;justify-self:start;align-items:flex-start;}
+  }
+
+  /* ---------- section scaffolding ---------- */
+  section{border-bottom:1px solid var(--rule);}
+  .sect-head{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:clamp(40px,6vw,72px) 0 clamp(28px,4vw,48px);
+  }
+  h2{
+    font-size:clamp(32px,5vw,72px);
+    letter-spacing:-.03em;line-height:1.02;font-weight:700;
+    text-wrap:balance;
+  }
+  h2 .accent{color:var(--accent);}
+
+  /* ---------- statement ---------- */
+  .statement{padding:clamp(64px,10vw,140px) 0;}
+  .statement p{
+    font-size:clamp(30px,4.6vw,64px);
+    line-height:1.08;letter-spacing:-.03em;font-weight:700;
+    max-width:18em;
+  }
+  .statement p .accent{color:var(--accent);}
+  .statement .micro{margin-bottom:24px;display:block;}
+
+  /* ---------- card grids (why now / done with you / data) ---------- */
+  .cardgrid{
+    display:grid;gap:16px;
+    margin-bottom:clamp(48px,7vw,96px);
+  }
+  .cardgrid.c4{grid-template-columns:repeat(4,1fr);}
+  .cardgrid.c3{grid-template-columns:repeat(3,1fr);}
+  .cardgrid.c2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);
+    padding:clamp(24px,3vw,40px);
+    transition:background .25s ease;
+  }
+  .card:hover{background:var(--tint);}
+  .card .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:18px;font-variant-numeric:tabular-nums;}
+  .card h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:10px;}
+  .card p{font-size:14px;color:rgba(17,24,39,.72);line-height:1.5;}
+  .card.vert .job{margin-top:22px;padding-top:18px;border-top:1px solid var(--rule);}
+  .card.vert .job .micro{display:block;margin-bottom:8px;color:var(--accent);}
+  .card.vert .job p{color:var(--ink);}
+  .incl{border:1px solid var(--rule);border-radius:var(--r);padding:clamp(24px,3vw,40px);margin-top:clamp(24px,3vw,40px);}
+  .incl h3{font-size:clamp(18px,1.7vw,23px);letter-spacing:-.015em;line-height:1.15;margin-bottom:14px;}
+  .incl ul{list-style:none;display:grid;grid-template-columns:repeat(2,1fr);gap:10px 32px;margin-bottom:18px;}
+  .incl li{font-size:14px;line-height:1.5;color:rgba(17,24,39,.78);padding-left:16px;position:relative;}
+  .incl li:before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+  .incl .pl{font-size:14px;font-weight:600;line-height:1.5;}
+  @media(max-width:760px){.incl ul{grid-template-columns:1fr;}}
+  #plan .ladder{margin-bottom:0;}
+  #plan .incl{margin-bottom:clamp(48px,7vw,96px);}
+  .card.vert>h3{margin-bottom:0;}
+  .cardgrid.c5{grid-template-columns:repeat(6,1fr);}
+  .cardgrid.c5 .card{grid-column:span 2;}
+  .cardgrid.c5 .card:nth-child(4){grid-column:2/4;}
+  .cardgrid.c5 .card:nth-child(5){grid-column:4/6;}
+  @media(max-width:760px){
+    .cardgrid.c5{grid-template-columns:1fr;}
+    .cardgrid.c5 .card:nth-child(n){grid-column:auto;}
+  }
+  .testimonials[hidden]{display:none;}
+  .testimonial p{font-size:16px;line-height:1.6;}
+  .testimonial .who{margin-top:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(17,24,39,.55);font-weight:500;}
+  @media(max-width:980px){.cardgrid.c4{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:760px){.cardgrid.c3,.cardgrid.c2{grid-template-columns:1fr;}}
+  @media(max-width:560px){.cardgrid.c4{grid-template-columns:1fr;}}
+
+  /* ---------- systems: five named systems, each shown working ----------
+     CSS only. Every keyframe moves transform and opacity, nothing else.
+     Green, amber, muted and the hairline are scoped here because the site
+     has no token for them; ink, paper, accent and tint are the site's own. */
+  #systems{--sys-green:#40C69B;--sys-green-ink:#1f8f6c;--sys-amber:#E8A13A;--sys-muted:#5A6470;--sys-line:#E4E9F0;}
+  .sys-list{max-width:1040px;margin:0 auto clamp(48px,7vw,96px);}
+  .sys-card{
+    display:grid;grid-template-columns:1fr 1fr;gap:36px;align-items:center;
+    background:var(--paper);border:1px solid var(--sys-line);border-radius:var(--r-lg);
+    padding:30px 34px;margin-bottom:22px;
+    box-shadow:0 1px 2px rgba(17,24,39,.04),0 14px 34px rgba(17,24,39,.05);
+  }
+  .sys-card:nth-child(even) .sys-demo{order:-1;}
+  .sys-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:0 0 8px;}
+  .sys-card h3{font-size:22px;font-weight:800;margin:0 0 10px;letter-spacing:-.01em;line-height:1.15;}
+  .sys-card p{font-size:15px;line-height:1.55;color:var(--sys-muted);margin:0 0 14px;}
+  .sys-card .sys-human{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600;line-height:1.4;color:var(--ink);margin:0;}
+  .sys-human svg{flex:none;}
+  .sys-human svg circle{fill:var(--sys-green);}
+  .sys-human svg path,.sys-tick svg path{stroke:var(--paper);}
+  .sys-demo{
+    background:linear-gradient(180deg,#FBFDFE,var(--tint));
+    border:1px solid var(--sys-line);border-radius:var(--r);
+    padding:18px 18px 38px;min-height:210px;
+    display:flex;flex-direction:column;justify-content:center;gap:10px;
+    position:relative;overflow:hidden;
+  }
+  .sys-cap{position:absolute;bottom:12px;left:18px;right:18px;font-size:11.5px;color:var(--sys-muted);text-align:center;opacity:0;animation:sys-cap 9s infinite;}
+  @keyframes sys-cap{0%,55%{opacity:0}70%,92%{opacity:1}100%{opacity:0}}
+  .sys-row{
+    display:flex;align-items:center;gap:9px;
+    background:var(--paper);border:1px solid var(--sys-line);border-radius:var(--r-sm);
+    padding:9px 11px;font-size:12.5px;line-height:1.35;color:var(--ink);
+    flex-wrap:wrap;
+    opacity:0;transform:translateY(6px);
+  }
+  .sys-row b{font-weight:700;}
+  .sys-dot{width:8px;height:8px;border-radius:50%;flex:none;}
+  .sys-dot.amber{background:var(--sys-amber);} .sys-dot.green{background:var(--sys-green);} .sys-dot.blue{background:var(--accent);}
+  .sys-quiet{color:var(--sys-muted);}
+  .sys-pill{margin-left:auto;flex:none;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:20px;}
+  .sys-pill.draft{background:var(--tint);color:var(--accent);}
+  .sys-pill.done{background:rgba(64,198,155,.15);color:var(--sys-green-ink);}
+  .sys-row.s1{animation:sys-rev 9s infinite;animation-delay:.3s}
+  .sys-row.s2{animation:sys-rev 9s infinite;animation-delay:1.6s}
+  .sys-row.s3{animation:sys-rev 9s infinite;animation-delay:2.9s}
+  .sys-row.s4{animation:sys-rev 9s infinite;animation-delay:4.2s}
+  @keyframes sys-rev{0%{opacity:0;transform:translateY(6px)}6%{opacity:1;transform:translateY(0)}92%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(0)}}
+  .sys-approve{
+    display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+    background:var(--accent);color:var(--paper);font-size:12.5px;font-weight:600;
+    padding:9px 14px;border-radius:var(--r-sm);
+    opacity:0;animation:sys-rev 9s infinite;animation-delay:4.2s;
+  }
+  .sys-tick{width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,.25);display:inline-flex;align-items:center;justify-content:center;flex:none;}
+  .sys-tick svg{opacity:0;animation:sys-tickin 9s infinite;animation-delay:5.4s;}
+  @keyframes sys-tickin{0%,10%{opacity:0;transform:scale(.4)}14%{opacity:1;transform:scale(1)}92%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+  .sys-rcol{display:flex;gap:14px;align-items:center;}
+  .sys-fields{flex:1;min-width:0;display:flex;flex-direction:column;gap:8px;}
+  .sys-receipt{width:84px;height:104px;background:var(--paper);border:1px solid var(--sys-line);border-radius:var(--r-sm);position:relative;overflow:hidden;flex:none;}
+  .sys-receipt::before{content:"";position:absolute;left:10px;right:10px;top:12px;height:6px;background:#EEF2F6;border-radius:3px;box-shadow:0 12px 0 #EEF2F6,0 24px 0 #EEF2F6,0 36px 0 #F4F6F9,0 48px 0 #F4F6F9;}
+  .sys-scan{position:absolute;left:0;right:0;top:0;height:3px;background:var(--accent);box-shadow:0 0 10px rgba(45,156,219,.7);opacity:0;animation:sys-scan 9s infinite;}
+  @keyframes sys-scan{0%,4%{transform:translateY(0);opacity:0}8%{transform:translateY(8px);opacity:1}30%{transform:translateY(101px);opacity:1}34%,100%{transform:translateY(101px);opacity:0}}
+  .sys-bars{display:flex;align-items:flex-end;gap:7px;height:66px;}
+  .sys-bars i{width:16px;background:var(--accent);border-radius:3px 3px 0 0;opacity:0;transform:scaleY(0);transform-origin:bottom;animation:sys-bar 9s infinite;}
+  .sys-bars .b1{height:48%;animation-delay:.3s}.sys-bars .b2{height:72%;animation-delay:.8s}.sys-bars .b3{height:38%;animation-delay:1.3s}.sys-bars .b4{height:88%;animation-delay:1.8s}.sys-bars .b5{height:60%;animation-delay:2.3s}
+  @keyframes sys-bar{0%{opacity:0;transform:scaleY(0)}7%{opacity:.85;transform:scaleY(1)}92%{opacity:.85;transform:scaleY(1)}100%{opacity:0;transform:scaleY(1)}}
+  @media(max-width:760px){
+    .sys-card{grid-template-columns:1fr;gap:24px;padding:24px;}
+    .sys-card:nth-child(even) .sys-demo{order:0;}
+  }
+  /* Where the demo column is narrow (small phones, and two columns on a
+     tablet) the receipt sits above its fields so no row runs out of room. */
+  @media(max-width:480px),(min-width:761px) and (max-width:1040px){
+    .sys-rcol{flex-direction:column;align-items:stretch;}
+    .sys-receipt{align-self:center;}
+  }
+  /* Reduced motion: no animation. Each demo sits in its finished state, so
+     the working result is still on the page, just without the movement. */
+  @media (prefers-reduced-motion: reduce){
+    #systems .sys-row,#systems .sys-approve,#systems .sys-cap,#systems .sys-tick svg,#systems .sys-bars i,#systems .sys-scan{animation:none;}
+    #systems .sys-row,#systems .sys-approve,#systems .sys-cap,#systems .sys-tick svg{opacity:1;transform:none;}
+    #systems .sys-bars i{opacity:.85;transform:none;}
+    #systems .sys-scan{opacity:0;}
+  }
+
+  /* ---------- plan / ladder ---------- */
+  .ladder{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
+    margin-bottom:clamp(48px,7vw,96px);
+  }
+  .step{
+    border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);
+    padding:clamp(24px,3vw,40px);
+    min-height:300px;
+    display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:0;
+    transition:background .25s ease;
+  }
+  .step>div:first-child{display:contents;}
+  .step .n{grid-row:1;}
+  .step h3{grid-row:2;}
+  .step p{grid-row:3;}
+  .step .mini{grid-row:4;justify-self:start;align-self:start;}
+  .step .price{grid-row:5;align-self:start;}
+  .step:hover{background:var(--tint);}
+  .step .n{font-size:13px;font-weight:600;color:var(--accent);margin-bottom:20px;font-variant-numeric:tabular-nums;}
+  .step h3{font-size:clamp(19px,1.8vw,24px);letter-spacing:-.015em;line-height:1.15;margin-bottom:12px;}
+  .step p{font-size:14px;color:rgba(17,24,39,.72);line-height:1.5;}
+  .step .price{
+    margin-top:24px;font-size:clamp(22px,2.2vw,32px);font-weight:700;letter-spacing:-.02em;
+  }
+  .step .price small{display:block;font-size:12px;font-weight:400;color:rgba(17,24,39,.6);letter-spacing:0;margin-top:4px;}
+  .step .price{white-space:nowrap;}
+  .step .price small{white-space:normal;}
+  .step .price--quote{white-space:normal;font-size:clamp(20px,1.9vw,26px);line-height:1.15;}
+  .step .price:has(.from){position:relative;}
+  .step .price .from{position:absolute;left:0;bottom:100%;margin-bottom:-2px;font-size:13px;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);line-height:1.2;}
+  .step .price .per{font-size:.5em;font-weight:500;letter-spacing:0;color:rgba(17,24,39,.6);margin-left:1px;}
+  .step.free .price{color:var(--accent);}
+  .step .mini{
+    display:inline-block;margin-top:12px;font-size:12px;font-weight:600;
+    color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);
+    letter-spacing:.04em;
+  }
+  .step .mini:hover{color:var(--ink);border-color:var(--ink);}
+  @media(max-width:900px){.ladder{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.ladder{grid-template-columns:1fr;}}
+
+  /* ---------- comparison ---------- */
+  .compare{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;margin-bottom:clamp(48px,7vw,96px);}
+  .compare th,.compare td{
+    border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    padding:clamp(12px,1.8vw,22px);
+    text-align:left;vertical-align:top;
+    font-size:15px;
+  }
+  .compare thead th{
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+    background:var(--paper);
+  }
+  .compare tr>:last-child{border-right:0;}
+  .compare tbody tr:last-child>*{border-bottom:0;}
+  .compare thead th.hl{background:var(--ink);color:#fff;}
+  .compare td.hl{background:var(--tint);font-weight:600;}
+  .compare tbody th{font-weight:600;font-size:14px;width:20%;background:var(--paper);}
+  @media(max-width:700px){
+    .compare thead th:nth-child(2),.compare tbody td:nth-child(2){display:none;}
+  }
+  @media(max-width:420px){
+    .compare th,.compare td{padding:10px 8px;font-size:13px;overflow-wrap:anywhere;}
+    .compare thead th{font-size:11px;letter-spacing:.06em;}
+    .compare tbody th{font-size:12.5px;width:30%;}
+  }
+  @media(max-width:360px){
+    .compare th,.compare td{padding:8px 6px;font-size:12.5px;}
+    .compare thead th{font-size:9.5px;letter-spacing:0;padding-left:4px;padding-right:4px;}
+    .compare tbody th{font-size:11px;width:33%;padding-left:5px;padding-right:5px;}
+  }
+
+  /* ---------- results ---------- */
+  .result .big{
+    font-size:clamp(36px,4.5vw,64px);font-weight:700;letter-spacing:-.03em;line-height:1;
+    color:var(--accent);margin-bottom:14px;font-variant-numeric:tabular-nums;
+  }
+  .result .who{margin-top:16px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(17,24,39,.55);font-weight:500;}
+
+  /* ---------- fit filter ---------- */
+  .fit-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:16px;
+    margin-bottom:clamp(48px,7vw,96px);
+  }
+  .fit-col{border:1px solid var(--rule);border-radius:var(--r);background:var(--paper);padding:clamp(24px,3vw,40px);}
+  .fit-col h3{font-size:clamp(18px,1.8vw,24px);letter-spacing:-.015em;margin-bottom:20px;}
+  .fit-col.yes h3{color:var(--accent);}
+  .fit-col ul{list-style:none;}
+  .fit-col li{
+    padding:12px 0;border-bottom:1px solid var(--rule);
+    font-size:15px;display:flex;gap:14px;align-items:baseline;
+  }
+  .fit-col li:last-child{border-bottom:none;}
+  .fit-col .mark{font-weight:700;flex:0 0 auto;}
+  .fit-col.yes .mark{color:var(--accent);}
+  .fit-col.no .mark{color:rgba(17,24,39,.4);}
+  @media(max-width:760px){.fit-grid{grid-template-columns:1fr;}}
+
+  /* ---------- FAQ ---------- */
+  .faq-list{border-top:1px solid var(--rule);margin-bottom:clamp(48px,7vw,96px);}
+  .faq-list details{border-bottom:1px solid var(--rule);}
+  .faq-list summary{
+    list-style:none;cursor:pointer;
+    display:flex;justify-content:space-between;align-items:baseline;gap:24px;
+    padding:clamp(18px,2.4vw,28px) 0;
+    font-size:clamp(17px,1.8vw,22px);font-weight:600;letter-spacing:-.01em;
+    transition:color .2s ease;
+  }
+  .faq-list summary::-webkit-details-marker{display:none;}
+  .faq-list summary:hover{color:var(--accent);}
+  .faq-list summary .pm{
+    flex:0 0 auto;font-weight:400;font-size:22px;color:var(--accent);
+    transition:transform .3s ease;
+  }
+  .faq-list details[open] summary .pm{transform:rotate(45deg);}
+  .faq-list details p{
+    padding:0 0 clamp(20px,2.4vw,28px);
+    font-size:15px;line-height:1.6;color:rgba(17,24,39,.75);max-width:44em;
+  }
+  .faq-list details::details-content{
+    block-size:0;overflow:hidden;
+    transition:block-size .3s ease,content-visibility .3s allow-discrete;
+  }
+  .faq-list details[open]::details-content{block-size:auto;}
+
+  /* ---------- final CTA ---------- */
+  .final{padding:clamp(72px,12vw,160px) 0;border-bottom:1px solid var(--rule);}
+  .final h2{font-size:clamp(40px,7.5vw,110px);max-width:9.5em;}
+  .final .row{
+    display:flex;gap:20px;flex-wrap:wrap;align-items:center;
+    margin-top:clamp(32px,5vw,56px);
+  }
+  .final .note{font-size:14px;color:rgba(17,24,39,.6);}
+
+  /* ---------- footer ---------- */
+  footer{padding:40px 0 56px;}
+  .foot{
+    display:flex;justify-content:space-between;align-items:baseline;gap:24px;flex-wrap:wrap;
+  }
+  .foot .micro{color:rgba(17,24,39,.55);}
+  .foot a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule);}
+  .foot a:hover{border-color:var(--accent);color:var(--accent);}
+  .foot .links{display:flex;gap:20px;flex-wrap:wrap;}
+
+  /* ---------- reveal animation ---------- */
+  /* Resting state is fully visible; the fade-in plays once when an element scrolls into view. */
+  @keyframes rvIn{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:none;}}
+  html.js .rv.in{animation:rvIn .7s cubic-bezier(.22,1,.36,1) both;}
+  html.js .rv.in.d1{animation-delay:.08s;}
+  html.js .rv.in.d2{animation-delay:.16s;}
+  html.js .rv.in.d3{animation-delay:.24s;}
+  @media(prefers-reduced-motion:reduce){
+    html.js .rv.in{animation:none;}
+    .faq-list details::details-content{transition:none;}
+  }
+  .f4t-band{padding-top:clamp(48px,7vw,88px);padding-bottom:clamp(48px,7vw,88px);}
+  .f4t-band .f4t-logo-link{display:block;width:130px;max-width:40vw;margin-bottom:18px;border:0;line-height:0;}
+  .f4t-band .f4t-logo-link:hover{border:0;}
+  .f4t-band .f4t-logo{display:block;width:100%;height:auto;}
+  .f4t-band .micro{display:block;margin-bottom:20px;}
+  .f4t-band p{font-size:clamp(20px,2.4vw,32px);line-height:1.3;letter-spacing:-.02em;font-weight:500;max-width:30em;}
+  .f4t-band p strong{font-weight:700;}
+  .f4t-band a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent);}
+  .f4t-band a:hover{color:var(--ink);border-color:var(--ink);}
+
+  /* ---------- depth: elevation, rhythm, layers ---------- */
+  :root{
+    --navy:#0B1526;
+    --accent-on-dark:#5BB8EA;
+    --e1:0 1px 2px rgba(17,24,39,.05),0 4px 12px rgba(17,24,39,.05);
+    --e2:0 2px 4px rgba(17,24,39,.04),0 18px 40px -12px rgba(17,24,39,.18);
+    --e3:0 4px 8px rgba(17,24,39,.05),0 40px 80px -24px rgba(17,24,39,.35);
+  }
+  .btn{box-shadow:0 8px 20px -10px rgba(17,24,39,.55);}
+  .btn.ghost{box-shadow:none;}
+  .card,.fit-col,.incl,.compare{box-shadow:var(--e1);}
+  .step,.roi__card,.testimonial{box-shadow:var(--e2);}
+  .fn-card{box-shadow:var(--e3);}
+  .card,.step{transition:background .25s ease,transform .25s ease,box-shadow .25s ease;}
+  .card:hover,.step:hover{transform:translateY(-4px);box-shadow:var(--e3);}
+
+  /* rhythm */
+  
+  .dark{background:var(--navy);color:#fff;border-bottom-color:transparent;}
+  .dark h2,.dark h3{color:#fff;}
+  .dark h2 .accent,.dark .idx{color:var(--accent-on-dark);}
+
+  /* systems on navy: the white cards carry the section */
+  #systems .sys-card{box-shadow:var(--e3);border-color:transparent;}
+  #systems .sys-card h3{color:var(--ink);}
+
+  /* results on navy with a glow behind the proof */
+  #results{position:relative;overflow:hidden;}
+  #results::before{content:"";position:absolute;width:min(1100px,140vw);aspect-ratio:1;left:50%;top:38%;transform:translate(-50%,-50%);
+    background:radial-gradient(circle,rgba(45,156,219,.30),rgba(45,156,219,.08) 40%,transparent 65%);pointer-events:none;}
+  #results .wrap{position:relative;}
+  #results .card{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.12);box-shadow:none;}
+  #results .card:hover{background:rgba(255,255,255,.08);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);}
+  #results .card p{color:rgba(255,255,255,.72);}
+  #results .result .big{color:var(--accent-on-dark);text-shadow:0 0 40px rgba(45,156,219,.55);}
+  #results .who{color:rgba(255,255,255,.5);}
+
+  /* how it works: step cards overlap the edge of a navy band */
+  #plan{position:relative;}
+  #plan::before{content:"";position:absolute;left:0;right:0;top:0;background:var(--navy);
+    height:calc(clamp(40px,6vw,72px) + clamp(32px,5vw,72px)*2.04 + clamp(28px,4vw,48px) + clamp(90px,10vw,150px));}
+  #plan .wrap{position:relative;}
+  #plan .sect-head h2{color:#fff;}
+  #plan .sect-head h2 .accent,#plan .sect-head .idx{color:var(--accent-on-dark);}
+  #plan .step{border-color:transparent;}
+  @media(max-width:560px){#plan::before{height:calc(clamp(40px,6vw,72px) + clamp(32px,5vw,72px)*2.04 + clamp(28px,4vw,48px) + 70px);}}
+
+  /* hero: light, a fading dot grid, and the work happening on top */
+  .hero{position:relative;overflow:hidden;}
+  .hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+      radial-gradient(900px 480px at 88% 8%,rgba(45,156,219,.20),transparent 70%),
+      radial-gradient(700px 380px at 4% 105%,rgba(64,198,155,.13),transparent 70%);}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:radial-gradient(rgba(17,24,39,.10) 1px,transparent 1px);background-size:24px 24px;
+    -webkit-mask-image:linear-gradient(180deg,#000,transparent 80%);mask-image:linear-gradient(180deg,#000,transparent 80%);}
+  .hero .wrap{position:relative;z-index:1;}
+  .kicker{border-bottom-color:rgba(17,24,39,.10);}
+  .hero-cta .btn.ghost{background:rgba(255,255,255,.7);}
+  .compare-box{overflow-x:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--rule);border-radius:var(--r);box-shadow:var(--e1);margin-bottom:clamp(48px,7vw,96px);background:var(--paper);}
+  .compare-box .compare{border:0;border-radius:0;box-shadow:none;overflow:visible;margin-bottom:0;}
+  @media(max-width:760px){
+    .compare-box .compare{min-width:640px;}
+    .compare-box .compare thead th:nth-child(2),.compare-box .compare tbody td:nth-child(2){display:table-cell;}
+    .compare-box .compare th,.compare-box .compare td{padding:12px 10px;font-size:13.5px;overflow-wrap:normal;}
+    .compare-box .compare thead th{font-size:11px;letter-spacing:.08em;}
+    .compare-box .compare tbody th{width:auto;font-size:13px;}
+  }
+
+  /* ---------- how it works page ---------- */
+  .page-head{border-bottom:1px solid var(--rule);}
+  .page-head .hero-grid{padding-bottom:clamp(40px,6vw,72px);}
+  .page-head .lede{font-size:clamp(18px,2vw,24px);line-height:1.4;max-width:34em;}
+  .page-head .lede strong{font-weight:700;}
+  .res-note{margin:-20px 0 clamp(28px,4vw,40px);max-width:40em;font-size:clamp(16px,1.6vw,19px);line-height:1.5;color:rgba(255,255,255,.75);}
+  #systems{scroll-margin-top:64px;}
+  #plan,#compare,#fit,#results,#faqs{scroll-margin-top:64px;}
+
+</style>
+<script type="application/ld+json">
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://www.veruslink.au/how-it-works",
+    "url": "https://www.veruslink.au/how-it-works",
+    "name": "How it works | VerusLink",
+    "isPartOf": {
+      "@id": "https://www.veruslink.au/#website"
+    },
+    "publisher": {
+      "@id": "https://www.veruslink.au/#org"
+    },
+    "inLanguage": "en-AU"
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "@id": "https://www.veruslink.au/how-it-works#faq",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What happens after the Health Check?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Your results land in your inbox. If there’s real opportunity, we’ll suggest the $999 + GST assessment. If there isn’t, we’ll tell you straight."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I have to do the free Health Check first?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. You can book the assessment directly if you already know you want it. Most people start with the Health Check."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to be technical?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. You describe how your business runs. We handle the tools, the wiring and the jargon."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What tools do I need?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The ones you already have. New subscriptions are rarely needed. We build inside your existing stack."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What does a typical month look like?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We run one job for you, with a person checking the work. Two working sessions a month to check in and pick the next job, plus unlimited async support in between. Something ships every cycle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How is this different from hiring a consultant?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Consultants leave you a strategy deck after weeks of discovery. We leave you working systems, starting day one."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why can’t I just use ChatGPT myself?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can. The gap is wiring it into your actual workflows so it runs without you thinking about it. That’s the job."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if something breaks?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "I fix it. Usually the same business day. You message the founder, not a support queue."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What if I want to cancel or pause?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No lock-in. Cancel or pause with 14 days notice."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is my data safe?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "It stays in your own accounts, under your control. Never sold, never moved, never used to train anything."
+        }
+      }
+    ]
+  }
+]
+</script>
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-L524B34JQF"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-L524B34JQF');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="wrap bar">
+    <a class="wordmark" href="/">VERUS<span>LINK</span></a>
+    <nav>
+      <a href="#systems">Systems</a>
+      <a href="#plan">Pricing</a>
+      <a href="#results">Results</a>
+      <a href="#faqs">FAQs</a>
+      <a class="btn" href="/#start">Tell us where it hurts</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero page-head">
+  <div class="wrap hero-grid">
+    <div class="kicker rv">
+      <span class="micro">How it works</span>
+      <span class="micro">Sydney, Australia</span>
+    </div>
+    <h1 class="rv d1">How it<br><span class="accent">works.</span></h1>
+    <div class="hero-sub">
+      <p class="rv d2 lede">We take one job off your desk. <strong>You get the result.</strong></p>
+    </div>
+  </div>
+</section>
+
+<section id="systems" class="dark">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Named systems<br>we install.</h2>
+      <span class="micro rv idx">01 / What We Build</span>
+    </div>
+    <div class="sys-list">
+      <div class="sys-card rv">
+        <div class="sys-copy">
+          <span class="sys-tag">01 / Never miss a follow-up</span>
+          <h3>The Chase System</h3>
+          <p>Lead and invoice follow-up that keeps moving until a human needs to step in.</p>
+          <p class="sys-human"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8"/><path d="M4.6 8.3l2.2 2.2 4.6-4.9" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>You approve every send. Always.</p>
+        </div>
+        <div class="sys-demo" role="img" aria-label="The Chase System at work: an overdue invoice is spotted, a nudge is drafted, and it waits for you to approve and send.">
+          <div class="sys-row s1"><span class="sys-dot amber"></span><span><b>Invoice 1042</b> <span class="sys-quiet">14 days overdue</span></span></div>
+          <div class="sys-row s2"><span class="sys-dot blue"></span><span>Friendly nudge written</span><span class="sys-pill draft">Draft</span></div>
+          <div class="sys-approve"><span class="sys-tick"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2 5.2l2 2 4-4.3" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Approve &amp; send</div>
+          <div class="sys-cap">Nothing goes out without your say-so.</div>
+        </div>
+      </div>
+      <div class="sys-card rv">
+        <div class="sys-copy">
+          <span class="sys-tag">02 / Your daily owner brief</span>
+          <h3>The Morning Brief</h3>
+          <p>What needs attention, what&rsquo;s stuck and what&rsquo;s moving, before the first coffee.</p>
+          <p class="sys-human"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8"/><path d="M4.6 8.3l2.2 2.2 4.6-4.9" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Lands at 6:42am. You just read it.</p>
+        </div>
+        <div class="sys-demo" role="img" aria-label="The Morning Brief at work: three lines assemble. Three things need your attention, two are stuck, one is moving.">
+          <div class="sys-row s1"><span class="sys-dot amber"></span><span><b>3</b> need your attention</span></div>
+          <div class="sys-row s2"><span class="sys-dot blue"></span><span><b>2</b> stuck: Jones matter, supplier quote</span></div>
+          <div class="sys-row s3"><span class="sys-dot green"></span><span><b>1</b> moving: new lead replied overnight</span></div>
+          <div class="sys-cap">The whole day on one screen.</div>
+        </div>
+      </div>
+      <div class="sys-card rv">
+        <div class="sys-copy">
+          <span class="sys-tag">03 / Expenses that file themselves</span>
+          <h3>The Receipts Engine</h3>
+          <p>Photographs, categorises and logs every expense the moment it happens.</p>
+          <p class="sys-human"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8"/><path d="M4.6 8.3l2.2 2.2 4.6-4.9" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Into your own accounting. Your stack.</p>
+        </div>
+        <div class="sys-demo" role="img" aria-label="The Receipts Engine at work: a receipt is scanned, then the vendor, amount, GST and category fill in and the expense is logged.">
+          <div class="sys-rcol">
+            <div class="sys-receipt"><span class="sys-scan"></span></div>
+            <div class="sys-fields">
+              <div class="sys-row s2"><span class="sys-quiet">Vendor</span><span><b>Officeworks</b></span></div>
+              <div class="sys-row s3"><span class="sys-quiet">Amount</span><span><b>$84.20</b> <span class="sys-quiet">GST $7.65</span></span></div>
+              <div class="sys-row s4"><span class="sys-quiet">Category</span><span>Office supplies</span><span class="sys-pill done">Logged</span></div>
+            </div>
+          </div>
+          <div class="sys-cap">Photographed once. Never keyed in.</div>
+        </div>
+      </div>
+      <div class="sys-card rv">
+        <div class="sys-copy">
+          <span class="sys-tag">04 / Friction-free client intake</span>
+          <h3>The Intake Engine</h3>
+          <p>The right documents, answers and approvals collected before your team chases anything.</p>
+          <p class="sys-human"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8"/><path d="M4.6 8.3l2.2 2.2 4.6-4.9" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>You open the matter. It&rsquo;s ready when you do.</p>
+        </div>
+        <div class="sys-demo" role="img" aria-label="The Intake Engine at work: ID is verified, the engagement letter is signed, the conflict check clears, and the matter is ready to open.">
+          <div class="sys-row s1"><span class="sys-dot green"></span><span>ID verified</span><span class="sys-pill done">Done</span></div>
+          <div class="sys-row s2"><span class="sys-dot green"></span><span>Engagement letter signed</span><span class="sys-pill done">Done</span></div>
+          <div class="sys-row s3"><span class="sys-dot green"></span><span>Conflict check cleared</span><span class="sys-pill done">Done</span></div>
+          <div class="sys-row s4"><span class="sys-dot blue"></span><span><b>Matter ready to open</b></span></div>
+          <div class="sys-cap">Collected before anyone had to chase.</div>
+        </div>
+      </div>
+      <div class="sys-card rv">
+        <div class="sys-copy">
+          <span class="sys-tag">05 / Reports without the late night</span>
+          <h3>The Report Builder</h3>
+          <p>Monthly reporting, assembled and formatted without you lifting a finger.</p>
+          <p class="sys-human"><svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="8"/><path d="M4.6 8.3l2.2 2.2 4.6-4.9" fill="none" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>Drafted for your review, never sent for you.</p>
+        </div>
+        <div class="sys-demo" role="img" aria-label="The Report Builder at work: the month&rsquo;s figures assemble into a chart, then the report waits for your review.">
+          <div class="sys-bars"><i class="b1"></i><i class="b2"></i><i class="b3"></i><i class="b4"></i><i class="b5"></i></div>
+          <div class="sys-approve"><span class="sys-tick"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true" focusable="false"><path d="M2 5.2l2 2 4-4.3" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ready for your review</div>
+          <div class="sys-cap">The month, assembled and formatted.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Four steps.<br>Start free.</h2>
+      <span class="micro rv idx">02 / The Plan</span>
+    </div>
+    <div class="ladder">
+      <div class="step free rv">
+        <div><div class="n">Step 01</div><h3>Operations Health Check</h3><p>Five minutes. We find where your business is bleeding hours and show you what AI can actually take off your plate.</p><a class="mini" href="https://www.veruslink.au/audit">Start the Health Check &rarr;</a></div>
+        <div class="price">Free<small>No obligation</small></div>
+      </div>
+      <div class="step rv d1">
+        <div><div class="n">Step 02</div><h3>Intro Call</h3><p>A straight conversation about your operation. No pitch deck. No pressure. Just where the friction lives.</p><a class="mini" href="https://book.veruslink.au/intro">Book 15 minutes &rarr;</a></div>
+        <div class="price">Free<small>15 minutes</small></div>
+      </div>
+      <div class="step rv d2">
+        <div><div class="n">Step 03</div><h3>AI Opportunity Assessment</h3><p>A full map of your workflows and the exact systems worth building, priced and prioritised. Credited to your first month if you proceed.</p><a class="mini" href="https://buy.stripe.com/6oUeV70mQbyv8zK1T8ao800">Book the Assessment &rarr;</a></div>
+        <div class="price">$999<small>+ GST, one-time</small></div>
+      </div>
+      <div class="step rv d3">
+        <div><div class="n">Step 04</div><h3>Concierge</h3><p>We take one job off your desk and run it, with a person checking the work. You approve anything client-facing. Then we pick the next job.</p></div>
+        <div class="price price--quote">Quoted after your Assessment<small>No lock-in. Cancel or pause with 14 days notice.</small></div>
+      </div>
+    </div>
+    <div class="incl rv">
+      <h3>What&rsquo;s included</h3>
+      <ul>
+        <li>One job owned and running in your first 30 days, with a measured before and after.</li>
+        <li>Something ships every cycle.</li>
+        <li>Proactive monitoring. We catch issues before you notice them.</li>
+        <li>Unlimited async support by voice message, answered within 12 business hours.</li>
+        <li>A shared operations hub: every system logged, the hours saved recorded.</li>
+        <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
+        <li>Done-for-you builds available as an add-on, quoted separately.</li>
+      </ul>
+      <p class="pl">Price on application. A fixed monthly fee, quoted after your Assessment. No lock-in. Cancel or pause with 14 days notice. Your $999 + GST Assessment is credited in full to your first month.</p>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">The honest<br>comparison.</h2>
+      <span class="micro rv idx">03 / Compare</span>
+    </div>
+    <div class="compare-box rv">
+    <table class="compare">
+      <thead>
+        <tr><th></th><th>AI course</th><th>Consultant</th><th class="hl">VerusLink</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>Time to first result</th><td>Weeks of study</td><td>Months</td><td class="hl">Week one</td></tr>
+        <tr><th>What you receive</th><td>Videos and templates</td><td>Strategy deck</td><td class="hl">Working systems</td></tr>
+        <tr><th>Ongoing support</th><td>Forum access</td><td>Ends at delivery</td><td class="hl">Unlimited async</td></tr>
+        <tr><th>New subscriptions needed</th><td>Several new tools</td><td>A few new tools</td><td class="hl">Zero</td></tr>
+        <tr><th>Who does the work</th><td>You</td><td>You, after handoff</td><td class="hl">We do. You approve.</td></tr>
+        <tr><th>Monthly cost</th><td>Low fee, plus your time</td><td>A large project fee</td><td class="hl">Quoted after your Assessment.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section id="fit">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">We&rsquo;re selective.<br><span class="accent">So should you be.</span></h2>
+      <span class="micro rv idx">04 / The Fit</span>
+    </div>
+    <div class="fit-grid">
+      <div class="fit-col yes rv">
+        <h3>A good fit</h3>
+        <ul>
+          <li><span class="mark">+</span>$500K to $5M revenue, owner-operated</li>
+          <li><span class="mark">+</span>You&rsquo;ve tried AI and it didn&rsquo;t stick</li>
+          <li><span class="mark">+</span>Ready to invest in proven systems</li>
+          <li><span class="mark">+</span>You want outcomes, not tutorials</li>
+          <li><span class="mark">+</span>You can make a decision without a committee</li>
+        </ul>
+      </div>
+      <div class="fit-col no rv d1">
+        <h3>Not a fit</h3>
+        <ul>
+          <li><span class="mark">&ndash;</span>You want generic AI training</li>
+          <li><span class="mark">&ndash;</span>You want a report to implement yourself</li>
+          <li><span class="mark">&ndash;</span>You&rsquo;re still deciding whether AI is worth it</li>
+          <li><span class="mark">&ndash;</span>Every decision needs multiple sign-offs</li>
+          <li><span class="mark">&ndash;</span>Pre-revenue</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="results" class="dark">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Built and<br><span class="accent">running.</span></h2>
+      <span class="micro rv idx">05 / Other Industries</span>
+    </div>
+    <p class="res-note rv">These are from other kinds of businesses. Law firm and association results will be added as they land.</p>
+    <div class="cardgrid c4">
+      <div class="card result rv">
+        <div class="big">Logged</div><h3>Back every month</h3><p>Receipts photographed, categorised and logged automatically. No more shoebox.</p>
+        <div class="who">AI services operator, Sydney</div>
+      </div>
+      <div class="card result rv d1">
+        <div class="big">Scaled</div><h3>Content output</h3><p>One piece of source material becomes blog, social and SEO content at scale.</p>
+        <div class="who">Marketing firm, Sydney</div>
+      </div>
+      <div class="card result rv d2">
+        <div class="big">Live</div><h3>Interview analysis</h3><p>Real-time AI analysis during podcast interviews, with coaching prompts as they record.</p>
+        <div class="who">Not-for-profit, Victoria</div>
+      </div>
+      <div class="card result rv d3">
+        <div class="big">Voice</div><h3>To drafted chapters</h3><p>Spoken conversations turned into structured book chapters, ready for the editor.</p>
+        <div class="who">Ghostwriting business, Sydney</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faqs">
+  <div class="wrap">
+    <div class="sect-head">
+      <h2 class="rv">Common questions.<br><span class="accent">Straight answers.</span></h2>
+      <span class="micro rv idx">06 / FAQs</span>
+    </div>
+    <div class="faq-list rv">
+      <details name="faq"><summary>What happens after the Health Check?<span class="pm">+</span></summary><p>Your results land in your inbox. If there&rsquo;s real opportunity, we&rsquo;ll suggest the $999 + GST assessment. If there isn&rsquo;t, we&rsquo;ll tell you straight.</p></details>
+      <details name="faq"><summary>Do I have to do the free Health Check first?<span class="pm">+</span></summary><p>No. You can book the assessment directly if you already know you want it. Most people start with the Health Check.</p></details>
+      <details name="faq"><summary>Do I need to be technical?<span class="pm">+</span></summary><p>No. You describe how your business runs. We handle the tools, the wiring and the jargon.</p></details>
+      <details name="faq"><summary>What tools do I need?<span class="pm">+</span></summary><p>The ones you already have. New subscriptions are rarely needed. We build inside your existing stack.</p></details>
+      <details name="faq"><summary>What does a typical month look like?<span class="pm">+</span></summary><p>We run one job for you, with a person checking the work. Two working sessions a month to check in and pick the next job, plus unlimited async support in between. Something ships every cycle.</p></details>
+      <details name="faq"><summary>How is this different from hiring a consultant?<span class="pm">+</span></summary><p>Consultants leave you a strategy deck after weeks of discovery. We leave you working systems, starting day one.</p></details>
+      <details name="faq"><summary>Why can&rsquo;t I just use ChatGPT myself?<span class="pm">+</span></summary><p>You can. The gap is wiring it into your actual workflows so it runs without you thinking about it. That&rsquo;s the job.</p></details>
+      <details name="faq"><summary>What happens if something breaks?<span class="pm">+</span></summary><p>I fix it. Usually the same business day. You message the founder, not a support queue.</p></details>
+      <details name="faq"><summary>What if I want to cancel or pause?<span class="pm">+</span></summary><p>No lock-in. Cancel or pause with 14 days notice.</p></details>
+      <details name="faq"><summary>Is my data safe?<span class="pm">+</span></summary><p>It stays in your own accounts, under your control. Never sold, never moved, never used to train anything.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2 class="rv">Stop learning AI.<br><span class="accent">Start using it.</span></h2>
+    <div class="row rv d1">
+      <a class="btn big" href="/#start">Tell us where it hurts</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a class="wordmark" href="/">VERUS<span>LINK</span></a>
+    <span class="micro">AI Operations Concierge for Australian SMEs</span>
+    <div class="links micro">
+      <a href="mailto:james@veruslink.au">james@veruslink.au</a>
+      <a href="/">Home</a>
+      <a href="/blog">Blog</a>
+      <a href="/ai-for-law-firms-sydney">AI for law firms in Sydney</a>
+      <a href="/where-it-hurts">Tell us where it hurts</a>
+      <a href="https://www.veruslink.au/privacy">Privacy</a>
+      <a href="https://www.veruslink.au/terms">Terms</a>
+      <a href="https://www.linkedin.com/company/veruslink/">LinkedIn</a>
+      <a href="https://www.instagram.com/veruslink/">Instagram</a>
+    </div>
+    <span class="micro">&copy; 2026 VerusLink</span>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+    });
+  },{threshold:0.12,rootMargin:"0px 0px -40px 0px"});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+</script>
+</body>
+</html>

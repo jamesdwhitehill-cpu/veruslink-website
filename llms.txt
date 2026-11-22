@@ -10,7 +10,8 @@
 
 ## Key pages
 
-- [Home](https://www.veruslink.au/): the offer, pricing, FAQ.
+- [Home](https://www.veruslink.au/): what VerusLink does and the one way to start.
+- [How it works](https://www.veruslink.au/how-it-works): the named systems, the four-step plan and pricing, how it compares, who it fits, and the full FAQ.
 - [AI Health Check](https://www.veruslink.au/audit): free 5-minute assessment, personally reviewed.
 - [AI for law firms in Sydney](https://www.veruslink.au/ai-for-law-firms-sydney): enquiry answering, intake, follow-ups and matter admin for small and mid-size Sydney firms, human-checked, with confidentiality built in.
 - [Blog](https://www.veruslink.au/blog): plain-English essays on AI in small business.
