@@ -138,7 +138,7 @@
     display:flex;justify-content:space-between;align-items:baseline;
     padding:clamp(40px,6vw,72px) 0 clamp(28px,4vw,48px);
   }
-  h2{
+  h2,.sect-head h1{
     font-size:clamp(32px,5vw,72px);
     letter-spacing:-.03em;line-height:1.02;font-weight:700;
     text-wrap:balance;
@@ -494,8 +494,8 @@
   #plan::before{content:"";position:absolute;left:0;right:0;top:0;background:var(--navy);
     height:calc(clamp(40px,6vw,72px) + clamp(32px,5vw,72px)*2.04 + clamp(28px,4vw,48px) + clamp(90px,10vw,150px));}
   #plan .wrap{position:relative;}
-  #plan .sect-head h2{color:#fff;}
-  #plan .sect-head h2 .accent,#plan .sect-head .idx{color:var(--accent-on-dark);}
+  #plan .sect-head h1,#plan .sect-head h2{color:#fff;}
+  #plan .sect-head h1 .accent,#plan .sect-head h2 .accent,#plan .sect-head .idx{color:var(--accent-on-dark);}
   #plan .step{border-color:transparent;}
   @media(max-width:560px){#plan::before{height:calc(clamp(40px,6vw,72px) + clamp(32px,5vw,72px)*2.04 + clamp(28px,4vw,48px) + 70px);}}
 
@@ -659,15 +659,42 @@
   </div>
 </header>
 
-<section class="hero page-head">
-  <div class="wrap hero-grid">
-    <div class="kicker rv">
-      <span class="micro">How it works</span>
-      <span class="micro">Sydney, Australia</span>
+<section id="plan">
+  <div class="wrap">
+    <div class="sect-head">
+      <h1 class="rv">Four steps.<br>Start free.</h1>
+      <span class="micro rv idx">01 / The Plan</span>
     </div>
-    <h1 class="rv d1">How it<br><span class="accent">works.</span></h1>
-    <div class="hero-sub">
-      <p class="rv d2 lede">We take one job off your desk. <strong>You get the result.</strong></p>
+    <div class="ladder">
+      <div class="step free rv">
+        <div><div class="n">Step 01</div><h3>Operations Health Check</h3><p>Five minutes. We find where your business is bleeding hours and show you what AI can actually take off your plate.</p><a class="mini" href="https://www.veruslink.au/audit">Start the Health Check &rarr;</a></div>
+        <div class="price">Free<small>No obligation</small></div>
+      </div>
+      <div class="step rv d1">
+        <div><div class="n">Step 02</div><h3>Intro Call</h3><p>A straight conversation about your operation. No pitch deck. No pressure. Just where the friction lives.</p><a class="mini" href="https://book.veruslink.au/intro">Book 15 minutes &rarr;</a></div>
+        <div class="price">Free<small>15 minutes</small></div>
+      </div>
+      <div class="step rv d2">
+        <div><div class="n">Step 03</div><h3>AI Opportunity Assessment</h3><p>A full map of your workflows and the exact systems worth building, priced and prioritised. Credited to your first month if you proceed.</p><a class="mini" href="https://buy.stripe.com/6oUeV70mQbyv8zK1T8ao800">Book the Assessment &rarr;</a></div>
+        <div class="price">$999<small>+ GST, one-time</small></div>
+      </div>
+      <div class="step rv d3">
+        <div><div class="n">Step 04</div><h3>Concierge</h3><p>We take one job off your desk and run it, with a person checking the work. You approve anything client-facing. Then we pick the next job.</p></div>
+        <div class="price price--quote">Quoted after your Assessment<small>No lock-in. Cancel or pause with 14 days notice.</small></div>
+      </div>
+    </div>
+    <div class="incl rv">
+      <h3>What&rsquo;s included</h3>
+      <ul>
+        <li>One job owned and running in your first 30 days, with a measured before and after.</li>
+        <li>Something ships every cycle.</li>
+        <li>Proactive monitoring. We catch issues before you notice them.</li>
+        <li>Unlimited async support by voice message, answered within 12 business hours.</li>
+        <li>A shared operations hub: every system logged, the hours saved recorded.</li>
+        <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
+        <li>Done-for-you builds available as an add-on, quoted separately.</li>
+      </ul>
+      <p class="pl">Price on application. A fixed monthly fee, quoted after your Assessment. No lock-in. Cancel or pause with 14 days notice. Your $999 + GST Assessment is credited in full to your first month.</p>
     </div>
   </div>
 </section>
@@ -676,7 +703,7 @@
   <div class="wrap">
     <div class="sect-head">
       <h2 class="rv">Named systems<br>we install.</h2>
-      <span class="micro rv idx">01 / What We Build</span>
+      <span class="micro rv idx">02 / What We Build</span>
     </div>
     <div class="sys-list">
       <div class="sys-card rv">
@@ -754,46 +781,6 @@
           <div class="sys-cap">The month, assembled and formatted.</div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="plan">
-  <div class="wrap">
-    <div class="sect-head">
-      <h2 class="rv">Four steps.<br>Start free.</h2>
-      <span class="micro rv idx">02 / The Plan</span>
-    </div>
-    <div class="ladder">
-      <div class="step free rv">
-        <div><div class="n">Step 01</div><h3>Operations Health Check</h3><p>Five minutes. We find where your business is bleeding hours and show you what AI can actually take off your plate.</p><a class="mini" href="https://www.veruslink.au/audit">Start the Health Check &rarr;</a></div>
-        <div class="price">Free<small>No obligation</small></div>
-      </div>
-      <div class="step rv d1">
-        <div><div class="n">Step 02</div><h3>Intro Call</h3><p>A straight conversation about your operation. No pitch deck. No pressure. Just where the friction lives.</p><a class="mini" href="https://book.veruslink.au/intro">Book 15 minutes &rarr;</a></div>
-        <div class="price">Free<small>15 minutes</small></div>
-      </div>
-      <div class="step rv d2">
-        <div><div class="n">Step 03</div><h3>AI Opportunity Assessment</h3><p>A full map of your workflows and the exact systems worth building, priced and prioritised. Credited to your first month if you proceed.</p><a class="mini" href="https://buy.stripe.com/6oUeV70mQbyv8zK1T8ao800">Book the Assessment &rarr;</a></div>
-        <div class="price">$999<small>+ GST, one-time</small></div>
-      </div>
-      <div class="step rv d3">
-        <div><div class="n">Step 04</div><h3>Concierge</h3><p>We take one job off your desk and run it, with a person checking the work. You approve anything client-facing. Then we pick the next job.</p></div>
-        <div class="price price--quote">Quoted after your Assessment<small>No lock-in. Cancel or pause with 14 days notice.</small></div>
-      </div>
-    </div>
-    <div class="incl rv">
-      <h3>What&rsquo;s included</h3>
-      <ul>
-        <li>One job owned and running in your first 30 days, with a measured before and after.</li>
-        <li>Something ships every cycle.</li>
-        <li>Proactive monitoring. We catch issues before you notice them.</li>
-        <li>Unlimited async support by voice message, answered within 12 business hours.</li>
-        <li>A shared operations hub: every system logged, the hours saved recorded.</li>
-        <li>Two working sessions a month. That&rsquo;s how we check in and pick the next job.</li>
-        <li>Done-for-you builds available as an add-on, quoted separately.</li>
-      </ul>
-      <p class="pl">Price on application. A fixed monthly fee, quoted after your Assessment. No lock-in. Cancel or pause with 14 days notice. Your $999 + GST Assessment is credited in full to your first month.</p>
     </div>
   </div>
 </section>
